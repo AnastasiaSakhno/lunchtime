@@ -32,6 +32,9 @@ repositories {
 	mavenCentral()
 }
 
+bootRun {
+    addResources = true
+}
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa') {
