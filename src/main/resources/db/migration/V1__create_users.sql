@@ -1,5 +1,3 @@
-BEGIN TRANSACTION;
-
 CREATE TABLE users (
   id BIGSERIAL PRIMARY KEY,
   email VARCHAR(50) UNIQUE,
@@ -12,5 +10,3 @@ CREATE UNIQUE INDEX users_email_uindex ON users (email);
 
 INSERT INTO users (email, password, full_name, role)
             VALUES('admin@anadeainc.com', '$2a$12$6yiK4/ar7AfbL/VAjJd1M.u4SC5NHTwEvNfhCQLh.2ktmxUstEZJu', 'App Admin', 'ADMIN');
-
-COMMIT TRANSACTION;
