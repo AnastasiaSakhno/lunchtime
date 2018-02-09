@@ -21,7 +21,7 @@ class User {
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
-    var role: Role? = Role.REGULAR
+    var role: Role? = Role.ROLE_REGULAR
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

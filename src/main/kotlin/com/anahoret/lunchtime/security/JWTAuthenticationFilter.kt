@@ -11,7 +11,7 @@ import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
-import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import java.io.IOException
 import java.util.*
@@ -29,14 +29,14 @@ class JWTAuthenticationFilter(authenticationManager: AuthenticationManager) : Us
     override fun attemptAuthentication(req: HttpServletRequest,
                               res: HttpServletResponse): Authentication {
         try {
-            val creds = ObjectMapper()
+            val user = ObjectMapper()
                     .readValue(req.inputStream, User::class.java)
 
             return authenticationManager.authenticate(
                     UsernamePasswordAuthenticationToken(
-                            creds.email,
-                            creds.password,
-                            ArrayList<GrantedAuthority>())
+                            user.email,
+                            user.password,
+                            listOf(SimpleGrantedAuthority(user.role?.name)))
             )
         } catch (e: IOException) {
             throw RuntimeException(e)

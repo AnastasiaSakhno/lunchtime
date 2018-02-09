@@ -6,17 +6,15 @@ import com.anahoret.lunchtime.security.Constants.Companion.TOKEN_PREFIX
 import io.jsonwebtoken.Jwts
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
-import java.util.*
 import javax.servlet.FilterChain
-import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 
-class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenticationFilter(authManager) {
+class JWTAuthorizationFilter(authManager: AuthenticationManager, private val userDetailsService: UserDetailsService) : BasicAuthenticationFilter(authManager) {
 
     override fun doFilterInternal(req: HttpServletRequest,
                                    res: HttpServletResponse,
@@ -37,14 +35,15 @@ class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenti
     private fun getAuthentication(request: HttpServletRequest): UsernamePasswordAuthenticationToken? {
         val token = request.getHeader(HEADER_STRING)
         if (token != null) {
-            val user = Jwts.parser()
+            val email = Jwts.parser()
                     .setSigningKey(SECRET.toByteArray(Charsets.UTF_8))
                     .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
                     .getBody()
                     .getSubject()
 
-            return if (user != null) {
-                UsernamePasswordAuthenticationToken(user, null, ArrayList<GrantedAuthority>())
+            return if (email != null) {
+                val user = userDetailsService.loadUserByUsername(email)
+                UsernamePasswordAuthenticationToken(email, null, user.authorities)
             } else null
         }
         return null

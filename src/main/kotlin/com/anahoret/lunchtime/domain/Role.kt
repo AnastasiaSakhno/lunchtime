@@ -1,5 +1,5 @@
 package com.anahoret.lunchtime.domain
 
 enum class Role {
-  REGULAR, ADMIN
+    ROLE_REGULAR, ROLE_ADMIN
 }
