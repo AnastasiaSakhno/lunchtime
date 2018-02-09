@@ -19,7 +19,6 @@ class WebSecurityConfig(private val userDetailsService: UserDetailsService) : We
     @Bean
     fun passwordEncoder() = BCryptPasswordEncoder(12)
 
-    @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.cors().and().csrf().disable().authorizeRequests()
                 .mvcMatchers("/", "/built/**", "/api/**").permitAll()
@@ -31,7 +30,6 @@ class WebSecurityConfig(private val userDetailsService: UserDetailsService) : We
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }
 
-    @Throws(Exception::class)
     public override fun configure(auth: AuthenticationManagerBuilder?) {
         auth!!.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder())
     }
