@@ -22,9 +22,9 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 
-class JWTAuthenticationFilter : UsernamePasswordAuthenticationFilter {
+class JWTAuthenticationFilter(authenticationManager: AuthenticationManager) : UsernamePasswordAuthenticationFilter() {
 
-    constructor(authenticationManager: AuthenticationManager) : super() {
+    init {
         this.authenticationManager = authenticationManager
     }
 
@@ -33,7 +33,7 @@ class JWTAuthenticationFilter : UsernamePasswordAuthenticationFilter {
                               res: HttpServletResponse): Authentication {
         try {
             val creds = ObjectMapper()
-                    .readValue(req.getInputStream(), User::class.java)
+                    .readValue(req.inputStream, User::class.java)
 
             return authenticationManager.authenticate(
                     UsernamePasswordAuthenticationToken(
@@ -54,7 +54,7 @@ class JWTAuthenticationFilter : UsernamePasswordAuthenticationFilter {
                                            auth: Authentication) {
 
         val token = Jwts.builder()
-                .setSubject((auth.getPrincipal() as org.springframework.security.core.userdetails.User).username)
+                .setSubject((auth.principal as org.springframework.security.core.userdetails.User).username)
                 .setExpiration(Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET.toByteArray(Charsets.UTF_8))
                 .compact()
