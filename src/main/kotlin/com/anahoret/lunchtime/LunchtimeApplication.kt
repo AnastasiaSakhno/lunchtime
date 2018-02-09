@@ -8,11 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 
 @SpringBootApplication
-class LunchtimeApplication {
-
-    @Bean
-    fun passwordEncoder() = BCryptPasswordEncoder(12)
-}
+class LunchtimeApplication
 
 fun main(args: Array<String>) {
     SpringApplication.run(LunchtimeApplication::class.java, *args)

@@ -14,7 +14,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 
 @EnableWebSecurity
-class WebSecurity(private val userDetailsService: UserDetailsService, private val passwordEncoder: BCryptPasswordEncoder) : WebSecurityConfigurerAdapter() {
+class WebSecurityConfig(private val userDetailsService: UserDetailsService) : WebSecurityConfigurerAdapter() {
+
+    @Bean
+    fun passwordEncoder() = BCryptPasswordEncoder(12)
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
@@ -30,7 +33,7 @@ class WebSecurity(private val userDetailsService: UserDetailsService, private va
 
     @Throws(Exception::class)
     public override fun configure(auth: AuthenticationManagerBuilder?) {
-        auth!!.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder)
+        auth!!.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder())
     }
 
     @Bean
