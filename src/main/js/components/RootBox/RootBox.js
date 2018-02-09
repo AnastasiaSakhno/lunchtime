@@ -2,7 +2,7 @@ import React from 'react'
 
 const RootBox = () => {
   return (
-    <div className="container-fluid">
+    <div className="root-box">
       <Root/>
     </div>
   )

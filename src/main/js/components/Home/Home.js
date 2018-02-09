@@ -1,22 +1,29 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { logout } from '../../actions/auth'
 import RootBox from '../RootBox'
-import Logout from '../Logout'
+import LogoutButton from '../Logout'
+import { Redirect } from 'react-router'
 
-const Home = ({ logout, user, authenticated }) => (
-  <div>
-    <h3>Welcome { user ? user.email : 'You need to sign in.' }</h3>
-    <Logout/>
-    <RootBox/>
-  </div>
-)
+class Home extends Component {
+  render() {
+    return (
+      this.props.authenticated ?
+        <div className='home'>
+          <h3>Welcome, { this.props.user.email }</h3>
+          <LogoutButton/>
+          <hr/>
+          <RootBox/>
+        </div>
+        :
+        <Redirect to='/login'/>
+    )
+  }
+}
 
-const { object, bool, func } = PropTypes
+const { object, bool } = PropTypes
 
 Home.propTypes = {
-  logout: func,
   user: object,
   authenticated: bool.isRequired
 }
@@ -26,10 +33,4 @@ const mapStateToProps = (state) => ({
   authenticated: state.session.authenticated
 })
 
-const mapDispatchToProps = (dispatch) => {
-  logout: () => {
-    dispatch(logout())
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps)(Home)

@@ -5,9 +5,14 @@ export const login = (user) => ({
   user
 })
 
-export const loginSuccess = (user, data) => ({
+export const loggedInSuccessfully = (data) => ({
   type: actionTypes.LOGIN_SUCCESS,
-  user, data
+  data
+})
+
+export const loginFailed = (error) => ({
+  type: actionTypes.LOGIN_FAILED,
+  error
 })
 
 export const logout = () => ({

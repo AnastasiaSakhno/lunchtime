@@ -1,16 +1,15 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { Switch, Route } from 'react-router-dom'
+import routes from '../routes'
 
-const App = ({ children }) => (
-  <div>
-    {children}
-  </div>
-)
-
-const { object } = PropTypes
-
-App.propTypes = {
-  children: object.isRequired
+const App = () => {
+  return (
+    <div className='container-fluid'>
+      <Switch>
+        {routes.map((route, i) => <Route key={i} {...route} />)}
+      </Switch>
+    </div>
+  )
 }
 
 export default App

@@ -1,8 +1,9 @@
-import authReducer from './auth'
+import auth from './auth'
+import { sessionReducer } from 'redux-react-session'
 import { combineReducers } from 'redux'
 
 const reducers = combineReducers({
-  jwtReducer: authReducer
+  auth, session: sessionReducer
 })
 
 export default reducers
