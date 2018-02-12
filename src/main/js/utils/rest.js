@@ -1,7 +1,6 @@
 export const apiCall = (path, options) => (
   fetch(path, options)
-    .then(r => r.text())
-    .then(r => JSON.parse(r))
+    .then(r => r.json())
 )
 
 export const post = (path, data = {}) => apiCall(path, {

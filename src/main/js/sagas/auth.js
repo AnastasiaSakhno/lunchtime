@@ -2,7 +2,7 @@ import {takeEvery, put, call} from 'redux-saga/effects'
 import * as actionTypes from '../actions/types'
 import actions from '../actions'
 import {sessionService} from 'redux-react-session'
-import {post} from '../utils/rest'
+import {getSession} from '../utils/api'
 
 export const deleteSession = sessionService.deleteSession
 export const saveSession = sessionService.saveSession
@@ -10,17 +10,16 @@ export const saveUser = sessionService.saveUser
 
 
 export function* login({user}) {
-  let data = yield call(post, '/login', {email: user.email, password: user.password})
+  let data = yield call(getSession, {email: user.email, password: user.password})
   if (data.status === 200) {
-    console.log(data)
     yield put(actions.auth.loggedInSuccessfully(data))
   } else {
-    yield put(actions.auth.loginFailed(data.error + ': ' + data.message))
+    yield put(actions.auth.loginFailed(data.status === 401 ? 'Bad credentials' : 'Server error'))
   }
 }
 
 export function* loggedInSuccessfully({data}) {
-  yield call(saveSession, {token: data.refreshToken})
+  yield call(saveSession, {token: data.auth_token})
   yield call(saveUser, data)
 }
 
