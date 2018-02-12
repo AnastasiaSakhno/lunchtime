@@ -1,3 +1,9 @@
+import Repoint from 'repoint'
+
+// TODO change host
+const repoint = new Repoint({host: 'http://localhost:8080/api'})
+export const restaurantsAPI = repoint.generate('restaurants')
+
 export const getSession = (data) => fetch('/login', {
   method: 'POST',
   headers: {
