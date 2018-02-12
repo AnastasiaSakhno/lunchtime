@@ -3,6 +3,8 @@ buildscript {
 		kotlinVersion = '1.2.21'
 		springBootVersion = '1.5.10.RELEASE'
 		hikariCPVersion = '2.7.6'
+		jodaTimeVersion = '2.9.9'
+		userTypeCoreVersion = '5.0.0.GA'
 	}
 	repositories {
 		mavenCentral()
@@ -49,6 +51,8 @@ dependencies {
 	compile("com.zaxxer:HikariCP:$hikariCPVersion")
 	compile('org.flywaydb:flyway-core')
 	compile("io.jsonwebtoken:jjwt:0.7.0")
+	compile("joda-time:joda-time:$jodaTimeVersion")
+	compile("org.jadira.usertype:usertype.core:$userTypeCoreVersion") // Should match Hibernate version
 	runtime('org.springframework.boot:spring-boot-devtools')
 	runtime('org.postgresql:postgresql')
 	testCompile('org.springframework.boot:spring-boot-starter-test')

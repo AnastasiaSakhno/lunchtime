@@ -16,18 +16,18 @@ class UserEventHandler(@NotNull private val passwordEncoder: BCryptPasswordEncod
 
     @HandleBeforeCreate
     fun handleUserCreate(user: User) {
-        user.password = passwordEncoder!!.encode(user.password)
+        user.password = passwordEncoder.encode(user.password)
     }
 
     @HandleBeforeSave
     fun handleUserUpdate(user: User) {
         if (user.password == null || user.password == "") {
             //keeps the last password
-            val storedUser = userRepository!!.findOne(user.id)
+            val storedUser = userRepository.findOne(user.id)
             user.password = storedUser.password
         } else {
             //password change request
-            user.password = passwordEncoder!!.encode(user.password)
+            user.password = passwordEncoder.encode(user.password)
         }
     }
 }
