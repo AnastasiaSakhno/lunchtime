@@ -27,10 +27,10 @@ class Restaurant extends Component {
   }
 }
 
-const { string, bool, integer } = PropTypes
+const { string, bool, number } = PropTypes
 
 Restaurant.propTypes = {
-  id: integer,
+  id: number,
   name: string.isRequired,
   address: string,
   archive: bool.isRequired

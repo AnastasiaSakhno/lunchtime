@@ -16,14 +16,14 @@ const RestaurantList = ({ data, onDestroy }) => {
   )
 }
 
-const { string, bool, arrayOf, shape, func } = PropTypes
+const { string, bool, number, arrayOf, shape, func } = PropTypes
 
 RestaurantList.propTypes = {
   data: arrayOf(
     shape({
       name: string,
       address: string,
-      id: string,
+      id: number,
       archive: bool
     })
   ).isRequired,
