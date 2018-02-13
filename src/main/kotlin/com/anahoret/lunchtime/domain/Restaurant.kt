@@ -16,6 +16,9 @@ class Restaurant {
     @Column(name = "address", nullable = false)
     var address: String? = null
 
+    @Column(name = "archive", nullable = false)
+    var archive: Boolean? = null
+
     @OneToMany(cascade = [CascadeType.ALL], mappedBy = "restaurant")
     var menu: MutableSet<Menu> = LinkedHashSet()
 }

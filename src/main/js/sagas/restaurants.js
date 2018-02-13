@@ -1,21 +1,25 @@
 import { takeLatest, takeEvery, put, call } from 'redux-saga/effects'
-import { restaurantsAPI } from '../utils/api'
+import { get, post, del } from '../utils/rest'
+import { RESTAURANTS_URI } from "../utils/api"
 import actions from '../actions'
 import * as actionTypes from '../actions/types'
+import { sessionService } from 'redux-react-session'
+
+const loadUser = sessionService.loadUser
 
 export function* loadRestaurants() {
-  const links = yield call(restaurantsAPI.getCollection, {})
-
-  yield put(actions.restaurants.loaded(links))
+  const restaurants = yield call(get, RESTAURANTS_URI)
+  yield put(actions.restaurants.loaded(restaurants))
 }
 
 export function* addRestaurant({ restaurant }) {
-  console.log(restaurant)
-  yield call(restaurantsAPI.post, restaurant)
+  const user = yield call(loadUser)
+  yield call(post, RESTAURANTS_URI, user.auth_token, restaurant)
 }
 
 export function* removeRestaurant({ restaurant }) {
-  yield call(restaurantsAPI.destroy, restaurant)
+  const user = yield call(loadUser)
+  yield call(del, RESTAURANTS_URI, user.auth_token, restaurant)
   yield put(actions.restaurants.removedSuccessfully(restaurant))
 }
 

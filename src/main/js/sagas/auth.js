@@ -2,7 +2,7 @@ import {takeEvery, put, call} from 'redux-saga/effects'
 import * as actionTypes from '../actions/types'
 import actions from '../actions'
 import {sessionService} from 'redux-react-session'
-import {getSession} from '../utils/api'
+import {getSession} from '../utils/rest'
 
 export const deleteSession = sessionService.deleteSession
 export const saveSession = sessionService.saveSession

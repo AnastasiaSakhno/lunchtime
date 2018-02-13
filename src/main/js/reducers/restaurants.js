@@ -5,7 +5,7 @@ export const initialState = []
 const restaurants = (state = initialState, action) => {
   switch(action.type) {
   case actionTypes.RESTAURANTS_LOADED:
-    return [...action.restaurants]
+    return [...action.restaurants._embedded.restaurants]
 
   case actionTypes.ADD_RESTAURANT:
     return [

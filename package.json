@@ -28,8 +28,7 @@
     "redux-react-session": "^2.1.0",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
-    "redux-saga": "^0.15.6",
-    "repoint": "^0.7.5"
+    "redux-saga": "^0.15.6"
   },
   "scripts": {
     "watch": "webpack --watch -d",
