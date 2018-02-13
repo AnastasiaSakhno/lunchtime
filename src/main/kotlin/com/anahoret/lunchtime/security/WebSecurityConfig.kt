@@ -13,7 +13,6 @@ import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
-
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class WebSecurityConfig(private val userDetailsService: UserDetailsService) : WebSecurityConfigurerAdapter() {
@@ -23,7 +22,7 @@ class WebSecurityConfig(private val userDetailsService: UserDetailsService) : We
 
     override fun configure(http: HttpSecurity) {
         http.cors().and().csrf().disable().authorizeRequests()
-                .mvcMatchers("/", "/login", "/built/**", "/api/**").permitAll()
+                .mvcMatchers("/", "/login", "/built/**",  "/css/**", "/fonts/**", "/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(JWTAuthenticationFilter(authenticationManager()))
