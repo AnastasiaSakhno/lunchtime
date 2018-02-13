@@ -12,13 +12,13 @@ export const saveUser = sessionService.saveUser
 export function* login({user}) {
   let data = yield call(getSession, {email: user.email, password: user.password})
   if (data.status === 200) {
-    yield put(actions.auth.loggedInSuccessfully(data))
+    yield put(actions.auth.loggedInSuccessfully({ email: user.email, ...data }))
   } else {
     yield put(actions.auth.loginFailed(data.status === 401 ? 'Bad credentials' : 'Server error'))
   }
 }
 
-export function* loggedInSuccessfully({data}) {
+export function* loggedInSuccessfully({ data }) {
   yield call(saveSession, {token: data.auth_token})
   yield call(saveUser, data)
 }
