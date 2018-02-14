@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as sessionActions from '../../actions/auth'
 import { Redirect } from 'react-router'
+import HeaderHOC from '../../HOC/HeaderHOC'
 
 class Login extends Component {
   static propTypes = {
@@ -81,4 +82,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderHOC(Login))
