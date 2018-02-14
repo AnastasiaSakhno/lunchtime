@@ -17,12 +17,21 @@ export const get = path => apiCall(path, {
   method: 'GET'
 })
 
-export const del = path => apiCall(path, {
-  method: 'DELETE'
+export const del = (path, authToken) => apiCall(path, {
+  method: 'DELETE',
+  headers: {
+    Accept: 'application/json',
+    'Authorization': authToken
+  }
 })
 
-export const put = (path, data) => apiCall(path, {
+export const put = (path, authToken, data) => apiCall(path, {
   method: 'PUT',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json; charset=utf-8',
+    'Authorization': authToken
+  },
   body: JSON.stringify(data)
 })
 

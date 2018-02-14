@@ -5,7 +5,7 @@ import Restaurant from '../Restaurant'
 
 const RestaurantList = ({ data, onDestroy }) => {
   const map = data.map((restaurant) => (
-    <Restaurant { ...restaurant } key={ restaurant.id } onDestroy={ onDestroy } />
+    <Restaurant { ...restaurant } key={ 'restaurant_' + restaurant.id } onDestroy={ onDestroy } />
   ))
 
   return (

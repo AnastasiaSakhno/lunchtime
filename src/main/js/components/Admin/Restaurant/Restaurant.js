@@ -9,7 +9,7 @@ class Restaurant extends Component {
 
   handleDestroy = (e) => {
     e.preventDefault()
-    this.props.onDestroy({ id: this.props.id })
+    this.props.onDestroy({ ...this.props })
   }
 
   render() {

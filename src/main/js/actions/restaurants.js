@@ -14,6 +14,11 @@ export const add = (restaurant) => ({
   restaurant
 })
 
+export const addedSuccessfully = (restaurant) => ({
+  type: actionTypes.RESTAURANT_ADDED_SUCCESSFULLY,
+  restaurant
+})
+
 export const remove = (restaurant) => ({
   type: actionTypes.REMOVE_RESTAURANT,
   restaurant

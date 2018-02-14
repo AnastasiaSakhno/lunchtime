@@ -7,7 +7,7 @@ const restaurants = (state = initialState, action) => {
   case actionTypes.RESTAURANTS_LOADED:
     return [...action.restaurants._embedded.restaurants]
 
-  case actionTypes.ADD_RESTAURANT:
+  case actionTypes.RESTAURANT_ADDED_SUCCESSFULLY:
     return [
       ...state,
       action.restaurant
