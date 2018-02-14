@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Logout from '../Logout'
+import LogoutLink from '../LogoutLink'
 
 class Header extends Component {
   render() {
@@ -25,7 +25,7 @@ class Header extends Component {
                 <a className="nav-link disabled" href="/admin/menu">Menu</a>
               </li>
               <li className="nav-item">
-                { (this.props.authenticated) ? <Logout/> : '' }
+                { (this.props.authenticated) ? <LogoutLink/> : '' }
               </li>
             </ul>
             <form className="form-inline mt-2 mt-md-0">
