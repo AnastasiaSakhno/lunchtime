@@ -11,7 +11,6 @@ const RootBox = () => {
 }
 
 class Root extends React.Component {
-
   constructor(props) {
     super(props)
     this.state = {users: []}
@@ -30,27 +29,27 @@ class Root extends React.Component {
   }
 }
 
-class UsersList extends React.Component{
+class UsersList extends React.Component {
   render() {
-    var users = this.props.users.map(user =>
+    let users = this.props.users.map(user =>
       <User key={user._links.self.href} user={user}/>
     )
     return (
       <table>
         <tbody>
-        <tr>
-          <th>Full Name</th>
-          <th>Email</th>
-          <th>Role</th>
-        </tr>
-        {users}
+          <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Role</th>
+          </tr>
+          {users}
         </tbody>
       </table>
     )
   }
 }
 
-class User extends React.Component{
+class User extends React.Component {
   render() {
     return (
       <tr>
