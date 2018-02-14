@@ -2,9 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { logout } from '../../actions/auth'
+import { Link } from 'react-router-dom'
 
 const Logout = ({ logout }) => (
-  <button onClick={ logout }>Logout</button>
+  <Link onClick={ logout } className='nav-link' to='#'>Logout</Link>
 )
 
 Logout.propTypes = ({
