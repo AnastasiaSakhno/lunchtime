@@ -18,9 +18,11 @@ class Restaurant extends Component {
       destroyIcon = ''
     }
 
+    let text = `Name: ${ this.props.name }, Address: ${ this.props.address }`
+
     return (
       <div className='restaurant'>
-        Name: { this.props.name }, Address: { this.props.address }
+        { this.props.archive ? <del>{ text }</del> : text }
         { destroyIcon }
       </div>
     )
