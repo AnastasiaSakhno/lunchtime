@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import LogoutLink from '../LogoutLink'
+import { Link } from 'react-router-dom'
 
 class Header extends Component {
   render() {
@@ -19,7 +20,7 @@ class Header extends Component {
                 <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/admin/restaurants">Restaurants</a>
+                <Link className='nav-link' to='/admin/restaurants'>Restaurants</Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link disabled" href="/admin/menu">Menu</a>
@@ -34,7 +35,8 @@ class Header extends Component {
             </form>
           </div>
         </nav>
-        <hr/>
+        <br/>
+        <br/>
       </header>
     )
   }

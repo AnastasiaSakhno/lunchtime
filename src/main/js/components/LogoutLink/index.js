@@ -4,11 +4,11 @@ import { connect } from 'react-redux'
 import { logout } from '../../actions/auth'
 import { Link } from 'react-router-dom'
 
-const Logout = ({ logout }) => (
+const LogoutLink = ({ logout }) => (
   <Link onClick={ logout } className='nav-link' to='#'>Logout</Link>
 )
 
-Logout.propTypes = ({
+LogoutLink.propTypes = ({
   logout: PropTypes.func.isRequired
 })
 
@@ -18,4 +18,4 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect(null, mapDispatchToProps)(Logout)
+export default connect(null, mapDispatchToProps)(LogoutLink)

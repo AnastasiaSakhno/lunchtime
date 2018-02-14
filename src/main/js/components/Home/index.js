@@ -9,7 +9,7 @@ class Home extends Component {
   render() {
     return (
       this.props.authenticated ?
-        <div className='home mt-5'>
+        <div className='home'>
           <h3>Welcome, { this.props.user.email }</h3>
           <hr/>
           <RootBox/>

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import actions from '../../../actions'
 import RestaurantList from './../RestaurantList'
 import RestaurantForm from './../RestaurantForm'
+import HeaderHOC from '../../../HOC/HeaderHOC'
 
 const { bool, array, func } = PropTypes
 
@@ -51,4 +52,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(RestaurantsContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderHOC(RestaurantsContainer))

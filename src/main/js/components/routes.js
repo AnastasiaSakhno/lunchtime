@@ -1,5 +1,6 @@
 import Login from './Login'
 import Home from './Home'
+import RestaurantContainer from './Admin/RestaurantContainer'
 
 const routes = [
   {
@@ -10,6 +11,10 @@ const routes = [
   {
     path: '/login',
     component: Login
+  },
+  {
+    path: '/admin/restaurants',
+    component: RestaurantContainer
   }
 ]
 
