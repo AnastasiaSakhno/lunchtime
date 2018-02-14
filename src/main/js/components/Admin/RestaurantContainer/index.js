@@ -5,9 +5,12 @@ import actions from '../../../actions'
 import RestaurantList from './../RestaurantList'
 import RestaurantForm from './../RestaurantForm'
 import HeaderHOC from '../../../HOC/HeaderHOC'
+import RedirectToLoginHOC from '../../../HOC/RedirectToLoginHOC'
 
 const { bool, array, func } = PropTypes
 
+@HeaderHOC
+@RedirectToLoginHOC
 class RestaurantsContainer extends PureComponent {
   static propTypes = {
     loadRestaurants: func.isRequired,
@@ -52,4 +55,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderHOC(RestaurantsContainer))
+export default connect(mapStateToProps, mapDispatchToProps)(RestaurantsContainer)

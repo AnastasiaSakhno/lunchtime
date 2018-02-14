@@ -2,20 +2,19 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import RootBox from '../RootBox'
-import { Redirect } from 'react-router'
 import HeaderHOC from '../../HOC/HeaderHOC'
+import RedirectToLoginHOC from '../../HOC/RedirectToLoginHOC'
 
+@HeaderHOC
+@RedirectToLoginHOC
 class Home extends Component {
   render() {
     return (
-      this.props.authenticated ?
-        <div className='home'>
-          <h3>Welcome, { this.props.user.email }</h3>
-          <hr/>
-          <RootBox/>
-        </div>
-        :
-        <Redirect to='/login'/>
+      <div className='home'>
+        <h3>Welcome, { this.props.user.email }</h3>
+        <hr/>
+        <RootBox/>
+      </div>
     )
   }
 }
@@ -32,4 +31,4 @@ const mapStateToProps = (state) => ({
   authenticated: state.session.authenticated
 })
 
-export default connect(mapStateToProps)(HeaderHOC(Home))
+export default connect(mapStateToProps)(Home)

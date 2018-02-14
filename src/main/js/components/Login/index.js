@@ -6,6 +6,7 @@ import * as sessionActions from '../../actions/auth'
 import { Redirect } from 'react-router'
 import HeaderHOC from '../../HOC/HeaderHOC'
 
+@HeaderHOC
 class Login extends Component {
   static propTypes = {
     actions: PropTypes.object.isRequired
@@ -82,4 +83,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderHOC(Login))
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
