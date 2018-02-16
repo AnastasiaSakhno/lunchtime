@@ -3,8 +3,8 @@ package com.anahoret.lunchtime.domain
 import javax.persistence.*
 
 @Entity
-@Table(name = "day_menu_documents")
-class DayMenuDocument(
+@Table(name = "menu_documents")
+class MenuDocument(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,5 +22,5 @@ class DayMenuDocument(
     var content: ByteArray,
 
     @OneToOne
-    var dayMenu: DayMenu
+    var restaurant: Restaurant
 )
