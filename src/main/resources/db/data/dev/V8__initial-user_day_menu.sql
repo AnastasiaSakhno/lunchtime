@@ -1,0 +1,3 @@
+-- INSERT INTO user_day_menu (date, out, user_id, menu_id)
+--   VALUES
+--     ();

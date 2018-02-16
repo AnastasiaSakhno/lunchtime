@@ -1,3 +1,6 @@
+flyway:
+  locations: classpath:/db/migration,/db/data/dev
+
 spring:
   messages:
     basename: messages/messages

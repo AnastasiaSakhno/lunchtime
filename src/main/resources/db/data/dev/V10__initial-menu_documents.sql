@@ -1,0 +1,3 @@
+-- INSERT INTO menu_documents (name, type, content, restaurant_id)
+--   VALUES
+--     ();

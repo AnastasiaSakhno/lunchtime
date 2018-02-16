@@ -1,0 +1,3 @@
+-- INSERT INTO menu (name, restaurant_id, archive)
+--   VALUES
+--     ();
