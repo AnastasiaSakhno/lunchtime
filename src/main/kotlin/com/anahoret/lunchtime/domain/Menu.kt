@@ -13,6 +13,12 @@ class Menu(
     @Column(name = "name", nullable = false)
     var name: String,
 
+    @Column(name = "week_day", nullable = true)
+    var week_day: String,
+
+    @Column(name = "archive", nullable = false)
+    var archive: Boolean,
+
     @ManyToOne(targetEntity = Restaurant::class)
     var restaurant: Restaurant
 )
