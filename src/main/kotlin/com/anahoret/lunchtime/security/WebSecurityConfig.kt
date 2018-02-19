@@ -26,7 +26,8 @@ class WebSecurityConfig(private val userDetailsService: UserDetailsService) : We
 
     override fun configure(http: HttpSecurity) {
         http.cors().and().csrf().disable().authorizeRequests()
-                .mvcMatchers("/", "/login", "/admin/**", "/built/**",  "/js/**", "/css/**", "/fonts/**", "/api/**").permitAll()
+                .mvcMatchers("/", "/login", "/admin/**", "/built/**",
+                        "/js/**", "/css/**", "/fonts/**", "/api/**", "/favicon.ico").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(JWTAuthenticationFilter(authenticationManager(), jwtConfig!!))
