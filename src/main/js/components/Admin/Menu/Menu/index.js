@@ -18,7 +18,7 @@ class Menu extends Component {
       destroyIcon = ''
     }
 
-    let text = `Name: ${ this.props.name }, Week days: ${ this.props.week_days }`
+    let text = `Name: ${ this.props.name }, Week days: ${ this.props.week_days ? this.props.week_days : 'All' }`
 
     return (
       <div className='restaurant'>
@@ -29,13 +29,17 @@ class Menu extends Component {
   }
 }
 
-const { string, bool, number } = PropTypes
+const { string, bool, number, shape } = PropTypes
 
 Menu.propTypes = {
   id: number,
   name: string.isRequired,
   week_days: string,
-  restaurant_id: number,
+  restaurant: shape({
+    id: number,
+    name: string,
+    archive: bool
+  }),
   archive: bool.isRequired
 }
 

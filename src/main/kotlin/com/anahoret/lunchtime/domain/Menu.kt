@@ -4,21 +4,22 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "menu")
-class Menu {
+class Menu(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    var id: Long? = null
+    var id: Long,
 
     @Column(name = "name", nullable = false)
-    var name: String? = null
+    var name: String,
 
     @Column(name = "week_days", nullable = true)
-    var week_days: String? = null
+    var week_days: String,
 
     @Column(name = "archive", nullable = false)
-    var archive: Boolean? = null
+    var archive: Boolean,
 
-    @ManyToOne(targetEntity = Restaurant::class)
-    var restaurant: Restaurant? = null
-}
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "restaurant_id")
+    var restaurant: Restaurant
+)

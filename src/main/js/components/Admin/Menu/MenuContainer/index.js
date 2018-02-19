@@ -16,11 +16,13 @@ class MenuContainer extends PureComponent {
     addMenu: func.isRequired,
     removeMenu: func.isRequired,
     menu: array.isRequired,
+    restaurants: array.isRequired,
     authenticated: bool.isRequired
   }
 
   componentDidMount() {
     if(this.props.authenticated) {
+      this.props.loadRestaurants()
       this.props.loadMenu()
     }
   }
@@ -28,7 +30,7 @@ class MenuContainer extends PureComponent {
   render() {
     return (
       <div className="menu-container">
-        <MenuForm onSubmit={ this.props.addMenu }/>
+        <MenuForm onSubmit={ this.props.addMenu } restaurants={ this.props.restaurants }/>
         <MenuList
           data={ this.props.menu }
           onDestroy={ this.props.removeMenu } />
@@ -38,11 +40,21 @@ class MenuContainer extends PureComponent {
 }
 
 const mapStateToProps = (state) => ({
-  menu: state.menu,
+  menu: state.menu.map((menu) => (
+    { ...menu,
+      restaurant: state.restaurants.find((restaurant) => (
+        restaurant.id === menu.restaurant_id
+      ))
+    }
+  )),
+  restaurants: state.restaurants,
   authenticated: state.session.authenticated
 })
 
 const mapDispatchToProps = (dispatch) => ({
+  loadRestaurants: () => {
+    dispatch(actions.restaurants.load())
+  },
   loadMenu: () => {
     dispatch(actions.menu.load())
   },

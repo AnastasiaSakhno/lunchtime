@@ -16,7 +16,7 @@ const MenuList = ({ data, onDestroy }) => {
   )
 }
 
-const { string, bool, number, arrayOf, shape, func } = PropTypes
+const { string, bool, number, object, arrayOf, shape, func } = PropTypes
 
 MenuList.propTypes = {
   data: arrayOf(
@@ -24,7 +24,7 @@ MenuList.propTypes = {
       id: number,
       name: string,
       week_days: string,
-      restaurant_id: number,
+      restaurant: object,
       archive: bool
     })
   ).isRequired,
