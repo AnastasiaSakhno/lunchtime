@@ -1,4 +1,4 @@
-INSERT INTO menu (name, week_day, archive, restaurant_id)
+INSERT INTO menu (name, week_days, archive, restaurant_id)
   VALUES
     ('Loft', null, false, 1),
     ('Loft диета', null, false, 1),

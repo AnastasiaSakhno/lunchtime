@@ -23,7 +23,7 @@ class Header extends Component {
                 <Link className='nav-link' to='/admin/restaurants'>Restaurants</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link disabled" href="/admin/menu">Menu</a>
+                <Link className='nav-link' to='/admin/menu'>Menu</Link>
               </li>
               <li className="nav-item">
                 { (this.props.authenticated) ? <LogoutLink/> : '' }

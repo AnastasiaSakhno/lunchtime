@@ -4,21 +4,21 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "menu")
-class Menu(
+class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    var id: Long,
+    var id: Long? = null
 
     @Column(name = "name", nullable = false)
-    var name: String,
+    var name: String? = null
 
-    @Column(name = "week_day", nullable = true)
-    var week_day: String,
+    @Column(name = "week_days", nullable = true)
+    var week_days: String? = null
 
     @Column(name = "archive", nullable = false)
-    var archive: Boolean,
+    var archive: Boolean? = null
 
     @ManyToOne(targetEntity = Restaurant::class)
-    var restaurant: Restaurant
-)
+    var restaurant: Restaurant? = null
+}

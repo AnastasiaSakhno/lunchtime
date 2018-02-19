@@ -7,7 +7,7 @@ const App = () => {
   return (
     <div className='app'>
       <main role='main'>
-        <div className='container mt-5'>
+        <div className='container-fluid mt-5'>
           <Switch>
             {routes.map((route, i) => <Route key={i} {...route} />)}
           </Switch>

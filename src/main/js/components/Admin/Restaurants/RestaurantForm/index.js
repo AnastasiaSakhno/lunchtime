@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 
 class RestaurantForm extends Component {
   static propTypes = {
@@ -36,13 +35,4 @@ class RestaurantForm extends Component {
   }
 }
 
-RestaurantForm.propTypes = {
-  user: PropTypes.object.isRequired
-}
-
-
-const mapStateToProps = (state) => ({
-  user: state.session.user
-})
-
-export default connect(mapStateToProps)(RestaurantForm)
+export default RestaurantForm

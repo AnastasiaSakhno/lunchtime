@@ -46,11 +46,11 @@ const mapDispatchToProps = (dispatch) => ({
   loadRestaurants: () => {
     dispatch(actions.restaurants.load())
   },
-  addRestaurant: (link) => {
-    dispatch(actions.restaurants.add(link))
+  addRestaurant: (restaurant) => {
+    dispatch(actions.restaurants.add(restaurant))
   },
-  removeRestaurant: (link) => {
-    dispatch(actions.restaurants.remove(link))
+  removeRestaurant: (restaurant) => {
+    dispatch(actions.restaurants.remove(restaurant))
   }
 })
 

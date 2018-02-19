@@ -21,9 +21,9 @@ const { string, bool, number, arrayOf, shape, func } = PropTypes
 RestaurantsList.propTypes = {
   data: arrayOf(
     shape({
+      id: number,
       name: string,
       address: string,
-      id: number,
       archive: bool
     })
   ).isRequired,
