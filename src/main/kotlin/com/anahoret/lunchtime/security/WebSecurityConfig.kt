@@ -1,5 +1,6 @@
 package com.anahoret.lunchtime.security
 
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
@@ -20,13 +21,16 @@ class WebSecurityConfig(private val userDetailsService: UserDetailsService) : We
     @Bean
     fun passwordEncoder() = BCryptPasswordEncoder(12)
 
+    @Autowired
+    var jwtConfig: JwtConfig?  = null
+
     override fun configure(http: HttpSecurity) {
         http.cors().and().csrf().disable().authorizeRequests()
                 .mvcMatchers("/", "/login", "/admin/**", "/built/**",  "/js/**", "/css/**", "/fonts/**", "/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(JWTAuthorizationFilter(authenticationManager(), userDetailsService = userDetailsService))
+                .addFilter(JWTAuthenticationFilter(authenticationManager(), jwtConfig!!))
+                .addFilter(JWTAuthorizationFilter(authenticationManager(), userDetailsService = userDetailsService, jwtConfig = jwtConfig!!))
                 // this disables session creation on Spring Security
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }

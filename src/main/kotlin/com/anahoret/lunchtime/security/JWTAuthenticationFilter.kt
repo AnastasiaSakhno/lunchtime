@@ -1,10 +1,6 @@
 package com.anahoret.lunchtime.security
 
 import com.anahoret.lunchtime.domain.User
-import com.anahoret.lunchtime.security.Constants.Companion.EXPIRATION_TIME
-import com.anahoret.lunchtime.security.Constants.Companion.HEADER_STRING
-import com.anahoret.lunchtime.security.Constants.Companion.SECRET
-import com.anahoret.lunchtime.security.Constants.Companion.TOKEN_PREFIX
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
@@ -20,7 +16,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 
-class JWTAuthenticationFilter(authenticationManager: AuthenticationManager) : UsernamePasswordAuthenticationFilter() {
+class JWTAuthenticationFilter(authenticationManager: AuthenticationManager, private val jwtConfig: JwtConfig) : UsernamePasswordAuthenticationFilter() {
 
     init {
         this.authenticationManager = authenticationManager
@@ -51,9 +47,9 @@ class JWTAuthenticationFilter(authenticationManager: AuthenticationManager) : Us
 
         val token = Jwts.builder()
                 .setSubject((auth.principal as org.springframework.security.core.userdetails.User).username)
-                .setExpiration(Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS512, SECRET.toByteArray(Charsets.UTF_8))
+                .setExpiration(Date(System.currentTimeMillis() + jwtConfig.expirationTime))
+                .signWith(SignatureAlgorithm.HS512, jwtConfig.secret.toByteArray(Charsets.UTF_8))
                 .compact()
-        res.addHeader(HEADER_STRING, TOKEN_PREFIX + token)
+        res.addHeader(jwtConfig.header, jwtConfig.tokenPrefix + token)
     }
 }

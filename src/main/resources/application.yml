@@ -28,6 +28,12 @@ logging.level.org.springframework.security: ERROR
 logging.level.org.hibernate.SQL: ERROR
 logging.level.org.hibernate.type.descriptor.sql.BasicBinder: ERROR
 
+jwt:
+  secret: some_secret
+  expiration_time: 864000000 # 10 days
+  token_prefix: "Bearer "
+  header: Authorization
+
 ---
 
 spring:

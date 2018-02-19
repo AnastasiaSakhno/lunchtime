@@ -1,8 +1,5 @@
 package com.anahoret.lunchtime.security
 
-import com.anahoret.lunchtime.security.Constants.Companion.HEADER_STRING
-import com.anahoret.lunchtime.security.Constants.Companion.SECRET
-import com.anahoret.lunchtime.security.Constants.Companion.TOKEN_PREFIX
 import io.jsonwebtoken.Jwts
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -14,14 +11,14 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 
-class JWTAuthorizationFilter(authManager: AuthenticationManager, private val userDetailsService: UserDetailsService) : BasicAuthenticationFilter(authManager) {
+class JWTAuthorizationFilter(authenticationManager: AuthenticationManager, private val userDetailsService: UserDetailsService, private val jwtConfig: JwtConfig) : BasicAuthenticationFilter(authenticationManager) {
 
     override fun doFilterInternal(req: HttpServletRequest,
                                    res: HttpServletResponse,
                                    chain: FilterChain) {
-        val header = req.getHeader(HEADER_STRING)
+        val header = req.getHeader(jwtConfig.header)
 
-        if (header == null || !header.startsWith(TOKEN_PREFIX)) {
+        if (header == null || !header.startsWith(jwtConfig.tokenPrefix)) {
             chain.doFilter(req, res)
             return
         }
@@ -33,11 +30,11 @@ class JWTAuthorizationFilter(authManager: AuthenticationManager, private val use
     }
 
     private fun getAuthentication(request: HttpServletRequest): UsernamePasswordAuthenticationToken? {
-        val token = request.getHeader(HEADER_STRING)
+        val token = request.getHeader(jwtConfig.header)
         if (token != null) {
             val email = Jwts.parser()
-                    .setSigningKey(SECRET.toByteArray(Charsets.UTF_8))
-                    .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+                    .setSigningKey(jwtConfig.secret.toByteArray(Charsets.UTF_8))
+                    .parseClaimsJws(token.replace(jwtConfig.tokenPrefix, ""))
                     .getBody()
                     .getSubject()
 
