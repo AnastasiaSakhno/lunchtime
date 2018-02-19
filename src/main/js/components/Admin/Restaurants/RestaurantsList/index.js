@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Restaurant from '../Restaurant'
+import { Restaurant } from '../../Restaurants'
 
-const RestaurantList = ({ data, onDestroy }) => {
+const RestaurantsList = ({ data, onDestroy }) => {
   const map = data.map((restaurant) => (
     <Restaurant { ...restaurant } key={ `restaurant_${restaurant.id}` } onDestroy={ onDestroy } />
   ))
@@ -18,7 +18,7 @@ const RestaurantList = ({ data, onDestroy }) => {
 
 const { string, bool, number, arrayOf, shape, func } = PropTypes
 
-RestaurantList.propTypes = {
+RestaurantsList.propTypes = {
   data: arrayOf(
     shape({
       name: string,
@@ -30,4 +30,4 @@ RestaurantList.propTypes = {
   onDestroy: func.isRequired
 }
 
-export default RestaurantList
+export default RestaurantsList

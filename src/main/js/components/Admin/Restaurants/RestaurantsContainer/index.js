@@ -1,11 +1,10 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import actions from '../../../actions'
-import RestaurantList from './../RestaurantList'
-import RestaurantForm from './../RestaurantForm'
-import HeaderHOC from '../../../HOC/HeaderHOC'
-import RedirectToLoginHOC from '../../../HOC/RedirectToLoginHOC'
+import actions from '../../../../actions/index'
+import { RestaurantsList, RestaurantForm } from '../../Restaurants'
+import HeaderHOC from '../../../../HOC/HeaderHOC/index'
+import RedirectToLoginHOC from '../../../../HOC/RedirectToLoginHOC/index'
 
 const { bool, array, func } = PropTypes
 
@@ -30,7 +29,7 @@ class RestaurantsContainer extends PureComponent {
     return (
       <div className="restaurants-container">
         <RestaurantForm onSubmit={ this.props.addRestaurant }/>
-        <RestaurantList
+        <RestaurantsList
           data={ this.props.restaurants }
           onDestroy={ this.props.removeRestaurant } />
       </div>
