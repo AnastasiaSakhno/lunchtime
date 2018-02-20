@@ -26,6 +26,11 @@ apply plugin: 'org.springframework.boot'
 group = 'com.anahoret'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
+
+jar {
+	archiveName = 'lunchtime.jar'
+}
+
 compileKotlin {
 	kotlinOptions.jvmTarget = "1.8"
 }
