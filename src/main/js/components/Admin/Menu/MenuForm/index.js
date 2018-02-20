@@ -31,7 +31,9 @@ class MenuForm extends Component {
           <select ref={ el => { this.restaurantSelect = el } }>
             <option>Select a Restaurant</option>
             { this.props.restaurants.map((restaurant) => (
-              <option value={ restaurant.id } key={ `restaurant-option_${restaurant.id}` }>{ restaurant.name }</option>
+              <option
+                value={ restaurant._links.self.href }
+                key={ `restaurant-option_${restaurant.id}` }>{ restaurant.name }</option>
             )) }
           </select>
           <input type='text' placeholder='Name' ref={ el => { this.nameInput = el } }/>
