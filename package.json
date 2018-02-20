@@ -6,6 +6,7 @@
     "type": "git",
     "url": "git+ssh://git@gitlab.anahoret.com:ask/lunchtime.git"
   },
+  "bin": "./bin",
   "keywords": [
     "rest",
     "spring",
