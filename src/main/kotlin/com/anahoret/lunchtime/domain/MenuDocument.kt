@@ -1,26 +1,13 @@
 package com.anahoret.lunchtime.domain
 
-import javax.persistence.*
+import java.io.Serializable
+import java.util.*
 
-@Entity
-@Table(name = "menu_documents")
-class MenuDocument(
+class MenuDocument(val metadata: MenuDocumentMetadata) : Serializable {
+    var fileData: ByteArray? = null
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
-
-    @Column(name = "name", length = 100, nullable = false)
-    var name: String,
-
-    @Column(name = "type", length = 100, nullable = false)
-    var type: String,
-
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "content", nullable = false)
-    var content: ByteArray,
-
-    @OneToOne
-    var restaurant: Restaurant
-)
+    constructor(fileData: ByteArray?, fileName: String, restaurantName: String, uploadedAt: Date, userName: String)
+            : this(MenuDocumentMetadata(fileName = fileName, restaurantName = restaurantName, uploadedAt = uploadedAt, userName = userName)) {
+        this.fileData = fileData
+    }
+}
