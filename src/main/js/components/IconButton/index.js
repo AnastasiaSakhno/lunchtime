@@ -5,7 +5,7 @@ class IconButton extends Component {
   render() {
     return (
       <span className='iconbutton-box' onClick={ this.props.onSubmit }>
-        <i className={ 'fa ' + this.props.icon }/>
+        <i className={ `fa animated-hover faa-vertical ${ this.props.icon }` }/>
       </span>
     )
   }

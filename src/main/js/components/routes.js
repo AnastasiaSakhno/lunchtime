@@ -2,6 +2,7 @@ import Login from './Login'
 import Home from './Home'
 import { RestaurantsContainer } from './Admin/Restaurants'
 import { MenuContainer } from './Admin/Menu'
+import { MenuDocumentsContainer } from './Admin/MenuDocuments'
 
 const routes = [
   {
@@ -20,6 +21,10 @@ const routes = [
   {
     path: '/admin/menu',
     component: MenuContainer
+  },
+  {
+    path: '/admin/menu_documents',
+    component: MenuDocumentsContainer
   }
 ]
 

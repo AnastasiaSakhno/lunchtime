@@ -12,6 +12,7 @@ const { bool, array, func } = PropTypes
 @RedirectToLoginHOC
 class MenuContainer extends PureComponent {
   static propTypes = {
+    loadRestaurants: func.isRequired,
     loadMenu: func.isRequired,
     addMenu: func.isRequired,
     removeMenu: func.isRequired,

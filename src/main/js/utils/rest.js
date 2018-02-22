@@ -8,7 +8,7 @@ export const post = (path, authToken, data = {}) => apiCall(path, {
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json; charset=utf-8',
-    'Authorization': authToken
+    Authorization: authToken
   },
   body: JSON.stringify(data)
 })
@@ -21,7 +21,7 @@ export const del = (path, authToken) => apiCall(path, {
   method: 'DELETE',
   headers: {
     Accept: 'application/json',
-    'Authorization': authToken
+    Authorization: authToken
   }
 })
 
@@ -30,7 +30,7 @@ export const put = (path, authToken, data) => apiCall(path, {
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json; charset=utf-8',
-    'Authorization': authToken
+    Authorization: authToken
   },
   body: JSON.stringify(data)
 })

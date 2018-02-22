@@ -11,7 +11,7 @@ class Header extends Component {
         <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
           <a className="navbar-brand" href="/">Lunch time</a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                  aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" />
           </button>
           <div className="collapse navbar-collapse" id="navbarCollapse">
@@ -24,6 +24,9 @@ class Header extends Component {
               </li>
               <li className="nav-item">
                 <Link className='nav-link' to='/admin/menu'>Menu</Link>
+              </li>
+              <li className="nav-item">
+                <Link className='nav-link' to='/admin/menu_documents'>Menu documents</Link>
               </li>
               <li className="nav-item">
                 { (this.props.authenticated) ? <LogoutLink/> : '' }
