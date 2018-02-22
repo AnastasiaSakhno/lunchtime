@@ -5,6 +5,7 @@ node_modules
 package-lock.json
 src/main/resources/static/built
 out
+documents
 
 ### STS ###
 .apt_generated
