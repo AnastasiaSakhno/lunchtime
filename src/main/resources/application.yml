@@ -21,6 +21,8 @@ spring:
 
   data.rest.base-path: /api
 
+  http.multipart.max-file-size: 1024KB
+
 server.session.timeout: 18000 # 5 hours
 
 logging.level.org.springframework.web: INFO
