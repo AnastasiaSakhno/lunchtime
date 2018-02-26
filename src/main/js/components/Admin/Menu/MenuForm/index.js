@@ -27,18 +27,41 @@ class MenuForm extends Component {
     return (
       <div>
         <legend>Menu to add</legend>
-        <form className='restaurant-form' onSubmit={ this.handleSubmit }>
-          <select ref={ el => { this.restaurantSelect = el } }>
-            <option>Select a Restaurant</option>
-            { this.props.restaurants.map((restaurant) => (
-              <option
-                value={ restaurant._links.self.href }
-                key={ `restaurant-option_${restaurant.id}` }>{ restaurant.name }</option>
-            )) }
-          </select>
-          <input type='text' placeholder='Name' ref={ el => { this.nameInput = el } }/>
-          <input type='text' placeholder='Week days' formNoValidate ref={ el => { this.weekDaysInput = el } }/>
-          <input type='submit' value='Add menu'/>
+        <form className='menu-form' onSubmit={ this.handleSubmit }>
+          <div className="form-row align-items-center">
+            <div className="col-auto">
+              <label className="sr-only" htmlFor="restaurant_input">Restaurant</label>
+              <select className="custom-select mr-sm-2"
+                id='restaurant_input'
+                ref={ el => { this.restaurantSelect = el } }>
+                <option>Select a Restaurant</option>
+                { this.props.restaurants.map((restaurant) => (
+                  <option
+                    value={ restaurant._links.self.href }
+                    key={ `restaurant-option_${restaurant.id}` }>{ restaurant.name }</option>
+                )) }
+              </select>
+            </div>
+            <div className="col-auto">
+              <label className="sr-only" htmlFor="name_input">Name</label>
+              <input type='text'
+                className="form-control"
+                id="name_input"
+                placeholder='Name'
+                ref={ el => { this.nameInput = el } }/>
+            </div>
+            <div className="col-auto">
+              <label className="sr-only" htmlFor="week_days_input">Name</label>
+              <input type='text'
+                className="form-control"
+                id='week_days_input'
+                placeholder='Week days'
+                ref={ el => { this.weekDaysInput = el } }/>
+            </div>
+            <div className="col-auto">
+              <button type="submit" className="btn btn-primary mr-sm-2">Add menu</button>
+            </div>
+          </div>
         </form>
       </div>
     )

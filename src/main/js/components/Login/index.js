@@ -38,23 +38,18 @@ class Login extends Component {
         <Redirect to='/'/>
         :
         <div className='login-box'>
-          <form className='form-horizontal'>
-            <div className='control-group'>
-              <label>Email</label>
-              <div className='controls'>
-                <input type='email' ref={ (el) => { this.emailInput = el } }/>
+          <form className='login-form' onSubmit={ this.handleSubmit }>
+            <div className="form-row align-items-center">
+              <div className="col-auto">
+                <label className="sr-only" htmlFor="email_input">Email</label>
+                <input type='email' className="form-control mb-2" id="email_input" ref={ (el) => { this.emailInput = el } }/>
               </div>
-              { error }
-            </div>
-            <div className='control-group'>
-              <label>Password</label>
-              <div className='controls'>
-                <input type='password' ref={ (el) => { this.passwordInput = el } }/>
+              <div className="col-auto">
+                <label className="sr-only" htmlFor="password_input">Password</label>
+                <input type='password' className="form-control mb-2" id="password_input" ref={ (el) => { this.passwordInput = el } }/>
               </div>
-            </div>
-            <div className='control-group'>
-              <div className='controls'>
-                <input type='submit' value='Sign In' onClick={ this.handleSubmit }/>
+              <div className="col-auto">
+                <button type="submit" className="btn btn-primary mb-2">Sign In</button>
               </div>
             </div>
           </form>

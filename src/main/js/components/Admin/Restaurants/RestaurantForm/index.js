@@ -26,9 +26,27 @@ class RestaurantForm extends Component {
       <div>
         <legend>Restaurant to add</legend>
         <form className='restaurant-form' onSubmit={ this.handleSubmit }>
-          <input type='text' placeholder='Name' ref={ el => { this.nameInput = el } }/>
-          <input type='text' placeholder='Address' ref={ el => { this.addressInput = el } }/>
-          <input type='submit' value='Add restaurant'/>
+          <div className="form-row align-items-center">
+            <div className="col-auto">
+              <label className="sr-only" htmlFor="name_input">Name</label>
+              <input type='text'
+                className="form-control"
+                id="name_input"
+                placeholder='Name'
+                ref={ el => { this.nameInput = el } }/>
+            </div>
+            <div className="col-auto">
+              <label className="sr-only" htmlFor="address_input">Address</label>
+              <input type='text'
+                className="form-control"
+                id='address_input'
+                placeholder='Address'
+                ref={ el => { this.addressInput = el } }/>
+            </div>
+            <div className="col-auto">
+              <button type="submit" className="btn btn-primary mr-sm-2">Add restaurant</button>
+            </div>
+          </div>
         </form>
       </div>
     )
