@@ -7,11 +7,11 @@ const App = () => {
   return (
     <div className='app'>
       <main role='main'>
-        <div className='container-fluid mt-5'>
+        <main className='container-fluid mt-5' role='main'>
           <Switch>
             {routes.map((route, i) => <Route key={i} {...route} />)}
           </Switch>
-        </div>
+        </main>
         <Footer/>
       </main>
     </div>
