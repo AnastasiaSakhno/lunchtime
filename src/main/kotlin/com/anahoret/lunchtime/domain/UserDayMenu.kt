@@ -20,6 +20,9 @@ class UserDayMenu(
     @Column(name = "out", nullable = true)
     var out: Boolean,
 
+    @Column(name = "archive", nullable = false)
+    var archive: Boolean,
+
     @ManyToOne(targetEntity = Menu::class)
     var menu: Menu,
 
