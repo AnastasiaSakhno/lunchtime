@@ -1,5 +1,6 @@
 package com.anahoret.lunchtime.security
 
+import com.anahoret.lunchtime.config.JwtConfig
 import org.springframework.context.annotation.Bean
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity

@@ -1,5 +1,6 @@
 package com.anahoret.lunchtime.security
 
+import com.anahoret.lunchtime.config.JwtConfig
 import com.anahoret.lunchtime.domain.User
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.jsonwebtoken.Jwts

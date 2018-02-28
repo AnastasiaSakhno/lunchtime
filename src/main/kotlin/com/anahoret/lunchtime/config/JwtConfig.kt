@@ -1,4 +1,4 @@
-package com.anahoret.lunchtime.security
+package com.anahoret.lunchtime.config
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration

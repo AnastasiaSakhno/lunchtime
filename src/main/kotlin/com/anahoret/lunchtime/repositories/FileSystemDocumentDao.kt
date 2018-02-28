@@ -1,5 +1,6 @@
 package com.anahoret.lunchtime.repositories
 
+import com.anahoret.lunchtime.config.FileSystemDocumentConfig
 import com.anahoret.lunchtime.domain.MenuDocument
 import com.anahoret.lunchtime.domain.MenuDocumentMetadata
 import org.springframework.stereotype.Service
@@ -19,18 +20,18 @@ interface IDocumentDao {
 }
 
 @Service("menuDocumentDao")
-class FileSystemDocumentDao : IDocumentDao {
+class FileSystemDocumentDao(private val fileSystemDocumentConfig: FileSystemDocumentConfig) : IDocumentDao {
 
     private val uuidList: List<String>
         get() {
-            val file = File(DIRECTORY)
+            val file = File(fileSystemDocumentConfig.directory)
             val directories = file.list { current, name -> File(current, name).isDirectory }
             return Arrays.asList(*directories!!)
         }
 
     @PostConstruct
     fun init() {
-        createDirectory(DIRECTORY)
+        createDirectory(fileSystemDocumentConfig.directory)
     }
 
     override fun insert(document: MenuDocument) {
@@ -87,7 +88,7 @@ class FileSystemDocumentDao : IDocumentDao {
     fun saveMetaData(document: MenuDocument) {
         val path = getDirectoryPath(document)
         val props = document.metadata.properties
-        val f = File(File(path), META_DATA_FILE_NAME)
+        val f = File(File(path), fileSystemDocumentConfig.metadataFileName)
         val out = FileOutputStream(f)
         props.store(out, "Document meta data")
     }
@@ -96,7 +97,7 @@ class FileSystemDocumentDao : IDocumentDao {
         val prop = Properties()
         var input: InputStream? = null
         try {
-            input = FileInputStream(File(getDirectoryPath(uuid), META_DATA_FILE_NAME))
+            input = FileInputStream(File(getDirectoryPath(uuid), fileSystemDocumentConfig.metadataFileName))
             prop.load(input)
         } finally {
             if (input != null) {
@@ -128,17 +129,12 @@ class FileSystemDocumentDao : IDocumentDao {
 
     private fun getDirectoryPath(uuid: String): String {
         val sb = StringBuilder()
-        sb.append(DIRECTORY).append(File.separator).append(uuid)
+        sb.append(fileSystemDocumentConfig.directory).append(File.separator).append(uuid)
         return sb.toString()
     }
 
     private fun createDirectory(path: String): Boolean {
         val file = File(path)
         return file.mkdir()
-    }
-
-    companion object {
-        const val DIRECTORY = "documents"
-        const val META_DATA_FILE_NAME = "metadata.properties"
     }
 }

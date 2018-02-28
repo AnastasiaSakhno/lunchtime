@@ -1,5 +1,6 @@
 package com.anahoret.lunchtime.security
 
+import com.anahoret.lunchtime.config.JwtConfig
 import io.jsonwebtoken.Jwts
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken

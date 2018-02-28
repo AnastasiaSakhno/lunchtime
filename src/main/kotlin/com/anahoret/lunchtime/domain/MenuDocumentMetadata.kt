@@ -31,7 +31,7 @@ class MenuDocumentMetadata(val fileName: String, val restaurantName: String, val
         private const val PROP_RESTAURANT_NAME = "restaurant-name"
         private const val PROP_PERSON_NAME = "person-name"
         private const val PROP_FILE_NAME = "file-name"
-        private const val PROP_DOCUMENT_DATE = "document-uploadedAt"
+        private const val PROP_DOCUMENT_DATE = "document-uploaded-at"
 
         private const val DATE_FORMAT_PATTERN = "yyyy-MM-dd"
         private val DATE_FORMAT = SimpleDateFormat(DATE_FORMAT_PATTERN)

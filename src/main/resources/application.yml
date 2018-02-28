@@ -36,6 +36,11 @@ jwt:
   token_prefix: "Bearer "
   header: Authorization
 
+documents:
+  directory: documents
+  metadata:
+    file_name: metadata.properties
+
 ---
 
 spring:
