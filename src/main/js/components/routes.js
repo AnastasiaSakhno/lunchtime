@@ -1,14 +1,14 @@
 import Login from './Login'
-import Home from './Home'
 import { RestaurantsContainer } from './Admin/Restaurants'
 import { MenuContainer } from './Admin/Menu'
 import { MenuDocumentsContainer } from './Admin/MenuDocuments'
+import { UsersMenuContainer } from './Regular/UsersMenu'
 
 const routes = [
   {
     path: '/',
     exact: true,
-    component: Home
+    component: UsersMenuContainer
   },
   {
     path: '/login',
