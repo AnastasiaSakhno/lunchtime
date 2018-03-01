@@ -1,33 +1,50 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import IconButton from '../../../IconButton/index'
+import moment from 'moment'
 
-const { string, bool, number, array, shape, func } = PropTypes
+const {string, bool, number, object, array, shape, func} = PropTypes
 
 class UserDayMenu extends Component {
   static propTypes = {
-    onDestroy: func.isRequired,
     onSubmit: func.isRequired,
     menuList: array.isRequired
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
-    // TODO update or destroy
-    this.props.onSubmit({ ...this.props })
+    
+    let attrs = {
+      date: moment().add(this.props.dayOfWeek).format('YYYY-MM-DD'),
+      user: this.props.user._links.self.href,
+      menu: this.menuSelect.value
+    }
+
+    if(this.props.id) {
+      this.props.onSubmit({ id: this.props.id, ...attrs })
+    } else {
+      this.props.onSubmit({ ...attrs })
+    }
   }
 
   render() {
+    let selected = this.props.menu ? this.props.menu._links.self.href.replace('{?projection}', '') : ''
+
     return (
       <td>
         <select className="custom-select mr-sm-2"
-          ref={ el => { this.menuSelect = el } } onChange={ this.handleSubmit }>
+                value={selected}
+                onChange={this.handleSubmit}
+                ref={el => {
+                  this.menuSelect = el
+                }}>
           <option>Select a Restaurant</option>
-          { this.props.menuList.map((menu) => (
+          {this.props.menuList.map((menu) => (
             <option
-              value={ menu._links.self.href }
-              key={ `menu-option_${menu.id}` }>{ menu.name }</option>
-          )) }
+              value={menu._links.self.href}
+              key={`menu-option_${menu.id}`}>
+              {menu.name}
+            </option>
+          ))}
         </select>
       </td>
     )
@@ -36,7 +53,8 @@ class UserDayMenu extends Component {
 
 UserDayMenu.propTypes = {
   id: number,
-  date: string.isRequired,
+  dayOfWeek: number.isRequired,
+  date: object,
   out: bool,
   archive: bool,
   menu: shape({

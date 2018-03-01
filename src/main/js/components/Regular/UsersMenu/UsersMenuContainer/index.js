@@ -6,7 +6,7 @@ import HeaderHOC from '../../../../HOC/HeaderHOC/index'
 import RedirectToLoginHOC from '../../../../HOC/RedirectToLoginHOC/index'
 import UsersMenuSheet from '../UsersMenuSheet'
 
-const { bool, array, func } = PropTypes
+const { bool, array, number, string, object,  arrayOf, shape, func } = PropTypes
 
 @HeaderHOC
 @RedirectToLoginHOC
@@ -14,32 +14,44 @@ class UsersMenuContainer extends PureComponent {
   static propTypes = {
     loadMenu: func.isRequired,
     loadUsersMenu: func.isRequired,
+    loadUsers: func.isRequired,
+    usersMenu: object.isRequired,
     menuList: array.isRequired,
+    users: array.isRequired,
     authenticated: bool.isRequired
   }
 
   componentDidMount() {
     if(this.props.authenticated) {
       this.props.loadMenu()
+      // this.props.loadUsers()
       this.props.loadUsersMenu()
     }
   }
 
   render() {
-    const map = this.props.usersMenu.map((usersMenuSheet) => (
-      <UsersMenuSheet dateStart={ usersMenuSheet.dateStart } data={ usersMenuSheet.data } onSubmit={ this.props.submitUserMenu }/>
-    ))
-
-    return (
-      <div className="users-menu-container">
-        { map }
-      </div>
-    )
+    if(this.props.usersMenu) {
+      return (
+        <div className="users-menu-container">
+          <UsersMenuSheet
+            startDate={this.props.usersMenu.startDate}
+            data={this.props.usersMenu.data}
+            onSubmit={this.props.submitUserMenu}
+            menuList={this.props.menuList}
+            users={this.props.users}/>
+        </div>
+      )
+    } else {
+      return (
+        <div>not yet</div>
+      )
+    }
   }
 }
 
 const mapStateToProps = (state) => ({
   menuList: state.menu,
+  users: state.users,
   usersMenu: state.usersMenu,
   authenticated: state.session.authenticated
 })
@@ -50,6 +62,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadMenu: () => {
     dispatch(actions.menu.load())
+  },
+  loadUsers: () => {
+    dispatch(actions.users.load())
   },
   submitUserMenu: (userDayMenu) => {
     dispatch(actions.usersMenu.submit(userDayMenu))

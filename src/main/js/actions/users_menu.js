@@ -4,9 +4,9 @@ export const load = () => ({
   type: actionTypes.LOAD_USERS_MENU
 })
 
-export const loaded = (data) => ({
+export const loaded = ({ startDate, data }) => ({
   type: actionTypes.USERS_MENU_LOADED,
-  data
+  startDate, data
 })
 
 export const submit = (userDayMenu) => ({

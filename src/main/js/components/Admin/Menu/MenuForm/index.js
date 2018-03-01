@@ -16,7 +16,7 @@ class MenuForm extends Component {
     }
 
     const name = this.nameInput.value.trim()
-    const restaurantLink = this.restaurantSelect.value.trim()
+    const restaurantLink = this.restaurantSelect.value
 
     this.props.onSubmit({ name: name, week_days: weekDays, restaurant: restaurantLink, archive: false })
 

@@ -4,12 +4,17 @@ import { USERS_MENU_URI } from '../utils/api'
 import actions from '../actions'
 import * as actionTypes from '../actions/types'
 import { sessionService } from 'redux-react-session'
+import moment from 'moment'
+import { groupBy } from 'ramda'
 
 const loadUser = sessionService.loadUser
 
 export function* loadUsersMenu() {
-  const usersMenu = yield call(get, USERS_MENU_URI)
-  yield put(actions.usersMenu.loaded(usersMenu))
+  const now = moment()
+  const url = USERS_MENU_URI({ from: now.day(1).format('YYYY-MM-DD'), to: now.day(7).format('YYYY-MM-DD') })
+  const usersMenu = yield call(get, url)
+  let groupedByUsers = groupBy(udm => udm.user.id)(usersMenu._embedded.userDayMenus)
+  yield put(actions.usersMenu.loaded({ startDate: now.day(1).format('YYYY-MM-DD'), data: groupedByUsers }))
 }
 
 export function* submitUserDayMenu({ userDayMenu }) {

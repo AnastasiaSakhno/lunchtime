@@ -2,45 +2,46 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import UserWeekMenu from '../UserWeekMenu'
 
-const UsersMenuSheet = ({ dateStart, data, onSubmit }) => {
-  const map = data.map((userWeekMenu) => (
-    <UserWeekMenu { ...userWeekMenu } onSubmit={ onSubmit } dateStart={ dateStart }/>
-  ))
+const UsersMenuSheet = ({startDate, data, onSubmit, menuList, users}) => {
+  let map = []
+  $.each(data, (userId, usersMenu) => {
+    // let user = users.find((u) => u.id === userId)
+    let user = { id: Number.parseInt(userId), name: 'temp' }
 
-  // const date = new Date(dateStart)
-  // const weekDates = Array.from(new Array(5), (_, index) => new Date(date.getTime() + 86400000 * index))
+    map.push(<UserWeekMenu
+      key={`uwm_${startDate}_${userId}`}
+      onSubmit={onSubmit}
+      menuList={menuList}
+      user={user}
+      data={usersMenu}/>)
+  })
+
   const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
   const tableHeaders = weekDays.map((day) => (
-    <th scope="col">{ day }</th>
+    <th scope="col">{day}</th>
   ))
 
   return (
-    <table className="table table-bordered">
-      <thead>
+    <table className="table table-bordered table-striped">
+      <thead className="thead-dark">
+      <tr>
         <th scope="col">User</th>
-        { tableHeaders }
+        {tableHeaders}
+      </tr>
       </thead>
-      <tbody>{ map }</tbody>
+      <tbody>{map}</tbody>
     </table>
   )
 }
 
-const { string, number, array, arrayOf, shape, func } = PropTypes
+const {string, object, array, func} = PropTypes
 
 UsersMenuSheet.propTypes = {
-  dateStart: string.isRequired,
-  data: arrayOf(
-    shape({
-      id: number,
-      user: shape({
-        id: number,
-        name: string
-      }).isRequired,
-      dayMenuList: array
-    })
-  ).isRequired,
-  onSubmit: func.isRequired
+  startDate: string,
+  data: object,
+  onSubmit: func.isRequired,
+  users: array.isRequired
 }
 
 export default UsersMenuSheet
