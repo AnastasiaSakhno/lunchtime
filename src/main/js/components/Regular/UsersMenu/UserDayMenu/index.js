@@ -12,7 +12,7 @@ class UserDayMenu extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    
+
     let attrs = {
       date: moment().add(this.props.dayOfWeek).format('YYYY-MM-DD'),
       user: this.props.user._links.self.href,

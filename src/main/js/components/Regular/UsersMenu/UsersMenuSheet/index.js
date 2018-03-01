@@ -23,7 +23,7 @@ const UsersMenuSheet = ({startDate, data, onSubmit, menuList, users}) => {
   ))
 
   return (
-    <table className="table table-bordered table-striped">
+    <table className="table table-bordered table-hover">
       <thead className="thead-dark">
       <tr>
         <th scope="col">User</th>
