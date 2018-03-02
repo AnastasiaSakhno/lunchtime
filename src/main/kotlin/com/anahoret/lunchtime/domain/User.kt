@@ -24,6 +24,9 @@ class User {
     @Enumerated(EnumType.STRING)
     var role: Role? = Role.ROLE_REGULAR
 
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user")
+    var userDayMenu: MutableSet<UserDayMenu> = LinkedHashSet()
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

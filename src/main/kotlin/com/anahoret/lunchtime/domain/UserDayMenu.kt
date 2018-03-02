@@ -1,5 +1,6 @@
 package com.anahoret.lunchtime.domain
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import org.hibernate.annotations.Type
 import org.joda.time.LocalDate
 import javax.persistence.*
@@ -15,6 +16,7 @@ class UserDayMenu(
     @Column(name = "date", nullable = false)
     @Type(`type` = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     @Temporal(TemporalType.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
     var date: LocalDate,
 
     @Column(name = "out", nullable = true)
@@ -23,9 +25,11 @@ class UserDayMenu(
     @Column(name = "archive", nullable = false)
     var archive: Boolean,
 
-    @ManyToOne(targetEntity = Menu::class)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "menu_id")
     var menu: Menu,
 
-    @ManyToOne(targetEntity = User::class)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     var user: User
 )
