@@ -1,3 +1,5 @@
+import {LOGIN_URI, USERS_MENU_URI} from './api'
+
 export const apiCall = (path, options) => (
   fetch(path, options)
     .then(r => r.json())
@@ -35,8 +37,19 @@ export const put = (path, authToken, data) => apiCall(path, {
   body: JSON.stringify(data)
 })
 
+export const putUserDayMenu = (authToken, udm) => fetch(`${USERS_MENU_URI}/${udm.id}/menu`, {
+  method: 'PUT',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'text/uri-list',
+    Authorization: authToken
+  },
+  body: udm.menu
+}).then(r => ({
+  status: r.status
+}))
 
-export const getSession = (data) => fetch('/login', {
+export const getSession = (data) => fetch(LOGIN_URI, {
   method: 'POST',
   headers: {
     Accept: 'application/json',
@@ -44,8 +57,7 @@ export const getSession = (data) => fetch('/login', {
     'Access-Control-Expose-Headers': 'Authorization'
   },
   body: JSON.stringify(data)
-})
-  .then(r => ({
-    status: r.status,
-    auth_token: r.headers.get('Authorization')
-  }))
+}).then(r => ({
+  status: r.status,
+  auth_token: r.headers.get('Authorization')
+}))

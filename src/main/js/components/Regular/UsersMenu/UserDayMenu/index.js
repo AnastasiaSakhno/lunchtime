@@ -7,6 +7,7 @@ const {string, bool, number, object, array, shape, func} = PropTypes
 class UserDayMenu extends Component {
   static propTypes = {
     onSubmit: func.isRequired,
+    onUpdate: func.isRequired,
     menuList: array.isRequired
   }
 
@@ -14,13 +15,13 @@ class UserDayMenu extends Component {
     e.preventDefault()
 
     let attrs = {
-      date: moment().add(this.props.dayOfWeek).format('YYYY-MM-DD'),
-      user: this.props.user._links.self.href,
+      date: moment().day(this.props.dayOfWeek).valueOf(),
+      user: this.props.user._links.self.href.replace('{?projection}', ''),
       menu: this.menuSelect.value
     }
 
     if(this.props.id) {
-      this.props.onSubmit({ id: this.props.id, ...attrs })
+      this.props.onUpdate({ id: this.props.id, ...attrs })
     } else {
       this.props.onSubmit({ ...attrs })
     }

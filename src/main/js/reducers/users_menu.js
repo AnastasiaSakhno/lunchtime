@@ -8,29 +8,37 @@ const usersMenu = (state = initialState, action) => {
       return {
         ...state,
         startDate: action.startDate,
-        data: action.data
+        data: action.data._embedded.userDayMenus
       }
 
-    case actionTypes.USER_DAY_MENU_SUBMITTED_SUCCESSFULLY:
-      const findMethod = (udm) =>
-        udm.date === action.userDayMenu.date
-        && udm.user.href === action.userDayMenu.user.href
+    case actionTypes.USER_DAY_MENU_ADDED_SUCCESSFULLY:
+      return {
+        ...state,
+        data: [
+          ...state.data,
+          action.userDayMenu
+        ]
+      }
 
-      let found = state.find(findMethod)
-
-      if (found) {
-        return state.map((udm) => {
-          if (findMethod(udm)) {
-            return {...udm}
+    case actionTypes.USER_DAY_MENU_UPDATEED_SUCCESSFULLY:
+      return {
+        ...state,
+        data: state.data.map((udm) => {
+          if (udm.id === action.userDayMenu.id) {
+            return {
+              ...udm,
+              menu: {
+                _links: {
+                  self: {
+                    href: action.userDayMenu.menu
+                  }
+                }
+              }
+            }
           }
           return udm
         })
       }
-
-      return [
-        ...state,
-        action.userDayMenu
-      ]
 
 
     default:

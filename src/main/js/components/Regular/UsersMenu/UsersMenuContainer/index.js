@@ -5,8 +5,9 @@ import actions from '../../../../actions/index'
 import HeaderHOC from '../../../../HOC/HeaderHOC/index'
 import RedirectToLoginHOC from '../../../../HOC/RedirectToLoginHOC/index'
 import UsersMenuSheet from '../UsersMenuSheet'
+import { groupBy } from 'ramda'
 
-const { bool, array, number, string, object,  arrayOf, shape, func } = PropTypes
+const { bool, array, object, func } = PropTypes
 
 @HeaderHOC
 @RedirectToLoginHOC
@@ -15,6 +16,8 @@ class UsersMenuContainer extends PureComponent {
     loadMenu: func.isRequired,
     loadUsersMenu: func.isRequired,
     loadUsers: func.isRequired,
+    addUserDayMenu: func.isRequired,
+    updateUserDayMenu: func.isRequired,
     usersMenu: object.isRequired,
     menuList: array.isRequired,
     users: array.isRequired,
@@ -31,12 +34,15 @@ class UsersMenuContainer extends PureComponent {
 
   render() {
     if(this.props.usersMenu.data && this.props.menuList && this.props.users) {
+      let groupedByUser = groupBy(udm => udm.user._links.self.href.replace('{?projection}', ''))(this.props.usersMenu.data)
+
       return (
         <div className="users-menu-container">
           <UsersMenuSheet
             startDate={this.props.usersMenu.startDate}
-            data={this.props.usersMenu.data}
-            onSubmit={this.props.submitUserMenu}
+            data={groupedByUser}
+            onSubmit={this.props.addUserDayMenu}
+            onUpdate={this.props.updateUserDayMenu}
             menuList={this.props.menuList}
             users={this.props.users}/>
         </div>
@@ -66,8 +72,11 @@ const mapDispatchToProps = (dispatch) => ({
   loadUsers: () => {
     dispatch(actions.users.load())
   },
-  submitUserMenu: (userDayMenu) => {
-    dispatch(actions.usersMenu.submit(userDayMenu))
+  addUserDayMenu: (userDayMenu) => {
+    dispatch(actions.usersMenu.add(userDayMenu))
+  },
+  updateUserDayMenu: (userDayMenu) => {
+    dispatch(actions.usersMenu.update(userDayMenu))
   }
 })
 

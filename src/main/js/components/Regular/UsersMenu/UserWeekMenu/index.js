@@ -7,6 +7,7 @@ const {string, number, bool, object, array, arrayOf, shape, func} = PropTypes
 class UserWeekMenu extends Component {
   static propTypes = {
     onSubmit: func.isRequired,
+    onUpdate: func.isRequired,
     menuList: array.isRequired
   }
 

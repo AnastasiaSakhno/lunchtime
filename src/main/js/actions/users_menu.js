@@ -9,12 +9,22 @@ export const loaded = ({ startDate, data }) => ({
   startDate, data
 })
 
-export const submit = (userDayMenu) => ({
-  type: actionTypes.SUBMIT_USER_DAY_MENU,
+export const add = (userDayMenu) => ({
+  type: actionTypes.ADD_USER_DAY_MENU,
   userDayMenu
 })
 
-export const submittedSuccessfully = (userDayMenu) => ({
-  type: actionTypes.USER_DAY_MENU_SUBMITTED_SUCCESSFULLY,
+export const addedSuccessfully = (userDayMenu) => ({
+  type: actionTypes.USER_DAY_MENU_ADDED_SUCCESSFULLY,
+  userDayMenu
+})
+
+export const update = (userDayMenu) => ({
+  type: actionTypes.UPDATE_USER_DAY_MENU,
+  userDayMenu
+})
+
+export const updatedSuccessfully = (userDayMenu) => ({
+  type: actionTypes.USER_DAY_MENU_UPDATEED_SUCCESSFULLY,
   userDayMenu
 })
