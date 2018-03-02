@@ -14,7 +14,6 @@ class User {
     @Column(name = "email", nullable = false)
     var email: String? = null
 
-    @JsonIgnore
     @Column(name = "password", nullable = false)
     var password: String? = null
 
