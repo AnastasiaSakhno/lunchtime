@@ -31,26 +31,34 @@ class UserDayMenu extends Component {
     let selected = this.props.menu ? this.props.menu._links.self.href.replace('{?projection}', '') : ''
 
     const editablePresentation = () => (
-      <select className="custom-select mr-sm-2"
-              value={selected}
-              onChange={this.handleSubmit}
-              ref={el => {
-                this.menuSelect = el
-              }}>
-        <option>Select a Restaurant</option>
-        {this.props.menuList.map((menu) => (
-          <option
-            value={menu._links.self.href}
-            key={`menu-option_${menu.id}`}>
-            {menu.name}
-          </option>
-        ))}
-      </select>
+      <div className="input-group mb-3">
+        <select className="form-control custom-select"
+                value={selected}
+                onChange={this.handleSubmit}
+                ref={el => {
+                  this.menuSelect = el
+                }}>
+          <option>Select a Restaurant</option>
+          {this.props.menuList.map((menu) => (
+            <option
+              value={menu._links.self.href}
+              key={`menu-option_${menu.id}`}>
+              {menu.name}
+            </option>
+          ))}
+        </select>
+        <div className="input-group-append">
+          <div className="input-group-text">
+            <input type="checkbox"/>
+          </div>
+        </div>
+      </div>
     )
 
     const notEditablePresentation = () => {
       let selectedMenu = this.props.menuList.find((m) => (m._links.self.href === selected))
-      return <p>{selectedMenu ? selectedMenu.name : ''}</p>
+      let menuName = selectedMenu ? selectedMenu.name : ''
+      return <p>{`${menuName}${this.props.out ? ' (out)' : ''}`}</p>
     }
 
     return (
