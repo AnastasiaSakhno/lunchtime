@@ -10,13 +10,13 @@ class MenuForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
 
-    const weekDays = this.weekDaysInput.value.trim()
-    if(!weekDays) {
+    const name = this.nameInput.value.trim()
+    const restaurantLink = this.restaurantSelect.value
+    if(!name || !restaurantLink) {
       return
     }
 
-    const name = this.nameInput.value.trim()
-    const restaurantLink = this.restaurantSelect.value
+    const weekDays = this.weekDaysInput.value.trim()
 
     this.props.onSubmit({ name: name, week_days: weekDays, restaurant: restaurantLink, archive: false })
 

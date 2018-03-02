@@ -1,6 +1,6 @@
 import { takeLatest, takeEvery, put, call } from 'redux-saga/effects'
 import { get, post } from '../utils/rest'
-import { USERS_MENU_URI } from '../utils/api'
+import { USERS_MENU_URI, USERS_MENU_SEARCH_URI } from '../utils/api'
 import actions from '../actions'
 import * as actionTypes from '../actions/types'
 import { sessionService } from 'redux-react-session'
@@ -11,7 +11,7 @@ const loadUser = sessionService.loadUser
 
 export function* loadUsersMenu() {
   const now = moment()
-  const url = USERS_MENU_URI({ from: now.day(1).format('YYYY-MM-DD'), to: now.day(7).format('YYYY-MM-DD') })
+  const url = USERS_MENU_SEARCH_URI({ from: now.day(1).format('YYYY-MM-DD'), to: now.day(7).format('YYYY-MM-DD') })
   const usersMenu = yield call(get, url)
   let groupedByUsers = groupBy(udm => udm.user.id)(usersMenu._embedded.userDayMenus)
   yield put(actions.usersMenu.loaded({ startDate: now.day(1).format('YYYY-MM-DD'), data: groupedByUsers }))

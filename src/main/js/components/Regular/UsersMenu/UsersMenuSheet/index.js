@@ -3,23 +3,21 @@ import PropTypes from 'prop-types'
 import UserWeekMenu from '../UserWeekMenu'
 
 const UsersMenuSheet = ({startDate, data, onSubmit, menuList, users}) => {
-  let map = []
-  $.each(data, (userId, usersMenu) => {
-    // let user = users.find((u) => u.id === userId)
-    let user = { id: Number.parseInt(userId), name: 'temp' }
+  let map = users.map((u) => {
+    let found = data[u.id.toString()]
 
-    map.push(<UserWeekMenu
-      key={`uwm_${startDate}_${userId}`}
+    return <UserWeekMenu
+      key={`uwm_${startDate}_${u.id}`}
       onSubmit={onSubmit}
       menuList={menuList}
-      user={user}
-      data={usersMenu}/>)
+      user={u}
+      data={found ? found : []}/>
   })
 
   const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
   const tableHeaders = weekDays.map((day) => (
-    <th scope="col">{day}</th>
+    <th scope="col"key={day}>{day}</th>
   ))
 
   return (

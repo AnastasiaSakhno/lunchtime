@@ -24,13 +24,13 @@ class UsersMenuContainer extends PureComponent {
   componentDidMount() {
     if(this.props.authenticated) {
       this.props.loadMenu()
-      // this.props.loadUsers()
+      this.props.loadUsers()
       this.props.loadUsersMenu()
     }
   }
 
   render() {
-    if(this.props.usersMenu) {
+    if(this.props.usersMenu.data && this.props.menuList && this.props.users) {
       return (
         <div className="users-menu-container">
           <UsersMenuSheet

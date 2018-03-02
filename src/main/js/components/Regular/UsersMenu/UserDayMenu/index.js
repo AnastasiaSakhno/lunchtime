@@ -63,7 +63,7 @@ UserDayMenu.propTypes = {
   }),
   user: shape({
     id: number,
-    name: string
+    fullName: string
   }).isRequired
 }
 

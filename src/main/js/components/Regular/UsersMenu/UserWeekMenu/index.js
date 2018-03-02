@@ -13,7 +13,7 @@ class UserWeekMenu extends Component {
   render() {
     return (
       <tr>
-        <td>{this.props.user.name}</td>
+        <td>{this.props.user.fullName}</td>
         {[...Array(5).keys()].map((dayOfWeek) => {
           dayOfWeek = dayOfWeek + 1
           let found = this.props.data.find((udm) => (
@@ -34,7 +34,7 @@ class UserWeekMenu extends Component {
 UserWeekMenu.propTypes = {
   user: shape({
     id: number,
-    name: string
+    fullName: string
   }).isRequired,
   data: arrayOf(
     shape({
