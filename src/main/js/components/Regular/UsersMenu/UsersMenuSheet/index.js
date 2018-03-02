@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import UserWeekMenu from '../UserWeekMenu'
 
-const UsersMenuSheet = ({startDate, data, onSubmit, onUpdate, menuList, users}) => {
+const UsersMenuSheet = ({startDate, data, onSubmit, onUpdate, menuList, users, currentUser}) => {
   let map = users.map((u) => {
     let found = data[u._links.self.href]
 
@@ -12,6 +12,7 @@ const UsersMenuSheet = ({startDate, data, onSubmit, onUpdate, menuList, users}) 
       onUpdate={onUpdate}
       menuList={menuList}
       user={u}
+      editable={currentUser.role === 'ROLE_ADMIN' || currentUser.id === u.id}
       data={found ? found : []}/>
   })
 
@@ -41,7 +42,9 @@ UsersMenuSheet.propTypes = {
   data: object,
   onSubmit: func.isRequired,
   onUpdate: func.isRequired,
-  users: array.isRequired
+  menuList: array.isRequired,
+  users: array.isRequired,
+  currentUser: object.isRequired
 }
 
 export default UsersMenuSheet

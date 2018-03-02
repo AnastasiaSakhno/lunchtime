@@ -48,7 +48,8 @@ UserWeekMenu.propTypes = {
         name: string
       })
     })
-  ).isRequired
+  ).isRequired,
+  editable : bool.isRequired
 }
 
 export default UserWeekMenu

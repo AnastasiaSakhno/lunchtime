@@ -21,7 +21,8 @@ class UsersMenuContainer extends PureComponent {
     usersMenu: object.isRequired,
     menuList: array.isRequired,
     users: array.isRequired,
-    authenticated: bool.isRequired
+    authenticated: bool.isRequired,
+    currentUser: object.isRequired
   }
 
   componentDidMount() {
@@ -33,7 +34,10 @@ class UsersMenuContainer extends PureComponent {
   }
 
   render() {
-    if(this.props.usersMenu.data && this.props.menuList && this.props.users) {
+    if(this.props.currentUser
+      && this.props.usersMenu.data
+      && this.props.menuList
+      && this.props.users) {
       let groupedByUser = groupBy(udm => udm.user._links.self.href.replace('{?projection}', ''))(this.props.usersMenu.data)
 
       return (
@@ -44,6 +48,7 @@ class UsersMenuContainer extends PureComponent {
             onSubmit={this.props.addUserDayMenu}
             onUpdate={this.props.updateUserDayMenu}
             menuList={this.props.menuList}
+            currentUser={this.props.currentUser}
             users={this.props.users}/>
         </div>
       )
@@ -59,7 +64,8 @@ const mapStateToProps = (state) => ({
   menuList: state.menu,
   users: state.users,
   usersMenu: state.usersMenu,
-  authenticated: state.session.authenticated
+  authenticated: state.session.authenticated,
+  currentUser: state.users.find((u) => (u.email === state.session.user.email))
 })
 
 const mapDispatchToProps = (dispatch) => ({

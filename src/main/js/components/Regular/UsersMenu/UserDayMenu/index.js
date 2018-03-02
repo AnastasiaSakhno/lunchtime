@@ -20,33 +20,42 @@ class UserDayMenu extends Component {
       menu: this.menuSelect.value
     }
 
-    if(this.props.id) {
-      this.props.onUpdate({ id: this.props.id, ...attrs })
+    if (this.props.id) {
+      this.props.onUpdate({id: this.props.id, ...attrs})
     } else {
-      this.props.onSubmit({ ...attrs })
+      this.props.onSubmit({...attrs})
     }
   }
 
   render() {
     let selected = this.props.menu ? this.props.menu._links.self.href.replace('{?projection}', '') : ''
 
+    const editablePresentation = () => (
+      <select className="custom-select mr-sm-2"
+              value={selected}
+              onChange={this.handleSubmit}
+              ref={el => {
+                this.menuSelect = el
+              }}>
+        <option>Select a Restaurant</option>
+        {this.props.menuList.map((menu) => (
+          <option
+            value={menu._links.self.href}
+            key={`menu-option_${menu.id}`}>
+            {menu.name}
+          </option>
+        ))}
+      </select>
+    )
+
+    const notEditablePresentation = () => {
+      let selectedMenu = this.props.menuList.find((m) => (m._links.self.href === selected))
+      return <p>{selectedMenu ? selectedMenu.name : ''}</p>
+    }
+
     return (
       <td>
-        <select className="custom-select mr-sm-2"
-                value={selected}
-                onChange={this.handleSubmit}
-                ref={el => {
-                  this.menuSelect = el
-                }}>
-          <option>Select a Restaurant</option>
-          {this.props.menuList.map((menu) => (
-            <option
-              value={menu._links.self.href}
-              key={`menu-option_${menu.id}`}>
-              {menu.name}
-            </option>
-          ))}
-        </select>
+        {this.props.editable ? editablePresentation() : notEditablePresentation()}
       </td>
     )
   }
@@ -65,7 +74,8 @@ UserDayMenu.propTypes = {
   user: shape({
     id: number,
     fullName: string
-  }).isRequired
+  }).isRequired,
+  editable: bool.isRequired
 }
 
 export default UserDayMenu
