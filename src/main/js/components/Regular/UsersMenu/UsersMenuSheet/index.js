@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import UserWeekMenu from '../UserWeekMenu'
+import moment from 'moment'
 
 const UsersMenuSheet = ({startDate, data, onSubmit, onUpdate, onOutChange, menuList, users, currentUser}) => {
   let map = users.map((u) => {
@@ -19,9 +20,10 @@ const UsersMenuSheet = ({startDate, data, onSubmit, onUpdate, onOutChange, menuL
 
   const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
-  const tableHeaders = weekDays.map((day) => (
-    <th scope="col" key={day}>{day}</th>
-  ))
+  const tableHeaders = weekDays.map((day, index) => {
+    let date = moment(startDate).day(index + 1).format('YYYY-MM-DD')
+    return <th scope="col" key={day}>{`${day}, ${date}`}</th>
+  })
 
   return (
     <table className="table table-bordered table-hover">
