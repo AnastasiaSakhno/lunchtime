@@ -9,6 +9,7 @@ const loadUser = sessionService.loadUser
 
 export function* loadMenuDocuments() {
   const menuDocuments = yield call(get, MENU_DOCUMENTS_URI)
+  // TODO for each document we need to load file content
   yield put(actions.menuDocuments.loaded(menuDocuments))
 }
 

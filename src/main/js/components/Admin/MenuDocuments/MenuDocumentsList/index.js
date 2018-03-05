@@ -2,20 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import MenuDocument from '../MenuDocument'
 
-const MenuDocumentsList = ({ data, onSubmit }) => {
+const MenuDocumentsList = ({data, onSubmit}) => {
   const map = data.map((md) => (
-    <MenuDocument { ...md } key={ `menu_document_${md.restaurantName}` } onSubmit={ onSubmit } />
+    <MenuDocument {...md} key={`menu_document_${md.restaurantName}`} onSubmit={onSubmit}/>
   ))
 
   return (
-    <div className="menu-documents-list">
+    <div className="container-fluid menu-documents-list">
       <legend>Menu documents</legend>
-      { map }
+      <div className='row'>
+        {map}
+      </div>
     </div>
   )
 }
 
-const { string, number, arrayOf, shape, func } = PropTypes
+const {string, number, arrayOf, shape, func} = PropTypes
 
 MenuDocumentsList.propTypes = {
   data: arrayOf(

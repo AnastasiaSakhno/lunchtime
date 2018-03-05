@@ -20,9 +20,7 @@ class MenuDocumentsController(var menuDocumentService: MenuDocumentService) {
 
     @GetMapping("/{id}")
     fun show(@PathVariable id: String): HttpEntity<ByteArray> {
-        val httpHeaders = HttpHeaders()
-        httpHeaders.contentType = MediaType.ALL
-        return ResponseEntity(menuDocumentService.getDocumentFile(id), httpHeaders, HttpStatus.OK)
+        return ResponseEntity(menuDocumentService.getDocumentFile(id), null, HttpStatus.OK)
     }
 
     @PostMapping
