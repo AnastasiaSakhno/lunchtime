@@ -1,5 +1,5 @@
 import { takeLatest, takeEvery, put, call } from 'redux-saga/effects'
-import { get, post, putUserDayMenu } from '../utils/rest'
+import { get, post, putUserDayMenu, put as putRest } from '../utils/rest'
 import { USERS_MENU_URI, USERS_MENU_SEARCH_URI } from '../utils/api'
 import actions from '../actions'
 import * as actionTypes from '../actions/types'
@@ -46,10 +46,19 @@ export function* addUserDayMenu({ userDayMenu }) {
 
 export function* updateUserDayMenu({ userDayMenu }) {
   const user = yield call(loadUser)
-  const newUserDayMenu = yield call(putUserDayMenu, user.auth_token, userDayMenu)
+  const response = yield call(putUserDayMenu, user.auth_token, userDayMenu)
 
-  if(newUserDayMenu.status === 204) {
+  if(response.status === 204) {
     yield put(actions.usersMenu.updatedSuccessfully({ id: userDayMenu.id, menu: userDayMenu.menu }))
+  }
+}
+
+export function* updateUserDayMenuOut({ userDayMenu }) {
+  const user = yield call(loadUser)
+  const newUserDayMenu = yield call(putRest, `${USERS_MENU_URI}/${userDayMenu.id}`, user.auth_token, userDayMenu)
+
+  if(newUserDayMenu.id) {
+    yield put(actions.usersMenu.outUpdatedSuccessfully(newUserDayMenu))
   }
 }
 
@@ -57,6 +66,7 @@ export default function* watchUsersMenu() {
   yield [
     takeLatest(actionTypes.LOAD_USERS_MENU, loadUsersMenu),
     takeEvery(actionTypes.ADD_USER_DAY_MENU, addUserDayMenu),
-    takeEvery(actionTypes.UPDATE_USER_DAY_MENU, updateUserDayMenu)
+    takeEvery(actionTypes.UPDATE_USER_DAY_MENU, updateUserDayMenu),
+    takeEvery(actionTypes.UPDATE_USER_DAY_MENU_OUT, updateUserDayMenuOut)
   ]
 }

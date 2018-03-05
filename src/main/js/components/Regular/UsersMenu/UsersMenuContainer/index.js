@@ -18,6 +18,7 @@ class UsersMenuContainer extends PureComponent {
     loadUsers: func.isRequired,
     addUserDayMenu: func.isRequired,
     updateUserDayMenu: func.isRequired,
+    updateOut: func.isRequired,
     usersMenu: object.isRequired,
     menuList: array.isRequired,
     users: array.isRequired,
@@ -47,6 +48,7 @@ class UsersMenuContainer extends PureComponent {
             data={groupedByUser}
             onSubmit={this.props.addUserDayMenu}
             onUpdate={this.props.updateUserDayMenu}
+            onOutChange={this.props.updateOut}
             menuList={this.props.menuList}
             currentUser={this.props.currentUser}
             users={this.props.users}/>
@@ -83,6 +85,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   updateUserDayMenu: (userDayMenu) => {
     dispatch(actions.usersMenu.update(userDayMenu))
+  },
+  updateOut: (userDayMenu) => {
+    dispatch(actions.usersMenu.updateOut(userDayMenu))
   }
 })
 

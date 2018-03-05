@@ -8,6 +8,7 @@ class UserWeekMenu extends Component {
   static propTypes = {
     onSubmit: func.isRequired,
     onUpdate: func.isRequired,
+    onOutChange: func.isRequired,
     menuList: array.isRequired
   }
 

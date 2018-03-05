@@ -40,6 +40,20 @@ const usersMenu = (state = initialState, action) => {
       })
     }
 
+  case actionTypes.USER_DAY_MENU_OUT_UPDATEED_SUCCESSFULLY:
+    return {
+      ...state,
+      data: state.data.map((udm) => {
+        if (udm.id === action.userDayMenu.id) {
+          return {
+            ...udm,
+            out: !udm.out
+          }
+        }
+        return udm
+      })
+    }
+
 
   default:
     return state

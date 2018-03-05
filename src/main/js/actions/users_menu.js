@@ -28,3 +28,13 @@ export const updatedSuccessfully = (userDayMenu) => ({
   type: actionTypes.USER_DAY_MENU_UPDATEED_SUCCESSFULLY,
   userDayMenu
 })
+
+export const updateOut = (userDayMenu) => ({
+  type: actionTypes.UPDATE_USER_DAY_MENU_OUT,
+  userDayMenu
+})
+
+export const outUpdatedSuccessfully = (userDayMenu) => ({
+  type: actionTypes.USER_DAY_MENU_OUT_UPDATEED_SUCCESSFULLY,
+  userDayMenu
+})

@@ -8,6 +8,7 @@ class UserDayMenu extends Component {
   static propTypes = {
     onSubmit: func.isRequired,
     onUpdate: func.isRequired,
+    onOutChange: func.isRequired,
     menuList: array.isRequired
   }
 
@@ -15,7 +16,7 @@ class UserDayMenu extends Component {
     e.preventDefault()
 
     let attrs = {
-      date: moment().day(this.props.dayOfWeek).valueOf(),
+      date: this.dateString(this.props.dayOfWeek),
       user: this.props.user._links.self.href.replace('{?projection}', ''),
       menu: this.menuSelect.value
     }
@@ -27,9 +28,18 @@ class UserDayMenu extends Component {
     }
   }
 
+  handleOutChange = (e) => {
+    e.preventDefault()
+
+    this.props.onOutChange({id: this.props.id, out: this.outInput.checked, date: this.dateString(this.props.dayOfWeek)})
+  }
+
+  dateString = (dayOfWeek) => (moment().day(dayOfWeek).valueOf())
+
   editablePresentation = (selected) => (
     <div className="input-group mb-3">
-      <select className="form-control custom-select"
+      <select
+        className="form-control custom-select"
         value={selected}
         onChange={this.handleSubmit}
         ref={el => {
@@ -46,7 +56,14 @@ class UserDayMenu extends Component {
       </select>
       <div className="input-group-append">
         <div className="input-group-text">
-          <input type="checkbox"/>
+          <input
+            type="checkbox"
+            checked={this.props.out}
+            disabled={!this.props.id}
+            ref={el => {
+              this.outInput = el
+            }}
+            onChange={this.handleOutChange}/>
         </div>
       </div>
     </div>
