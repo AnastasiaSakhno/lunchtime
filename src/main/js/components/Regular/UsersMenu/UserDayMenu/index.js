@@ -27,43 +27,43 @@ class UserDayMenu extends Component {
     }
   }
 
+  editablePresentation = (selected) => (
+    <div className="input-group mb-3">
+      <select className="form-control custom-select"
+        value={selected}
+        onChange={this.handleSubmit}
+        ref={el => {
+          this.menuSelect = el
+        }}>
+        <option>Select a Restaurant</option>
+        {this.props.menuList.map((menu) => (
+          <option
+            value={menu._links.self.href}
+            key={`menu-option_${menu.id}`}>
+            {menu.name}
+          </option>
+        ))}
+      </select>
+      <div className="input-group-append">
+        <div className="input-group-text">
+          <input type="checkbox"/>
+        </div>
+      </div>
+    </div>
+  )
+
+  notEditablePresentation = (selected) => {
+    let selectedMenu = this.props.menuList.find((m) => (m._links.self.href === selected))
+    let menuName = selectedMenu ? selectedMenu.name : ''
+    return <p>{`${menuName}${this.props.out ? ' (out)' : ''}`}</p>
+  }
+
   render() {
     let selected = this.props.menu ? this.props.menu._links.self.href.replace('{?projection}', '') : ''
 
-    const editablePresentation = () => (
-      <div className="input-group mb-3">
-        <select className="form-control custom-select"
-                value={selected}
-                onChange={this.handleSubmit}
-                ref={el => {
-                  this.menuSelect = el
-                }}>
-          <option>Select a Restaurant</option>
-          {this.props.menuList.map((menu) => (
-            <option
-              value={menu._links.self.href}
-              key={`menu-option_${menu.id}`}>
-              {menu.name}
-            </option>
-          ))}
-        </select>
-        <div className="input-group-append">
-          <div className="input-group-text">
-            <input type="checkbox"/>
-          </div>
-        </div>
-      </div>
-    )
-
-    const notEditablePresentation = () => {
-      let selectedMenu = this.props.menuList.find((m) => (m._links.self.href === selected))
-      let menuName = selectedMenu ? selectedMenu.name : ''
-      return <p>{`${menuName}${this.props.out ? ' (out)' : ''}`}</p>
-    }
-
     return (
       <td>
-        {this.props.editable ? editablePresentation() : notEditablePresentation()}
+        {this.props.editable ? this.editablePresentation(selected) : this.notEditablePresentation(selected)}
       </td>
     )
   }

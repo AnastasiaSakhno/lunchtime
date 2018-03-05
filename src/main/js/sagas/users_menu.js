@@ -8,6 +8,24 @@ import moment from 'moment'
 
 const loadUser = sessionService.loadUser
 
+const userDayMenuWithLinks = (udm, nudm) => ({
+  ...nudm,
+  user: {
+    _links: {
+      self: {
+        href: udm.user
+      }
+    }
+  },
+  menu: {
+    _links: {
+      self: {
+        href: udm.menu
+      }
+    }
+  }
+})
+
 export function* loadUsersMenu() {
   const now = moment()
   const weekStart = now.day(1).format('YYYY-MM-DD')
@@ -34,24 +52,6 @@ export function* updateUserDayMenu({ userDayMenu }) {
     yield put(actions.usersMenu.updatedSuccessfully({ id: userDayMenu.id, menu: userDayMenu.menu }))
   }
 }
-
-const userDayMenuWithLinks = (udm, nudm) => ({
-  ...nudm,
-  user: {
-    _links: {
-      self: {
-        href: udm.user
-      }
-    }
-  } ,
-  menu: {
-    _links: {
-      self: {
-        href: udm.menu
-      }
-    }
-  }
-})
 
 export default function* watchUsersMenu() {
   yield [

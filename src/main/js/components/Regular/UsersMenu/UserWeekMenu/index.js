@@ -23,9 +23,8 @@ class UserWeekMenu extends Component {
           let key = `udm_${this.props.user.id}_${dayOfWeek}`
           if (found) {
             return (<UserDayMenu key={key} dayOfWeek={dayOfWeek} {...this.props} {...found}/>)
-          } else {
-            return (<UserDayMenu key={key} dayOfWeek={dayOfWeek} {...this.props}/>)
           }
+          return (<UserDayMenu key={key} dayOfWeek={dayOfWeek} {...this.props}/>)
         })}
       </tr>
     )
@@ -49,7 +48,7 @@ UserWeekMenu.propTypes = {
       })
     })
   ).isRequired,
-  editable : bool.isRequired
+  editable: bool.isRequired
 }
 
 export default UserWeekMenu
