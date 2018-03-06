@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import FileViewer from 'react-file-viewer'
 
 class MenuDocument extends Component {
   static propTypes = {
@@ -30,8 +29,6 @@ class MenuDocument extends Component {
 
   render() {
     let uploadedText = `Uploaded at: ${ new Date(this.props.uploadedAt) } by ${ this.props.userName }`
-    let fileViewer = this.props.uuid ?
-      <FileViewer key={this.props.uuid} fileType='docx' filePath={`/api/menu_documents/${this.props.uuid}`}/> : ''
 
     let text = `Restaurant name: \
       ${ this.props.restaurantName }, \
@@ -46,19 +43,20 @@ class MenuDocument extends Component {
           <input type='file' onChange={this.onChange}/>
           <button className='btn btn-primary' onSubmit={this.handleSubmit}>Upload</button>
         </form>
-        {fileViewer}
+        <div dangerouslySetInnerHTML={{__html: this.props.content}}/>
       </div>
     )
   }
 }
 
-const {string, number} = PropTypes
+const {string, number, } = PropTypes
 
 MenuDocument.propTypes = {
   restaurantName: string.isRequired,
   fileName: string,
   uploadedAt: number,
-  userName: string
+  userName: string,
+  content: string
 }
 
 export default MenuDocument

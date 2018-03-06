@@ -25,7 +25,8 @@ MenuDocumentsList.propTypes = {
       restaurantName: string.isRequired,
       fileName: string,
       uploadedAt: number,
-      userName: string
+      userName: string,
+      content: string
     })
   ).isRequired,
   onSubmit: func.isRequired

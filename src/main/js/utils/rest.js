@@ -1,4 +1,5 @@
-import {LOGIN_URI, USERS_MENU_URI} from './api'
+import {LOGIN_URI, USERS_MENU_URI, MENU_DOCUMENTS_URI} from './api'
+import mammoth from 'mammoth'
 
 export const apiCall = (path, options) => (
   fetch(path, options)
@@ -36,6 +37,16 @@ export const put = (path, authToken, data) => apiCall(path, {
   },
   body: JSON.stringify(data)
 })
+
+export const readMenuDocument = (md) => fetch(`${MENU_DOCUMENTS_URI}/${md.uuid}`, {
+  method: 'GET',
+  responseType: 'arraybuffer'
+}).then(r => r.arrayBuffer())
+  .then(buffer => mammoth.convertToHtml(
+    {arrayBuffer: buffer},
+    {includeDefaultStyleMap: true}
+  ))
+  .then((r) => r.value.toString())
 
 export const putUserDayMenu = (authToken, udm) => fetch(`${USERS_MENU_URI}/${udm.id}/menu`, {
   method: 'PUT',
