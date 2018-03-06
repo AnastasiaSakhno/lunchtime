@@ -6,13 +6,13 @@ const {bool, number, func} = PropTypes
 
 class UserDayMenuOut extends Component {
   static propTypes = {
-    onUpdate: func.isRequired
+    onOutUpdate: func.isRequired
   }
 
   handleUpdate = (e) => {
     e.preventDefault()
 
-    this.props.onUpdate({id: this.props.id, out: this.outInput.checked, date: this.dateString(this.props.dayOfWeek)})
+    this.props.onOutUpdate({id: this.props.id, out: this.outInput.checked, date: this.dateString(this.props.dayOfWeek)})
   }
 
   dateString = (dayOfWeek) => (moment().day(dayOfWeek).valueOf())

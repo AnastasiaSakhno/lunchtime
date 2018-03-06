@@ -40,7 +40,7 @@ class UsersMenuContainer extends PureComponent {
       && this.props.menuList
       && this.props.users) {
       let groupedByUser = groupBy(udm => udm.user._links.self.href.replace('{?projection}', ''))(this.props.usersMenu.data)
-      
+
       let orderedUsers = sortBy(compose(toLower, prop('fullName')))(this.props.users)
       orderedUsers = filter(u => u.id !== this.props.currentUser.id, orderedUsers)
       orderedUsers = prepend(this.props.currentUser, orderedUsers)
