@@ -20,7 +20,7 @@ class MenuDocumentsController(var menuDocumentService: MenuDocumentService) {
 
     @GetMapping("/{id}")
     fun show(@PathVariable id: String): HttpEntity<ByteArray> {
-        return ResponseEntity(menuDocumentService.getDocumentFile(id), null, HttpStatus.OK)
+        return ResponseEntity.ok(menuDocumentService.getDocumentFile(id))
     }
 
     @PostMapping
@@ -30,7 +30,13 @@ class MenuDocumentsController(var menuDocumentService: MenuDocumentService) {
             @RequestParam(value = "restaurant", required = true) restaurant: String,
             @RequestParam(value = "user", required = true) user: String): MenuDocumentMetadata {
 
-        val document = MenuDocument(fileData = file.bytes, fileName = file.originalFilename, restaurantName = restaurant, uploadedAt = Date(), userName = user)
+        val document = MenuDocument(
+            fileData = file.bytes,
+            fileName = file.originalFilename,
+            restaurantName = restaurant,
+            uploadedAt = Date(),
+            userName = user
+        )
         menuDocumentService.save(document)
         return document.metadata
     }

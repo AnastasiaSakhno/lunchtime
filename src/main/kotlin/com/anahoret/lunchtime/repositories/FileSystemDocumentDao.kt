@@ -31,7 +31,7 @@ class FileSystemDocumentDao(private val fileSystemDocumentConfig: FileSystemDocu
 
     @PostConstruct
     fun init() {
-        createDirectory(fileSystemDocumentConfig.directory)
+        File(fileSystemDocumentConfig.directory).mkdir()
     }
 
     override fun insert(document: MenuDocument) {
@@ -51,17 +51,10 @@ class FileSystemDocumentDao(private val fileSystemDocumentConfig: FileSystemDocu
         return loadFromFileSystem(uuid)
     }
 
-    private fun loadMetadataFromFileSystem(uuid: String): MenuDocumentMetadata? {
-        var document: MenuDocumentMetadata? = null
-        val dirPath = getDirectoryPath(uuid)
-        val file = File(dirPath)
-        if (file.exists()) {
-            val properties = readProperties(uuid)
-            document = MenuDocumentMetadata(properties)
-
+    private fun loadMetadataFromFileSystem(uuid: String): MenuDocumentMetadata? =
+        File(getDirectoryPath(uuid)).takeIf { it.exists() }?.let {
+            MenuDocumentMetadata(readProperties(uuid))
         }
-        return document
-    }
 
     private fun loadFromFileSystem(uuid: String): MenuDocument? {
         val metadata = loadMetadataFromFileSystem(uuid) ?: return null
@@ -114,27 +107,17 @@ class FileSystemDocumentDao(private val fileSystemDocumentConfig: FileSystemDocu
 
     private fun createDirectory(document: MenuDocument): Boolean {
         val path = getDirectoryPath(document)
-        return createDirectory(path)
+        return File(path).mkdir()
     }
 
-    private fun deleteDirectory(document: MenuDocument): Boolean {
-        val path = getDirectoryPath(document)
-        val file = File(path)
-        return file.deleteRecursively()
-    }
+    private fun deleteDirectory(document: MenuDocument): Boolean =
+        File(getDirectoryPath(document)).deleteRecursively()
 
     private fun getDirectoryPath(document: MenuDocument): String {
         return getDirectoryPath(document.metadata.uuid)
     }
 
     private fun getDirectoryPath(uuid: String): String {
-        val sb = StringBuilder()
-        sb.append(fileSystemDocumentConfig.directory).append(File.separator).append(uuid)
-        return sb.toString()
-    }
-
-    private fun createDirectory(path: String): Boolean {
-        val file = File(path)
-        return file.mkdir()
+        return "${fileSystemDocumentConfig.directory}${File.separator}$uuid"
     }
 }
