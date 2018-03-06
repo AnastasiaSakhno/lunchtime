@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import UserWeekMenu from '../UserWeekMenu'
 import moment from 'moment'
 
-const UsersMenuSheet = ({startDate, data, onSubmit, onUpdate, onOutChange, menuList, users, currentUser}) => {
+const UsersMenuSheet = ({startDate, data, onSubmit, onUpdate, onOutUpdate, menuList, users, currentUser}) => {
   let map = users.map((u) => {
     let found = data[u._links.self.href]
 
@@ -11,7 +11,7 @@ const UsersMenuSheet = ({startDate, data, onSubmit, onUpdate, onOutChange, menuL
       key={`uwm_${startDate}_${u.id}`}
       onSubmit={onSubmit}
       onUpdate={onUpdate}
-      onOutChange={onOutChange}
+      onOutUpdate={onOutUpdate}
       menuList={menuList}
       user={u}
       editable={currentUser.role === 'ROLE_ADMIN' || currentUser.id === u.id}
@@ -45,7 +45,7 @@ UsersMenuSheet.propTypes = {
   data: object,
   onSubmit: func.isRequired,
   onUpdate: func.isRequired,
-  onOutChange: func.isRequired,
+  onOutUpdate: func.isRequired,
   menuList: array.isRequired,
   users: array.isRequired,
   currentUser: object.isRequired

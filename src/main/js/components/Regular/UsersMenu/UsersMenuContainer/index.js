@@ -48,7 +48,7 @@ class UsersMenuContainer extends PureComponent {
             data={groupedByUser}
             onSubmit={this.props.addUserDayMenu}
             onUpdate={this.props.updateUserDayMenu}
-            onOutChange={this.props.updateOut}
+            onOutUpdate={this.props.updateOut}
             menuList={this.props.menuList}
             currentUser={this.props.currentUser}
             users={this.props.users}/>
