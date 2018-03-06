@@ -38,7 +38,7 @@ export const put = (path, authToken, data) => apiCall(path, {
   body: JSON.stringify(data)
 })
 
-export const readMenuDocument = (md) => fetch(`${MENU_DOCUMENTS_URI}/${md.uuid}`, {
+export const getMenuDocumentContent = (md) => fetch(`${MENU_DOCUMENTS_URI}/${md.uuid}`, {
   method: 'GET',
   responseType: 'arraybuffer'
 }).then(r => r.arrayBuffer())

@@ -1,5 +1,5 @@
 import { takeLatest, takeEvery, put, call, all } from 'redux-saga/effects'
-import { get, apiCall, readMenuDocument } from '../utils/rest'
+import { get, apiCall, getMenuDocumentContent } from '../utils/rest'
 import { MENU_DOCUMENTS_URI } from '../utils/api'
 import actions from '../actions'
 import * as actionTypes from '../actions/types'
@@ -12,7 +12,7 @@ export function* loadMenuDocuments() {
   yield put(actions.menuDocuments.loaded(menuDocuments))
 
   const menuDocumentsWithContent = yield all(menuDocuments.map((md) => {
-    return call(readMenuDocument, md)
+    return call(getMenuDocumentContent, md)
   }))
 
   yield all(menuDocumentsWithContent.map((content, index) => (
