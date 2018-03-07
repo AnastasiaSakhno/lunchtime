@@ -13,22 +13,19 @@ import java.util.*
 class MenuDocumentsController(var menuDocumentService: MenuDocumentService) {
 
     @GetMapping
-    fun index(): HttpEntity<List<MenuDocumentMetadata>> {
-        val httpHeaders = HttpHeaders()
-        return ResponseEntity<List<MenuDocumentMetadata>>(menuDocumentService.findAllDocuments(), httpHeaders, HttpStatus.OK)
-    }
+    fun index(): HttpEntity<List<MenuDocumentMetadata>> =
+        ResponseEntity.ok(menuDocumentService.findAllDocuments())
 
     @GetMapping("/{id}")
-    fun show(@PathVariable id: String): HttpEntity<ByteArray> {
-        return ResponseEntity.ok(menuDocumentService.getDocumentFile(id))
-    }
+    fun show(@PathVariable id: String): HttpEntity<ByteArray> =
+        ResponseEntity.ok(menuDocumentService.getDocumentFile(id))
 
     @PostMapping
     @ResponseBody
     fun upload(
-            @RequestParam(value = "file", required = true) file: MultipartFile,
-            @RequestParam(value = "restaurant", required = true) restaurant: String,
-            @RequestParam(value = "user", required = true) user: String): MenuDocumentMetadata {
+            @RequestParam(value = "file") file: MultipartFile,
+            @RequestParam(value = "restaurant") restaurant: String,
+            @RequestParam(value = "user") user: String): MenuDocumentMetadata {
 
         val document = MenuDocument(
             fileData = file.bytes,
