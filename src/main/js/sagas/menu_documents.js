@@ -11,11 +11,11 @@ export function* loadMenuDocuments() {
   const menuDocuments = yield call(get, MENU_DOCUMENTS_URI)
   yield put(actions.menuDocuments.loaded(menuDocuments))
 
-  const menuDocumentsWithContent = yield all(menuDocuments.map((md) => {
+  const menuDocumentsContent = yield all(menuDocuments.map((md) => {
     return call(getMenuDocumentContent, md)
   }))
 
-  yield all(menuDocumentsWithContent.map((content, index) => (
+  yield all(menuDocumentsContent.map((content, index) => (
     put(actions.menuDocuments.contentLoadedSuccessfully({ menuDocument: menuDocuments[index], content: content }))
   )))
 }
@@ -35,6 +35,10 @@ export function* uploadMenuDocument({ menuDocument }) {
 
   if(newMenuDocument.uuid) {
     yield put(actions.menuDocuments.uploadedSuccessfully(newMenuDocument))
+    const menuDocumentContent = yield call(getMenuDocumentContent, newMenuDocument)
+    yield put(
+      actions.menuDocuments.contentLoadedSuccessfully({ menuDocument: newMenuDocument, content: menuDocumentContent })
+    )
   }
 }
 

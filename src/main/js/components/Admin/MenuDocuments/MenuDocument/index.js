@@ -36,12 +36,15 @@ class MenuDocument extends Component {
 
     return (
       <div className='col'>
-        <form className='menu-document-form' ref={el => {
-          this.form = el
-        }}>
+        <form
+          className='menu-document-form'
+          ref={el => {
+            this.form = el
+          }}
+          onSubmit={this.handleSubmit}>
           {text}
           <input type='file' onChange={this.onChange}/>
-          <button className='btn btn-primary' onSubmit={this.handleSubmit}>Upload</button>
+          <input type='submit' className='btn btn-primary' value='Upload'/>
         </form>
         <div dangerouslySetInnerHTML={{__html: this.props.content}}/>
       </div>
@@ -49,7 +52,7 @@ class MenuDocument extends Component {
   }
 }
 
-const {string, number, } = PropTypes
+const {string, number} = PropTypes
 
 MenuDocument.propTypes = {
   restaurantName: string.isRequired,
