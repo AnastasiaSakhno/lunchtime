@@ -3,9 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import actions from '../../../../actions/index'
 import HeaderHOC from '../../../../HOC/HeaderHOC/index'
-import RedirectToLoginHOC from '../../../../HOC/RedirectToLoginHOC/index'
+import RedirectToLoginHOC from '../../../../HOC/RedirectToLoginHOC'
 import UsersMenuSheet from '../UsersMenuSheet'
-import { groupBy, sortBy, compose, toLower, prop, filter, prepend } from 'ramda'
 
 const { bool, array, object, func } = PropTypes
 
@@ -23,7 +22,7 @@ class UsersMenuContainer extends PureComponent {
     menuList: array.isRequired,
     users: array.isRequired,
     authenticated: bool.isRequired,
-    currentUser: object.isRequired
+    currentUser: object
   }
 
   componentDidMount() {
@@ -35,34 +34,19 @@ class UsersMenuContainer extends PureComponent {
   }
 
   render() {
-    if(this.props.currentUser
-      && this.props.usersMenu.data
-      && this.props.menuList
-      && this.props.users) {
-      let groupedByUser = groupBy(udm => udm.user._links.self.href.replace('{?projection}', ''))(this.props.usersMenu.data)
-
-      let orderedUsers = sortBy(compose(toLower, prop('fullName')))(this.props.users)
-      orderedUsers = filter(u => u.id !== this.props.currentUser.id, orderedUsers)
-      orderedUsers = prepend(this.props.currentUser, orderedUsers)
-
-      return (
-        <div className="users-menu-container">
-          <UsersMenuSheet
-            startDate={this.props.usersMenu.startDate}
-            data={groupedByUser}
-            onSubmit={this.props.addUserDayMenu}
-            onUpdate={this.props.updateUserDayMenu}
-            onOutUpdate={this.props.updateOut}
-            menuList={this.props.menuList}
-            currentUser={this.props.currentUser}
-            users={orderedUsers}/>
-        </div>
-      )
-    } else {
-      return (
-        <div>not yet</div>
-      )
-    }
+    return (
+      <div className="users-menu-container">
+        <UsersMenuSheet
+          startDate={this.props.usersMenu.startDate}
+          data={this.props.usersMenu.data}
+          onSubmit={this.props.addUserDayMenu}
+          onUpdate={this.props.updateUserDayMenu}
+          onOutUpdate={this.props.updateOut}
+          menuList={this.props.menuList}
+          currentUser={this.props.currentUser}
+          users={this.props.users}/>
+      </div>
+    )
   }
 }
 

@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import Spinner from '../../components/Spinner'
+import { all } from 'ramda'
 
-const SpinnerHOC = (WrappedComponent) => {
-  return class HeaderWrapper extends Component {
-    static propTypes = {
-      loaded: PropTypes.bool.isRequired
-    }
+const isEmpty = (prop) => (
+  prop === null ||
+  prop === undefined ||
+  (prop.hasOwnProperty('length') && prop.length === 0) ||
+  (prop.constructor === Object && Object.keys(prop).length === 0)
+)
 
+const SpinnerHOC = (neededProps) => (WrappedComponent) => {
+  return class SpinnerWrapper extends Component {
     render() {
       return (
-        this.props.loaded ?
+        all((p) => !isEmpty(this.props[p]))(neededProps) ?
           <WrappedComponent {...this.props} />
           :
           <Spinner/>
