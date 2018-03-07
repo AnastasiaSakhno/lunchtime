@@ -42,7 +42,7 @@ class FileSystemDocumentDao(private val fileSystemDocumentConfig: FileSystemDocu
     }
 
     override fun loadAll(): List<MenuDocumentMetadata> =
-        uuidList.mapNotNullTo(ArrayList(uuidList.size)) { loadMetadataFromFileSystem(it) }
+        uuidList.mapNotNullTo(destination = ArrayList(uuidList.size)) { loadMetadataFromFileSystem(it) }
 
     override fun load(uuid: String): MenuDocument? =
         loadFromFileSystem(uuid)
