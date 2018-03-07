@@ -65,59 +65,36 @@ class FileSystemDocumentDao(private val fileSystemDocumentConfig: FileSystemDocu
     }
 
     private fun getFilePath(metadata: MenuDocumentMetadata): String {
-        val dirPath = getDirectoryPath(metadata.uuid)
-        val sb = StringBuilder()
-        sb.append(dirPath).append(File.separator).append(metadata.fileName)
-        return sb.toString()
+        return "${getDirectoryPath(metadata.uuid)}${File.separator}${metadata.fileName}"
     }
 
     private fun saveFileData(document: MenuDocument) {
-        val path = getDirectoryPath(document)
-        val stream = BufferedOutputStream(FileOutputStream(File(File(path), document.metadata.fileName)))
-        stream.write(document.fileData)
-        stream.close()
+        val path = Paths.get(getDirectoryPath(document), document.metadata.fileName)
+        Files.newOutputStream(path).use { it.write(document.fileData) }
     }
 
     fun saveMetaData(document: MenuDocument) {
-        val path = getDirectoryPath(document)
         val props = document.metadata.properties
-        val f = File(File(path), fileSystemDocumentConfig.metadataFileName)
-        val out = FileOutputStream(f)
-        props.store(out, "Document meta data")
+        val path = File(File(getDirectoryPath(document)), fileSystemDocumentConfig.metadataFileName).toPath()
+        Files.newOutputStream(path).use { props.store(it, "Document meta data") }
     }
 
     private fun readProperties(uuid: String): Properties {
-        val prop = Properties()
-        var input: InputStream? = null
-        try {
-            input = FileInputStream(File(getDirectoryPath(uuid), fileSystemDocumentConfig.metadataFileName))
-            prop.load(input)
-        } finally {
-            if (input != null) {
-                try {
-                    input.close()
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-
-            }
-        }
-        return prop
+        val props = Properties()
+        val path = File(getDirectoryPath(uuid), fileSystemDocumentConfig.metadataFileName).toPath()
+        Files.newInputStream(path).use { props.load(it) }
+        return props
     }
 
-    private fun createDirectory(document: MenuDocument): Boolean {
-        val path = getDirectoryPath(document)
-        return File(path).mkdir()
-    }
+    private fun createDirectory(document: MenuDocument): Boolean =
+        File(getDirectoryPath(document)).mkdir()
 
     private fun deleteDirectory(document: MenuDocument): Boolean =
         File(getDirectoryPath(document)).deleteRecursively()
 
-    private fun getDirectoryPath(document: MenuDocument): String {
-        return getDirectoryPath(document.metadata.uuid)
-    }
+    private fun getDirectoryPath(document: MenuDocument): String =
+        getDirectoryPath(document.metadata.uuid)
 
-    private fun getDirectoryPath(uuid: String): String {
-        return "${fileSystemDocumentConfig.directory}${File.separator}$uuid"
-    }
+    private fun getDirectoryPath(uuid: String): String =
+        "${fileSystemDocumentConfig.directory}${File.separator}$uuid"
 }
