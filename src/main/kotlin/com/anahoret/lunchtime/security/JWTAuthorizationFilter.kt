@@ -15,35 +15,25 @@ import javax.servlet.http.HttpServletResponse
 class JWTAuthorizationFilter(authenticationManager: AuthenticationManager, private val userDetailsService: UserDetailsService, private val jwtConfig: JwtConfig) : BasicAuthenticationFilter(authenticationManager) {
 
     override fun doFilterInternal(req: HttpServletRequest,
-                                   res: HttpServletResponse,
-                                   chain: FilterChain) {
-        val header = req.getHeader(jwtConfig.header)
+                                  res: HttpServletResponse,
+                                  chain: FilterChain) {
+        req.getHeader(jwtConfig.header)
+                ?.takeIf { it.startsWith(jwtConfig.tokenPrefix) }
+                ?.let { SecurityContextHolder.getContext().authentication = getAuthentication(it) }
 
-        if (header == null || !header.startsWith(jwtConfig.tokenPrefix)) {
-            chain.doFilter(req, res)
-            return
-        }
-
-        val authentication = getAuthentication(req)
-
-        SecurityContextHolder.getContext().authentication = authentication
         chain.doFilter(req, res)
     }
 
-    private fun getAuthentication(request: HttpServletRequest): UsernamePasswordAuthenticationToken? {
-        val token = request.getHeader(jwtConfig.header)
-        if (token != null) {
-            val email = Jwts.parser()
-                    .setSigningKey(jwtConfig.secret.toByteArray(Charsets.UTF_8))
-                    .parseClaimsJws(token.replace(jwtConfig.tokenPrefix, ""))
-                    .getBody()
-                    .getSubject()
+    private fun getAuthentication(tokenHeader: String): UsernamePasswordAuthenticationToken? {
+        val email = Jwts.parser()
+                .setSigningKey(jwtConfig.secret.toByteArray(Charsets.UTF_8))
+                .parseClaimsJws(tokenHeader.replace(jwtConfig.tokenPrefix, ""))
+                .body
+                .subject
 
-            return if (email != null) {
-                val user = userDetailsService.loadUserByUsername(email)
-                UsernamePasswordAuthenticationToken(email, null, user.authorities)
-            } else null
+        return email?.let {
+            val user = userDetailsService.loadUserByUsername(it)
+            UsernamePasswordAuthenticationToken(it, null, user.authorities)
         }
-        return null
     }
 }
