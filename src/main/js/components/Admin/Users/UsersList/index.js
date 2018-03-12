@@ -1,19 +1,23 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { User } from '../../Users'
+import SpinnerHOC from "../../../../HOC/SpinnerHOC";
 
-const UsersList = ({ data }) => {
-  const map = data.map((user) => (
-    <User { ...user } key={ `user_${user.id}` } />
-  ))
+@SpinnerHOC(['data'])
+class UsersList extends Component {
+  render() {
+    const map = this.props.data.map((user) => (
+      <User {...user} key={`user_${user.id}`}/>
+    ))
 
-  return (
-    <div className="users-list">
-      <legend>Users</legend>
-      { map }
-    </div>
-  )
+    return (
+      <div className="users-list">
+        <legend>Users</legend>
+        {map}
+      </div>
+    )
+  }
 }
 
 const { string, number, arrayOf, shape } = PropTypes
