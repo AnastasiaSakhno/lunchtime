@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import LogoutLink from '../LogoutLink'
 import { Link } from 'react-router-dom'
+import withCurrentUser from '../../HOC/withCurrentUser'
 
+@withCurrentUser
 class Header extends Component {
   render() {
     return (

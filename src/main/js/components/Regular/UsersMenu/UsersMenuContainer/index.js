@@ -3,34 +3,22 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import actions from '../../../../actions'
 import withHeader from '../../../../HOC/withHeader'
-import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
+import withCurrentUser from '../../../../HOC/withCurrentUser'
 import UsersMenuSheet from '../UsersMenuSheet'
+import withNeededStores from '../../../../HOC/withNeededStores'
+import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
 
-const { bool, array, object, func } = PropTypes
+const { func } = PropTypes
 
-@withHeader
+@withNeededStores(['menu', 'users', 'usersMenu'])
 @withRedirectToLogin
+@withCurrentUser
+@withHeader
 class UsersMenuContainer extends PureComponent {
   static propTypes = {
-    loadMenu: func.isRequired,
-    loadUsersMenu: func.isRequired,
-    loadUsers: func.isRequired,
     addUserDayMenu: func.isRequired,
     updateUserDayMenu: func.isRequired,
-    updateOut: func.isRequired,
-    usersMenu: object.isRequired,
-    menuList: array.isRequired,
-    users: array.isRequired,
-    authenticated: bool.isRequired,
-    currentUser: object
-  }
-
-  componentDidMount() {
-    if(this.props.authenticated) {
-      this.props.loadMenu()
-      this.props.loadUsers()
-      this.props.loadUsersMenu()
-    }
+    updateOut: func.isRequired
   }
 
   render() {
@@ -42,7 +30,7 @@ class UsersMenuContainer extends PureComponent {
           onSubmit={this.props.addUserDayMenu}
           onUpdate={this.props.updateUserDayMenu}
           onOutUpdate={this.props.updateOut}
-          menuList={this.props.menuList}
+          menuList={this.props.menu}
           currentUser={this.props.currentUser}
           users={this.props.users}/>
       </div>
@@ -50,24 +38,7 @@ class UsersMenuContainer extends PureComponent {
   }
 }
 
-const mapStateToProps = (state) => ({
-  menuList: state.menu,
-  users: state.users,
-  usersMenu: state.usersMenu,
-  authenticated: state.session.authenticated,
-  currentUser: state.users.find((u) => (u.email === state.session.user.email))
-})
-
 const mapDispatchToProps = (dispatch) => ({
-  loadUsersMenu: () => {
-    dispatch(actions.usersMenu.load())
-  },
-  loadMenu: () => {
-    dispatch(actions.menu.load())
-  },
-  loadUsers: () => {
-    dispatch(actions.users.load())
-  },
   addUserDayMenu: (userDayMenu) => {
     dispatch(actions.usersMenu.add(userDayMenu))
   },
@@ -79,4 +50,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersMenuContainer)
+export default connect(null, mapDispatchToProps)(UsersMenuContainer)

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router'
 
 const withRedirectToLogin = (WrappedComponent) => {
-  return class HeaderWrapper extends Component {
+  class RedirectToLoginWrapper extends Component {
     static propTypes = {
       authenticated: PropTypes.bool.isRequired
     }
@@ -17,6 +18,12 @@ const withRedirectToLogin = (WrappedComponent) => {
       )
     }
   }
+
+  const mapStateToProps = (state) => ({
+    authenticated: state.session.authenticated
+  })
+
+  return connect(mapStateToProps)(RedirectToLoginWrapper)
 }
 
 export default withRedirectToLogin
