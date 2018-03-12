@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import RootBox from '../RootBox'
-import HeaderHOC from '../../HOC/HeaderHOC'
-import RedirectToLoginHOC from '../../HOC/RedirectToLoginHOC'
+import withHeader from '../../HOC/withHeader'
+import withRedirectToLogin from '../../HOC/withRedirectToLogin'
 
-@HeaderHOC
-@RedirectToLoginHOC
+@withHeader
+@withRedirectToLogin
 class Home extends Component {
   render() {
     return (

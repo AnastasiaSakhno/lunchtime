@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router'
 
-const RedirectToLoginHOC = (WrappedComponent) => {
+const withRedirectToLogin = (WrappedComponent) => {
   return class HeaderWrapper extends Component {
     static propTypes = {
       authenticated: PropTypes.bool.isRequired
@@ -19,4 +19,4 @@ const RedirectToLoginHOC = (WrappedComponent) => {
   }
 }
 
-export default RedirectToLoginHOC
+export default withRedirectToLogin

@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { User } from '../../Users'
-import SpinnerHOC from "../../../../HOC/SpinnerHOC";
+import withSpinner from "../../../../HOC/withSpinner";
 
-@SpinnerHOC(['data'])
+@withSpinner(['data'])
 class UsersList extends Component {
   render() {
     const map = this.props.data.map((user) => (

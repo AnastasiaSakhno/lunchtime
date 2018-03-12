@@ -9,7 +9,7 @@ const isEmpty = (prop) => (
   (prop.constructor === Object && Object.keys(prop).length === 0)
 )
 
-const SpinnerHOC = (neededProps) => (WrappedComponent) => {
+const withSpinner = (neededProps) => (WrappedComponent) => {
   return class SpinnerWrapper extends Component {
     render() {
       return (
@@ -22,4 +22,4 @@ const SpinnerHOC = (neededProps) => (WrappedComponent) => {
   }
 }
 
-export default SpinnerHOC
+export default withSpinner

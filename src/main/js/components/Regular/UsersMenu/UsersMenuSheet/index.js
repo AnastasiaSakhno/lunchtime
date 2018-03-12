@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import UserWeekMenu from '../UserWeekMenu'
 import moment from 'moment'
-import SpinnerHOC from '../../../../HOC/SpinnerHOC'
+import withSpinner from '../../../../HOC/withSpinner'
 import {compose, filter, groupBy, prepend, prop, sortBy, toLower} from 'ramda'
 
-@SpinnerHOC(['startDate', 'currentUser', 'menuList'])
+@withSpinner(['startDate', 'currentUser', 'menuList'])
 class UsersMenuSheet extends Component {
   render() {
     let groupedByUser = groupBy(udm => udm.user._links.self.href.replace('{?projection}', ''))(this.props.data)

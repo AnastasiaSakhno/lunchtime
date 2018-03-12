@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Header from '../../components/Header'
 
-const HeaderHOC = (WrappedComponent) => {
+const withHeader = (WrappedComponent) => {
   return class HeaderWrapper extends Component {
     render() {
       return (
@@ -14,4 +14,4 @@ const HeaderHOC = (WrappedComponent) => {
   }
 }
 
-export default HeaderHOC
+export default withHeader

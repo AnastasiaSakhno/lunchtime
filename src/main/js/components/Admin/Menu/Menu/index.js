@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import IconButton from '../../../IconButton/index'
+import IconButton from '../../../IconButton'
 
 class Menu extends Component {
   static propTypes = {

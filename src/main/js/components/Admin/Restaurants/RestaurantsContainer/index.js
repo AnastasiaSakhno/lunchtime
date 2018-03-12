@@ -1,15 +1,15 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import actions from '../../../../actions/index'
+import actions from '../../../../actions'
 import { RestaurantsList, RestaurantForm } from '../../Restaurants'
-import HeaderHOC from '../../../../HOC/HeaderHOC/index'
-import RedirectToLoginHOC from '../../../../HOC/RedirectToLoginHOC/index'
+import withHeader from '../../../../HOC/withHeader'
+import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
 
 const { bool, array, func } = PropTypes
 
-@HeaderHOC
-@RedirectToLoginHOC
+@withHeader
+@withRedirectToLogin
 class RestaurantsContainer extends PureComponent {
   static propTypes = {
     loadRestaurants: func.isRequired,
