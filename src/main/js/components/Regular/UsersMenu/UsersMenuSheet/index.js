@@ -5,7 +5,7 @@ import moment from 'moment'
 import SpinnerHOC from '../../../../HOC/SpinnerHOC'
 import {compose, filter, groupBy, prepend, prop, sortBy, toLower} from 'ramda'
 
-@SpinnerHOC(['data', 'currentUser', 'users', 'menuList'])
+@SpinnerHOC(['startDate', 'currentUser', 'menuList'])
 class UsersMenuSheet extends Component {
   render() {
     let groupedByUser = groupBy(udm => udm.user._links.self.href.replace('{?projection}', ''))(this.props.data)
