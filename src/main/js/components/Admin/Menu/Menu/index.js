@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import IconButton from '../../../IconButton'
+import withCurrentUser from '../../../../HOC/withCurrentUser'
+import {cancanUser, can, Menu as MenuItem} from '../../../abilities'
 
+@withCurrentUser
 class Menu extends Component {
   static propTypes = {
     onDestroy: PropTypes.func.isRequired
@@ -20,10 +23,11 @@ class Menu extends Component {
 
     let text = `Name: ${ this.props.name }, Week days: ${ this.props.week_days ? this.props.week_days : 'All' }`
 
+    const user = cancanUser(this.props.currentUser)
     return (
       <div className='restaurant'>
         { this.props.archive ? <del>{ text }</del> : text }
-        { destroyIcon }
+        { can(user, 'delete', MenuItem) ? destroyIcon : '' }
       </div>
     )
   }
