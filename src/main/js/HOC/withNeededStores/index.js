@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import actions from '../../actions'
 import { isEmpty } from '../../utils/object'
+import capitalize from 'capitalize'
 
 const withNeededStores = (neededStores) => (WrappedComponent) => {
   const { func, object, array } = PropTypes
@@ -13,6 +14,7 @@ const withNeededStores = (neededStores) => (WrappedComponent) => {
       menu: array.isRequired,
       restaurants: array.isRequired,
       users: array.isRequired,
+      menuDocuments: array.isRequired,
       loadMenu: func.isRequired,
       loadRestaurants: func.isRequired,
       loadUsersMenu: func.isRequired,
@@ -21,22 +23,13 @@ const withNeededStores = (neededStores) => (WrappedComponent) => {
     }
 
     componentDidMount() {
-      // TODO eval all
-      if(neededStores.includes('menu') && isEmpty(this.props.menu)) {
-        this.props.loadMenu()
-      }
-      if(neededStores.includes('users') && isEmpty(this.props.menu)) {
-        this.props.loadUsers()
-      }
-      if(neededStores.includes('usersMenu') && isEmpty(this.props.menu)) {
-        this.props.loadUsersMenu()
-      }
-      if(neededStores.includes('restaurants') && isEmpty(this.props.restaurants)) {
-        this.props.loadRestaurants()
-      }
-      if(neededStores.includes('menuDocuments') && isEmpty(this.props.menuDocuments)) {
-        this.props.loadMenuDocuments()
-      }
+      let self = this
+      neededStores.forEach((storeName) => {
+        let store = eval(`self.props.${storeName}`)
+        if (isEmpty(store)) {
+          eval(`self.props.load${capitalize(storeName)}()`)
+        }
+      })
     }
 
     render() {
