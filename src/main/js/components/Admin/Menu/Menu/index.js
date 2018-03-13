@@ -1,39 +1,41 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import IconButton from '../../../IconButton'
 import withCurrentUser from '../../../../HOC/withCurrentUser'
 import {cancanUser, can, Menu as MenuItem} from '../../../abilities'
 
+const {func, object} = PropTypes
+
 @withCurrentUser
 class Menu extends Component {
   static propTypes = {
-    onDestroy: PropTypes.func.isRequired
+    onDestroy: func.isRequired,
+    currentUser: object
   }
 
   handleDestroy = (e) => {
     e.preventDefault()
-    this.props.onDestroy({ ...this.props })
+    this.props.onDestroy({...this.props})
   }
 
   render() {
-    let destroyIcon = <IconButton icon={ 'fa-remove ' } onSubmit={ this.handleDestroy } />
-    if(this.props.archive) {
-      destroyIcon = ''
-    }
+    const user = cancanUser(this.props.currentUser)
+    let destroyIcon = !this.props.archive && can(user, 'delete', MenuItem)
+      ? <IconButton icon={'fa-remove '} onSubmit={this.handleDestroy}/>
+      : ''
 
     let text = `Name: ${ this.props.name }, Week days: ${ this.props.week_days ? this.props.week_days : 'All' }`
 
-    const user = cancanUser(this.props.currentUser)
     return (
       <div className='restaurant'>
-        { this.props.archive ? <del>{ text }</del> : text }
-        { can(user, 'delete', MenuItem) ? destroyIcon : '' }
+        {this.props.archive ? <del>{text}</del> : text}
+        {destroyIcon}
       </div>
     )
   }
 }
 
-const { string, bool, number, shape } = PropTypes
+const {string, bool, number, shape} = PropTypes
 
 Menu.propTypes = {
   id: number,

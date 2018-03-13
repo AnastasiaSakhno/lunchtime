@@ -24,7 +24,6 @@ class UsersMenuSheet extends Component {
         onOutUpdate={this.props.onOutUpdate}
         menuList={this.props.menuList}
         user={u}
-        editable={this.props.currentUser.role === 'ROLE_ADMIN' || this.props.currentUser.id === u.id}
         data={found ? found : []}/>)
     })
 

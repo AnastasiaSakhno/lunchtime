@@ -1,12 +1,16 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import withCurrentUser from '../../../../HOC/withCurrentUser'
+import {can, cancanUser, UserDayMenu} from '../../../abilities'
 
-const {bool, number, func} = PropTypes
+const {bool, number, object, func} = PropTypes
 
+@withCurrentUser
 class UserDayMenuOut extends Component {
   static propTypes = {
-    onOutUpdate: func.isRequired
+    onOutUpdate: func.isRequired,
+    currentUser: object
   }
 
   handleUpdate = (e) => {
@@ -18,7 +22,9 @@ class UserDayMenuOut extends Component {
   dateString = (dayOfWeek) => (moment().day(dayOfWeek).valueOf())
 
   render() {
-    if (this.props.editable) {
+    const user = cancanUser(this.props.currentUser)
+
+    if (can(user, 'manage', new UserDayMenu(this.props))) {
       return (
         <div className='input-group-append'>
           <div className="input-group-text">
@@ -42,8 +48,7 @@ class UserDayMenuOut extends Component {
 UserDayMenuOut.propTypes = {
   id: number,
   dayOfWeek: number.isRequired,
-  out: bool,
-  editable: bool.isRequired
+  out: bool
 }
 
 export default UserDayMenuOut

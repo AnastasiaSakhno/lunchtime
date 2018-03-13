@@ -1,14 +1,18 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import withCurrentUser from '../../../../HOC/withCurrentUser'
+import {can, cancanUser, UserDayMenu} from '../../../abilities'
 
-const {string, bool, number, object, array, shape, func} = PropTypes
+const {string, number, object, array, shape, func} = PropTypes
 
+@withCurrentUser
 class UserDayMenuSelect extends Component {
   static propTypes = {
     onSubmit: func.isRequired,
     onUpdate: func.isRequired,
-    menuList: array.isRequired
+    menuList: array.isRequired,
+    currentUser: object
   }
 
   handleSubmit = (e) => {
@@ -32,7 +36,9 @@ class UserDayMenuSelect extends Component {
   render() {
     let selected = this.props.menu ? this.props.menu._links.self.href.replace('{?projection}', '') : ''
 
-    if (this.props.editable) {
+    const user = cancanUser(this.props.currentUser)
+
+    if (can(user, 'manage', new UserDayMenu(this.props))) {
       return (
         <select
           className="form-control custom-select"
@@ -70,8 +76,7 @@ UserDayMenuSelect.propTypes = {
   user: shape({
     id: number,
     fullName: string
-  }).isRequired,
-  editable: bool.isRequired
+  }).isRequired
 }
 
 export default UserDayMenuSelect

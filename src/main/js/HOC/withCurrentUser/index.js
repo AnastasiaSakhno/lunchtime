@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import withNeededStores from '../withNeededStores'
 
 const withCurrentUser = (WrappedComponent) => {
 
-  @withNeededStores(['users'])
   class LoggedInUserWrapper extends Component {
     static propTypes = {
       currentUser: PropTypes.object
