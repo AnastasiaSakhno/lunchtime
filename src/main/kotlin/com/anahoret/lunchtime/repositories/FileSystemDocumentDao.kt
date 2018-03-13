@@ -31,110 +31,58 @@ class FileSystemDocumentDao(private val fileSystemDocumentConfig: FileSystemDocu
 
     @PostConstruct
     fun init() {
-        createDirectory(fileSystemDocumentConfig.directory)
+        File(fileSystemDocumentConfig.directory).mkdir()
     }
 
     override fun insert(document: MenuDocument) {
-        deleteDirectory(document)
-        createDirectory(document)
+        getDirectory(document).deleteRecursively()
+        getDirectory(document).mkdir()
         saveFileData(document)
         saveMetaData(document)
     }
 
-    override fun loadAll(): List<MenuDocumentMetadata> {
-        val list = ArrayList<MenuDocumentMetadata>(uuidList.size)
-        uuidList.mapNotNullTo(list) { loadMetadataFromFileSystem(it) }
-        return list
-    }
+    override fun loadAll(): List<MenuDocumentMetadata> =
+        uuidList.mapNotNullTo(destination = ArrayList(uuidList.size)) { loadMetadataFromFileSystem(it) }
 
-    override fun load(uuid: String): MenuDocument? {
-        return loadFromFileSystem(uuid)
-    }
+    override fun load(uuid: String): MenuDocument? =
+        loadFromFileSystem(uuid)
 
-    private fun loadMetadataFromFileSystem(uuid: String): MenuDocumentMetadata? {
-        var document: MenuDocumentMetadata? = null
-        val dirPath = getDirectoryPath(uuid)
-        val file = File(dirPath)
-        if (file.exists()) {
-            val properties = readProperties(uuid)
-            document = MenuDocumentMetadata(properties)
-
+    private fun loadMetadataFromFileSystem(uuid: String): MenuDocumentMetadata? =
+        File(getDirectoryPath(uuid)).takeIf { it.exists() }?.let {
+            MenuDocumentMetadata(readProperties(uuid))
         }
-        return document
-    }
 
-    private fun loadFromFileSystem(uuid: String): MenuDocument? {
-        val metadata = loadMetadataFromFileSystem(uuid) ?: return null
-        val path = Paths.get(getFilePath(metadata))
-        val document = MenuDocument(metadata)
-        document.fileData = Files.readAllBytes(path)
-        return document
-    }
+    private fun loadFromFileSystem(uuid: String): MenuDocument? =
+        loadMetadataFromFileSystem(uuid)?.let { metadata ->
+            val path = Paths.get(getFilePath(metadata))
+            MenuDocument(metadata).also { document -> document.fileData = Files.readAllBytes(path) }
+        }
 
-    private fun getFilePath(metadata: MenuDocumentMetadata): String {
-        val dirPath = getDirectoryPath(metadata.uuid)
-        val sb = StringBuilder()
-        sb.append(dirPath).append(File.separator).append(metadata.fileName)
-        return sb.toString()
-    }
+    private fun getFilePath(metadata: MenuDocumentMetadata): String =
+        "${getDirectoryPath(metadata.uuid)}${File.separator}${metadata.fileName}"
 
     private fun saveFileData(document: MenuDocument) {
-        val path = getDirectoryPath(document)
-        val stream = BufferedOutputStream(FileOutputStream(File(File(path), document.metadata.fileName)))
-        stream.write(document.fileData)
-        stream.close()
+        val path = Paths.get(getDirectoryPath(document), document.metadata.fileName)
+        Files.newOutputStream(path).use { it.write(document.fileData) }
     }
 
-    fun saveMetaData(document: MenuDocument) {
-        val path = getDirectoryPath(document)
-        val props = document.metadata.properties
-        val f = File(File(path), fileSystemDocumentConfig.metadataFileName)
-        val out = FileOutputStream(f)
-        props.store(out, "Document meta data")
+    private fun saveMetaData(document: MenuDocument) {
+        val path = Paths.get(getDirectoryPath(document), fileSystemDocumentConfig.metadataFileName)
+        Files.newOutputStream(path).use { document.metadata.properties.store(it, "Document meta data") }
     }
 
-    private fun readProperties(uuid: String): Properties {
-        val prop = Properties()
-        var input: InputStream? = null
-        try {
-            input = FileInputStream(File(getDirectoryPath(uuid), fileSystemDocumentConfig.metadataFileName))
-            prop.load(input)
-        } finally {
-            if (input != null) {
-                try {
-                    input.close()
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-
-            }
+    private fun readProperties(uuid: String): Properties =
+        Properties().also { props ->
+            val path = Paths.get(getDirectoryPath(uuid), fileSystemDocumentConfig.metadataFileName)
+            Files.newInputStream(path).use { props.load(it) }
         }
-        return prop
-    }
 
-    private fun createDirectory(document: MenuDocument): Boolean {
-        val path = getDirectoryPath(document)
-        return createDirectory(path)
-    }
+    private fun getDirectory(document: MenuDocument): File =
+        File(getDirectoryPath(document))
 
-    private fun deleteDirectory(document: MenuDocument): Boolean {
-        val path = getDirectoryPath(document)
-        val file = File(path)
-        return file.deleteRecursively()
-    }
+    private fun getDirectoryPath(document: MenuDocument): String =
+        getDirectoryPath(document.metadata.uuid)
 
-    private fun getDirectoryPath(document: MenuDocument): String {
-        return getDirectoryPath(document.metadata.uuid)
-    }
-
-    private fun getDirectoryPath(uuid: String): String {
-        val sb = StringBuilder()
-        sb.append(fileSystemDocumentConfig.directory).append(File.separator).append(uuid)
-        return sb.toString()
-    }
-
-    private fun createDirectory(path: String): Boolean {
-        val file = File(path)
-        return file.mkdir()
-    }
+    private fun getDirectoryPath(uuid: String): String =
+        "${fileSystemDocumentConfig.directory}${File.separator}$uuid"
 }

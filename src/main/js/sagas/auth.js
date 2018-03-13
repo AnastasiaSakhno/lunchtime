@@ -25,6 +25,7 @@ export function* loggedInSuccessfully({ data }) {
 
 export function* logout() {
   yield call(saveUser, null)
+  yield call(saveSession, null)
   yield call(deleteSession)
 }
 

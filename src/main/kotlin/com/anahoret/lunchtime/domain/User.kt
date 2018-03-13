@@ -1,5 +1,6 @@
 package com.anahoret.lunchtime.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
@@ -22,6 +23,9 @@ class User {
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     var role: Role? = Role.ROLE_REGULAR
+
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user")
+    var userDayMenu: MutableSet<UserDayMenu> = LinkedHashSet()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

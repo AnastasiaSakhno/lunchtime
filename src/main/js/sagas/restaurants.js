@@ -24,7 +24,7 @@ export function* addRestaurant({ restaurant }) {
 export function* removeRestaurant({ restaurant }) {
   const user = yield call(loadUser)
   const newRestaurant = yield call(putRest,
-    RESTAURANTS_URI + '/' + restaurant.id,
+    `${RESTAURANTS_URI}/${restaurant.id}`,
     user.auth_token, {...restaurant, archive: true})
 
   if(newRestaurant.id) {

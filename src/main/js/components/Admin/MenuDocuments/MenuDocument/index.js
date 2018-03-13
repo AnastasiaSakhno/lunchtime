@@ -1,10 +1,15 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import IconButton from '../../../IconButton/index'
+import withCurrentUser from '../../../../HOC/withCurrentUser'
+import {can, cancanUser, MenuDocument as MenuDocumentItem} from '../../../abilities'
 
+const {object, func} = PropTypes
+
+@withCurrentUser
 class MenuDocument extends Component {
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: func.isRequired,
+    currentUser: object
   }
 
   constructor(props) {
@@ -35,15 +40,25 @@ class MenuDocument extends Component {
       ${ this.props.restaurantName }, \
       ${ this.props.uploadedAt ? uploadedText : '' }`
 
+    const user = cancanUser(this.props.currentUser)
+
     return (
-      <div>
-        <form className='menu-document-form' ref={el => {
-          this.form = el
-        }}>
-          {text}
-          <input type='file' onChange={this.onChange}/>
-          <IconButton icon={'fa-upload '} onSubmit={this.handleSubmit}/>
-        </form>
+      <div className='col'>
+        {
+          can(user, 'manage', MenuDocumentItem)
+            ? <form
+              className='menu-document-form'
+              ref={el => {
+                this.form = el
+              }}
+              onSubmit={this.handleSubmit}>
+              {text}
+              <input type='file' onChange={this.onChange}/>
+              <input type='submit' className='btn btn-primary' value='Upload'/>
+            </form>
+            : ''
+        }
+        <div dangerouslySetInnerHTML={{__html: this.props.content}}/>
       </div>
     )
   }
@@ -55,7 +70,8 @@ MenuDocument.propTypes = {
   restaurantName: string.isRequired,
   fileName: string,
   uploadedAt: number,
-  userName: string
+  userName: string,
+  content: string
 }
 
 export default MenuDocument

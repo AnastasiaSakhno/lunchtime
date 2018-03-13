@@ -1,30 +1,22 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import actions from '../../../../actions/index'
+import actions from '../../../../actions'
 import MenuDocumentsList from '../MenuDocumentsList'
-import HeaderHOC from '../../../../HOC/HeaderHOC/index'
-import RedirectToLoginHOC from '../../../../HOC/RedirectToLoginHOC/index'
+import withHeader from '../../../../HOC/withHeader'
+import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
+import withNeededStores from '../../../../HOC/withNeededStores'
 
-const { bool, array, func } = PropTypes
+const { array, func } = PropTypes
 
-@HeaderHOC
-@RedirectToLoginHOC
+@withNeededStores(['restaurants', 'menuDocuments'])
+@withRedirectToLogin
+@withHeader
 class MenuDocumentsContainer extends PureComponent {
   static propTypes = {
-    loadMenuDocuments: func.isRequired,
-    loadRestaurants: func.isRequired,
     submitMenuDocument: func.isRequired,
-    menuDocuments: array.isRequired,
-    restaurants: array.isRequired,
-    authenticated: bool.isRequired
-  }
-
-  componentDidMount() {
-    if(this.props.authenticated) {
-      this.props.loadRestaurants()
-      this.props.loadMenuDocuments()
-    }
+    menuDocuments: array,
+    restaurants: array
   }
 
   render() {
@@ -45,22 +37,10 @@ class MenuDocumentsContainer extends PureComponent {
   }
 }
 
-const mapStateToProps = (state) => ({
-  menuDocuments: state.menuDocuments,
-  restaurants: state.restaurants,
-  authenticated: state.session.authenticated
-})
-
 const mapDispatchToProps = (dispatch) => ({
-  loadRestaurants: () => {
-    dispatch(actions.restaurants.load())
-  },
-  loadMenuDocuments: () => {
-    dispatch(actions.menuDocuments.load())
-  },
   submitMenuDocument: (menuDocument) => {
     dispatch(actions.menuDocuments.upload(menuDocument))
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(MenuDocumentsContainer)
+export default connect(null, mapDispatchToProps)(MenuDocumentsContainer)

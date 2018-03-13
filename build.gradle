@@ -1,9 +1,10 @@
 buildscript {
 	ext {
-		kotlinVersion = '1.2.21'
+		kotlinVersion = '1.2.30'
 		springBootVersion = '1.5.10.RELEASE'
 		hikariCPVersion = '2.7.6'
 		jodaTimeVersion = '2.9.9'
+		apacheCommonsVersion = '3:3.6'
 		userTypeCoreVersion = '5.0.0.GA'
 	}
 	repositories {
@@ -60,6 +61,7 @@ dependencies {
 	compile('org.flywaydb:flyway-core')
 	compile("io.jsonwebtoken:jjwt:0.7.0")
 	compile("joda-time:joda-time:$jodaTimeVersion")
+	compile("org.apache.commons:commons-lang$apacheCommonsVersion")
 	compile("org.jadira.usertype:usertype.core:$userTypeCoreVersion") // Should match Hibernate version
 	runtime('org.springframework.boot:spring-boot-devtools')
 	runtime('org.postgresql:postgresql')

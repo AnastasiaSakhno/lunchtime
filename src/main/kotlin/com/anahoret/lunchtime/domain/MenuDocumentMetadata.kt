@@ -1,7 +1,8 @@
 package com.anahoret.lunchtime.domain
 
+import org.apache.commons.lang3.time.DateFormatUtils
+import org.apache.commons.lang3.time.DateUtils
 import java.io.Serializable
-import java.text.SimpleDateFormat
 import java.util.*
 
 class MenuDocumentMetadata(val fileName: String, val restaurantName: String, val uploadedAt: Date, val userName: String) : Serializable {
@@ -11,7 +12,7 @@ class MenuDocumentMetadata(val fileName: String, val restaurantName: String, val
     constructor(properties: Properties) : this(
             fileName = properties.getProperty(PROP_FILE_NAME),
             restaurantName = properties.getProperty(PROP_RESTAURANT_NAME),
-            uploadedAt = DATE_FORMAT.parse(properties.getProperty(PROP_DOCUMENT_DATE)),
+            uploadedAt = DateUtils.parseDate(properties.getProperty(PROP_DOCUMENT_DATE), DATE_FORMAT_PATTERN),
             userName = properties.getProperty(PROP_PERSON_NAME)
     )
 
@@ -22,7 +23,7 @@ class MenuDocumentMetadata(val fileName: String, val restaurantName: String, val
             props.setProperty(PROP_RESTAURANT_NAME, restaurantName)
             props.setProperty(PROP_FILE_NAME, fileName)
             props.setProperty(PROP_PERSON_NAME, userName)
-            props.setProperty(PROP_DOCUMENT_DATE, DATE_FORMAT.format(uploadedAt))
+            props.setProperty(PROP_DOCUMENT_DATE, DateFormatUtils.format(uploadedAt, DATE_FORMAT_PATTERN))
             return props
         }
 
@@ -34,6 +35,5 @@ class MenuDocumentMetadata(val fileName: String, val restaurantName: String, val
         private const val PROP_DOCUMENT_DATE = "document-uploaded-at"
 
         private const val DATE_FORMAT_PATTERN = "yyyy-MM-dd"
-        private val DATE_FORMAT = SimpleDateFormat(DATE_FORMAT_PATTERN)
     }
 }

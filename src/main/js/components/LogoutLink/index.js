@@ -1,12 +1,14 @@
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { logout } from '../../actions/auth'
-import { Link } from 'react-router-dom'
+import {connect} from 'react-redux'
+import {logout} from '../../actions/auth'
+import {Link} from 'react-router-dom'
 
-const LogoutLink = ({ logout }) => (
-  <Link onClick={ logout } className='nav-link' to='#'>Logout</Link>
-)
+class LogoutLink extends Component {
+  render() {
+    return <Link onClick={this.props.logout} className='nav-link' to='#'>Logout</Link>
+  }
+}
 
 LogoutLink.propTypes = ({
   logout: PropTypes.func.isRequired

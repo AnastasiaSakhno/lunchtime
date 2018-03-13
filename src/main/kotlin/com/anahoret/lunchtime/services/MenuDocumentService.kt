@@ -28,11 +28,6 @@ class MenuDocumentService(var documentDao: IDocumentDao) : IMenuDocumentService,
     }
 
     override fun getDocumentFile(id: String): ByteArray? {
-        val document = documentDao.load(id)
-        return if (document != null) {
-            document.fileData
-        } else {
-            null
-        }
+        return documentDao.load(id)?.fileData
     }
 }

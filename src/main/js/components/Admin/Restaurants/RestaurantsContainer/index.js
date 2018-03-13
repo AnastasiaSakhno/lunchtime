@@ -1,51 +1,47 @@
-import React, { PureComponent } from 'react'
+import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import actions from '../../../../actions/index'
-import { RestaurantsList, RestaurantForm } from '../../Restaurants'
-import HeaderHOC from '../../../../HOC/HeaderHOC/index'
-import RedirectToLoginHOC from '../../../../HOC/RedirectToLoginHOC/index'
+import {connect} from 'react-redux'
+import actions from '../../../../actions'
+import {RestaurantsList, RestaurantForm} from '../../Restaurants'
+import withHeader from '../../../../HOC/withHeader'
+import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
+import withNeededStores from '../../../../HOC/withNeededStores'
+import withCurrentUser from '../../../../HOC/withCurrentUser'
+import {can, cancanUser, Restaurant} from '../../../abilities'
 
-const { bool, array, func } = PropTypes
+const {object, array, func} = PropTypes
 
-@HeaderHOC
-@RedirectToLoginHOC
+@withNeededStores(['restaurants'])
+@withRedirectToLogin
+@withCurrentUser
+@withHeader
 class RestaurantsContainer extends PureComponent {
   static propTypes = {
-    loadRestaurants: func.isRequired,
     addRestaurant: func.isRequired,
     removeRestaurant: func.isRequired,
-    restaurants: array.isRequired,
-    authenticated: bool.isRequired
-  }
-
-  componentDidMount() {
-    if(this.props.authenticated) {
-      this.props.loadRestaurants()
-    }
+    restaurants: array,
+    currentUser: object
   }
 
   render() {
+    const user = cancanUser(this.props.currentUser)
+
     return (
       <div className="restaurants-container">
-        <RestaurantForm onSubmit={ this.props.addRestaurant }/>
+        {
+          can(user, 'create', Restaurant)
+            ? <RestaurantForm onSubmit={this.props.addRestaurant}/>
+            : ''
+        }
         <RestaurantsList
-          data={ this.props.restaurants }
-          onDestroy={ this.props.removeRestaurant } />
+          data={this.props.restaurants}
+          onDestroy={this.props.removeRestaurant}/>
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => ({
-  restaurants: state.restaurants,
-  authenticated: state.session.authenticated
-})
-
 const mapDispatchToProps = (dispatch) => ({
-  loadRestaurants: () => {
-    dispatch(actions.restaurants.load())
-  },
   addRestaurant: (restaurant) => {
     dispatch(actions.restaurants.add(restaurant))
   },
@@ -54,4 +50,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(RestaurantsContainer)
+export default connect(null, mapDispatchToProps)(RestaurantsContainer)

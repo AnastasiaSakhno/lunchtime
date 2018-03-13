@@ -1,64 +1,56 @@
-import React, { PureComponent } from 'react'
+import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import actions from '../../../../actions/index'
-import { MenuList, MenuForm } from '../../Menu'
-import HeaderHOC from '../../../../HOC/HeaderHOC/index'
-import RedirectToLoginHOC from '../../../../HOC/RedirectToLoginHOC/index'
+import {connect} from 'react-redux'
+import actions from '../../../../actions'
+import {MenuList, MenuForm} from '../../Menu'
+import withHeader from '../../../../HOC/withHeader'
+import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
+import withCurrentUser from '../../../../HOC/withCurrentUser'
+import withNeededStores from '../../../../HOC/withNeededStores'
+import {cancanUser, can, Menu} from '../../../abilities'
 
-const { bool, array, func } = PropTypes
+const {array, func, object} = PropTypes
 
-@HeaderHOC
-@RedirectToLoginHOC
+@withNeededStores(['restaurants', 'menu'])
+@withRedirectToLogin
+@withCurrentUser
+@withHeader
 class MenuContainer extends PureComponent {
   static propTypes = {
-    loadRestaurants: func.isRequired,
-    loadMenu: func.isRequired,
+    menu: array,
+    restaurants: array,
+    currentUser: object,
     addMenu: func.isRequired,
-    removeMenu: func.isRequired,
-    menu: array.isRequired,
-    restaurants: array.isRequired,
-    authenticated: bool.isRequired
-  }
-
-  componentDidMount() {
-    if(this.props.authenticated) {
-      this.props.loadRestaurants()
-      this.props.loadMenu()
-    }
+    removeMenu: func.isRequired
   }
 
   render() {
+    const user = cancanUser(this.props.currentUser)
+    const menu = this.props.menu.map((menu) => (
+      {
+        ...menu,
+        restaurant: this.props.restaurants.find((restaurant) => (
+          restaurant.id === menu.restaurant_id
+        ))
+      }
+    ))
+
     return (
       <div className="menu-container">
-        <MenuForm onSubmit={ this.props.addMenu } restaurants={ this.props.restaurants }/>
+        {
+          can(user, 'create', Menu)
+            ? <MenuForm onSubmit={this.props.addMenu} restaurants={this.props.restaurants}/>
+            : ''
+        }
         <MenuList
-          data={ this.props.menu }
-          onDestroy={ this.props.removeMenu } />
+          data={menu}
+          onDestroy={this.props.removeMenu}/>
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => ({
-  menu: state.menu.map((menu) => (
-    { ...menu,
-      restaurant: state.restaurants.find((restaurant) => (
-        restaurant.id === menu.restaurant_id
-      ))
-    }
-  )),
-  restaurants: state.restaurants,
-  authenticated: state.session.authenticated
-})
-
 const mapDispatchToProps = (dispatch) => ({
-  loadRestaurants: () => {
-    dispatch(actions.restaurants.load())
-  },
-  loadMenu: () => {
-    dispatch(actions.menu.load())
-  },
   addMenu: (menu) => {
     dispatch(actions.menu.add(menu))
   },
@@ -67,4 +59,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(MenuContainer)
+export default connect(null, mapDispatchToProps)(MenuContainer)
