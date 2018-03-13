@@ -8,7 +8,7 @@ import UsersMenuSheet from '../UsersMenuSheet'
 import withNeededStores from '../../../../HOC/withNeededStores'
 import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
 
-const { func } = PropTypes
+const { object, array, func } = PropTypes
 
 @withNeededStores(['menu', 'users', 'usersMenu'])
 @withRedirectToLogin
@@ -16,9 +16,13 @@ const { func } = PropTypes
 @withHeader
 class UsersMenuContainer extends PureComponent {
   static propTypes = {
+    usersMenu: object,
+    menu: array,
+    users: array,
     addUserDayMenu: func.isRequired,
     updateUserDayMenu: func.isRequired,
-    updateOut: func.isRequired
+    updateOut: func.isRequired,
+    currentUser: object
   }
 
   render() {

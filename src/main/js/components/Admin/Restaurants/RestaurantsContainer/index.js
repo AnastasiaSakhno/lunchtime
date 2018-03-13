@@ -5,24 +5,18 @@ import actions from '../../../../actions'
 import { RestaurantsList, RestaurantForm } from '../../Restaurants'
 import withHeader from '../../../../HOC/withHeader'
 import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
+import withNeededStores from '../../../../HOC/withNeededStores'
 
 const { bool, array, func } = PropTypes
 
-@withHeader
+@withNeededStores(['restaurants'])
 @withRedirectToLogin
+@withHeader
 class RestaurantsContainer extends PureComponent {
   static propTypes = {
-    loadRestaurants: func.isRequired,
     addRestaurant: func.isRequired,
     removeRestaurant: func.isRequired,
-    restaurants: array.isRequired,
-    authenticated: bool.isRequired
-  }
-
-  componentDidMount() {
-    if(this.props.authenticated) {
-      this.props.loadRestaurants()
-    }
+    restaurants: array
   }
 
   render() {
@@ -37,15 +31,7 @@ class RestaurantsContainer extends PureComponent {
   }
 }
 
-const mapStateToProps = (state) => ({
-  restaurants: state.restaurants,
-  authenticated: state.session.authenticated
-})
-
 const mapDispatchToProps = (dispatch) => ({
-  loadRestaurants: () => {
-    dispatch(actions.restaurants.load())
-  },
   addRestaurant: (restaurant) => {
     dispatch(actions.restaurants.add(restaurant))
   },
@@ -54,4 +40,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(RestaurantsContainer)
+export default connect(null, mapDispatchToProps)(RestaurantsContainer)

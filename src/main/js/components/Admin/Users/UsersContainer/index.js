@@ -5,23 +5,17 @@ import actions from '../../../../actions'
 import { UsersList, UserForm } from '../../Users'
 import withHeader from '../../../../HOC/withHeader'
 import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
+import withNeededStores from '../../../../HOC/withNeededStores'
 
-const { bool, array, func } = PropTypes
+const { array, func } = PropTypes
 
-@withHeader
+@withNeededStores(['users'])
 @withRedirectToLogin
+@withHeader
 class UsersContainer extends PureComponent {
   static propTypes = {
-    loadUsers: func.isRequired,
     addUser: func.isRequired,
-    users: array.isRequired,
-    authenticated: bool.isRequired
-  }
-
-  componentDidMount() {
-    if(this.props.authenticated) {
-      this.props.loadUsers()
-    }
+    users: array
   }
 
   render() {
@@ -34,18 +28,10 @@ class UsersContainer extends PureComponent {
   }
 }
 
-const mapStateToProps = (state) => ({
-  users: state.users,
-  authenticated: state.session.authenticated
-})
-
 const mapDispatchToProps = (dispatch) => ({
-  loadUsers: () => {
-    dispatch(actions.users.load())
-  },
   addUser: (user) => {
     dispatch(actions.users.add(user))
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
+export default connect(null, mapDispatchToProps)(UsersContainer)
