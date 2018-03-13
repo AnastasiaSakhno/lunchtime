@@ -9,7 +9,6 @@ const MenuDocumentsList = ({data, onSubmit}) => {
 
   return (
     <div className="container-fluid menu-documents-list">
-      <legend>Menu documents</legend>
       <div className='row'>
         {map}
       </div>

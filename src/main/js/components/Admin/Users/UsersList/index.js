@@ -13,7 +13,6 @@ class UsersList extends Component {
 
     return (
       <div className="users-list">
-        <legend>Users</legend>
         {map}
       </div>
     )

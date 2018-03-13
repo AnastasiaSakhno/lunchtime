@@ -10,7 +10,6 @@ const RestaurantsList = ({ data, onDestroy }) => {
 
   return (
     <div className="restaurants-list">
-      <legend>Restaurants</legend>
       { map }
     </div>
   )
