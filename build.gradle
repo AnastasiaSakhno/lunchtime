@@ -44,6 +44,8 @@ repositories {
 }
 
 bootRun {
+    jvmArgs = ["-DLC_CTYPE=UTF-8",
+               "-Dfile.encoding=UTF-8"]
     addResources = true
 }
 
