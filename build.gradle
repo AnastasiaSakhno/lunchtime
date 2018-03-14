@@ -45,7 +45,14 @@ repositories {
 
 bootRun {
     jvmArgs = ["-DLC_CTYPE=UTF-8",
-               "-Dfile.encoding=UTF-8"]
+               "-Dfile.encoding=UTF-8",
+               "-Dcom.sun.management.jmxremote",
+               "-Dcom.sun.management.jmxremote.port=5002",
+               "-Dcom.sun.management.jmxremote.rmi.port=5003",
+               "-Dcom.sun.management.jmxremote.authenticate=true",
+               "-Dcom.sun.management.jmxremote.password.file=config/jmxremote.password",
+               "-Dcom.sun.management.jmxremote.access.file=config/jmxremote.access",
+               "-Dcom.sun.management.jmxremote.ssl=false"]
     addResources = true
 }
 
