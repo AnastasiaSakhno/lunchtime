@@ -39,7 +39,7 @@ class UserDayMenu extends Component {
     const user = cancanUser(this.props.currentUser)
 
     return (
-      <td>
+      <td className='col-2'>
         {
           can(user, 'manage', new UserDayMenuItem(this.props))
             ? this.editablePresentation()
