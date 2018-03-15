@@ -26,24 +26,19 @@ class MenuContainer extends PureComponent {
 
   render() {
     const user = cancanUser(this.props.currentUser)
-    const menu = this.props.menu.map((menu) => (
-      {
-        ...menu,
-        restaurant: this.props.restaurants.find((restaurant) => (
-          restaurant.id === menu.restaurant_id
-        ))
-      }
-    ))
 
     return (
       <div className="menu-container">
         {
           can(user, 'create', Menu)
-            ? <MenuForm onSubmit={this.props.addMenu} restaurants={this.props.restaurants}/>
+            ? <div>
+              <MenuForm onSubmit={this.props.addMenu} restaurants={this.props.restaurants}/>
+              <hr/>
+            </div>
             : ''
         }
         <MenuList
-          data={menu}
+          data={this.props.menu}
           onDestroy={this.props.removeMenu}/>
       </div>
     )

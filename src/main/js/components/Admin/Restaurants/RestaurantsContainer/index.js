@@ -30,7 +30,10 @@ class RestaurantsContainer extends PureComponent {
       <div className="restaurants-container">
         {
           can(user, 'create', Restaurant)
-            ? <RestaurantForm onSubmit={this.props.addRestaurant}/>
+            ? <div>
+              <RestaurantForm onSubmit={this.props.addRestaurant}/>
+              <hr/>
+            </div>
             : ''
         }
         <RestaurantsList

@@ -24,13 +24,13 @@ class Menu extends Component {
       ? <IconButton icon={'fa-remove '} onSubmit={this.handleDestroy}/>
       : ''
 
-    let text = `Name: ${ this.props.name }, Week days: ${ this.props.week_days ? this.props.week_days : 'All' }`
-
     return (
-      <div className='restaurant'>
-        {this.props.archive ? <del>{text}</del> : text}
-        {destroyIcon}
-      </div>
+      <tr>
+        <td>{this.props.archive ? <del>{this.props.restaurant.name}</del> : this.props.restaurant.name}</td>
+        <td>{this.props.archive ? <del>{this.props.name}</del> : this.props.name}</td>
+        <td>{this.props.archive ? <del>{this.props.week_days}</del> : 'All'}</td>
+        <td>{destroyIcon}</td>
+      </tr>
     )
   }
 }

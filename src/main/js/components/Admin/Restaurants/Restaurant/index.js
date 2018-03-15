@@ -24,13 +24,12 @@ class Restaurant extends Component {
       ? <IconButton icon={'fa-remove '} onSubmit={this.handleDestroy}/>
       : ''
 
-    let text = `Name: ${ this.props.name }, Address: ${ this.props.address }`
-
     return (
-      <div className='restaurant'>
-        {this.props.archive ? <del>{text}</del> : text}
-        {destroyIcon}
-      </div>
+      <tr>
+        <td>{this.props.archive ? <del>{this.props.name}</del> : this.props.name}</td>
+        <td>{this.props.archive ? <del>{this.props.address}</del> : this.props.address}</td>
+        <td>{destroyIcon}</td>
+      </tr>
     )
   }
 }

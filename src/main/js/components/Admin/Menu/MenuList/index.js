@@ -10,7 +10,17 @@ const MenuList = ({ data, onDestroy }) => {
 
   return (
     <div className="menu-list">
-      { map }
+      <table className="table table-bordered table-hover">
+        <thead className="thead-dark">
+          <tr>
+            <th scope="col">Restaurant</th>
+            <th scope="col">Name</th>
+            <th scope="col">Week days</th>
+            <th scope="col"/>
+          </tr>
+        </thead>
+        <tbody>{map}</tbody>
+      </table>
     </div>
   )
 }

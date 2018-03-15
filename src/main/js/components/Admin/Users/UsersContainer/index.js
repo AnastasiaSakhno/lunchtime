@@ -29,7 +29,10 @@ class UsersContainer extends PureComponent {
       <div className="users-container">
         {
           can(user, 'create', User)
-            ? <UserForm onSubmit={this.props.addUser}/>
+            ? <div>
+              <UserForm onSubmit={this.props.addUser}/>
+              <hr/>
+            </div>
             : ''
         }
         <UsersList data={this.props.users}/>

@@ -26,7 +26,6 @@ class MenuForm extends Component {
   render() {
     return (
       <div>
-        <legend>Menu to add</legend>
         <form className='menu-form' onSubmit={ this.handleSubmit }>
           <div className="form-row align-items-center">
             <div className="col-auto">
