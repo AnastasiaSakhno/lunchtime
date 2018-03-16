@@ -12,13 +12,8 @@ class MenuDocument extends Component {
     currentUser: object
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      file: null
-    }
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.onChange = this.onChange.bind(this)
+  state = {
+    file: null
   }
 
   handleSubmit = (e) => {
@@ -29,7 +24,7 @@ class MenuDocument extends Component {
     this.form.reset()
   }
 
-  onChange(e) {
+  onChange = (e) => {
     this.setState({file: e.target.files[0]})
   }
 

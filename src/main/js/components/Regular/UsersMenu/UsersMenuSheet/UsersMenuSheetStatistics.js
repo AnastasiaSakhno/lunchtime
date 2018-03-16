@@ -17,7 +17,7 @@ class UsersMenuSheetStatistics extends Component {
     const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
     const headers = weekDays.map(day => {
-      return <th scope="col" key={`total_${day}`} className='col-2'>{day}</th>
+      return <div scope="col" key={`total_${day}`} className='col-2'>{day}</div>
     })
 
     let weekStatistics = this.props.menuList.map(menu => {
@@ -25,9 +25,9 @@ class UsersMenuSheetStatistics extends Component {
       let dayMenuStatistics = weekDays.map((day, index) => {
         let date = moment(this.props.startDate).day(index + 1).format('YYYY-MM-DD')
         let arr = menuStatistics ? menuStatistics.groupedByDate[date] : []
-        return (<td className='col-2' key={`total_statistics_${menu.name}_${day}`}>
+        return (<div className='col-2' key={`total_statistics_${menu.name}_${day}`}>
           {`${menu.name} ${arr ? arr.length : 0}`}
-        </td>)
+        </div>)
       })
       return (<div className='row' key={`total_statistics_row_${menu.name}`}>
         <div className='col-2' key={`total_statistics_col_${menu.name}`}/>
@@ -38,7 +38,7 @@ class UsersMenuSheetStatistics extends Component {
     return (
       <div className="users-menu-sheet-table users-menu-sheet-table-statistics">
         <div className='row'>
-          <th scope="col" className='col-2'/>
+          <div className='col-2'/>
           {headers}
         </div>
         {weekStatistics}

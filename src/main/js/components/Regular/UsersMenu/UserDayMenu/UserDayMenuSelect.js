@@ -61,7 +61,7 @@ class UserDayMenuSelect extends Component {
 
     let selectedMenu = this.props.menuList.find((m) => (m._links.self.href === selected))
     let menuName = selectedMenu ? selectedMenu.name : ''
-    return <div>{menuName}</div>
+    return <div className='float-left'>{menuName}</div>
   }
 }
 

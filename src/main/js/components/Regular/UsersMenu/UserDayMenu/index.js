@@ -24,16 +24,12 @@ class UserDayMenu extends Component {
     </div>
   )
 
-  notEditablePresentation = () => {
-    return (
-      <div className='container'>
-        <div className='row'>
-          <UserDayMenuSelect {...this.props}/>
-          <UserDayMenuOut {...this.props}/>
-        </div>
-      </div>
-    )
-  }
+  notEditablePresentation = () => (
+    <div>
+      <UserDayMenuSelect {...this.props}/>
+      <UserDayMenuOut {...this.props}/>
+    </div>
+  )
 
   render() {
     const user = cancanUser(this.props.currentUser)

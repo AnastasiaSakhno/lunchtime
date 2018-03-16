@@ -41,7 +41,7 @@ class UserDayMenuOut extends Component {
       )
     }
 
-    return <div>{this.props.out ? '(out)' : ''}</div>
+    return <div className='float-left'>{this.props.out ? '(out)' : ''}</div>
   }
 }
 
