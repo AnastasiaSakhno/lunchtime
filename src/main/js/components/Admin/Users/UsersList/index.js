@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { User } from '../../Users'
-import withSpinner from "../../../../HOC/withSpinner";
+import withSpinner from '../../../../HOC/withSpinner'
 
 @withSpinner(['data'])
 class UsersList extends Component {
@@ -12,8 +12,17 @@ class UsersList extends Component {
     ))
 
     return (
-      <div className="users-list">
-        {map}
+      <div className='user-list'>
+        <table className="table table-bordered table-hover">
+          <thead className="thead-dark">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Role</th>
+            </tr>
+          </thead>
+          <tbody>{map}</tbody>
+        </table>
       </div>
     )
   }

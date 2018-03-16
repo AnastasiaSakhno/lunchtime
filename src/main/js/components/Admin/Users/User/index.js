@@ -7,12 +7,12 @@ class User extends Component {
   }
 
   render() {
-    let text = `Name: ${ this.props.fullName }, Email: ${ this.props.email }, Role: ${ this.props.role }`
-
     return (
-      <div className='user'>
-        { text }
-      </div>
+      <tr>
+        <td>{this.props.fullName}</td>
+        <td>{this.props.email}</td>
+        <td>{this.props.role}</td>
+      </tr>
     )
   }
 }

@@ -1,49 +1,17 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import UserWeekMenu from '../UserWeekMenu'
-import moment from 'moment'
 import withSpinner from '../../../../HOC/withSpinner'
-import {compose, filter, groupBy, prepend, prop, sortBy, toLower} from 'ramda'
+import UsersMenuSheetStatistics from './UsersMenuSheetStatistics'
+import UsersMenuSheetTable from './UsersMenuSheetTable'
 
 @withSpinner(['startDate', 'currentUser', 'menuList'])
 class UsersMenuSheet extends Component {
   render() {
-    let groupedByUser = groupBy(udm => udm.user._links.self.href.replace('{?projection}', ''))(this.props.data)
-
-    let orderedUsers = sortBy(compose(toLower, prop('fullName')))(this.props.users)
-    orderedUsers = filter(u => u.id !== this.props.currentUser.id, orderedUsers)
-    orderedUsers = prepend(this.props.currentUser, orderedUsers)
-
-    let map = orderedUsers.map((u) => {
-      let found = groupedByUser[u._links.self.href]
-
-      return (<UserWeekMenu
-        key={`uwm_${this.props.startDate}_${u.id}`}
-        onSubmit={this.props.onSubmit}
-        onUpdate={this.props.onUpdate}
-        onOutUpdate={this.props.onOutUpdate}
-        menuList={this.props.menuList}
-        user={u}
-        data={found ? found : []}/>)
-    })
-
-    const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-
-    const tableHeaders = weekDays.map((day, index) => {
-      let date = moment(this.props.startDate).day(index + 1).format('YYYY-MM-DD')
-      return <th scope="col" key={day}>{`${day}, ${date}`}</th>
-    })
-
     return (
-      <table className="table table-bordered table-hover">
-        <thead className="thead-dark">
-          <tr>
-            <th scope="col">User</th>
-            {tableHeaders}
-          </tr>
-        </thead>
-        <tbody>{map}</tbody>
-      </table>
+      <div className='users-menu-sheet'>
+        <UsersMenuSheetStatistics { ...this.props }/>
+        <UsersMenuSheetTable { ...this.props }/>
+      </div>
     )
   }
 }

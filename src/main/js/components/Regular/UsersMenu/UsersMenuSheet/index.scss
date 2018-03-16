@@ -1,0 +1,27 @@
+.users-menu-sheet-table {
+  padding: 1rem;
+  margin-right: 0;
+  margin-left: 0;
+
+  &-statistics {
+    .row {
+      height: 40px;
+    }
+  }
+
+  .row>.col, .row>[class^=col-] {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    border: 1px solid #D3D3D3;
+  }
+
+  .row:first-child {
+    color: #fff;
+    background-color: #212529;
+    border-color: #32383e;
+  }
+
+  .row:not(:first-child):hover {
+    background-color: #DCDCDC;
+  }
+}

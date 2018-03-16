@@ -23,7 +23,6 @@ class UserForm extends Component {
   render() {
     return (
       <div>
-        <legend>User to add</legend>
         <form className='user-form' onSubmit={ this.handleSubmit }>
           <div className="form-row align-items-center">
             <div className="col-auto">

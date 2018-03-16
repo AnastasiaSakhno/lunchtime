@@ -24,7 +24,6 @@ class RestaurantForm extends Component {
   render() {
     return (
       <div>
-        <legend>Restaurant to add</legend>
         <form className='restaurant-form' onSubmit={ this.handleSubmit }>
           <div className="form-row align-items-center">
             <div className="col-auto">
