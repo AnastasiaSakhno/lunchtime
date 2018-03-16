@@ -5,13 +5,13 @@ import {groupBy} from 'ramda'
 
 class UsersMenuSheetStatistics extends Component {
   render() {
-    let groupedByMenuNames = groupBy(udm => udm.menu.name)(this.props.data)
-    let groupedByMenuNamesAndDate = Object.entries(groupedByMenuNames).map(entry => {
-      const [menu, arr] = entry
+    let groupedByMenuLinks = groupBy(udm => udm.menu._links.self.href.replace('{?projection}', ''))(this.props.data)
+    let groupedByMenuLinksAndDate = Object.entries(groupedByMenuLinks).map(entry => {
+      const [menuHref, arr] = entry
       let groupedByDate = groupBy(udm => {
         return `${udm.date.year}-${('0' + udm.date.monthOfYear).slice(-2)}-${udm.date.dayOfMonth}`
       })(arr)
-      return {menu: {name: menu}, groupedByDate: groupedByDate}
+      return {menu: {href: menuHref}, groupedByDate: groupedByDate}
     })
 
     const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
@@ -21,7 +21,7 @@ class UsersMenuSheetStatistics extends Component {
     })
 
     let weekStatistics = this.props.menuList.map(menu => {
-      let menuStatistics = groupedByMenuNamesAndDate.find(gmd => gmd.menu.name === menu.name)
+      let menuStatistics = groupedByMenuLinksAndDate.find(gmd => gmd.menu.href === menu._links.self.href)
       let dayMenuStatistics = weekDays.map((day, index) => {
         let date = moment(this.props.startDate).day(index + 1).format('YYYY-MM-DD')
         let arr = menuStatistics ? menuStatistics.groupedByDate[date] : []
