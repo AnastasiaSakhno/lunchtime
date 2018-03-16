@@ -51,8 +51,6 @@ bootRun {
                "-Dcom.sun.management.jmxremote.rmi.port=5020",
                "-Dcom.sun.management.jmxremote.local.only=false",
                "-Dcom.sun.management.jmxremote.authenticate=true",
-               "-Dcom.sun.management.jmxremote.host=0.0.0.0",
-               "-java.rmi.server.hostname=0.0.0.0",
                "-Dcom.sun.management.jmxremote.password.file=config/jmxremote.password",
                "-Dcom.sun.management.jmxremote.access.file=config/jmxremote.access",
                "-Dcom.sun.management.jmxremote.ssl=false"]
