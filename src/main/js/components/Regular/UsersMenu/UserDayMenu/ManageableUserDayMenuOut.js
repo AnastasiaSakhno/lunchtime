@@ -1,45 +1,40 @@
-import React, {Component} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 
-const {bool, number, func} = PropTypes
+const ManageableUserDayMenuOut = ({id, dayOfWeek, out, onOutUpdate}) => {
+  const dateString = (dayOfWeek) => moment().day(dayOfWeek).valueOf()
 
-class ManageableUserDayMenuOut extends Component {
-  static propTypes = {
-    onOutUpdate: func.isRequired
-  }
-
-  handleUpdate = (e) => {
+  const handleUpdate = (e) => {
     e.preventDefault()
 
-    this.props.onOutUpdate({
-      id: this.props.id,
+    onOutUpdate({
+      id: id,
       out: e.target.checked,
-      date: this.dateString(this.props.dayOfWeek)
+      date: dateString(dayOfWeek)
     })
   }
 
-  dateString = (dayOfWeek) => moment().day(dayOfWeek).valueOf()
-
-  render() {
-    return (
-      <div className='input-group-append'>
-        <div className="input-group-text">
-          <input
-            type="checkbox"
-            checked={this.props.out}
-            disabled={!this.props.id}
-            onChange={this.handleUpdate}/>
-        </div>
+  return (
+    <div className='input-group-append'>
+      <div className="input-group-text">
+        <input
+          type='checkbox'
+          checked={out}
+          disabled={!id}
+          onChange={handleUpdate}/>
       </div>
-    )
-  }
+    </div>
+  )
 }
+
+const {bool, number, func} = PropTypes
 
 ManageableUserDayMenuOut.propTypes = {
   id: number,
   dayOfWeek: number.isRequired,
-  out: bool
+  out: bool,
+  onOutUpdate: func.isRequired
 }
 
 export default ManageableUserDayMenuOut
