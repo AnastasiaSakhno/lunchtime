@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import cssModules from 'react-css-modules'
+import styles from './index.scss'
 import UserWeekMenu from '../UserWeekMenu'
 import moment from 'moment'
 import {compose, filter, groupBy, prepend, prop, sortBy, toLower} from 'ramda'
@@ -29,19 +31,17 @@ class UsersMenuSheetTable extends Component {
 
     let headers = weekDays.map((day, index) => {
       let date = moment(this.props.startDate).day(index + 1).format('YYYY-MM-DD')
-      return <th scope="col" key={`date_${day}`} className='col-2'>{date}</th>
+      return <div key={`date_${day}`} className='col-2'>{date}</div>
     })
 
     return (
-      <table className="table table-sm table-bordered table-hover">
-        <thead className="thead-dark">
-          <tr className='row'>
-            <th scope="col" className='col-2'>User</th>
-            {headers}
-          </tr>
-        </thead>
-        <tbody>{map}</tbody>
-      </table>
+      <div className="users-menu-sheet-table">
+        <div className='row'>
+          <div className='col-2'>User</div>
+          {headers}
+        </div>
+        {map}
+      </div>
     )
   }
 }
@@ -59,4 +59,4 @@ UsersMenuSheetTable.propTypes = {
   currentUser: object
 }
 
-export default UsersMenuSheetTable
+export default cssModules(UsersMenuSheetTable, styles)

@@ -14,8 +14,8 @@ class UserWeekMenu extends Component {
 
   render() {
     return (
-      <tr className='row'>
-        <td className='col-2'>{this.props.user.fullName}</td>
+      <div className='row'>
+        <div className='col-2'>{this.props.user.fullName}</div>
         {[...Array(5).keys()].map((dayOfWeek) => {
           dayOfWeek = dayOfWeek + 1
           let found = this.props.data.find((udm) => (
@@ -27,7 +27,7 @@ class UserWeekMenu extends Component {
           }
           return (<UserDayMenu key={key} dayOfWeek={dayOfWeek} {...this.props}/>)
         })}
-      </tr>
+      </div>
     )
   }
 }

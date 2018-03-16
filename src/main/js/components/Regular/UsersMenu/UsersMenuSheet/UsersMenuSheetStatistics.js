@@ -29,22 +29,20 @@ class UsersMenuSheetStatistics extends Component {
           {`${menu.name} ${arr ? arr.length : 0}`}
         </td>)
       })
-      return (<tr className='row' key={`total_statistics_row_${menu.name}`}>
-        <td className='col-2' key={`total_statistics_col_${menu.name}`}/>
+      return (<div className='row' key={`total_statistics_row_${menu.name}`}>
+        <div className='col-2' key={`total_statistics_col_${menu.name}`}/>
         {dayMenuStatistics}
-      </tr>)
+      </div>)
     })
 
     return (
-      <table className="table table-sm table-bordered table-hover">
-        <thead className="thead-dark">
-          <tr className='row'>
-            <th scope="col" className='col-2'/>
-            {headers}
-          </tr>
-        </thead>
-        <tbody>{weekStatistics}</tbody>
-      </table>
+      <div className="users-menu-sheet-table users-menu-sheet-table-statistics">
+        <div className='row'>
+          <th scope="col" className='col-2'/>
+          {headers}
+        </div>
+        {weekStatistics}
+      </div>
     )
   }
 }
