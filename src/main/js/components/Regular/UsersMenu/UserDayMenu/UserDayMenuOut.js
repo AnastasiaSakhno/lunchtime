@@ -1,51 +1,24 @@
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
-import moment from 'moment'
-import withCurrentUser from '../../../../HOC/withCurrentUser'
 import {can, cancanUser, UserDayMenu} from '../../../abilities'
+import {connect} from 'react-redux'
+import {compose, branch, renderComponent} from 'recompose'
+import ManageableUserDayMenuOut from './ManageableUserDayMenuOut'
+import ReadonlyUserDayMenuOut from './ReadonlyUserDayMenuOut'
+import selectors from '../../../../selectors'
 
-const {bool, number, object, func} = PropTypes
-
-@withCurrentUser
-class UserDayMenuOut extends Component {
-  static propTypes = {
-    onOutUpdate: func.isRequired,
-    currentUser: object
-  }
-
-  handleUpdate = (e) => {
-    e.preventDefault()
-
-    this.props.onOutUpdate({id: this.props.id, out: e.target.checked, date: this.dateString(this.props.dayOfWeek)})
-  }
-
-  dateString = (dayOfWeek) => (moment().day(dayOfWeek).valueOf())
-
-  render() {
-    const user = cancanUser(this.props.currentUser)
-
-    if (can(user, 'manage', new UserDayMenu(this.props))) {
-      return (
-        <div className='input-group-append'>
-          <div className="input-group-text">
-            <input
-              type="checkbox"
-              checked={this.props.out}
-              disabled={!this.props.id}
-              onChange={this.handleUpdate}/>
-          </div>
-        </div>
-      )
-    }
-
-    return <div className='float-left'>{this.props.out ? '(out)' : ''}</div>
+const mapStateToProps = (state) => {
+  return {
+    currentUser: selectors.auth.getCurrentUser(state)
   }
 }
 
-UserDayMenuOut.propTypes = {
-  id: number,
-  dayOfWeek: number.isRequired,
-  out: bool
-}
-
-export default UserDayMenuOut
+export default compose(
+  connect(mapStateToProps),
+  branch(
+    (props) => {
+      const user = cancanUser(props.currentUser)
+      return can(user, 'manage', new UserDayMenu(props))
+    },
+    renderComponent(ManageableUserDayMenuOut),
+    renderComponent(ReadonlyUserDayMenuOut)
+  )
+)()
