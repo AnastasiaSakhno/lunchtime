@@ -21,7 +21,7 @@ class UserDayMenuSelect extends Component {
     let attrs = {
       date: this.dateString(this.props.dayOfWeek),
       user: this.props.user._links.self.href.replace('{?projection}', ''),
-      menu: this.menuSelect.value
+      menu: e.target.value
     }
 
     if (this.props.id) {
@@ -43,10 +43,7 @@ class UserDayMenuSelect extends Component {
         <select
           className="form-control custom-select"
           value={selected}
-          onChange={this.handleSubmit}
-          ref={el => {
-            this.menuSelect = el
-          }}>
+          onChange={this.handleSubmit}>
           <option>Select a Restaurant</option>
           {this.props.menuList.map((menu) => (
             <option

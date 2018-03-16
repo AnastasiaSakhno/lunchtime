@@ -21,7 +21,7 @@ class MenuDocument extends Component {
 
     this.props.onSubmit({file: this.state.file, restaurant: this.props.restaurantName})
 
-    this.form.reset()
+    e.target.reset()
   }
 
   onChange = (e) => {
@@ -43,9 +43,6 @@ class MenuDocument extends Component {
           can(user, 'manage', MenuDocumentItem)
             ? <form
               className='menu-document-form'
-              ref={el => {
-                this.form = el
-              }}
               onSubmit={this.handleSubmit}>
               {text}
               <input type='file' onChange={this.onChange}/>

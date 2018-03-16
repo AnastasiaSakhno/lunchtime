@@ -16,7 +16,7 @@ class UserDayMenuOut extends Component {
   handleUpdate = (e) => {
     e.preventDefault()
 
-    this.props.onOutUpdate({id: this.props.id, out: this.outInput.checked, date: this.dateString(this.props.dayOfWeek)})
+    this.props.onOutUpdate({id: this.props.id, out: e.target.checked, date: this.dateString(this.props.dayOfWeek)})
   }
 
   dateString = (dayOfWeek) => (moment().day(dayOfWeek).valueOf())
@@ -32,9 +32,6 @@ class UserDayMenuOut extends Component {
               type="checkbox"
               checked={this.props.out}
               disabled={!this.props.id}
-              ref={el => {
-                this.outInput = el
-              }}
               onChange={this.handleUpdate}/>
           </div>
         </div>
