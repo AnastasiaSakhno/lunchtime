@@ -14,7 +14,7 @@ class Menu(
     var name: String,
 
     @Column(name = "week_days", nullable = true)
-    var week_days: String,
+    var weekDays: String?,
 
     @Column(name = "archive", nullable = false)
     var archive: Boolean,

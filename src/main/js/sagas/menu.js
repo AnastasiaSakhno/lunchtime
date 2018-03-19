@@ -24,8 +24,8 @@ export function* addMenu({ menu }) {
 export function* removeMenu({ menu }) {
   const user = yield call(loadUser)
   const newMenu = yield call(putRest,
-    MENU_URI + '/' + menu.id,
-    user.auth_token, {...menu, archive: true})
+    MENU_URI.replace('?projection=wide', '') + '/' + menu.id,
+    user.auth_token, {id: menu.id, name: menu.name, weekDays: menu.weekDays, archive: true})
 
   if(newMenu.id) {
     yield put(actions.menu.removedSuccessfully(menu))

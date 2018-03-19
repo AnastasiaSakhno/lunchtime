@@ -9,7 +9,7 @@ const PureMenu = (props) => (
   <tr>
     <td>{props.restaurant.name}</td>
     <td>{props.name}</td>
-    <td>{props.week_days ? props.week_days : 'All'}</td>
+    <td>{props.weekDays ? props.weekDays : 'All'}</td>
     <td><MenuDestroyAction {...props}/></td>
   </tr>
 )
@@ -17,7 +17,7 @@ const PureMenu = (props) => (
 PureMenu.propTypes = {
   id: number,
   name: string.isRequired,
-  week_days: string,
+  weekDays: string,
   restaurant: shape({
     id: number,
     name: string,

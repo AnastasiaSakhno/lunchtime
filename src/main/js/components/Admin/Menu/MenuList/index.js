@@ -32,7 +32,7 @@ MenuList.propTypes = {
     shape({
       id: number,
       name: string,
-      week_days: string,
+      weekDays: string,
       restaurant: object,
       archive: bool
     })

@@ -1,7 +1,7 @@
 import React from 'react'
 import {string, bool, number, shape} from 'prop-types'
 
-const ArchiveMenu = ({id, name, restaurant, week_days}) => (
+const ArchiveMenu = ({id, name, restaurant, weekDays}) => (
   <tr>
     <td>
       <del>{restaurant.name}</del>
@@ -10,7 +10,7 @@ const ArchiveMenu = ({id, name, restaurant, week_days}) => (
       <del>{name}</del>
     </td>
     <td>
-      <del>{week_days ? week_days : 'All'}</del>
+      <del>{weekDays ? weekDays : 'All'}</del>
     </td>
     <td/>
   </tr>
@@ -19,7 +19,7 @@ const ArchiveMenu = ({id, name, restaurant, week_days}) => (
 ArchiveMenu.propTypes = {
   id: number,
   name: string.isRequired,
-  week_days: string,
+  weekDays: string,
   restaurant: shape({
     id: number,
     name: string,
