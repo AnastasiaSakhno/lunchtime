@@ -3,4 +3,8 @@ import {UserDayMenu} from '../../../../abilities'
 import ManageableUserDayMenuSelect from './ManageableUserDayMenuSelect'
 import ReadonlyUserDayMenuSelect from './ReadonlyUserDayMenuSelect'
 
-export default cancanBranch(UserDayMenu, ManageableUserDayMenuSelect, ReadonlyUserDayMenuSelect)()
+export default cancanBranch({
+  verifiableClass: UserDayMenu,
+  CanComponent: ManageableUserDayMenuSelect,
+  CannotComponent: ReadonlyUserDayMenuSelect
+})()
