@@ -9,5 +9,6 @@ interface WideMenuProjection {
     val id: Long
     val name: String
     val archive: Boolean
+    val week_days: String
     val restaurant: WideRestaurantProjection
 }
