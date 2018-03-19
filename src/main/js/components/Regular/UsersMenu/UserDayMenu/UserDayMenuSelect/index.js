@@ -1,10 +1,10 @@
-import cancanBranch from '../../../../../HOC/cancanBranch'
+import cancanBranch from '../../../../../HOC/branch/cancanBranch'
 import {UserDayMenu} from '../../../../abilities'
 import ManageableUserDayMenuSelect from './ManageableUserDayMenuSelect'
 import ReadonlyUserDayMenuSelect from './ReadonlyUserDayMenuSelect'
 
 export default cancanBranch({
-  verifiableClass: UserDayMenu,
+  VerifiableClass: UserDayMenu,
   CanComponent: ManageableUserDayMenuSelect,
   CannotComponent: ReadonlyUserDayMenuSelect
 })()
