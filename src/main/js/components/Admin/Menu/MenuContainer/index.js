@@ -1,23 +1,20 @@
 import React, {PureComponent} from 'react'
-import {array, func, object} from 'prop-types'
+import {array, func} from 'prop-types'
 import {connect} from 'react-redux'
 
 import actions from '../../../../actions'
 import {MenuList, MenuForm} from '../../Menu'
 import withHeader from '../../../../HOC/withHeader'
 import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
-import withCurrentUser from '../../../../HOC/withCurrentUser'
 import withNeededStores from '../../../../HOC/withNeededStores'
 
 @withNeededStores(['restaurants', 'menu'])
 @withRedirectToLogin
-@withCurrentUser
 @withHeader
 class MenuContainer extends PureComponent {
   static propTypes = {
     menu: array,
     restaurants: array,
-    currentUser: object,
     addMenu: func.isRequired,
     removeMenu: func.isRequired
   }
