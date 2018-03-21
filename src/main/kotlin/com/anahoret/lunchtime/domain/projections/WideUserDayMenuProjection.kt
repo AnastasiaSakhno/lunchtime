@@ -10,7 +10,6 @@ interface WideUserDayMenuProjection {
     val id: Long
     val date: LocalDate
     val out: Boolean
-    val archive: Boolean
     val menu: WideMenuProjection
     val user: ShortUserProjection
 

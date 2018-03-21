@@ -22,9 +22,6 @@ class UserDayMenu(
     @Column(name = "out", nullable = true)
     var out: Boolean,
 
-    @Column(name = "archive", nullable = false)
-    var archive: Boolean,
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "menu_id")
     var menu: Menu,
