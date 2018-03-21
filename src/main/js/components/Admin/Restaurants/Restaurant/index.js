@@ -1,46 +1,27 @@
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
-import IconButton from '../../../IconButton'
-import withCurrentUser from '../../../../HOC/withCurrentUser'
-import {cancanUser, can, Restaurant as RestaurantItem} from '../../../abilities'
+import React from 'react'
+import {string, bool, number, func} from 'prop-types'
 
-const {func, object} = PropTypes
+import archiveBranch from '../../../../HOC/branch/archiveBranch'
+import ArchiveRestaurant from './ArchiveRestaurant'
+import RestaurantDestroyAction from '../RestaurantActions/RestaurantDestroyAction'
 
-@withCurrentUser
-class Restaurant extends Component {
-  static propTypes = {
-    onDestroy: func.isRequired,
-    currentUser: object
-  }
+const PureRestaurant = (props) => (
+  <tr>
+    <td>{props.name}</td>
+    <td>{props.address}</td>
+    <td><RestaurantDestroyAction {...props}/></td>
+  </tr>
+)
 
-  handleDestroy = (e) => {
-    e.preventDefault()
-    this.props.onDestroy({...this.props})
-  }
-
-  render() {
-    const user = cancanUser(this.props.currentUser)
-    let destroyIcon = !this.props.archive && can(user, 'delete', RestaurantItem)
-      ? <IconButton icon={'fa-remove '} onSubmit={this.handleDestroy}/>
-      : ''
-
-    return (
-      <tr>
-        <td>{this.props.archive ? <del>{this.props.name}</del> : this.props.name}</td>
-        <td>{this.props.archive ? <del>{this.props.address}</del> : this.props.address}</td>
-        <td>{destroyIcon}</td>
-      </tr>
-    )
-  }
-}
-
-const {string, bool, number} = PropTypes
-
-Restaurant.propTypes = {
+PureRestaurant.propTypes = {
   id: number,
   name: string.isRequired,
   address: string,
-  archive: bool.isRequired
+  archive: bool.isRequired,
+  onDestroy: func.isRequired
 }
 
-export default Restaurant
+export default archiveBranch({
+  ArchiveComponent: ArchiveRestaurant,
+  NotArchiveComponent: PureRestaurant
+})()
