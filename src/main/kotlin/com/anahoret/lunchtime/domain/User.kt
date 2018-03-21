@@ -15,7 +15,7 @@ class User {
     var email: String? = null
 
     @Column(name = "password", nullable = false)
-    var password: String? = null
+    var password: String? = "password"
 
     @Column(name = "full_name", nullable = false)
     var fullName: String? = null
