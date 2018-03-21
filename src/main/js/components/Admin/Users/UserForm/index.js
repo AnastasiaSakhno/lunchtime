@@ -1,14 +1,17 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
+import {func} from 'prop-types'
+
+import cancanBranch from '../../../../HOC/branch/cancanBranch'
+import {User} from '../../../abilities'
 
 const defaultState = {
   email: null,
   fullName: null
 }
 
-class UserForm extends Component {
+class PureUserForm extends Component {
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: func.isRequired
   }
 
   state = defaultState
@@ -58,8 +61,12 @@ class UserForm extends Component {
           </div>
         </div>
       </form>
+      <hr/>
     </div>
   )
 }
 
-export default UserForm
+export default cancanBranch({
+  VerifiableClass: User,
+  CanComponent: PureUserForm
+})()

@@ -7,7 +7,6 @@ import withHeader from '../../../../HOC/withHeader'
 import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
 import withNeededStores from '../../../../HOC/withNeededStores'
 import withCurrentUser from '../../../../HOC/withCurrentUser'
-import {can, cancanUser, User} from '../../../abilities'
 
 const {array, object, func} = PropTypes
 
@@ -22,23 +21,12 @@ class UsersContainer extends PureComponent {
     currentUser: object
   }
 
-  render() {
-    const user = cancanUser(this.props.currentUser)
-
-    return (
-      <div className="users-container">
-        {
-          can(user, 'create', User)
-            ? <div>
-              <UserForm onSubmit={this.props.addUser}/>
-              <hr/>
-            </div>
-            : ''
-        }
-        <UsersList data={this.props.users}/>
-      </div>
-    )
-  }
+  render = () => (
+    <div className="users-container">
+      <UserForm onSubmit={this.props.addUser}/>
+      <UsersList data={this.props.users}/>
+    </div>
+  )
 }
 
 const mapDispatchToProps = (dispatch) => ({
