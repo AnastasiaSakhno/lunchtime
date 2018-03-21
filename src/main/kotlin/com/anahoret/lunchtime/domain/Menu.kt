@@ -19,7 +19,7 @@ class Menu(
     @Column(name = "archive", nullable = false)
     var archive: Boolean,
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "restaurant_id")
     var restaurant: Restaurant,
 

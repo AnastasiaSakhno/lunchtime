@@ -3,7 +3,7 @@ CREATE TABLE menu (
   name VARCHAR(50) UNIQUE,
   week_days VARCHAR(20),
   archive BOOL NOT NULL DEFAULT FALSE,
-  restaurant_id BIGINT NOT NULL,
+  restaurant_id BIGINT,
   CONSTRAINT fk_projects_menu_id_restaurant_id FOREIGN KEY (restaurant_id) REFERENCES restaurants (id)
 );
 

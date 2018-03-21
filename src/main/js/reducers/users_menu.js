@@ -47,7 +47,7 @@ const usersMenu = (state = initialState, action) => {
         if (udm.id === action.userDayMenu.id) {
           return {
             ...udm,
-            out: !udm.out
+            out: action.userDayMenu.out
           }
         }
         return udm

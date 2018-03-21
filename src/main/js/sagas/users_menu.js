@@ -35,27 +35,29 @@ export function* loadUsersMenu() {
   yield put(actions.usersMenu.loaded({ startDate: weekStart, data: usersMenu }))
 }
 
-export function* addUserDayMenu({ userDayMenu }) {
+export function* addUserDayMenu({ userDayMenu: udm }) {
   const user = yield call(loadUser)
-  const newUserDayMenu = yield call(post, USERS_MENU_URI, user.auth_token, userDayMenu)
+  const newUserDayMenu = yield call(post, USERS_MENU_URI, user.auth_token, udm)
 
   if(newUserDayMenu.id) {
-    yield put(actions.usersMenu.addedSuccessfully(userDayMenuWithLinks(userDayMenu, newUserDayMenu)))
+    yield put(actions.usersMenu.addedSuccessfully(userDayMenuWithLinks(udm, newUserDayMenu)))
   }
 }
 
-export function* updateUserDayMenu({ userDayMenu }) {
+export function* updateUserDayMenu({ userDayMenu: udm }) {
   const user = yield call(loadUser)
-  const response = yield call(putUserDayMenu, user.auth_token, userDayMenu)
+  const response = yield call(putUserDayMenu, user.auth_token, udm)
 
   if(response.status === 204) {
-    yield put(actions.usersMenu.updatedSuccessfully({ id: userDayMenu.id, menu: userDayMenu.menu }))
+    yield put(actions.usersMenu.updatedSuccessfully({ id: udm.id, menu: udm.menu }))
+    // TODO think how change it only for None menu
+    yield put(actions.usersMenu.updateOut({id: udm.id, out: false, date: udm.date}))
   }
 }
 
-export function* updateUserDayMenuOut({ userDayMenu }) {
+export function* updateUserDayMenuOut({ userDayMenu: udm }) {
   const user = yield call(loadUser)
-  const newUserDayMenu = yield call(putRest, `${USERS_MENU_URI}/${userDayMenu.id}`, user.auth_token, userDayMenu)
+  const newUserDayMenu = yield call(putRest, `${USERS_MENU_URI}/${udm.id}`, user.auth_token, udm)
 
   if(newUserDayMenu.id) {
     yield put(actions.usersMenu.outUpdatedSuccessfully(newUserDayMenu))

@@ -1,8 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import {bool, string, number, array, func, shape} from 'prop-types'
 import moment from 'moment'
 
-const ManageableUserDayMenuOut = ({id, dayOfWeek, out, onOutUpdate}) => {
+const ManageableUserDayMenuOut = ({id, dayOfWeek, out, menu, menuList, onOutUpdate}) => {
   const dateString = (dayOfWeek) => moment().day(dayOfWeek).valueOf()
 
   const handleUpdate = (e) => {
@@ -15,26 +15,33 @@ const ManageableUserDayMenuOut = ({id, dayOfWeek, out, onOutUpdate}) => {
     })
   }
 
+  if (menu) {
+    menu = menuList.find(m => m._links.self.href === menu._links.self.href.replace('{?projection}', ''))
+  }
+
   return (
     <div className='input-group-append'>
       <div className="input-group-text">
         <input
           type='checkbox'
           checked={out}
-          disabled={!id}
+          disabled={!id || menu && menu.name === 'None'}
           onChange={handleUpdate}/>
       </div>
     </div>
   )
 }
 
-const {bool, number, func} = PropTypes
-
 ManageableUserDayMenuOut.propTypes = {
   id: number,
   dayOfWeek: number.isRequired,
   out: bool,
-  onOutUpdate: func.isRequired
+  menu: shape({
+    id: number,
+    name: string
+  }),
+  onOutUpdate: func.isRequired,
+  menuList: array.isRequired
 }
 
 export default ManageableUserDayMenuOut

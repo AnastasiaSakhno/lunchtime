@@ -18,6 +18,8 @@ const ManageableUserDayMenu = ({id, dayOfWeek, out, menu, user, menuList, onSubm
       <ManageableUserDayMenuOut
         id={id}
         out={out}
+        menu={menu}
+        menuList={menuList}
         dayOfWeek={dayOfWeek}
         onOutUpdate={onOutUpdate}/>
     </div>

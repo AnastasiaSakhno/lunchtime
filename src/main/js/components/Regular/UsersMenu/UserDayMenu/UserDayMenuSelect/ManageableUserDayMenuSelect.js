@@ -1,8 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import {string, number, bool, array, shape, func} from 'prop-types'
 import moment from 'moment'
-
-const {string, number, array, shape, func} = PropTypes
 
 const ManageableUserDayMenuSelect = ({id, dayOfWeek, menu, user, menuList, onSubmit, onUpdate}) => {
 
@@ -30,7 +28,6 @@ const ManageableUserDayMenuSelect = ({id, dayOfWeek, menu, user, menuList, onSub
       className="form-control custom-select"
       value={selected}
       onChange={handleSubmit}>
-      <option>Select a Restaurant</option>
       {menuList.map((menu) => (
         <option
           value={menu._links.self.href}
