@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
+import {string, object, array, func} from 'prop-types'
+
 import withSpinner from '../../../../HOC/withSpinner'
 import UsersMenuSheetStatistics from './UsersMenuSheetStatistics'
 import UsersMenuSheetTable from './UsersMenuSheetTable'
@@ -15,8 +16,6 @@ class UsersMenuSheet extends Component {
     )
   }
 }
-
-const {string, object, array, func} = PropTypes
 
 UsersMenuSheet.propTypes = {
   startDate: string,

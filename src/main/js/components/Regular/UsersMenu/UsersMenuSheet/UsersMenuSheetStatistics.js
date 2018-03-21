@@ -3,30 +3,39 @@ import {string, array} from 'prop-types'
 import moment from 'moment'
 import {groupBy} from 'ramda'
 
-const UsersMenuSheetStatistics = ({startDate, data, menuList}) => {
+const UsersMenuSheetStatistics = ({startDate, data, menuList, users}) => {
+  const dateString = udm => `${udm.date.year}-${('0' + udm.date.monthOfYear).slice(-2)}-${udm.date.dayOfMonth}`
+
   let groupedByMenuLinks = groupBy(udm => udm.menu._links.self.href.replace('{?projection}', ''))(data)
   let groupedByMenuLinksAndDate = Object.entries(groupedByMenuLinks).map(entry => {
     const [menuHref, arr] = entry
-    let groupedByDate = groupBy(udm => {
-      return `${udm.date.year}-${('0' + udm.date.monthOfYear).slice(-2)}-${udm.date.dayOfMonth}`
-    })(arr)
+    let groupedByDate = groupBy(dateString)(arr)
     return {menu: {href: menuHref}, groupedByDate: groupedByDate}
   })
 
   const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
   const headers = weekDays.map(day => {
-    return <div scope="col" key={`total_${day}`} className='col-2'>{day}</div>
+    return <div key={`total_${day}`} className='col-2'>{day}</div>
   })
 
+  let groupedByDate = groupBy(dateString)(data.filter(udm => udm.menu.name !== 'None'))
   let weekStatistics = menuList.map(menu => {
     let menuStatistics = groupedByMenuLinksAndDate.find(gmd => gmd.menu.href === menu._links.self.href)
     let dayMenuStatistics = weekDays.map((day, index) => {
       let date = moment(startDate).day(index + 1).format('YYYY-MM-DD')
       let arr = menuStatistics ? menuStatistics.groupedByDate[date] : []
+      let count = arr ? arr.length : 0
+      if (menu.name === 'None') {
+        count = users.length
+        let totalDateArr = groupedByDate[date]
+        if (totalDateArr) {
+          count = count - totalDateArr.length
+        }
+      }
       return (
         <div className='col-2' key={`total_statistics_${menu.name}_${day}`}>
-          {`${menu.name} ${arr ? arr.length : 0}`}
+          {`${menu.name} ${count}`}
         </div>
       )
     })
@@ -52,7 +61,8 @@ const UsersMenuSheetStatistics = ({startDate, data, menuList}) => {
 UsersMenuSheetStatistics.propTypes = {
   startDate: string,
   data: array,
-  menuList: array.isRequired
+  menuList: array.isRequired,
+  users: array.isRequired
 }
 
 export default UsersMenuSheetStatistics

@@ -1,10 +1,11 @@
 import { takeLatest, takeEvery, put, call } from 'redux-saga/effects'
 import { get, post, putUserDayMenu, put as putRest } from '../utils/rest'
-import { USERS_MENU_URI, USERS_MENU_SEARCH_URI } from '../utils/api'
-import actions from '../actions'
-import * as actionTypes from '../actions/types'
 import { sessionService } from 'redux-react-session'
 import moment from 'moment'
+
+import {USERS_MENU_URI, USERS_MENU_SEARCH_URI, USERS_MENU_BY_ID_URI} from '../utils/api'
+import actions from '../actions'
+import * as actionTypes from '../actions/types'
 
 const loadUser = sessionService.loadUser
 
@@ -49,9 +50,10 @@ export function* updateUserDayMenu({ userDayMenu: udm }) {
   const response = yield call(putUserDayMenu, user.auth_token, udm)
 
   if(response.status === 204) {
-    yield put(actions.usersMenu.updatedSuccessfully({ id: udm.id, menu: udm.menu }))
-    // TODO think how change it only for None menu
+    // TODO think how to change it only for None menu
     yield put(actions.usersMenu.updateOut({id: udm.id, out: false, date: udm.date}))
+    const usersMenu = yield call(get, USERS_MENU_BY_ID_URI({id: udm.id}))
+    yield put(actions.usersMenu.updatedSuccessfully(usersMenu))
   }
 }
 

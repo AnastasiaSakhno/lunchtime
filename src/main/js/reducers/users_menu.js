@@ -25,16 +25,7 @@ const usersMenu = (state = initialState, action) => {
       ...state,
       data: state.data.map((udm) => {
         if (udm.id === action.userDayMenu.id) {
-          return {
-            ...udm,
-            menu: {
-              _links: {
-                self: {
-                  href: action.userDayMenu.menu
-                }
-              }
-            }
-          }
+          return action.userDayMenu
         }
         return udm
       })
