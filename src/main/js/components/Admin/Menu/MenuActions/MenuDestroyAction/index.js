@@ -26,11 +26,11 @@ PureMenuDestroyAction.propTypes = {
 }
 
 export default compose(
-  archiveBranch({
-    NotArchiveComponent: PureMenuDestroyAction
-  }),
   cancanBranch({
     VerifiableClass: Menu,
     CanComponent: PureMenuDestroyAction
+  }),
+  archiveBranch({
+    NotArchiveComponent: PureMenuDestroyAction
   })
 )()

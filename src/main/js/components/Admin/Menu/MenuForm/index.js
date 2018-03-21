@@ -1,7 +1,10 @@
 import React, {Component} from 'react'
 import {array, func} from 'prop-types'
 
-class MenuForm extends Component {
+import cancanBranch from '../../../../HOC/branch/cancanBranch'
+import {Menu} from '../../../abilities'
+
+class PureMenuForm extends Component {
   static propTypes = {
     onSubmit: func.isRequired,
     restaurants: array.isRequired
@@ -76,9 +79,13 @@ class MenuForm extends Component {
             </div>
           </div>
         </form>
+        <hr/>
       </div>
     )
   }
 }
 
-export default MenuForm
+export default cancanBranch({
+  VerifiableClass: Menu,
+  CanComponent: PureMenuForm
+})()

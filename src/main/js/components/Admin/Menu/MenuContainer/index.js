@@ -1,15 +1,13 @@
 import React, {PureComponent} from 'react'
-import PropTypes from 'prop-types'
+import {array, func, object} from 'prop-types'
 import {connect} from 'react-redux'
+
 import actions from '../../../../actions'
 import {MenuList, MenuForm} from '../../Menu'
 import withHeader from '../../../../HOC/withHeader'
 import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
 import withCurrentUser from '../../../../HOC/withCurrentUser'
 import withNeededStores from '../../../../HOC/withNeededStores'
-import {cancanUser, can, Menu} from '../../../abilities'
-
-const {array, func, object} = PropTypes
 
 @withNeededStores(['restaurants', 'menu'])
 @withRedirectToLogin
@@ -24,25 +22,14 @@ class MenuContainer extends PureComponent {
     removeMenu: func.isRequired
   }
 
-  render() {
-    const user = cancanUser(this.props.currentUser)
-
-    return (
-      <div className="menu-container">
-        {
-          can(user, 'create', Menu)
-            ? <div>
-              <MenuForm onSubmit={this.props.addMenu} restaurants={this.props.restaurants}/>
-              <hr/>
-            </div>
-            : ''
-        }
-        <MenuList
-          data={this.props.menu}
-          onDestroy={this.props.removeMenu}/>
-      </div>
-    )
-  }
+  render = () => (
+    <div className="menu-container">
+      <MenuForm onSubmit={this.props.addMenu} restaurants={this.props.restaurants}/>
+      <MenuList
+        data={this.props.menu}
+        onDestroy={this.props.removeMenu}/>
+    </div>
+  )
 }
 
 const mapDispatchToProps = (dispatch) => ({

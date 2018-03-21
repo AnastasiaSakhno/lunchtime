@@ -26,11 +26,11 @@ PureRestaurantDestroyAction.propTypes = {
 }
 
 export default compose(
-  archiveBranch({
-    NotArchiveComponent: PureRestaurantDestroyAction
-  }),
   cancanBranch({
     VerifiableClass: Restaurant,
     CanComponent: PureRestaurantDestroyAction
+  }),
+  archiveBranch({
+    NotArchiveComponent: PureRestaurantDestroyAction
   })
 )()
