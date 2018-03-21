@@ -1,55 +1,72 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, {Component} from 'react'
+import {func} from 'prop-types'
+import cancanBranch from '../../../../HOC/branch/cancanBranch'
+import {Restaurant} from '../../../abilities'
 
-class RestaurantForm extends Component {
+const defaultState = {
+  name: null,
+  address: null,
+  archive: false
+}
+
+class PureRestaurantForm extends Component {
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: func.isRequired
+  }
+
+  state = defaultState
+
+  handleChange = (e) => {
+    const target = e.target
+    this.setState({...this.state, [target.name]: target.value.trim()})
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
 
-    const address = this.addressInput.value.trim()
-    if(!address) {
+    if (!this.state.name || !this.state.address) {
       return
     }
 
-    const name = this.nameInput.value.trim()
+    this.props.onSubmit({...this.state})
 
-    this.props.onSubmit({ name: name, address: address, archive: false })
-
-    this.addressInput.value = this.nameInput.value = ''
+    this.setState(defaultState)
+    e.target.reset()
   }
 
-  render() {
-    return (
-      <div>
-        <form className='restaurant-form' onSubmit={ this.handleSubmit }>
-          <div className="form-row align-items-center">
-            <div className="col-auto">
-              <label className="sr-only" htmlFor="name_input">Name</label>
-              <input type='text'
-                className="form-control"
-                id="name_input"
-                placeholder='Name'
-                ref={ el => { this.nameInput = el } }/>
-            </div>
-            <div className="col-auto">
-              <label className="sr-only" htmlFor="address_input">Address</label>
-              <input type='text'
-                className="form-control"
-                id='address_input'
-                placeholder='Address'
-                ref={ el => { this.addressInput = el } }/>
-            </div>
-            <div className="col-auto">
-              <button type="submit" className="btn btn-primary mr-sm-2">Add restaurant</button>
-            </div>
+  render = () => (
+    <div>
+      <form className='restaurant-form' onSubmit={this.handleSubmit}>
+        <div className="form-row align-items-center">
+          <div className="col-auto">
+            <label className="sr-only" htmlFor="name_input">Name</label>
+            <input type='text'
+                   name='name'
+                   className="form-control"
+                   id="name_input"
+                   placeholder='Name'
+                   onChange={this.handleChange}/>
           </div>
-        </form>
-      </div>
-    )
-  }
+          <div className="col-auto">
+            <label className="sr-only" htmlFor="address_input">Address</label>
+            <input type='text'
+                   name='address'
+                   className="form-control"
+                   id='address_input'
+                   placeholder='Address'
+                   onChange={this.handleChange}/>
+          </div>
+          <div className="col-auto">
+            <button type="submit" className="btn btn-primary mr-sm-2">Add restaurant</button>
+          </div>
+        </div>
+      </form>
+      <hr/>
+    </div>
+  )
 }
 
-export default RestaurantForm
+export default cancanBranch({
+  VerifiableClass: Restaurant,
+  CanComponent: PureRestaurantForm
+})()
