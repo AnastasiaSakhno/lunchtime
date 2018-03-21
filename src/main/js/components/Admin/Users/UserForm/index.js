@@ -1,54 +1,65 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+
+const defaultState = {
+  email: null,
+  fullName: null
+}
 
 class UserForm extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired
   }
 
+  state = defaultState
+
+  handleChange = (e) => {
+    const target = e.target
+    this.setState({...this.state, [target.name]: target.value.trim()})
+  }
+
   handleSubmit = (e) => {
     e.preventDefault()
 
-    const email = this.emailInput.value.trim()
-    const name = this.nameInput.value.trim()
-    if(!email || !name) {
+    if (!this.state.email || !this.state.fullName) {
       return
     }
 
-    this.props.onSubmit({ fullName: name, email: email, role: 'ROLE_REGULAR' })
+    this.props.onSubmit({...this.state})
 
-    this.emailInput.value = this.nameInput.value = ''
+    this.setState(defaultState)
+    e.target.reset()
   }
 
-  render() {
-    return (
-      <div>
-        <form className='user-form' onSubmit={ this.handleSubmit }>
-          <div className="form-row align-items-center">
-            <div className="col-auto">
-              <label className="sr-only" htmlFor="name_input">Name</label>
-              <input type='text'
-                className="form-control"
-                id="name_input"
-                placeholder='Name'
-                ref={ el => { this.nameInput = el } }/>
-            </div>
-            <div className="col-auto">
-              <label className="sr-only" htmlFor="email_input">Address</label>
-              <input type='text'
-                className="form-control"
-                id='email_input'
-                placeholder='Email'
-                ref={ el => { this.emailInput = el } }/>
-            </div>
-            <div className="col-auto">
-              <button type="submit" className="btn btn-primary mr-sm-2">Add user</button>
-            </div>
+  render = () => (
+    <div>
+      <form className='user-form' onSubmit={this.handleSubmit}>
+        <div className="form-row align-items-center">
+          <div className="col-auto">
+            <label className="sr-only" htmlFor="name_input">Name</label>
+            <input type='text'
+                   name='fullName'
+                   className="form-control"
+                   id="name_input"
+                   placeholder='Name'
+                   onChange={this.handleChange}/>
           </div>
-        </form>
-      </div>
-    )
-  }
+          <div className="col-auto">
+            <label className="sr-only" htmlFor="email_input">Address</label>
+            <input type='text'
+                   name='email'
+                   className="form-control"
+                   id='email_input'
+                   placeholder='Email'
+                   onChange={this.handleChange}/>
+          </div>
+          <div className="col-auto">
+            <button type="submit" className="btn btn-primary mr-sm-2">Add user</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  )
 }
 
 export default UserForm
