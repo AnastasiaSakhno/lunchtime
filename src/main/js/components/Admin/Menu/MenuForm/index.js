@@ -44,8 +44,8 @@ class PureMenuForm extends Component {
           <div className="col-auto">
             <label className="sr-only" htmlFor="restaurant_input">Restaurant</label>
             <select name='restaurant' className="custom-select mr-sm-2"
-                    id='restaurant_input'
-                    onChange={this.handleChange}>
+              id='restaurant_input'
+              onChange={this.handleChange}>
               <option>Select a Restaurant</option>
               {this.props.restaurants.map((restaurant) => (
                 <option
@@ -57,20 +57,20 @@ class PureMenuForm extends Component {
           <div className="col-auto">
             <label className="sr-only" htmlFor="name_input">Name</label>
             <input type='text'
-                   name='name'
-                   className="form-control"
-                   id="name_input"
-                   placeholder='Name'
-                   onChange={this.handleChange}/>
+              name='name'
+              className="form-control"
+              id="name_input"
+              placeholder='Name'
+              onChange={this.handleChange}/>
           </div>
           <div className="col-auto">
             <label className="sr-only" htmlFor="week_days_input">Name</label>
             <input type='text'
-                   name='weekDays'
-                   className="form-control"
-                   id='week_days_input'
-                   placeholder='Week days'
-                   onChange={this.handleChange}/>
+              name='weekDays'
+              className="form-control"
+              id='week_days_input'
+              placeholder='Week days'
+              onChange={this.handleChange}/>
           </div>
           <div className="col-auto">
             <button type="submit" className="btn btn-primary mr-sm-2">Add menu</button>

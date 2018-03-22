@@ -1,5 +1,5 @@
 import React from 'react'
-import {string, bool, number, object, array, shape, func} from 'prop-types'
+import {string, bool, number, array, shape, func} from 'prop-types'
 
 import ManageableUserDayMenuSelect from '../UserDayMenu/UserDayMenuSelect/ManageableUserDayMenuSelect'
 import ManageableUserDayMenuOut from '../UserDayMenu/UserDayMenuOut/ManageableUserDayMenuOut'
@@ -19,7 +19,6 @@ const ManageableUserDayMenu = ({id, dayOfWeek, out, menu, user, menuList, onSubm
         id={id}
         out={out}
         menu={menu}
-        menuList={menuList}
         dayOfWeek={dayOfWeek}
         onOutUpdate={onOutUpdate}/>
     </div>

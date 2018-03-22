@@ -1,8 +1,8 @@
 import React from 'react'
-import {bool, string, number, array, func, shape} from 'prop-types'
+import {bool, string, number, func, shape} from 'prop-types'
 import moment from 'moment'
 
-const ManageableUserDayMenuOut = ({id, dayOfWeek, out, menu, menuList, onOutUpdate}) => {
+const ManageableUserDayMenuOut = ({id, dayOfWeek, out, menu, onOutUpdate}) => {
   const dateString = (dayOfWeek) => moment().day(dayOfWeek).valueOf()
 
   const handleUpdate = (e) => {
@@ -13,10 +13,6 @@ const ManageableUserDayMenuOut = ({id, dayOfWeek, out, menu, menuList, onOutUpda
       out: e.target.checked,
       date: dateString(dayOfWeek)
     })
-  }
-
-  if (menu) {
-    menu = menuList.find(m => m._links.self.href === menu._links.self.href.replace('{?projection}', ''))
   }
 
   return (
@@ -40,8 +36,7 @@ ManageableUserDayMenuOut.propTypes = {
     id: number,
     name: string
   }),
-  onOutUpdate: func.isRequired,
-  menuList: array.isRequired
+  onOutUpdate: func.isRequired
 }
 
 export default ManageableUserDayMenuOut
