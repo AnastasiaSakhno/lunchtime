@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { string, bool, number, arrayOf, shape, func } from 'prop-types'
 
 import { Restaurant } from '../../Restaurants'
 
@@ -23,8 +23,6 @@ const RestaurantsList = ({ data, onDestroy }) => {
     </div>
   )
 }
-
-const { string, bool, number, arrayOf, shape, func } = PropTypes
 
 RestaurantsList.propTypes = {
   data: arrayOf(

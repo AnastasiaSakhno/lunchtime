@@ -41,20 +41,20 @@ class PureUserForm extends Component {
           <div className="col-auto">
             <label className="sr-only" htmlFor="name_input">Name</label>
             <input type='text'
-                   name='fullName'
-                   className="form-control"
-                   id="name_input"
-                   placeholder='Name'
-                   onChange={this.handleChange}/>
+              name='fullName'
+              className="form-control"
+              id="name_input"
+              placeholder='Name'
+              onChange={this.handleChange}/>
           </div>
           <div className="col-auto">
             <label className="sr-only" htmlFor="email_input">Address</label>
             <input type='text'
-                   name='email'
-                   className="form-control"
-                   id='email_input'
-                   placeholder='Email'
-                   onChange={this.handleChange}/>
+              name='email'
+              className="form-control"
+              id='email_input'
+              placeholder='Email'
+              onChange={this.handleChange}/>
           </div>
           <div className="col-auto">
             <button type="submit" className="btn btn-primary mr-sm-2">Add user</button>

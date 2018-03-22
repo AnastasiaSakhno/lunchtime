@@ -3,7 +3,7 @@ import {array} from 'prop-types'
 
 import selectors from '../../../../selectors'
 
-const UsersMenuSheetStatistics = ({summaryValues}) => {
+const UsersMenuSheetSummary = ({summaryValues}) => {
   let weekSummary = summaryValues.map((menuSummary, index) => {
     let menuMap = menuSummary.map((menu, mindex) => (
       <div className='col-2' key={`summary_${menu.name}_${mindex}`}>
@@ -31,8 +31,8 @@ const UsersMenuSheetStatistics = ({summaryValues}) => {
   )
 }
 
-UsersMenuSheetStatistics.propTypes = {
+UsersMenuSheetSummary.propTypes = {
   summaryValues: array
 }
 
-export default UsersMenuSheetStatistics
+export default UsersMenuSheetSummary

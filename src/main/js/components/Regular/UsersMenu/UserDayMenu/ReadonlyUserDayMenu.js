@@ -1,5 +1,5 @@
 import React from 'react'
-import {string, bool, number, object, array, shape, func} from 'prop-types'
+import {string, bool, number, array, shape} from 'prop-types'
 
 import ReadonlyUserDayMenuSelect from '../UserDayMenu/UserDayMenuSelect/ReadonlyUserDayMenuSelect'
 import ReadonlyUserDayMenuOut from '../UserDayMenu/UserDayMenuOut/ReadonlyUserDayMenuOut'

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import Spinner from '../../components/Spinner'
 import { all } from 'ramda'
+
+import Spinner from '../../components/Spinner'
 import { isEmpty } from '../../utils/object'
 
 const withSpinner = (neededProps) => (WrappedComponent) => {

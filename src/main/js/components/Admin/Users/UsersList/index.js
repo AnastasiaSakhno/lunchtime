@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import { string, number, arrayOf, shape } from 'prop-types'
 
 import { User } from '../../Users'
 import withSpinner from '../../../../HOC/withSpinner'
@@ -27,8 +27,6 @@ class UsersList extends Component {
     )
   }
 }
-
-const { string, number, arrayOf, shape } = PropTypes
 
 UsersList.propTypes = {
   data: arrayOf(

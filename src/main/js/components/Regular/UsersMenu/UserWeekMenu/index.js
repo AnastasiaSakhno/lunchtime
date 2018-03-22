@@ -1,36 +1,24 @@
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
+import {string, number, bool, object, array, arrayOf, shape, func} from 'prop-types'
+
 import UserDayMenu from '../UserDayMenu'
 
-const {string, number, bool, object, array, arrayOf, shape, func} = PropTypes
-
-class UserWeekMenu extends Component {
-  static propTypes = {
-    onSubmit: func.isRequired,
-    onUpdate: func.isRequired,
-    onOutUpdate: func.isRequired,
-    menuList: array.isRequired
-  }
-
-  render() {
-    return (
-      <div className='row'>
-        <div className='col-2'>{this.props.user.fullName}</div>
-        {[...Array(5).keys()].map((dayOfWeek) => {
-          dayOfWeek = dayOfWeek + 1
-          let found = this.props.data.find((udm) => (
-            udm.date.dayOfWeek === dayOfWeek
-          ))
-          let key = `udm_${this.props.user.id}_${dayOfWeek}`
-          if (found) {
-            return (<UserDayMenu key={key} dayOfWeek={dayOfWeek} {...this.props} {...found}/>)
-          }
-          return (<UserDayMenu key={key} dayOfWeek={dayOfWeek} {...this.props}/>)
-        })}
-      </div>
-    )
-  }
-}
+const UserWeekMenu = (props) => (
+  <div className='row'>
+    <div className='col-2'>{props.user.fullName}</div>
+    {[...Array(5).keys()].map((i) => {
+      let dayOfWeek = i + 1
+      let found = props.data.find((udm) => (
+        udm.date.dayOfWeek === dayOfWeek
+      ))
+      let key = `udm_${props.user.id}_${dayOfWeek}`
+      if (!found) {
+        found = {}
+      }
+      return (<UserDayMenu key={key} dayOfWeek={dayOfWeek} {...props} {...found}/>)
+    })}
+  </div>
+)
 
 UserWeekMenu.propTypes = {
   user: shape({
@@ -48,7 +36,11 @@ UserWeekMenu.propTypes = {
         name: string
       })
     })
-  ).isRequired
+  ).isRequired,
+  onSubmit: func.isRequired,
+  onUpdate: func.isRequired,
+  onOutUpdate: func.isRequired,
+  menuList: array.isRequired
 }
 
 export default UserWeekMenu

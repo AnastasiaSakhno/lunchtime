@@ -1,6 +1,7 @@
 import React from 'react'
 import {string} from 'prop-types'
 import {Link} from 'react-router-dom'
+
 import cancanBranch from '../../../HOC/branch/cancanBranch'
 import {Menu, MenuDocument, Restaurant, User} from '../../abilities'
 

@@ -1,7 +1,7 @@
 import React from 'react'
-import {string, bool, number, shape} from 'prop-types'
+import {string, number} from 'prop-types'
 
-const ArchiveRestaurant = ({id, name, address}) => (
+const ArchiveRestaurant = ({name, address}) => (
   <tr>
     <td>
       <del>{name}</del>

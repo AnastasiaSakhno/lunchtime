@@ -1,13 +1,12 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
+import {object, array, func} from 'prop-types'
 import {connect} from 'react-redux'
-import actions from '../../actions'
-import { isEmpty } from '../../utils/object'
 import capitalize from 'capitalize'
 
-const withNeededStores = (neededStores) => (WrappedComponent) => {
-  const { func, object, array } = PropTypes
+import actions from '../../actions'
+import { isEmpty } from '../../utils/object'
 
+const withNeededStores = (neededStores) => (WrappedComponent) => {
   class NeededStoresWrapper extends Component {
     static propTypes = {
       usersMenu: object.isRequired,

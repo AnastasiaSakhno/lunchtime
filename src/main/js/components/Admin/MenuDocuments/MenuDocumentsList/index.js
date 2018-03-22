@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import {string, number, arrayOf, shape, func} from 'prop-types'
 import MenuDocument from '../MenuDocument'
 
 const MenuDocumentsList = ({data, onSubmit}) => {
@@ -15,8 +15,6 @@ const MenuDocumentsList = ({data, onSubmit}) => {
     </div>
   )
 }
-
-const {string, number, arrayOf, shape, func} = PropTypes
 
 MenuDocumentsList.propTypes = {
   data: arrayOf(

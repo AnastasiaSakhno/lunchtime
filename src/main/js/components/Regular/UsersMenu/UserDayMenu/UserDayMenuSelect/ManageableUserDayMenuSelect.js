@@ -4,7 +4,7 @@ import moment from 'moment'
 
 const ManageableUserDayMenuSelect = ({id, dayOfWeek, menu, user, menuList, onSubmit, onUpdate}) => {
 
-  const dateString = (dayOfWeek) => (moment().day(dayOfWeek).valueOf())
+  const dateString = (day) => (moment().day(day).valueOf())
 
   const handleSubmit = (e) => {
     e.preventDefault()

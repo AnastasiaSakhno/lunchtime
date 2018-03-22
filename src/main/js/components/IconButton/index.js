@@ -1,19 +1,15 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
+import {string, func} from 'prop-types'
 
-class IconButton extends Component {
-  render() {
-    return (
-      <span className='iconbutton-box' onClick={ this.props.onSubmit }>
-        <i className={ `fa animated-hover faa-vertical ${ this.props.icon }` }/>
-      </span>
-    )
-  }
-}
+const IconButton = ({icon, onSubmit}) => (
+  <span className='iconbutton-box' onClick={onSubmit}>
+    <i className={`fa animated-hover faa-vertical ${ icon }`}/>
+  </span>
+)
 
 IconButton.propTypes = {
-  icon: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired
+  icon: string.isRequired,
+  onSubmit: func.isRequired
 }
 
 export default IconButton

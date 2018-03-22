@@ -1,7 +1,8 @@
 import React from 'react'
 import {string, number, func} from 'prop-types'
 
-const ManageableMenuDocument = ({file, restaurantName, userName, uploadedAt, content, onSubmit}) => {
+const ManageableMenuDocument = ({restaurantName, userName, uploadedAt, content, onSubmit}) => {
+  let file = null
 
   const handleSubmit = (e) => {
     e.preventDefault()

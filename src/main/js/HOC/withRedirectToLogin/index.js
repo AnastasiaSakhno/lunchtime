@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
+import {bool} from 'prop-types'
 import { Redirect } from 'react-router'
 
 const withRedirectToLogin = (WrappedComponent) => {
   class RedirectToLoginWrapper extends Component {
     static propTypes = {
-      authenticated: PropTypes.bool.isRequired
+      authenticated: bool.isRequired
     }
 
     render() {

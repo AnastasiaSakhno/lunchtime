@@ -1,13 +1,8 @@
-import React, {Component} from 'react'
-import styles from './index.scss'
+import React from 'react'
 import cssModules from 'react-css-modules'
 
-class Spinner extends Component {
-  render() {
-    return (
-      <div className='spinner'/>
-    )
-  }
-}
+import styles from './index.scss'
+
+const Spinner = () => <div className='spinner'/>
 
 export default cssModules(Spinner, styles)

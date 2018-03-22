@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {func} from 'prop-types'
+
 import cancanBranch from '../../../../HOC/branch/cancanBranch'
 import {Restaurant} from '../../../abilities'
 

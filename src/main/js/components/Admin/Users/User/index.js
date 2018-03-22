@@ -1,23 +1,13 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
+import {string, number} from 'prop-types'
 
-class User extends Component {
-  static propTypes = {
-    onUpdate: PropTypes.func.isRequired
-  }
-
-  render() {
-    return (
-      <tr>
-        <td>{this.props.fullName}</td>
-        <td>{this.props.email}</td>
-        <td>{this.props.role}</td>
-      </tr>
-    )
-  }
-}
-
-const { string, number } = PropTypes
+const User = ({fullName, email, role}) => (
+  <tr>
+    <td>{fullName}</td>
+    <td>{email}</td>
+    <td>{role}</td>
+  </tr>
+)
 
 User.propTypes = {
   id: number.isRequired,

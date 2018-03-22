@@ -2,14 +2,14 @@ import React, {Component} from 'react'
 import {string, object, array, func} from 'prop-types'
 
 import withSpinner from '../../../../HOC/withSpinner'
-import UsersMenuSheetStatistics from './UsersMenuSheetStatistics'
+import UsersMenuSheetSummary from './UsersMenuSheetSummary'
 import UsersMenuSheetTable from './UsersMenuSheetTable'
 
 @withSpinner(['startDate', 'menuList'])
 class UsersMenuSheet extends Component {
   render = () => (
     <div className='users-menu-sheet'>
-      <UsersMenuSheetStatistics {...this.props}/>
+      <UsersMenuSheetSummary {...this.props}/>
       <UsersMenuSheetTable {...this.props}/>
     </div>
   )

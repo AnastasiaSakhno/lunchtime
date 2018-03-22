@@ -1,9 +1,9 @@
 import Login from './Login'
-import { RestaurantsContainer } from './Admin/Restaurants'
-import { MenuContainer } from './Admin/Menu'
-import { MenuDocumentsContainer } from './Admin/MenuDocuments'
-import { UsersMenuContainer } from './Regular/UsersMenu'
-import { UsersContainer } from './Admin/Users'
+import {RestaurantsContainer} from './Admin/Restaurants'
+import {MenuContainer} from './Admin/Menu'
+import {MenuDocumentsContainer} from './Admin/MenuDocuments'
+import {UsersMenuContainer} from './Regular/UsersMenu'
+import {UsersContainer} from './Admin/Users'
 
 const routes = [
   {
