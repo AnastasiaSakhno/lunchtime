@@ -7,7 +7,7 @@ import ArchiveMenu from './ArchiveMenu'
 
 const PureMenu = (props) => (
   <tr>
-    <td>{props.restaurant.name}</td>
+    <td>{props.restaurant ? props.restaurant.name : ''}</td>
     <td>{props.name}</td>
     <td>{props.weekDays ? props.weekDays : 'All'}</td>
     <td><MenuDestroyAction {...props}/></td>
