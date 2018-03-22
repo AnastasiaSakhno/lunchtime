@@ -38,24 +38,38 @@ export const groupedByMenuAndDate = createSelector(
   )
 )
 
+const menuDayCount = (menu, date, users, byDate, arr) => {
+  let count = arr ? arr.length : 0
+  if (menu.name === 'None') {
+    count = users.length
+    let totalDateArr = byDate[date]
+    if (totalDateArr) {
+      count = count - totalDateArr.length
+    }
+  }
+  return count
+}
+
+const menuDayOutCount = (arr) => arr ? arr.filter(udm => udm.out).length : 0
+
+const menuSummaryRow = (menu, users, byDate, menuStatistics, usersMenu) => (
+  weekDays.map((day, index) => {
+    let date = moment(usersMenu.startDate).day(index + 1).format('YYYY-MM-DD')
+    let arr = menuStatistics ? menuStatistics.groupedByDate[date] : []
+    let count = menuDayCount(menu, date, users, byDate, arr)
+    let outCount = menuDayOutCount(arr)
+    return {name: menu.name, count: count, out: outCount}
+  })
+)
+
+const menuSummary = (menu, byMenuAndDate) => byMenuAndDate.find(gmd => gmd.menu.href === menu._links.self.href)
+
 export const summaryValues = createSelector(
   [getUsersMenu, getMenu, getUsers, groupedByMenuAndDate, groupedByDate],
-  (usersMenu, menuList, users, byMenuAndDate, byDate) => {
-    return menuList.map(menu => {
-      let menuStatistics = byMenuAndDate.find(gmd => gmd.menu.href === menu._links.self.href)
-      return weekDays.map((day, index) => {
-        let date = moment(usersMenu.startDate).day(index + 1).format('YYYY-MM-DD')
-        let arr = menuStatistics ? menuStatistics.groupedByDate[date] : []
-        let count = arr ? arr.length : 0
-        if (menu.name === 'None') {
-          count = users.length
-          let totalDateArr = byDate[date]
-          if (totalDateArr) {
-            count = count - totalDateArr.length
-          }
-        }
-        return {name: menu.name, count: count}
-      })
+  (usersMenu, menuList, users, byMenuAndDate, byDate) => (
+    menuList.map(menu => {
+      let menuStatistics = menuSummary(menu, byMenuAndDate)
+      return menuSummaryRow(menu, users, byDate, menuStatistics, usersMenu)
     })
-  }
+  )
 )
