@@ -5,27 +5,25 @@ import withSpinner from '../../../../HOC/withSpinner'
 import UsersMenuSheetStatistics from './UsersMenuSheetStatistics'
 import UsersMenuSheetTable from './UsersMenuSheetTable'
 
-@withSpinner(['startDate', 'currentUser', 'menuList'])
+@withSpinner(['startDate', 'menuList'])
 class UsersMenuSheet extends Component {
-  render() {
-    return (
-      <div className='users-menu-sheet'>
-        <UsersMenuSheetStatistics { ...this.props }/>
-        <UsersMenuSheetTable { ...this.props }/>
-      </div>
-    )
-  }
+  render = () => (
+    <div className='users-menu-sheet'>
+      <UsersMenuSheetStatistics {...this.props}/>
+      <UsersMenuSheetTable {...this.props}/>
+    </div>
+  )
 }
 
 UsersMenuSheet.propTypes = {
+  menuList: array.isRequired,
   startDate: string,
-  data: array,
+  dataGroupedByUser: object,
+  orderedUsers: array.isRequired,
+  summaryValues: array,
   onSubmit: func.isRequired,
   onUpdate: func.isRequired,
-  onOutUpdate: func.isRequired,
-  menuList: array.isRequired,
-  users: array.isRequired,
-  currentUser: object
+  onOutUpdate: func.isRequired
 }
 
 export default UsersMenuSheet
