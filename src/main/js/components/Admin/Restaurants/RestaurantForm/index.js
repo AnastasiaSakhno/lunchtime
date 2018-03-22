@@ -41,20 +41,20 @@ class PureRestaurantForm extends Component {
           <div className="col-auto">
             <label className="sr-only" htmlFor="name_input">Name</label>
             <input type='text'
-                   name='name'
-                   className="form-control"
-                   id="name_input"
-                   placeholder='Name'
-                   onChange={this.handleChange}/>
+              name='name'
+              className="form-control"
+              id="name_input"
+              placeholder='Name'
+              onChange={this.handleChange}/>
           </div>
           <div className="col-auto">
             <label className="sr-only" htmlFor="address_input">Address</label>
             <input type='text'
-                   name='address'
-                   className="form-control"
-                   id='address_input'
-                   placeholder='Address'
-                   onChange={this.handleChange}/>
+              name='address'
+              className="form-control"
+              id='address_input'
+              placeholder='Address'
+              onChange={this.handleChange}/>
           </div>
           <div className="col-auto">
             <button type="submit" className="btn btn-primary mr-sm-2">Add restaurant</button>

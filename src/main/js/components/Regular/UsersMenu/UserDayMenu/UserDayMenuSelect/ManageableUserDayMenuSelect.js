@@ -1,5 +1,5 @@
 import React from 'react'
-import {string, number, bool, array, shape, func} from 'prop-types'
+import {string, number, array, shape, func} from 'prop-types'
 import moment from 'moment'
 
 const ManageableUserDayMenuSelect = ({id, dayOfWeek, menu, user, menuList, onSubmit, onUpdate}) => {

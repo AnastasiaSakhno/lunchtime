@@ -1,7 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-
-const {string, number, array, shape} = PropTypes
+import {string, number, array, shape} from 'prop-types'
 
 const ReadonlyUserDayMenuSelect = ({menu, menuList}) => {
   let selected = menu ? menu._links.self.href.replace('{?projection}', '') : ''
