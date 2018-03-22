@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import selectors from '../../selectors'
+
 const withCurrentUser = (WrappedComponent) => {
 
   class LoggedInUserWrapper extends Component {
@@ -15,7 +17,7 @@ const withCurrentUser = (WrappedComponent) => {
   }
 
   const mapStateToProps = (state) => ({
-    currentUser: state.users.find((u) => (u.email === state.session.user.email))
+    currentUser: selectors.auth.getCurrentUser(state)
   })
 
   return connect(mapStateToProps)(LoggedInUserWrapper)
