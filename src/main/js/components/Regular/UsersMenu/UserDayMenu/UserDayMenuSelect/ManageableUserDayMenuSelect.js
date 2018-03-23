@@ -2,9 +2,8 @@ import React from 'react'
 import {string, number, array, shape, func} from 'prop-types'
 import moment from 'moment'
 
-const ManageableUserDayMenuSelect = ({id, dayOfWeek, menu, user, menuList, onSubmit, onUpdate}) => {
-
-  const dateString = (day) => (moment().day(day).valueOf())
+const ManageableUserDayMenuSelect = ({startDate, id, dayOfWeek, menu, user, menuList, onSubmit, onUpdate}) => {
+  const dateString = (day) => (moment(startDate, 'YYYY-MM-DD').day(day).valueOf())
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -40,6 +39,7 @@ const ManageableUserDayMenuSelect = ({id, dayOfWeek, menu, user, menuList, onSub
 }
 
 ManageableUserDayMenuSelect.propTypes = {
+  startDate: string,
   id: number,
   dayOfWeek: number.isRequired,
   menu: shape({

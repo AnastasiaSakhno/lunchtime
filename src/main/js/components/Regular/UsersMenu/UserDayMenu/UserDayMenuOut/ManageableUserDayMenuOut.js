@@ -2,8 +2,8 @@ import React from 'react'
 import {bool, string, number, func, shape} from 'prop-types'
 import moment from 'moment'
 
-const ManageableUserDayMenuOut = ({id, dayOfWeek, out, menu, onOutUpdate}) => {
-  const dateString = (dayOfWeek) => moment().day(dayOfWeek).valueOf()
+const ManageableUserDayMenuOut = ({startDate, id, dayOfWeek, out, menu, onOutUpdate}) => {
+  const dateString = (day) => (moment(startDate, 'YYYY-MM-DD').day(day).valueOf())
 
   const handleUpdate = (e) => {
     e.preventDefault()
@@ -29,6 +29,7 @@ const ManageableUserDayMenuOut = ({id, dayOfWeek, out, menu, onOutUpdate}) => {
 }
 
 ManageableUserDayMenuOut.propTypes = {
+  startDate: string,
   id: number,
   dayOfWeek: number.isRequired,
   out: bool,

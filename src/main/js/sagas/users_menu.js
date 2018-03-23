@@ -27,13 +27,31 @@ const userDayMenuWithLinks = (udm, nudm) => ({
   }
 })
 
-export function* loadUsersMenu() {
-  const now = moment()
-  const weekStart = now.day(1).format('YYYY-MM-DD')
-  const weekEnd = now.day(5).format('YYYY-MM-DD')
-  const url = USERS_MENU_SEARCH_URI({ from: weekStart, to: weekEnd })
+const weekRange = (startDate) => {
+  const weekStart = startDate.day(1).format('YYYY-MM-DD')
+  const weekEnd = startDate.day(5).format('YYYY-MM-DD')
+  return { from: weekStart, to: weekEnd }
+}
+
+export function* loadUsersMenu({ startDate }) {
+  const range = weekRange(startDate)
+  const url = USERS_MENU_SEARCH_URI(range)
   const usersMenu = yield call(get, url)
-  yield put(actions.usersMenu.loaded({ startDate: weekStart, data: usersMenu }))
+  yield put(actions.usersMenu.loaded({ startDate: range.from, data: usersMenu }))
+}
+
+export function* loadPrevWeek({ startDate }) {
+  const range = weekRange(startDate.add(-7, 'days'))
+  const url = USERS_MENU_SEARCH_URI(range)
+  const usersMenu = yield call(get, url)
+  yield put(actions.usersMenu.loaded({ startDate: range.from, data: usersMenu }))
+}
+
+export function* loadNextWeek({ startDate }) {
+  const range = weekRange(startDate.add(7, 'days'))
+  const url = USERS_MENU_SEARCH_URI(range)
+  const usersMenu = yield call(get, url)
+  yield put(actions.usersMenu.loaded({ startDate: range.from, data: usersMenu }))
 }
 
 export function* addUserDayMenu({ userDayMenu: udm }) {
@@ -69,6 +87,8 @@ export function* updateUserDayMenuOut({ userDayMenu: udm }) {
 export default function* watchUsersMenu() {
   yield [
     takeLatest(actionTypes.LOAD_USERS_MENU, loadUsersMenu),
+    takeEvery(actionTypes.LOAD_NEXT_WEEK, loadNextWeek),
+    takeEvery(actionTypes.LOAD_PREV_WEEK, loadPrevWeek),
     takeEvery(actionTypes.ADD_USER_DAY_MENU, addUserDayMenu),
     takeEvery(actionTypes.UPDATE_USER_DAY_MENU, updateUserDayMenu),
     takeEvery(actionTypes.UPDATE_USER_DAY_MENU_OUT, updateUserDayMenuOut)

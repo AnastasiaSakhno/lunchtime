@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {object, array, func} from 'prop-types'
+import {array, func} from 'prop-types'
 import {connect} from 'react-redux'
 import capitalize from 'capitalize'
 
@@ -9,14 +9,12 @@ import { isEmpty } from '../../utils/object'
 const withNeededStores = (neededStores) => (WrappedComponent) => {
   class NeededStoresWrapper extends Component {
     static propTypes = {
-      usersMenu: object.isRequired,
       menu: array.isRequired,
       restaurants: array.isRequired,
       users: array.isRequired,
       menuDocuments: array.isRequired,
       loadMenu: func.isRequired,
       loadRestaurants: func.isRequired,
-      loadUsersMenu: func.isRequired,
       loadUsers: func.isRequired,
       loadMenuDocuments: func.isRequired
     }
@@ -40,14 +38,10 @@ const withNeededStores = (neededStores) => (WrappedComponent) => {
     menu: state.menu,
     restaurants: state.restaurants,
     users: state.users,
-    usersMenu: state.usersMenu,
     menuDocuments: state.menuDocuments
   })
 
   const mapDispatchToProps = (dispatch) => ({
-    loadUsersMenu: () => {
-      dispatch(actions.usersMenu.load())
-    },
     loadMenu: () => {
       dispatch(actions.menu.load())
     },
