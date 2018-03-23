@@ -3,9 +3,9 @@ import {groupBy} from 'ramda'
 
 import {getMenu} from './menu'
 import {getUsers} from './users'
-import {weekDateFormattedFromString} from '../utils/date'
+import {weekDateFormattedFromString, formattedDate} from '../utils/date'
 
-export const dateString = udm => `${udm.date.year}-${('0' + udm.date.monthOfYear).slice(-2)}-${udm.date.dayOfMonth}`
+export const udmDateString = udm => formattedDate(udm.date)
 export const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
 export const getUsersMenu = (state) => state.usersMenu
@@ -24,7 +24,7 @@ export const groupedByMenu = createSelector(
 
 export const groupedByDate = createSelector(
   [getUsersMenuData],
-  (data) => groupBy(dateString)(data.filter(udm => udm.menu.name !== 'None'))
+  (data) => groupBy(udmDateString)(data.filter(udm => udm.menu.name !== 'None'))
 )
 
 export const groupedByMenuAndDate = createSelector(
@@ -32,7 +32,7 @@ export const groupedByMenuAndDate = createSelector(
   (groupedByMenu) => (
     Object.entries(groupedByMenu).map(entry => {
       const [menuHref, arr] = entry
-      let groupedByDate = groupBy(dateString)(arr)
+      let groupedByDate = groupBy(udmDateString)(arr)
       return {menu: {href: menuHref}, groupedByDate: groupedByDate}
     })
   )
