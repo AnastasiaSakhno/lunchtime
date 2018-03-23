@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {string, array, object, func} from 'prop-types'
 import cssModules from 'react-css-modules'
-import moment from 'moment'
+
+import {weekDateFormattedFromString} from '../../../../utils/date'
 
 import styles from './index.scss'
 import UserWeekMenu from '../UserWeekMenu'
@@ -25,7 +26,7 @@ class UsersMenuSheetTable extends Component {
     const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
     let headers = weekDays.map((day, index) => {
-      let date = moment(this.props.startDate).day(index + 1).format('YYYY-MM-DD')
+      let date = weekDateFormattedFromString(this.props.startDate, index + 1)
       return <div key={`date_${day}`} className='col-2'>{date}</div>
     })
 

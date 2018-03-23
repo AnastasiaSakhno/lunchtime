@@ -1,17 +1,16 @@
 import React from 'react'
 import {bool, string, number, func, shape} from 'prop-types'
-import moment from 'moment'
+
+import {weekDateLong} from '../../../../../utils/date'
 
 const ManageableUserDayMenuOut = ({startDate, id, dayOfWeek, out, menu, onOutUpdate}) => {
-  const dateString = (day) => (moment(startDate, 'YYYY-MM-DD').day(day).valueOf())
-
   const handleUpdate = (e) => {
     e.preventDefault()
 
     onOutUpdate({
       id: id,
       out: e.target.checked,
-      date: dateString(dayOfWeek)
+      date: weekDateLong(startDate, dayOfWeek)
     })
   }
 

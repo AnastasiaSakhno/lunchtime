@@ -1,9 +1,9 @@
 import {createSelector} from 'reselect'
 import {groupBy} from 'ramda'
-import moment from 'moment/moment'
 
 import {getMenu} from './menu'
 import {getUsers} from './users'
+import {weekDateFormattedFromString} from '../utils/date'
 
 export const dateString = udm => `${udm.date.year}-${('0' + udm.date.monthOfYear).slice(-2)}-${udm.date.dayOfMonth}`
 export const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
@@ -54,7 +54,7 @@ const menuDayOutCount = (arr) => arr ? arr.filter(udm => udm.out).length : 0
 
 const menuSummaryRow = (menu, users, byDate, menuStatistics, usersMenu) => (
   weekDays.map((day, index) => {
-    let date = moment(usersMenu.startDate).day(index + 1).format('YYYY-MM-DD')
+    let date = weekDateFormattedFromString(usersMenu.startDate, index + 1)
     let arr = menuStatistics ? menuStatistics.groupedByDate[date] : []
     let count = menuDayCount(menu, date, users, byDate, arr)
     let outCount = menuDayOutCount(arr)

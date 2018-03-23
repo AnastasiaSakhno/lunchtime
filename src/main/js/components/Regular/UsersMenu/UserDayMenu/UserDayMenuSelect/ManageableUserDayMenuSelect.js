@@ -1,15 +1,14 @@
 import React from 'react'
 import {string, number, array, shape, func} from 'prop-types'
-import moment from 'moment'
+
+import {weekDateLong} from '../../../../../utils/date'
 
 const ManageableUserDayMenuSelect = ({startDate, id, dayOfWeek, menu, user, menuList, onSubmit, onUpdate}) => {
-  const dateString = (day) => (moment(startDate, 'YYYY-MM-DD').day(day).valueOf())
-
   const handleSubmit = (e) => {
     e.preventDefault()
 
     let attrs = {
-      date: dateString(dayOfWeek),
+      date: weekDateLong(startDate, dayOfWeek),
       user: user._links.self.href,
       menu: e.target.value
     }
@@ -27,11 +26,11 @@ const ManageableUserDayMenuSelect = ({startDate, id, dayOfWeek, menu, user, menu
       className="form-control custom-select"
       value={selected}
       onChange={handleSubmit}>
-      {menuList.map((menu) => (
+      {menuList.map((m) => (
         <option
-          value={menu._links.self.href}
-          key={`menu-option_${menu.id}`}>
-          {menu.name}
+          value={m._links.self.href}
+          key={`menu-option_${m.id}`}>
+          {m.name}
         </option>
       ))}
     </select>
