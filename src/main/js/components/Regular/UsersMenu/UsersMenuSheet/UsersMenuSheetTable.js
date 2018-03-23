@@ -13,6 +13,7 @@ class UsersMenuSheetTable extends Component {
 
       return (<UserWeekMenu
         key={`uwm_${this.props.startDate}_${u.id}`}
+        startDate={this.props.startDate}
         onSubmit={this.props.onSubmit}
         onUpdate={this.props.onUpdate}
         onOutUpdate={this.props.onOutUpdate}

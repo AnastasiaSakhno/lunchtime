@@ -1,31 +1,45 @@
 import React, {PureComponent} from 'react'
 import {object, array, func} from 'prop-types'
 import {connect} from 'react-redux'
+import moment from 'moment/moment'
 
 import actions from '../../../../actions'
 import withHeader from '../../../../HOC/withHeader'
 import UsersMenuSheet from '../UsersMenuSheet'
 import withNeededStores from '../../../../HOC/withNeededStores'
 import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
+import UsersMenuPrevWeekLink from '../UsersMenuLinks/UsersMenuPrevWeekLink'
+import UsersMenuNextWeekLink from '../UsersMenuLinks/UsersMenuNextWeekLink'
 import selectors from '../../../../selectors'
 
-@withNeededStores(['menu', 'users', 'usersMenu'])
+@withNeededStores(['menu', 'users'])
 @withRedirectToLogin
 @withHeader
 class UsersMenuContainer extends PureComponent {
   static propTypes = {
-    usersMenu: object,
+    usersMenu: object.isRequired,
     menu: array,
     addUserDayMenu: func.isRequired,
     updateUserDayMenu: func.isRequired,
     updateOut: func.isRequired,
     orderedUsers: array.isRequired,
     dataGroupedByUser: object,
-    summaryValues: array
+    summaryValues: array,
+    loadUsersMenu: func.isRequired
+  }
+
+  state = {
+    startDate: moment().day(1)
+  }
+
+  componentDidMount() {
+    this.props.loadUsersMenu(this.state.startDate)
   }
 
   render = () => (
     <div className="users-menu-container">
+      <UsersMenuPrevWeekLink startDate={this.state.startDate}/>
+      <UsersMenuNextWeekLink startDate={this.state.startDate}/>
       <UsersMenuSheet
         startDate={this.props.usersMenu.startDate}
         dataGroupedByUser={this.props.dataGroupedByUser}
@@ -40,12 +54,16 @@ class UsersMenuContainer extends PureComponent {
 }
 
 const mapStateToProps = (state) => ({
+  usersMenu: state.usersMenu,
   orderedUsers: selectors.users.orderedUsers(state),
   dataGroupedByUser: selectors.usersMenu.groupedByUser(state),
   summaryValues: selectors.usersMenu.summaryValues(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({
+  loadUsersMenu: (startDate) => {
+    dispatch(actions.usersMenu.load(startDate))
+  },
   addUserDayMenu: (userDayMenu) => {
     dispatch(actions.usersMenu.add(userDayMenu))
   },

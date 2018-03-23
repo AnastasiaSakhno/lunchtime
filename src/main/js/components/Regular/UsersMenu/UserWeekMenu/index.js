@@ -21,6 +21,7 @@ const UserWeekMenu = (props) => (
 )
 
 UserWeekMenu.propTypes = {
+  startDate: string,
   user: shape({
     id: number,
     fullName: string

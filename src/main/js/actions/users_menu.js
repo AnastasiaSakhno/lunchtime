@@ -1,10 +1,21 @@
 import * as actionTypes from './types'
 
-export const load = () => ({
-  type: actionTypes.LOAD_USERS_MENU
+export const load = (startDate) => ({
+  type: actionTypes.LOAD_USERS_MENU,
+  startDate
 })
 
-export const loaded = ({ startDate, data }) => ({
+export const loadNextWeek = (startDate) => ({
+  type: actionTypes.LOAD_NEXT_WEEK,
+  startDate
+})
+
+export const loadPrevWeek = (startDate) => ({
+  type: actionTypes.LOAD_PREV_WEEK,
+  startDate
+})
+
+export const loaded = ({startDate, data}) => ({
   type: actionTypes.USERS_MENU_LOADED,
   startDate, data
 })
