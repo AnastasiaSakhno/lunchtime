@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/types'
-import {removeCollectionProjection} from '../utils/api'
+import {removeCollectionProjection, removeProjectionMembers} from '../utils/api'
 
 export const initialState = {}
 
@@ -14,20 +14,22 @@ const usersMenu = (state = initialState, action) => {
     }
 
   case actionTypes.USER_DAY_MENU_ADDED_SUCCESSFULLY:
+    let added = removeProjectionMembers(action.userDayMenu, ['user', 'menu'])
     return {
       ...state,
       data: [
         ...state.data,
-        action.userDayMenu
+        added
       ]
     }
 
   case actionTypes.USER_DAY_MENU_UPDATEED_SUCCESSFULLY:
+    let updated = removeProjectionMembers(action.userDayMenu, ['user', 'menu'])
     return {
       ...state,
       data: state.data.map((udm) => {
         if (udm.id === action.userDayMenu.id) {
-          return action.userDayMenu
+          return updated
         }
         return udm
       })

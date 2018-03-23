@@ -14,9 +14,11 @@ export const removeProjection = (obj) => {
   return obj
 }
 
+export const removeProjectionMembers = (obj, members = []) => {
+  removeProjection(obj)
+  members.forEach(m => removeProjection(obj[m]))
+  return obj
+}
+
 export const removeCollectionProjection = (action, collectionName, members = []) =>
-  action[collectionName]._embedded[collectionName].map(u => {
-    removeProjection(u)
-    members.forEach(m => removeProjection(u[m]))
-    return u
-  })
+  action[collectionName]._embedded[collectionName].map(obj => removeProjectionMembers(obj, members))
