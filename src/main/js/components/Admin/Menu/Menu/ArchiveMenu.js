@@ -1,7 +1,7 @@
 import React from 'react'
 import {string, bool, number, shape} from 'prop-types'
 
-const ArchiveMenu = ({id, name, restaurant, weekDays}) => (
+const ArchiveMenu = ({name, restaurant, weekDays}) => (
   <tr>
     <td>
       <del>{restaurant.name}</del>
