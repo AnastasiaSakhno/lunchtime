@@ -17,6 +17,7 @@ const ManageableUserDayMenu = ({startDate, id, dayOfWeek, out, menu, user, menuL
         onUpdate={onUpdate}
         menuList={menuList}/>
       <ManageableUserDayMenuOut
+        startDate={startDate}
         id={id}
         out={out}
         menu={menu}
