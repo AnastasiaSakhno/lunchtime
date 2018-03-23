@@ -1,7 +1,7 @@
 import {createSelector} from 'reselect'
 import {groupBy} from 'ramda'
 
-import {getMenu} from './menu'
+import {getMenu, NONE} from './menu'
 import {getUsers} from './users'
 import {weekDateFormattedFromString, formattedDate} from '../utils/date'
 
@@ -24,7 +24,7 @@ export const groupedByMenu = createSelector(
 
 export const groupedByDate = createSelector(
   [getUsersMenuData],
-  (data) => groupBy(udmDateString)(data.filter(udm => udm.menu.name !== 'None'))
+  (data) => groupBy(udmDateString)(data.filter(udm => udm.menu.name !== NONE))
 )
 
 export const groupedByMenuAndDate = createSelector(
@@ -40,7 +40,7 @@ export const groupedByMenuAndDate = createSelector(
 
 const menuDayCount = (menu, date, users, byDate, arr) => {
   let count = arr ? arr.length : 0
-  if (menu.name === 'None') {
+  if (menu.name === NONE) {
     count = users.length
     let totalDateArr = byDate[date]
     if (totalDateArr) {
