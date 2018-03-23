@@ -1,14 +1,16 @@
 import * as actionTypes from '../actions/types'
+import {removeCollectionProjection} from '../utils/api'
 
 export const initialState = {}
 
 const usersMenu = (state = initialState, action) => {
   switch (action.type) {
   case actionTypes.USERS_MENU_LOADED:
+    let data = removeCollectionProjection(action, 'userDayMenus', ['user', 'menu'])
     return {
       ...state,
       startDate: action.startDate,
-      data: action.data._embedded.userDayMenus
+      data: data
     }
 
   case actionTypes.USER_DAY_MENU_ADDED_SUCCESSFULLY:

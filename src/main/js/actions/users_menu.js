@@ -15,9 +15,9 @@ export const loadPrevWeek = (startDate) => ({
   startDate
 })
 
-export const loaded = ({startDate, data}) => ({
+export const loaded = ({startDate, userDayMenus}) => ({
   type: actionTypes.USERS_MENU_LOADED,
-  startDate, data
+  startDate, userDayMenus
 })
 
 export const add = (userDayMenu) => ({

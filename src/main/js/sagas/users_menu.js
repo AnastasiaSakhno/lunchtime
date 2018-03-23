@@ -37,21 +37,21 @@ export function* loadUsersMenu({ startDate }) {
   const range = weekRange(startDate)
   const url = USERS_MENU_SEARCH_URI(range)
   const usersMenu = yield call(get, url)
-  yield put(actions.usersMenu.loaded({ startDate: range.from, data: usersMenu }))
+  yield put(actions.usersMenu.loaded({ startDate: range.from, userDayMenus: usersMenu }))
 }
 
 export function* loadPrevWeek({ startDate }) {
   const range = weekRange(startDate.add(-7, 'days'))
   const url = USERS_MENU_SEARCH_URI(range)
   const usersMenu = yield call(get, url)
-  yield put(actions.usersMenu.loaded({ startDate: range.from, data: usersMenu }))
+  yield put(actions.usersMenu.loaded({ startDate: range.from, userDayMenus: usersMenu }))
 }
 
 export function* loadNextWeek({ startDate }) {
   const range = weekRange(startDate.add(7, 'days'))
   const url = USERS_MENU_SEARCH_URI(range)
   const usersMenu = yield call(get, url)
-  yield put(actions.usersMenu.loaded({ startDate: range.from, data: usersMenu }))
+  yield put(actions.usersMenu.loaded({ startDate: range.from, userDayMenus: usersMenu }))
 }
 
 export function* addUserDayMenu({ userDayMenu: udm }) {

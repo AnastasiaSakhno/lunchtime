@@ -27,6 +27,6 @@ export const cancanUser = (currentUser) => {
 
 allow(RegularUser, 'view', [MenuDocument, User, UserDayMenu])
 allow(RegularUser, 'manage', UserDayMenu,
-  (user, udm) => user.props.user._links.self.href === udm.props.user._links.self.href.replace('{?projection}', '')
+  (user, udm) => user.props.user._links.self.href === udm.props.user._links.self.href
 )
 allow(AdminUser, 'manage', 'all')

@@ -1,11 +1,13 @@
 import * as actionTypes from '../actions/types'
+import {removeCollectionProjection} from '../utils/api'
 
 export const initialState = []
 
 const menus = (state = initialState, action) => {
   switch(action.type) {
   case actionTypes.MENU_LOADED:
-    return [...action.menu._embedded.menus]
+    let menu = removeCollectionProjection(action, 'menus')
+    return [...menu]
 
   case actionTypes.MENU_ADDED_SUCCESSFULLY:
     return [

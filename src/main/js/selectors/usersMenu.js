@@ -14,12 +14,12 @@ const getUsersMenuData = (state) => state.usersMenu.data ? state.usersMenu.data 
 
 export const groupedByUser = createSelector(
   [getUsersMenuData],
-  (data) => groupBy(udm => udm.user._links.self.href.replace('{?projection}', ''))(data)
+  (data) => groupBy(udm => udm.user._links.self.href)(data)
 )
 
 export const groupedByMenu = createSelector(
   [getUsersMenuData],
-  (data) => groupBy(udm => udm.menu._links.self.href.replace('{?projection}', ''))(data)
+  (data) => groupBy(udm => udm.menu._links.self.href)(data)
 )
 
 export const groupedByDate = createSelector(

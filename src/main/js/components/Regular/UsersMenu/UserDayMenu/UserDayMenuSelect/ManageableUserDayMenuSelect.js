@@ -10,7 +10,7 @@ const ManageableUserDayMenuSelect = ({startDate, id, dayOfWeek, menu, user, menu
 
     let attrs = {
       date: dateString(dayOfWeek),
-      user: user._links.self.href.replace('{?projection}', ''),
+      user: user._links.self.href,
       menu: e.target.value
     }
 
@@ -21,7 +21,7 @@ const ManageableUserDayMenuSelect = ({startDate, id, dayOfWeek, menu, user, menu
     }
   }
 
-  let selected = menu ? menu._links.self.href.replace('{?projection}', '') : ''
+  let selected = menu ? menu._links.self.href : ''
   return (
     <select
       className="form-control custom-select"

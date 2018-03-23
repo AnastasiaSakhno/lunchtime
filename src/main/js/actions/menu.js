@@ -4,9 +4,9 @@ export const load = () => ({
   type: actionTypes.LOAD_MENU
 })
 
-export const loaded = (menu) => ({
+export const loaded = (menus) => ({
   type: actionTypes.MENU_LOADED,
-  menu
+  menus
 })
 
 export const add = (menu) => ({
