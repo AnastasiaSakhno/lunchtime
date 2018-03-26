@@ -7,6 +7,7 @@ import {weekDateFormattedFromString} from '../../../../utils/date'
 import styles from './index.scss'
 import UserWeekMenu from '../UserWeekMenu'
 import {href} from '../../../../utils/object'
+import {weekDays} from '../../../../selectors/usersMenu'
 
 class UsersMenuSheetTable extends Component {
   render() {
@@ -23,8 +24,6 @@ class UsersMenuSheetTable extends Component {
         user={u}
         data={found ? found : []}/>)
     })
-
-    const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
     let headers = weekDays.map((day, index) => {
       let date = weekDateFormattedFromString(this.props.startDate, index + 1)
