@@ -3,6 +3,7 @@ import {array, func} from 'prop-types'
 
 import cancanBranch from '../../../../HOC/branch/cancanBranch'
 import {Menu} from '../../../abilities'
+import {href} from '../../../../utils/object'
 
 const defaultState = {
   restaurant: null,
@@ -49,7 +50,7 @@ class PureMenuForm extends Component {
               <option>Select a Restaurant</option>
               {this.props.restaurants.map((restaurant) => (
                 <option
-                  value={restaurant._links.self.href}
+                  value={href(restaurant)}
                   key={`restaurant-option_${restaurant.id}`}>{restaurant.name}</option>
               ))}
             </select>

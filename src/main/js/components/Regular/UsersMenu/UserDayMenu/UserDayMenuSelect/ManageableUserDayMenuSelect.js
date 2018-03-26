@@ -2,6 +2,7 @@ import React from 'react'
 import {string, number, array, shape, func} from 'prop-types'
 
 import {weekDateLong} from '../../../../../utils/date'
+import {href} from '../../../../../utils/object'
 
 const ManageableUserDayMenuSelect = ({startDate, id, dayOfWeek, menu, user, menuList, onSubmit, onUpdate}) => {
   const handleSubmit = (e) => {
@@ -9,7 +10,7 @@ const ManageableUserDayMenuSelect = ({startDate, id, dayOfWeek, menu, user, menu
 
     let attrs = {
       date: weekDateLong(startDate, dayOfWeek),
-      user: user._links.self.href,
+      user: href(user),
       menu: e.target.value
     }
 
@@ -20,7 +21,7 @@ const ManageableUserDayMenuSelect = ({startDate, id, dayOfWeek, menu, user, menu
     }
   }
 
-  let selected = menu ? menu._links.self.href : ''
+  let selected = href(menu)
   return (
     <select
       className="form-control custom-select"
@@ -28,7 +29,7 @@ const ManageableUserDayMenuSelect = ({startDate, id, dayOfWeek, menu, user, menu
       onChange={handleSubmit}>
       {menuList.map((m) => (
         <option
-          value={m._links.self.href}
+          value={href(m)}
           key={`menu-option_${m.id}`}>
           {m.name}
         </option>

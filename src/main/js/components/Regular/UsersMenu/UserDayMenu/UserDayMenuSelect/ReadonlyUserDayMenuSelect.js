@@ -1,10 +1,11 @@
 import React from 'react'
 import {string, number, array, shape} from 'prop-types'
 
+import {href} from '../../../../../utils/object'
+
 const ReadonlyUserDayMenuSelect = ({menu, menuList}) => {
-  // TODO href(obj, method = 'self')
-  let selected = menu ? menu._links.self.href : ''
-  let selectedMenu = menuList.find((m) => (m._links.self.href === selected))
+  let selected = href(menu)
+  let selectedMenu = menuList.find((m) => (href(m) === selected))
   let menuName = selectedMenu ? selectedMenu.name : ''
 
   return <div className='float-left'>{menuName}</div>

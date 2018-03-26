@@ -6,11 +6,12 @@ import {weekDateFormattedFromString} from '../../../../utils/date'
 
 import styles from './index.scss'
 import UserWeekMenu from '../UserWeekMenu'
+import {href} from '../../../../utils/object'
 
 class UsersMenuSheetTable extends Component {
   render() {
     let map = this.props.orderedUsers.map((u) => {
-      let found = this.props.dataGroupedByUser[u._links.self.href]
+      let found = this.props.dataGroupedByUser[href(u)]
 
       return (<UserWeekMenu
         key={`uwm_${this.props.startDate}_${u.id}`}

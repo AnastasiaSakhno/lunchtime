@@ -1,5 +1,7 @@
 import CanCan from 'cancan'
 
+import {href} from '../utils/object'
+
 const cancan = new CanCan()
 export const {allow, can, cannot} = cancan
 
@@ -27,6 +29,6 @@ export const cancanUser = (currentUser) => {
 
 allow(RegularUser, 'view', [MenuDocument, User, UserDayMenu])
 allow(RegularUser, 'manage', UserDayMenu,
-  (user, udm) => user.props.user._links.self.href === udm.props.user._links.self.href
+  (user, udm) => href(user.props.user) === href(udm.props.user)
 )
 allow(AdminUser, 'manage', 'all')
