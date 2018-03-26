@@ -7,7 +7,7 @@ import {weekDateFormattedFromString} from '../../../../utils/date'
 import styles from './index.scss'
 import UserWeekMenu from '../UserWeekMenu'
 import {href} from '../../../../utils/object'
-import {weekDays} from '../../../../selectors/usersMenu'
+import {weekDays} from '../../../../selectors/users_menu'
 
 class UsersMenuSheetTable extends Component {
   render() {
