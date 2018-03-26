@@ -29,7 +29,7 @@ const ManageableMenuDocument = ({restaurantName, userName, uploadedAt, content, 
         onSubmit={handleSubmit}>
         {text}
         <input type='file' onChange={onChange}/>
-        <input type='submit' className='btn btn-primary' value='Upload'/>
+        <input type='submit' className='btn btn-dark' value='Upload'/>
       </form>
       <div dangerouslySetInnerHTML={{__html: content}}/>
     </div>

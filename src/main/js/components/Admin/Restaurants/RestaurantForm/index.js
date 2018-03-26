@@ -58,7 +58,7 @@ class PureRestaurantForm extends Component {
               onChange={this.handleChange}/>
           </div>
           <div className="col-auto">
-            <button type="submit" className="btn btn-primary mr-sm-2">Add restaurant</button>
+            <button type="submit" className="btn btn-dark mr-sm-2">Add restaurant</button>
           </div>
         </div>
       </form>

@@ -57,7 +57,7 @@ class PureUserForm extends Component {
               onChange={this.handleChange}/>
           </div>
           <div className="col-auto">
-            <button type="submit" className="btn btn-primary mr-sm-2">Add user</button>
+            <button type="submit" className="btn btn-dark mr-sm-2">Add user</button>
           </div>
         </div>
       </form>

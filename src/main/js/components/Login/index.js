@@ -45,7 +45,7 @@ class Login extends Component {
               this.passwordInput = el
             }}/>
           </div>
-          <button type='submit' className='btn btn-primary mb-2'>Sign In</button>
+          <button type='submit' className='btn btn-dark mb-2'>Sign In</button>
         </form>
       </div>
   )
