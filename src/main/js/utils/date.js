@@ -11,4 +11,7 @@ export const weekDateFormattedFromString = (weekBeginningFormatted, dayOfWeek) =
 export const weekDateFormattedFromObject = (weekBeginning, dayOfWeek) =>
   weekBeginning.day(dayOfWeek).format(DATE_FORMAT)
 
-export const formattedDate = (date) => `${date.year}-${('0' + date.monthOfYear).slice(-2)}-${date.dayOfMonth}`
+export const addUpToTwoDigits = (int) => ('0' + int).slice(-2)
+
+export const formattedDate = (date) =>
+  `${date.year}-${addUpToTwoDigits(date.monthOfYear)}-${addUpToTwoDigits(date.dayOfMonth)}`
