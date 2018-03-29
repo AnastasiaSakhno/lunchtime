@@ -2,12 +2,13 @@ import React, {Component} from 'react'
 import {string, array, object, func} from 'prop-types'
 import cssModules from 'react-css-modules'
 
-import {weekDateFormattedFromString} from '../../../../utils/date'
+import {weekDateFormattedFromObject, weekDateFormattedFromString} from '../../../../utils/date'
 
 import styles from './index.scss'
 import UserWeekMenu from '../UserWeekMenu'
 import {href} from '../../../../utils/object'
 import {weekDays} from '../../../../selectors/users_menu'
+import DayStatus from './DayStatus'
 
 class UsersMenuSheetTable extends Component {
   render() {
@@ -28,7 +29,12 @@ class UsersMenuSheetTable extends Component {
 
     let headers = weekDays.map((day, index) => {
       let date = weekDateFormattedFromString(this.props.startDate, index + 1)
-      return <div key={`date_${day}`} className='col-2'>{date}</div>
+      return (
+        <div key={`date_${day}`} className='col-2'>
+          {date}
+          <DayStatus days={this.props.days} date={date}/>
+        </div>
+      )
     })
 
     return (
@@ -46,6 +52,7 @@ class UsersMenuSheetTable extends Component {
 UsersMenuSheetTable.propTypes = {
   startDate: string,
   dataGroupedByUser: object,
+  days: array,
   onSubmit: func.isRequired,
   onUpdate: func.isRequired,
   onOutUpdate: func.isRequired,

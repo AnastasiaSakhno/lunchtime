@@ -8,7 +8,7 @@ import {loadPrevWeek} from '../../../../../actions/users_menu'
 const UsersMenuPrevWeekLink = ({startDate, loadPrevWeek}) => (
   <Link
     onClick={() => loadPrevWeek(startDate)}
-    className='users-menu-forward-arrow badge badge-dark'
+    className='users-menu-prev badge badge-dark'
     to='#'>
     Back
   </Link>

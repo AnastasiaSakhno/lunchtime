@@ -8,5 +8,5 @@ import org.springframework.security.access.prepost.PreAuthorize
 interface MenuRepository : CrudRepository<Menu, Long> {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    fun save(@Param("menu") restaurant: Menu) : Menu
+    fun save(@Param("menu") menu: Menu) : Menu
 }

@@ -29,3 +29,9 @@ export const addUpToTwoDigits = (int) => ('0' + int).slice(-2)
 export const dateFromJson = (date) => date ? moment([date.year, date.monthOfYear - 1, date.dayOfMonth]) : null
 
 export const formattedDate = (date) => dateFromJson(date).format(DATE_FORMAT)
+
+export const weekRange = (startDate) => {
+  const weekStart = weekDateFormattedFromObject(startDate, 1)
+  const weekEnd = weekDateFormattedFromObject(startDate, 5)
+  return {from: weekStart, to: weekEnd}
+}

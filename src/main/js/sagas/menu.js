@@ -1,9 +1,10 @@
 import { takeLatest, takeEvery, put, call } from 'redux-saga/effects'
-import { get, post, put as putRest } from '../utils/rest'
-import { MENU_URI } from '../utils/api'
+import { sessionService } from 'redux-react-session'
+
 import actions from '../actions'
 import * as actionTypes from '../actions/types'
-import { sessionService } from 'redux-react-session'
+import { get, post, put as putRest } from '../utils/rest'
+import {getWithoutProjection, MENU_URI} from '../utils/api'
 
 const loadUser = sessionService.loadUser
 
@@ -24,7 +25,7 @@ export function* addMenu({ menu }) {
 export function* removeMenu({ menu }) {
   const user = yield call(loadUser)
   const newMenu = yield call(putRest,
-    MENU_URI.replace('?projection=wide', '') + '/' + menu.id,
+    getWithoutProjection(MENU_URI) + '/' + menu.id,
     user.auth_token, {id: menu.id, name: menu.name, weekDays: menu.weekDays, archive: true})
 
   if(newMenu.id) {
