@@ -4,28 +4,29 @@ import {string, bool, number, array, shape, func} from 'prop-types'
 import ManageableUserDayMenuSelect from '../UserDayMenu/UserDayMenuSelect/ManageableUserDayMenuSelect'
 import ManageableUserDayMenuOut from '../UserDayMenu/UserDayMenuOut/ManageableUserDayMenuOut'
 
-const ManageableUserDayMenu = ({startDate, id, dayOfWeek, out, menu, user, menuList, onSubmit, onUpdate, onOutUpdate}) => (
-  <div className='col-2'>
-    <div className="user-day-menu_manageable input-group mb-3">
-      <ManageableUserDayMenuSelect
-        startDate={startDate}
-        id={id}
-        dayOfWeek={dayOfWeek}
-        user={user}
-        menu={menu}
-        onSubmit={onSubmit}
-        onUpdate={onUpdate}
-        menuList={menuList}/>
-      <ManageableUserDayMenuOut
-        startDate={startDate}
-        id={id}
-        out={out}
-        menu={menu}
-        dayOfWeek={dayOfWeek}
-        onOutUpdate={onOutUpdate}/>
+const ManageableUserDayMenu =
+  ({startDate, id, dayOfWeek, out, menu, user, activeMenu, onSubmit, onUpdate, onOutUpdate}) => (
+    <div className='col-2'>
+      <div className="user-day-menu_manageable input-group mb-3">
+        <ManageableUserDayMenuSelect
+          startDate={startDate}
+          id={id}
+          dayOfWeek={dayOfWeek}
+          user={user}
+          menu={menu}
+          onSubmit={onSubmit}
+          onUpdate={onUpdate}
+          menuList={activeMenu}/>
+        <ManageableUserDayMenuOut
+          startDate={startDate}
+          id={id}
+          out={out}
+          menu={menu}
+          dayOfWeek={dayOfWeek}
+          onOutUpdate={onOutUpdate}/>
+      </div>
     </div>
-  </div>
-)
+  )
 
 ManageableUserDayMenu.propTypes = {
   startDate: string,
@@ -43,7 +44,7 @@ ManageableUserDayMenu.propTypes = {
   onSubmit: func.isRequired,
   onUpdate: func.isRequired,
   onOutUpdate: func.isRequired,
-  menuList: array.isRequired
+  activeMenu: array.isRequired
 }
 
 export default ManageableUserDayMenu

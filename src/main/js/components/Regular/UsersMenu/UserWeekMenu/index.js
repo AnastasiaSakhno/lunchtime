@@ -41,7 +41,8 @@ UserWeekMenu.propTypes = {
   onSubmit: func.isRequired,
   onUpdate: func.isRequired,
   onOutUpdate: func.isRequired,
-  menuList: array.isRequired
+  menuList: array.isRequired,
+  activeMenu: array.isRequired
 }
 
 export default UserWeekMenu

@@ -65,8 +65,13 @@ const menuSummaryRow = (menu, users, byDate, menuStatistics, usersMenu) => (
 
 const menuSummary = (menu, byMenuAndDate) => byMenuAndDate.find(gmd => gmd.menu.href === href(menu))
 
+export const orderedMenu = createSelector(
+  [getMenu, groupedByMenu],
+  (menuList, byMenu) => menuList.filter(m => m.name === NONE || byMenu[href(m)])
+)
+
 export const summaryValues = createSelector(
-  [getUsersMenu, getMenu, getUsers, groupedByMenuAndDate, groupedByDate],
+  [getUsersMenu, orderedMenu, getUsers, groupedByMenuAndDate, groupedByDate],
   (usersMenu, menuList, users, byMenuAndDate, byDate) => (
     menuList.map(menu => {
       let menuStatistics = menuSummary(menu, byMenuAndDate)

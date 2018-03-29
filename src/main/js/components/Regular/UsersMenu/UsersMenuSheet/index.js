@@ -17,6 +17,7 @@ class UsersMenuSheet extends Component {
 
 UsersMenuSheet.propTypes = {
   menuList: array.isRequired,
+  activeMenu: array.isRequired,
   startDate: string,
   dataGroupedByUser: object,
   orderedUsers: array.isRequired,

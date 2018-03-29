@@ -21,6 +21,7 @@ class UsersMenuSheetTable extends Component {
         onUpdate={this.props.onUpdate}
         onOutUpdate={this.props.onOutUpdate}
         menuList={this.props.menuList}
+        activeMenu={this.props.activeMenu}
         user={u}
         data={found ? found : []}/>)
     })
@@ -49,6 +50,7 @@ UsersMenuSheetTable.propTypes = {
   onUpdate: func.isRequired,
   onOutUpdate: func.isRequired,
   menuList: array.isRequired,
+  activeMenu: array.isRequired,
   orderedUsers: array.isRequired
 }
 

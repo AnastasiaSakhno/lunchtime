@@ -19,6 +19,7 @@ class UsersMenuContainer extends PureComponent {
   static propTypes = {
     usersMenu: object.isRequired,
     menu: array,
+    activeMenu: array,
     addUserDayMenu: func.isRequired,
     updateUserDayMenu: func.isRequired,
     updateOut: func.isRequired,
@@ -48,6 +49,7 @@ class UsersMenuContainer extends PureComponent {
         onUpdate={this.props.updateUserDayMenu}
         onOutUpdate={this.props.updateOut}
         menuList={this.props.menu}
+        activeMenu={this.props.activeMenu}
         orderedUsers={this.props.orderedUsers}/>
     </div>
   )
@@ -57,7 +59,8 @@ const mapStateToProps = (state) => ({
   usersMenu: state.usersMenu,
   orderedUsers: selectors.users.orderedUsers(state),
   dataGroupedByUser: selectors.usersMenu.groupedByUser(state),
-  summaryValues: selectors.usersMenu.summaryValues(state)
+  summaryValues: selectors.usersMenu.summaryValues(state),
+  activeMenu: selectors.menu.activeMenu(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({
