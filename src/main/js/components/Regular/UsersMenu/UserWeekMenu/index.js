@@ -2,6 +2,7 @@ import React from 'react'
 import {string, number, bool, object, array, arrayOf, shape, func} from 'prop-types'
 
 import UserDayMenu from '../UserDayMenu'
+import {weekDateJson} from '../../../../utils/date'
 
 const UserWeekMenu = (props) => (
   <div className='row'>
@@ -13,7 +14,9 @@ const UserWeekMenu = (props) => (
       ))
       let key = `udm_${props.user.id}_${dayOfWeek}`
       if (!found) {
-        found = {}
+        found = {
+          date: weekDateJson(props.startDate, dayOfWeek)
+        }
       }
       return (<UserDayMenu key={key} dayOfWeek={dayOfWeek} {...props} {...found}/>)
     })}

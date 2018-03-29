@@ -1,6 +1,7 @@
 import CanCan from 'cancan'
 
 import {href} from '../utils/object'
+import {dateFromJson} from '../utils/date'
 
 const cancan = new CanCan()
 export const {allow, can, cannot} = cancan
@@ -27,8 +28,15 @@ export const cancanUser = (currentUser) => {
   return currentUser.role === 'ROLE_ADMIN' ? new AdminUser() : new RegularUser({user: currentUser})
 }
 
+const canManageUdmByTime = (udm) => dateFromJson(udm.props.date).fromNow().startsWith('in')
+
 allow(RegularUser, 'view', [MenuDocument, User, UserDayMenu])
 allow(RegularUser, 'manage', UserDayMenu,
-  (user, udm) => href(user.props.user) === href(udm.props.user)
+  (user, udm) => href(user.props.user) === href(udm.props.user) && canManageUdmByTime(udm)
 )
-allow(AdminUser, 'manage', 'all')
+
+allow(AdminUser, 'manage', [Menu, MenuDocument, Restaurant, User])
+allow(AdminUser, 'view', UserDayMenu)
+allow(AdminUser, 'manage', UserDayMenu,
+  (_, udm) => canManageUdmByTime(udm)
+)
