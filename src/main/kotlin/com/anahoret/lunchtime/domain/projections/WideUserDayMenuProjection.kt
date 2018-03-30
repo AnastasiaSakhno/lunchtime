@@ -6,11 +6,9 @@ import org.springframework.data.rest.core.config.Projection
 
 @Projection(name = "wide", types = [UserDayMenu::class])
 interface WideUserDayMenuProjection {
-
     val id: Long
     val date: LocalDate
     val out: Boolean
     val menu: WideMenuProjection
     val user: ShortUserProjection
-
 }

@@ -6,8 +6,8 @@ import org.joda.time.LocalDate
 import javax.persistence.*
 
 @Entity
-@Table(name = "user_day_menu")
-class UserDayMenu(
+@Table(name = "days")
+class Day(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -19,14 +19,6 @@ class UserDayMenu(
     @JsonFormat(shape = JsonFormat.Shape.NUMBER)
     var date: LocalDate,
 
-    @Column(name = "out", nullable = true)
-    var out: Boolean,
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "menu_id")
-    var menu: Menu,
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    var user: User
+    @Column(name = "closed", nullable = false)
+    var closed: Boolean
 )

@@ -4,6 +4,7 @@ import watchUsers from './users'
 import watchMenu from './menu'
 import watchMenuDocuments from './menu_documents'
 import watchUsersMenu from './users_menu'
+import watchDays from './days'
 
 export default function* rootSaga() {
   yield [
@@ -12,6 +13,7 @@ export default function* rootSaga() {
     watchUsers(),
     watchMenu(),
     watchMenuDocuments(),
-    watchUsersMenu()
+    watchUsersMenu(),
+    watchDays()
   ]
 }

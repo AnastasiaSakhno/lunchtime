@@ -20,10 +20,13 @@ UsersMenuSheet.propTypes = {
   activeMenu: array.isRequired,
   startDate: string,
   dataGroupedByUser: object,
+  days: array,
   orderedUsers: array.isRequired,
   summaryValues: array,
   onSubmit: func.isRequired,
   onUpdate: func.isRequired,
+  onSubmitDay: func.isRequired,
+  onUpdateDay: func.isRequired,
   onOutUpdate: func.isRequired
 }
 

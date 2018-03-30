@@ -1,9 +1,10 @@
 import { takeLatest, takeEvery, put, call, all } from 'redux-saga/effects'
-import { get, apiCall, getMenuDocumentContent } from '../utils/rest'
-import { MENU_DOCUMENTS_URI } from '../utils/api'
+import { sessionService } from 'redux-react-session'
+
 import actions from '../actions'
 import * as actionTypes from '../actions/types'
-import { sessionService } from 'redux-react-session'
+import { get, apiCall, getMenuDocumentContent } from '../utils/rest'
+import { MENU_DOCUMENTS_URI } from '../utils/api'
 
 const loadUser = sessionService.loadUser
 

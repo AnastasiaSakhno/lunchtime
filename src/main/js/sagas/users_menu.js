@@ -1,19 +1,13 @@
 import {takeLatest, takeEvery, put, call} from 'redux-saga/effects'
-import {get, post, putUserDayMenu, put as putRest} from '../utils/rest'
 import {sessionService} from 'redux-react-session'
-import {weekDateFormattedFromObject} from '../utils/date'
 
+import {get, post, putUserDayMenu, put as putRest} from '../utils/rest'
+import {weekRange} from '../utils/date'
 import {USERS_MENU_URI, USERS_MENU_SEARCH_URI, USERS_MENU_BY_ID_URI} from '../utils/api'
 import actions from '../actions'
 import * as actionTypes from '../actions/types'
 
 const loadUser = sessionService.loadUser
-
-const weekRange = (startDate) => {
-  const weekStart = weekDateFormattedFromObject(startDate, 1)
-  const weekEnd = weekDateFormattedFromObject(startDate, 5)
-  return {from: weekStart, to: weekEnd}
-}
 
 function* loadUserDayMenu(startDate, plusWeeks = 0) {
   const range = weekRange(startDate.add(plusWeeks, 'weeks'))

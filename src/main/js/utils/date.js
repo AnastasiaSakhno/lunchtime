@@ -15,6 +15,8 @@ export const weekDateJson = (weekBeginningFormatted, dayOfWeek) => {
   }
 }
 
+export const dateLong = (dateFormatted) => moment(dateFormatted, DATE_FORMAT).valueOf()
+
 export const weekDateLong = (weekBeginningFormatted, dayOfWeek) =>
   weekDate(weekBeginningFormatted, dayOfWeek).valueOf()
 
@@ -24,8 +26,12 @@ export const weekDateFormattedFromString = (weekBeginningFormatted, dayOfWeek) =
 export const weekDateFormattedFromObject = (weekBeginning, dayOfWeek) =>
   weekBeginning.day(dayOfWeek).format(DATE_FORMAT)
 
-export const addUpToTwoDigits = (int) => ('0' + int).slice(-2)
-
 export const dateFromJson = (date) => date ? moment([date.year, date.monthOfYear - 1, date.dayOfMonth]) : null
 
 export const formattedDate = (date) => dateFromJson(date).format(DATE_FORMAT)
+
+export const weekRange = (startDate) => {
+  const weekStart = weekDateFormattedFromObject(startDate, 1)
+  const weekEnd = weekDateFormattedFromObject(startDate, 5)
+  return {from: weekStart, to: weekEnd}
+}

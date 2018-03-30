@@ -18,15 +18,19 @@ import selectors from '../../../../selectors'
 class UsersMenuContainer extends PureComponent {
   static propTypes = {
     usersMenu: object.isRequired,
+    days: object.isRequired,
     menu: array,
     activeMenu: array,
     addUserDayMenu: func.isRequired,
     updateUserDayMenu: func.isRequired,
     updateOut: func.isRequired,
+    addDay: func.isRequired,
+    updateDay: func.isRequired,
     orderedUsers: array.isRequired,
     dataGroupedByUser: object,
     summaryValues: array,
-    loadUsersMenu: func.isRequired
+    loadUsersMenu: func.isRequired,
+    loadDays: func.isRequired
   }
 
   state = {
@@ -35,6 +39,7 @@ class UsersMenuContainer extends PureComponent {
 
   componentDidMount() {
     this.props.loadUsersMenu(this.state.startDate)
+    this.props.loadDays(this.state.startDate)
   }
 
   render = () => (
@@ -43,10 +48,13 @@ class UsersMenuContainer extends PureComponent {
       <UsersMenuNextWeekLink startDate={this.state.startDate}/>
       <UsersMenuSheet
         startDate={this.props.usersMenu.startDate}
+        days={this.props.days.data}
         dataGroupedByUser={this.props.dataGroupedByUser}
         summaryValues={this.props.summaryValues}
         onSubmit={this.props.addUserDayMenu}
         onUpdate={this.props.updateUserDayMenu}
+        onSubmitDay={this.props.addDay}
+        onUpdateDay={this.props.updateDay}
         onOutUpdate={this.props.updateOut}
         menuList={this.props.menu}
         activeMenu={this.props.activeMenu}
@@ -57,6 +65,7 @@ class UsersMenuContainer extends PureComponent {
 
 const mapStateToProps = (state) => ({
   usersMenu: state.usersMenu,
+  days: state.days,
   orderedUsers: selectors.users.orderedUsers(state),
   dataGroupedByUser: selectors.usersMenu.groupedByUser(state),
   summaryValues: selectors.usersMenu.summaryValues(state),
@@ -67,6 +76,9 @@ const mapDispatchToProps = (dispatch) => ({
   loadUsersMenu: (startDate) => {
     dispatch(actions.usersMenu.load(startDate))
   },
+  loadDays: (startDate) => {
+    dispatch(actions.days.load(startDate))
+  },
   addUserDayMenu: (userDayMenu) => {
     dispatch(actions.usersMenu.add(userDayMenu))
   },
@@ -75,6 +87,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   updateOut: (userDayMenu) => {
     dispatch(actions.usersMenu.updateOut(userDayMenu))
+  },
+  addDay: (day) => {
+    dispatch(actions.days.add(day))
+  },
+  updateDay: (day) => {
+    dispatch(actions.days.update(day))
   }
 })
 

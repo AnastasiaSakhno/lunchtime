@@ -8,7 +8,7 @@ import {loadNextWeek} from '../../../../../actions/users_menu'
 const UsersMenuNextWeekLink = ({startDate, loadNextWeek}) => (
   <Link
     onClick={() => loadNextWeek(startDate)}
-    className='users-menu-forward-arrow badge badge-dark'
+    className='users-menu-next badge badge-dark'
     to='#'>
     Forward
   </Link>

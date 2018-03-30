@@ -1,0 +1,11 @@
+.day-status {
+  &_manageable {
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:active {
+      background-color: #999999;
+    }
+  }
+}

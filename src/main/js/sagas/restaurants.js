@@ -1,9 +1,10 @@
 import { takeLatest, takeEvery, put, call } from 'redux-saga/effects'
-import { get, post, put as putRest } from '../utils/rest'
-import { RESTAURANTS_URI } from '../utils/api'
+import { sessionService } from 'redux-react-session'
+
 import actions from '../actions'
 import * as actionTypes from '../actions/types'
-import { sessionService } from 'redux-react-session'
+import { get, post, put as putRest } from '../utils/rest'
+import { RESTAURANTS_URI } from '../utils/api'
 
 const loadUser = sessionService.loadUser
 
