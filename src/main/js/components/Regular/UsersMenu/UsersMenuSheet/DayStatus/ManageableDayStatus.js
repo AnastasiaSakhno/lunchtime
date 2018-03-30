@@ -1,22 +1,20 @@
 import React from 'react'
-import {string, array, func} from 'prop-types'
+import {string, number, bool, func} from 'prop-types'
 import cssModules from 'react-css-modules'
 
 import styles from './index.scss'
-import {dateLong, formattedDate} from '../../../../../utils/date'
+import {dateLong} from '../../../../../utils/date'
 
-const ManageableDayStatus = ({date, days, onSubmit, onUpdate}) => {
-  let found = days.find(d => formattedDate(d.date) === date)
-
+const ManageableDayStatus = ({id, closed, date, onSubmit, onUpdate}) => {
   const handleClick = (e) => {
     e.preventDefault()
 
     const dateNumber = dateLong(date)
 
-    if (found) {
+    if (id) {
       onUpdate({
-        id: found.id,
-        closed: !found.closed,
+        id: id,
+        closed: !closed,
         date: dateNumber
       })
     } else {
@@ -31,15 +29,16 @@ const ManageableDayStatus = ({date, days, onSubmit, onUpdate}) => {
   return (
     <div className='float-right'>
       <span onClick={handleClick} className="badge badge-light day-status_manageable">
-        {found ? (found.closed ? 'Reopen' : 'Close') : 'Close'}
+        {id ? (closed ? 'Reopen' : 'Close') : 'Close'}
       </span>
     </div>
   )
 }
 
 ManageableDayStatus.propTypes = {
+  id: number,
+  closed: bool.isRequired,
   date: string.isRequired,
-  days: array.isRequired,
   onSubmit: func.isRequired,
   onUpdate: func.isRequired
 }

@@ -51,8 +51,8 @@ export function* updateDay({ day }) {
 export default function* watchDays() {
   yield [
     takeLatest(actionTypes.LOAD_DAYS, loadDays),
-    takeEvery(actionTypes.LOAD_NEXT_WEEK, loadNextWeek),
-    takeEvery(actionTypes.LOAD_PREV_WEEK, loadPrevWeek),
+    takeEvery(actionTypes.LOAD_NEXT_WEEK_DAYS, loadNextWeek),
+    takeEvery(actionTypes.LOAD_PREV_WEEK_DAYS, loadPrevWeek),
     takeEvery(actionTypes.ADD_DAY, addDay),
     takeEvery(actionTypes.UPDATE_DAY, updateDay)
   ]

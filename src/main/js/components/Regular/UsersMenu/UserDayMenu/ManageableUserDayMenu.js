@@ -1,5 +1,5 @@
 import React from 'react'
-import {string, bool, number, array, shape, func} from 'prop-types'
+import {string, bool, number, array, object, shape, func} from 'prop-types'
 
 import ManageableUserDayMenuSelect from '../UserDayMenu/UserDayMenuSelect/ManageableUserDayMenuSelect'
 import ManageableUserDayMenuOut from '../UserDayMenu/UserDayMenuOut/ManageableUserDayMenuOut'
@@ -41,6 +41,7 @@ ManageableUserDayMenu.propTypes = {
     id: number,
     fullName: string
   }).isRequired,
+  day: object,
   onSubmit: func.isRequired,
   onUpdate: func.isRequired,
   onOutUpdate: func.isRequired,

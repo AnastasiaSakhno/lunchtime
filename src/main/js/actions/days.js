@@ -6,12 +6,12 @@ export const load = (startDate) => ({
 })
 
 export const loadNextWeek = (startDate) => ({
-  type: actionTypes.LOAD_NEXT_WEEK,
+  type: actionTypes.LOAD_NEXT_WEEK_DAYS,
   startDate
 })
 
 export const loadPrevWeek = (startDate) => ({
-  type: actionTypes.LOAD_PREV_WEEK,
+  type: actionTypes.LOAD_PREV_WEEK_DAYS,
   startDate
 })
 

@@ -1,7 +1,7 @@
 import CanCan from 'cancan'
 
 import {href} from '../utils/object'
-import {dateFromJson} from '../utils/date'
+import moment from 'moment/moment'
 
 const cancan = new CanCan()
 export const {allow, can, cannot} = cancan
@@ -20,7 +20,7 @@ export class MenuDocument {}
 export class Restaurant {}
 export class User {}
 export class UserDayMenu extends WithProps {}
-export class Day {}
+export class Day extends WithProps {}
 
 export const cancanUser = (currentUser) => {
   if (!currentUser) {
@@ -29,15 +29,20 @@ export const cancanUser = (currentUser) => {
   return currentUser.role === 'ROLE_ADMIN' ? new AdminUser() : new RegularUser({user: currentUser})
 }
 
-const canManageUdmByTime = (udm) => dateFromJson(udm.props.date).fromNow().startsWith('in')
+const canManageDayByTime = (day) => !day.props.id || moment(day.props.date).diff(moment(), 'days') >= 0
+const canManageUdmDay = (udm) => !udm.props.day || !udm.props.day.closed
 
 allow(RegularUser, 'view', [MenuDocument, User, UserDayMenu])
 allow(RegularUser, 'manage', UserDayMenu,
-  (user, udm) => href(user.props.user) === href(udm.props.user) && canManageUdmByTime(udm)
+  (user, udm) => href(user.props.user) === href(udm.props.user) && canManageUdmDay(udm)
 )
 
-allow(AdminUser, 'manage', [Menu, MenuDocument, Restaurant, User, Day])
+allow(AdminUser, 'manage', [Menu, MenuDocument, Restaurant, User])
+
 allow(AdminUser, 'view', UserDayMenu)
 allow(AdminUser, 'manage', UserDayMenu,
-  (_, udm) => canManageUdmByTime(udm)
+  (_, udm) => canManageUdmDay(udm)
 )
+
+allow(AdminUser, 'close', Day,
+  (_, day) => canManageDayByTime(day))
