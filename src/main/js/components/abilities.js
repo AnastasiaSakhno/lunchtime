@@ -20,6 +20,7 @@ export class MenuDocument {}
 export class Restaurant {}
 export class User {}
 export class UserDayMenu extends WithProps {}
+export class Day {}
 
 export const cancanUser = (currentUser) => {
   if (!currentUser) {
@@ -35,7 +36,7 @@ allow(RegularUser, 'manage', UserDayMenu,
   (user, udm) => href(user.props.user) === href(udm.props.user) && canManageUdmByTime(udm)
 )
 
-allow(AdminUser, 'manage', [Menu, MenuDocument, Restaurant, User])
+allow(AdminUser, 'manage', [Menu, MenuDocument, Restaurant, User, Day])
 allow(AdminUser, 'view', UserDayMenu)
 allow(AdminUser, 'manage', UserDayMenu,
   (_, udm) => canManageUdmByTime(udm)

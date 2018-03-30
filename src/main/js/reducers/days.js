@@ -14,7 +14,7 @@ const days = (state = initialState, action) => {
     }
 
   case actionTypes.DAY_ADDED_SUCCESSFULLY:
-    let added = removeProjection(action.userDayMenu)
+    let added = removeProjection(action.day)
     return {
       ...state,
       data: [

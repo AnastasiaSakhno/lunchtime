@@ -20,22 +20,22 @@ export const loaded = ({startDate, days}) => ({
   startDate, days
 })
 
-export const add = (menu) => ({
+export const add = (day) => ({
   type: actionTypes.ADD_DAY,
-  menu
+  day
 })
 
-export const addedSuccessfully = (menu) => ({
+export const addedSuccessfully = (day) => ({
   type: actionTypes.DAY_ADDED_SUCCESSFULLY,
-  menu
+  day
 })
 
-export const update = (menu) => ({
+export const update = (day) => ({
   type: actionTypes.UPDATE_DAY,
-  menu
+  day
 })
 
-export const updatedSuccessfully = (menu) => ({
+export const updatedSuccessfully = (day) => ({
   type: actionTypes.DAY_UPDATED_SUCCESSFULLY,
-  menu
+  day
 })

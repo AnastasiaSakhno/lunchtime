@@ -2,13 +2,13 @@ import React, {Component} from 'react'
 import {string, array, object, func} from 'prop-types'
 import cssModules from 'react-css-modules'
 
-import {weekDateFormattedFromObject, weekDateFormattedFromString} from '../../../../utils/date'
+import {weekDateFormattedFromString} from '../../../../../utils/date'
 
 import styles from './index.scss'
-import UserWeekMenu from '../UserWeekMenu'
-import {href} from '../../../../utils/object'
-import {weekDays} from '../../../../selectors/users_menu'
-import DayStatus from './DayStatus'
+import UserWeekMenu from '../../UserWeekMenu/index'
+import {href} from '../../../../../utils/object'
+import {weekDays} from '../../../../../selectors/users_menu'
+import DayStatus from '../DayStatus/index'
 
 class UsersMenuSheetTable extends Component {
   render() {
@@ -32,7 +32,11 @@ class UsersMenuSheetTable extends Component {
       return (
         <div key={`date_${day}`} className='col-2'>
           {date}
-          <DayStatus days={this.props.days} date={date}/>
+          <DayStatus
+            days={this.props.days}
+            date={date}
+            onSubmit={this.props.onSubmitDay}
+            onUpdate={this.props.onUpdateDay}/>
         </div>
       )
     })
@@ -55,6 +59,8 @@ UsersMenuSheetTable.propTypes = {
   days: array,
   onSubmit: func.isRequired,
   onUpdate: func.isRequired,
+  onSubmitDay: func.isRequired,
+  onUpdateDay: func.isRequired,
   onOutUpdate: func.isRequired,
   menuList: array.isRequired,
   activeMenu: array.isRequired,

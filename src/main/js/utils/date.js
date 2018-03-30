@@ -15,6 +15,8 @@ export const weekDateJson = (weekBeginningFormatted, dayOfWeek) => {
   }
 }
 
+export const dateLong = (dateFormatted) => moment(dateFormatted, DATE_FORMAT).valueOf()
+
 export const weekDateLong = (weekBeginningFormatted, dayOfWeek) =>
   weekDate(weekBeginningFormatted, dayOfWeek).valueOf()
 
