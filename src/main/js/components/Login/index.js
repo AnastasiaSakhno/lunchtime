@@ -3,6 +3,7 @@ import {object, bool, string} from 'prop-types'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {Redirect} from 'react-router'
+import {Link} from 'react-router-dom'
 
 import * as sessionActions from '../../actions/auth'
 import withHeader from '../../HOC/withHeader'
@@ -40,12 +41,13 @@ class Login extends Component {
             <small id='emailHelp' className='form-text text-muted'>{this.props.error}</small>
           </div>
           <div className='form-group'>
-            <label className='sr-only' htmlFor='password_input'>Password</label>
+            <label htmlFor='password_input'>Password</label>
             <input type='password' className='form-control mb-2' id='password_input' ref={(el) => {
               this.passwordInput = el
             }}/>
           </div>
           <button type='submit' className='btn btn-dark mb-2'>Sign In</button>
+          <Link to='/signup'>Sign Up</Link>
         </form>
       </div>
   )
