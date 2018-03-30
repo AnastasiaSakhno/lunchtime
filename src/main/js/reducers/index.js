@@ -1,4 +1,5 @@
 import auth from './auth'
+import registrations from './registrations'
 import restaurants from './restaurants'
 import users from './users'
 import menu from './menu'
@@ -9,7 +10,7 @@ import { sessionReducer } from 'redux-react-session'
 import { combineReducers } from 'redux'
 
 const reducers = combineReducers({
-  auth, session: sessionReducer, restaurants, users, menu, menuDocuments, usersMenu, days
+  auth, registrations, session: sessionReducer, restaurants, users, menu, menuDocuments, usersMenu, days
 })
 
 export default reducers

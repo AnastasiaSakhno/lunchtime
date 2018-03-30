@@ -23,7 +23,7 @@ class WebSecurityConfig(private val userDetailsService: UserDetailsService, var 
 
     override fun configure(http: HttpSecurity) {
         http.cors().and().csrf().disable().authorizeRequests()
-                .mvcMatchers("/", "/login", "/admin/**", "/built/**",
+                .mvcMatchers("/", "/login", "/signup", "/admin/**", "/built/**",
                         "/js/**", "/css/**", "/fonts/**", "/api/**", "/favicon.ico").permitAll()
                 .anyRequest().authenticated()
                 .and()

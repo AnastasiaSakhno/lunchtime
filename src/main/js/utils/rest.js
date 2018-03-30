@@ -1,9 +1,9 @@
-import {LOGIN_URI, USERS_MENU_URI, MENU_DOCUMENTS_URI} from './api'
+import {LOGIN_URI, USERS_MENU_URI, MENU_DOCUMENTS_URI, USERS_URI} from './api'
 import mammoth from 'mammoth'
 
 export const apiCall = (path, options) => (
   fetch(path, options)
-    .then(r => r.json())
+    .then(r => r.json()) // TODO add status and refactor api
 )
 
 export const post = (path, authToken, data = {}) => apiCall(path, {
@@ -71,4 +71,16 @@ export const getSession = (data) => fetch(LOGIN_URI, {
 }).then(r => ({
   status: r.status,
   auth_token: r.headers.get('Authorization')
+}))
+
+export const signUp = (user) => fetch(USERS_URI, {
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json; charset=utf-8',
+  },
+  body: JSON.stringify(user)
+}).then(r => ({
+  status: r.status,
+  body: r.json()
 }))
