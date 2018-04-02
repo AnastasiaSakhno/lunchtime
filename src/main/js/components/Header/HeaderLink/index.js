@@ -1,18 +1,25 @@
-import React from 'react'
-import {string} from 'prop-types'
+import React, {Component} from 'react'
+import {string, object} from 'prop-types'
 import {Link} from 'react-router-dom'
+import {NavItem} from 'reactstrap'
 
 import cancanBranch from '../../../HOC/branch/cancanBranch'
 import {Menu, MenuDocument, Restaurant, User} from '../../abilities'
 
-const PureHeaderLink = ({url, name}) => (
-  <li className="nav-item">
-    <Link className='nav-link' to={url}>{name}</Link>
-  </li>
-)
+class PureHeaderLink extends Component {
+  static contextTypes = {
+    router: object
+  }
+
+  render = () => (
+    <NavItem active={this.props.path === this.context.router.history.location.pathname}>
+      <Link className='nav-link' to={this.props.path}>{this.props.name}</Link>
+    </NavItem>
+  )
+}
 
 PureHeaderLink.propTypes = {
-  url: string.isRequired,
+  path: string.isRequired,
   name: string.isRequired
 }
 
