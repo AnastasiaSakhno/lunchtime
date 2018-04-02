@@ -1,21 +1,22 @@
 buildscript {
-	ext {
-		kotlinVersion = '1.2.30'
-		springBootVersion = '1.5.10.RELEASE'
-		hikariCPVersion = '2.7.6'
-		jodaTimeVersion = '2.9.9'
-		apacheCommonsVersion = '3:3.6'
-		userTypeCoreVersion = '5.0.0.GA'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
-		classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
-		classpath("org.jetbrains.kotlin:kotlin-noarg:$kotlinVersion")
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+    ext {
+        kotlinVersion = '1.2.31'
+        springBootVersion = '1.5.10.RELEASE'
+        hikariCPVersion = '2.7.6'
+        jodaTimeVersion = '2.9.9'
+        apacheCommonsVersion = '3:3.6'
+        userTypeCoreVersion = '5.0.0.GA'
+        jsonWebTokenVersion = '0.7.0'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-noarg:$kotlinVersion")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
 apply plugin: 'kotlin'
@@ -29,18 +30,18 @@ version = '0.0.1'
 sourceCompatibility = 1.8
 
 jar {
-	archiveName = 'lunchtime.jar'
+    archiveName = 'lunchtime.jar'
 }
 
 compileKotlin {
-	kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "1.8"
 }
 compileTestKotlin {
-	kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 bootRun {
@@ -58,22 +59,23 @@ bootRun {
 }
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-jpa') {
-		exclude group: 'org.apache.tomcat', module: 'tomcat-jdbc'
-	}
-	compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa') {
+        exclude group: 'org.apache.tomcat', module: 'tomcat-jdbc'
+    }
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-boot-starter-web')
-	compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
-	compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
-	compile("com.zaxxer:HikariCP:$hikariCPVersion")
-	compile('org.flywaydb:flyway-core')
-	compile("io.jsonwebtoken:jjwt:0.7.0")
-	compile("joda-time:joda-time:$jodaTimeVersion")
-	compile("org.apache.commons:commons-lang$apacheCommonsVersion")
-	compile("org.jadira.usertype:usertype.core:$userTypeCoreVersion") // Should match Hibernate version
-	runtime('org.springframework.boot:spring-boot-devtools')
-	runtime('org.postgresql:postgresql')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile('org.springframework.data:spring-data-rest-hal-browser')
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+    compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+    compile("com.zaxxer:HikariCP:$hikariCPVersion")
+    compile('org.flywaydb:flyway-core')
+    compile("io.jsonwebtoken:jjwt:$jsonWebTokenVersion")
+    compile("joda-time:joda-time:$jodaTimeVersion")
+    compile("org.apache.commons:commons-lang$apacheCommonsVersion")
+    compile("org.jadira.usertype:usertype.core:$userTypeCoreVersion") // Should match Hibernate version
+    runtime('org.springframework.boot:spring-boot-devtools')
+    runtime('org.postgresql:postgresql')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }
