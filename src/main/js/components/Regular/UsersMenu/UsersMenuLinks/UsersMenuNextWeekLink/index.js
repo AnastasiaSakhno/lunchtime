@@ -3,14 +3,14 @@ import {object, func} from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
-import {loadNextWeek} from '../../../../../actions/users_menu'
+import actions from '../../../../../actions'
 
 const UsersMenuNextWeekLink = ({startDate, loadNextWeek}) => (
   <Link
     onClick={() => loadNextWeek(startDate)}
     className='users-menu-next badge badge-dark'
     to='#'>
-    Forward
+    Next
   </Link>
 )
 
@@ -21,7 +21,8 @@ UsersMenuNextWeekLink.propTypes = ({
 
 const mapDispatchToProps = dispatch => ({
   loadNextWeek: (startDate) => {
-    dispatch(loadNextWeek(startDate))
+    dispatch(actions.usersMenu.loadNextWeek(startDate))
+    dispatch(actions.days.load(startDate))
   }
 })
 

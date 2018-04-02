@@ -3,7 +3,7 @@ import {object, func} from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
-import {loadPrevWeek} from '../../../../../actions/users_menu'
+import actions from '../../../../../actions'
 
 const UsersMenuPrevWeekLink = ({startDate, loadPrevWeek}) => (
   <Link
@@ -21,7 +21,8 @@ UsersMenuPrevWeekLink.propTypes = ({
 
 const mapDispatchToProps = dispatch => ({
   loadPrevWeek: (startDate) => {
-    dispatch(loadPrevWeek(startDate))
+    dispatch(actions.usersMenu.loadPrevWeek(startDate))
+    dispatch(actions.days.load(startDate))
   }
 })
 
