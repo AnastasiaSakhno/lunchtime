@@ -7,6 +7,11 @@ buildscript {
         apacheCommonsVersion = '3:3.6'
         userTypeCoreVersion = '5.0.0.GA'
         jsonWebTokenVersion = '0.7.0'
+        assertjCoreVersion = '1.5.0'
+        seleniumVersion = '2.45.0'
+        fluentleniumAssertjVersion = '0.10.3'
+        seleniumChromedriverVersion = '2.53.0'
+        webDriverManagerVersion = '1.4.5'
     }
     repositories {
         mavenCentral()
@@ -70,4 +75,10 @@ dependencies {
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('org.postgresql:postgresql')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile("org.assertj:assertj-core:$assertjCoreVersion")
+    testCompile("org.seleniumhq.selenium:selenium-java:$seleniumVersion")
+    testCompile("org.fluentlenium:fluentlenium-assertj:$fluentleniumAssertjVersion")
+    testCompile("junit:junit")
+    testCompile("org.seleniumhq.selenium:selenium-chrome-driver:$seleniumChromedriverVersion")
+    testCompile("io.github.bonigarcia:webdrivermanager:$webDriverManagerVersion")
 }
