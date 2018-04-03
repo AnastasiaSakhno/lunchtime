@@ -46,13 +46,7 @@ repositories {
 
 bootRun {
     jvmArgs = ["-DLC_CTYPE=UTF-8",
-               "-Dfile.encoding=UTF-8",
-               "-Dcom.sun.management.jmxremote",
-               "-Dcom.sun.management.jmxremote.port=5020",
-               "-Dcom.sun.management.jmxremote.rmi.port=5020",
-               "-Dcom.sun.management.jmxremote.local.only=false",
-               "-Dcom.sun.management.jmxremote.authenticate=false",
-               "-Dcom.sun.management.jmxremote.ssl=false"]
+               "-Dfile.encoding=UTF-8"]
     addResources = true
 }
 
