@@ -26,6 +26,7 @@ class DatabaseCleanupService @Autowired constructor(private val entityManager: E
                 tableAnnotation?.name ?: throw IllegalStateException("should never get here")
             }
     }
+    
     @Transactional
     fun truncate() {
         tableNames.forEach { tableName ->

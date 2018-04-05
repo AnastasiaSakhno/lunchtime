@@ -64,9 +64,9 @@ class BaseFeatureTest : FluentTest() {
     fun loginAsAdmin() = loginWith(ADMIN_EMAIL, ADMIN_PASSWORD)
 
     fun loginWith(email: String, password: String) {
-        fill("#email_input").with(email)
-        fill("#password_input").with(password)
-        submit(".login-form")
+        fill(EMAIL_INPUT_SELECTOR).with(email)
+        fill(PASSWORD_INPUT_SELECTOR).with(password)
+        submit(LOGIN_FORM_SELECTOR)
     }
 
     companion object {
@@ -85,5 +85,21 @@ class BaseFeatureTest : FluentTest() {
         const val NEW_EMAIL = "some_new_email@anadeainc.com"
         const val NEW_PASSWORD = "some_password1"
         const val NEW_FULL_NAME = "Adam Freeman"
+
+        const val SUBMIT_BUTTON_SELECTOR = "button[type='submit']"
+        const val EMAIL_INPUT_SELECTOR = "#email_input"
+        const val NAME_INPUT_SELECTOR = "#name_input"
+        const val PASSWORD_INPUT_SELECTOR = "#password_input"
+        const val LOGIN_FORM_SELECTOR = ".login-form"
+
+        const val EMAIL_HELP_ID = "emailHelp"
+        const val EMAIL_HELP_SELECTOR = "#$EMAIL_HELP_ID"
+
+        const val NEXT_WEEK_LINK_SELECTOR = ".users-menu-next"
+        const val PREV_WEEK_LINK_SELECTOR = ".users-menu-prev"
+
+        const val USERS_LINK_SELECTOR = "a[href='/admin/users']"
+
+        const val TABLE_ROW_SELECTOR = "table tbody tr"
     }
 }

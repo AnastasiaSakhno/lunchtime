@@ -13,31 +13,31 @@ class ViewUsersTests : BaseFeatureTest() {
     @Test
     fun regularUserCanViewOnly() {
         loginWith(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
-        fluentUtils.waitFor { cssSelector("a[href='/admin/users']") }
-        find("a[href='/admin/users']").click()
-        assertThat(find("table tbody tr").count()).isEqualTo(3)
+        fluentUtils.waitFor { cssSelector(USERS_LINK_SELECTOR) }
+        find(USERS_LINK_SELECTOR).click()
+        assertThat(find(TABLE_ROW_SELECTOR).count()).isEqualTo(2)
         assertThat(find(USERS_FORM_SELECTOR)).isEmpty()
     }
 
     @Test
     fun adminCanSeeUsersForm() {
         loginAsAdmin()
-        fluentUtils.waitFor { cssSelector("a[href='/admin/users']") }
-        find("a[href='/admin/users']").click()
-        assertThat(find("#name_input")).isNotEmpty
+        fluentUtils.waitFor { cssSelector(USERS_LINK_SELECTOR) }
+        find(USERS_LINK_SELECTOR).click()
+        assertThat(find(NAME_INPUT_SELECTOR)).isNotEmpty
     }
 
     @Test
     fun adminCanAddNewUsers() {
         loginAsAdmin()
-        fluentUtils.waitFor { cssSelector("a[href='/admin/users']") }
-        find("a[href='/admin/users']").click()
-        assertThat(find("table tbody tr").count()).isEqualTo(3)
-        fill("#name_input").with(NEW_FULL_NAME)
-        fill("#email_input").with(NEW_EMAIL)
+        fluentUtils.waitFor { cssSelector(USERS_LINK_SELECTOR) }
+        find(USERS_LINK_SELECTOR).click()
+        assertThat(find(TABLE_ROW_SELECTOR).count()).isEqualTo(2)
+        fill(NAME_INPUT_SELECTOR).with(NEW_FULL_NAME)
+        fill(EMAIL_INPUT_SELECTOR).with(NEW_EMAIL)
         submit(USERS_FORM_SELECTOR)
         fluentUtils.waitFor { xpath("//td[contains(text(),'$NEW_FULL_NAME')]") }
-        assertThat(find("table tbody tr").count()).isEqualTo(4)
+        assertThat(find(TABLE_ROW_SELECTOR).count()).isEqualTo(3)
     }
 
     override fun setupInitialData() {

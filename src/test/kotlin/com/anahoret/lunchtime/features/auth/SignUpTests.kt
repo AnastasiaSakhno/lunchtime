@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.openqa.selenium.By
+import org.openqa.selenium.By.*
 import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
@@ -13,7 +13,7 @@ class SignUpTests : BaseFeatureTest() {
 
     @Before
     fun goToSignUp() {
-        find("a[href='/signup']").click()
+        find(SIGN_UP_LINK_SELECTOR).click()
     }
 
     @Test
@@ -22,14 +22,14 @@ class SignUpTests : BaseFeatureTest() {
         assertThat(find(NAME_INPUT_SELECTOR)).isNotEmpty
         assertThat(find(EMAIL_INPUT_SELECTOR)).isNotEmpty
         assertThat(find(PASSWORD_INPUT_SELECTOR)).isNotEmpty
-        assertThat(find("button[type='submit']")).isNotEmpty
+        assertThat(find(SUBMIT_BUTTON_SELECTOR)).isNotEmpty
     }
 
     @Test
     fun canSignUpWithRightCredentials() {
         signUpWith(NEW_FULL_NAME, NEW_EMAIL, NEW_PASSWORD)
-        fluentUtils.waitFor { By.className("users-menu-next") }
-        assertThat(find(".users-menu-next").text).isEqualTo("Next")
+        fluentUtils.waitFor { cssSelector(NEXT_WEEK_LINK_SELECTOR) }
+        assertThat(find(NEXT_WEEK_LINK_SELECTOR).text).isEqualTo("Next")
     }
 
     @Test
@@ -61,7 +61,7 @@ class SignUpTests : BaseFeatureTest() {
 
     fun wrongSignUpAssert(fullName: String, email: String, password: String, errorMessage: String) {
         signUpWith(fullName, email, password)
-        fluentUtils.waitFor { By.id(EMAIL_HELP_ID) }
+        fluentUtils.waitFor { id(EMAIL_HELP_ID) }
         assertThat(find(EMAIL_HELP_SELECTOR).text).isEqualTo(errorMessage)
     }
 
@@ -75,8 +75,7 @@ class SignUpTests : BaseFeatureTest() {
         const val EMAIL_INPUT_SELECTOR = "#email_input"
         const val PASSWORD_INPUT_SELECTOR = "#password_input"
         const val SIGN_UP_FORM_SELECTOR = ".signup-form"
-        const val SUBMIT_BUTTON_SELECTOR = "button[type='submit']"
-        const val EMAIL_HELP_ID = "emailHelp"
-        const val EMAIL_HELP_SELECTOR = "#${EMAIL_HELP_ID}"
+
+        const val SIGN_UP_LINK_SELECTOR = "a[href='/signup']"
     }
 }
