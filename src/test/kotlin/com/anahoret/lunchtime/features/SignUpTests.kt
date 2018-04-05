@@ -17,7 +17,7 @@ class SignUpTests : BaseSeleniumTest() {
 
     @Test
     fun hasSignUpForm() {
-        assertThat(find(SIGNUP_FORM_SELECTOR)).isNotEmpty
+        assertThat(find(SIGN_UP_FORM_SELECTOR)).isNotEmpty
         assertThat(find(NAME_INPUT_SELECTOR)).isNotEmpty
         assertThat(find(EMAIL_INPUT_SELECTOR)).isNotEmpty
         assertThat(find(PASSWORD_INPUT_SELECTOR)).isNotEmpty
@@ -55,7 +55,7 @@ class SignUpTests : BaseSeleniumTest() {
         fill(NAME_INPUT_SELECTOR).with(fullName)
         fill(EMAIL_INPUT_SELECTOR).with(email)
         fill(PASSWORD_INPUT_SELECTOR).with(password)
-        submit(SIGNUP_FORM_SELECTOR)
+        submit(SIGN_UP_FORM_SELECTOR)
     }
 
     fun wrongSignUpAssert(fullName: String, email:String, password: String, errorMessage: String) {
@@ -66,15 +66,15 @@ class SignUpTests : BaseSeleniumTest() {
 
     fun assertDisabledSubmitButtonWhenWrongCredentials(fullName: String, email:String, password: String) {
         signUpWith(fullName, email, password)
-        assertThat(find(SUBMIN_BUTTON_SELECTOR).getAttribute("disabled")).isEqualTo("true")
+        assertThat(find(SUBMIT_BUTTON_SELECTOR).getAttribute("disabled")).isEqualTo("true")
     }
 
     companion object {
         const val NAME_INPUT_SELECTOR = "#name_input"
         const val EMAIL_INPUT_SELECTOR = "#email_input"
         const val PASSWORD_INPUT_SELECTOR = "#password_input"
-        const val SIGNUP_FORM_SELECTOR = ".signup-form"
-        const val SUBMIN_BUTTON_SELECTOR = "button[type='submit']"
+        const val SIGN_UP_FORM_SELECTOR = ".signup-form"
+        const val SUBMIT_BUTTON_SELECTOR = "button[type='submit']"
         const val EMAIL_HELP_ID = "emailHelp"
         const val EMAIL_HELP_SELECTOR = "#$EMAIL_HELP_ID"
         const val NEW_EMAIL = "some_new_email@anadeainc.com"
