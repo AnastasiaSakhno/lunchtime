@@ -1,5 +1,8 @@
-package com.anahoret.lunchtime
+package com.anahoret.lunchtime.features
 
+import com.anahoret.lunchtime.DatabaseCleanupService
+import com.anahoret.lunchtime.FluentUtils
+import com.anahoret.lunchtime.LunchtimeApplication
 import com.anahoret.lunchtime.domain.Role
 import com.anahoret.lunchtime.domain.User
 import com.anahoret.lunchtime.repositories.UserRepository
@@ -15,7 +18,7 @@ import org.springframework.test.context.ActiveProfiles
 
 @SpringBootTest(classes = [LunchtimeApplication::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-class BaseSeleniumTest : FluentTest() {
+class BaseFeatureTest : FluentTest() {
     @Value("\${local.server.port}")
     private val serverPort: Int = 0
 
@@ -71,5 +74,16 @@ class BaseSeleniumTest : FluentTest() {
         const val ADMIN_PASSWORD = "admin"
         const val ADMIN_PASSWORD_ENCRYPTED = "\$2a\$12\$6yiK4/ar7AfbL/VAjJd1M.u4SC5NHTwEvNfhCQLh.2ktmxUstEZJu"
         const val ADMIN_FULL_NAME = "App Admin"
+        const val FIRST_REGULAR_USER_EMAIL = "test1@anadeainc.com"
+        const val FIRST_REGULAR_USER_PASSWORD = "some_password1"
+        const val FIRST_REGULAR_USER_PASSWORD_ENCRYPTED = "\$2a\$12\$z3GvA.LKJENQtVjvLZFoguCVNrJsx/Wr/xkuu7AAicVtA7qrLuCZW"
+        const val FIRST_REGULAR_USER_FULL_NAME = "Иван Иванов"
+        const val SECOND_REGULAR_USER_EMAIL = "test2@anadeainc.com"
+        const val SECOND_REGULAR_USER_PASSWORD = "some_password1"
+        const val SECOND_REGULAR_USER_PASSWORD_ENCRYPTED = "\$2a\$12\$z3GvA.LKJENQtVjvLZFoguCVNrJsx/Wr/xkuu7AAicVtA7qrLuCZW"
+        const val SECOND_REGULAR_USER_FULL_NAME = "Пётр Петров"
+        const val NEW_EMAIL = "some_new_email@anadeainc.com"
+        const val NEW_PASSWORD = "some_password1"
+        const val NEW_FULL_NAME = "Adam Freeman"
     }
 }

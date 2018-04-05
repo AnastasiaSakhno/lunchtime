@@ -1,14 +1,15 @@
-package com.anahoret.lunchtime.features
+package com.anahoret.lunchtime.features.auth
 
-import com.anahoret.lunchtime.BaseSeleniumTest
+import com.anahoret.lunchtime.features.BaseFeatureTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.openqa.selenium.By
 import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
-class SignUpTests : BaseSeleniumTest() {
+class SignUpTests : BaseFeatureTest() {
 
     @Before
     fun goToSignUp() {
@@ -27,7 +28,7 @@ class SignUpTests : BaseSeleniumTest() {
     @Test
     fun canSignUpWithRightCredentials() {
         signUpWith(NEW_FULL_NAME, NEW_EMAIL, NEW_PASSWORD)
-        fluentUtils.waitForClass("users-menu-next")
+        fluentUtils.waitFor { By.className("users-menu-next") }
         assertThat(find(".users-menu-next").text).isEqualTo("Next")
     }
 
@@ -51,20 +52,20 @@ class SignUpTests : BaseSeleniumTest() {
         wrongSignUpAssert(NEW_FULL_NAME, ADMIN_EMAIL, ADMIN_PASSWORD, "User already exists")
     }
 
-    fun signUpWith(fullName: String, email:String, password: String) {
+    fun signUpWith(fullName: String, email: String, password: String) {
         fill(NAME_INPUT_SELECTOR).with(fullName)
         fill(EMAIL_INPUT_SELECTOR).with(email)
         fill(PASSWORD_INPUT_SELECTOR).with(password)
         submit(SIGN_UP_FORM_SELECTOR)
     }
 
-    fun wrongSignUpAssert(fullName: String, email:String, password: String, errorMessage: String) {
+    fun wrongSignUpAssert(fullName: String, email: String, password: String, errorMessage: String) {
         signUpWith(fullName, email, password)
-        fluentUtils.waitForId(EMAIL_HELP_ID)
+        fluentUtils.waitFor { By.id(EMAIL_HELP_ID) }
         assertThat(find(EMAIL_HELP_SELECTOR).text).isEqualTo(errorMessage)
     }
 
-    fun assertDisabledSubmitButtonWhenWrongCredentials(fullName: String, email:String, password: String) {
+    fun assertDisabledSubmitButtonWhenWrongCredentials(fullName: String, email: String, password: String) {
         signUpWith(fullName, email, password)
         assertThat(find(SUBMIT_BUTTON_SELECTOR).getAttribute("disabled")).isEqualTo("true")
     }
@@ -76,9 +77,6 @@ class SignUpTests : BaseSeleniumTest() {
         const val SIGN_UP_FORM_SELECTOR = ".signup-form"
         const val SUBMIT_BUTTON_SELECTOR = "button[type='submit']"
         const val EMAIL_HELP_ID = "emailHelp"
-        const val EMAIL_HELP_SELECTOR = "#$EMAIL_HELP_ID"
-        const val NEW_EMAIL = "some_new_email@anadeainc.com"
-        const val NEW_PASSWORD = "some_password1"
-        const val NEW_FULL_NAME = "Adam Freeman"
+        const val EMAIL_HELP_SELECTOR = "#${EMAIL_HELP_ID}"
     }
 }
