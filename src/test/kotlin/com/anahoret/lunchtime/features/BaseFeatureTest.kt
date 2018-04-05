@@ -92,8 +92,7 @@ class BaseFeatureTest : FluentTest() {
         const val PASSWORD_INPUT_SELECTOR = "#password_input"
         const val LOGIN_FORM_SELECTOR = ".login-form"
 
-        const val EMAIL_HELP_ID = "emailHelp"
-        const val EMAIL_HELP_SELECTOR = "#$EMAIL_HELP_ID"
+        const val EMAIL_HELP_SELECTOR = "#emailHelp"
 
         const val NEXT_WEEK_LINK_SELECTOR = ".users-menu-next"
         const val PREV_WEEK_LINK_SELECTOR = ".users-menu-prev"

@@ -27,7 +27,7 @@ class LoginTests : BaseFeatureTest() {
     @Test
     fun cannotLoginWithWrongCredentials() {
         loginWith(ADMIN_EMAIL, "guess")
-        fluentUtils.waitFor { id(EMAIL_HELP_ID) }
+        fluentUtils.waitFor { cssSelector(EMAIL_HELP_SELECTOR) }
         assertThat(find(EMAIL_HELP_SELECTOR).text).isEqualTo("Bad credentials")
     }
 }

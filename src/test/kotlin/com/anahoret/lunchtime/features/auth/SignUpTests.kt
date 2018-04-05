@@ -61,7 +61,7 @@ class SignUpTests : BaseFeatureTest() {
 
     fun wrongSignUpAssert(fullName: String, email: String, password: String, errorMessage: String) {
         signUpWith(fullName, email, password)
-        fluentUtils.waitFor { id(EMAIL_HELP_ID) }
+        fluentUtils.waitFor { cssSelector(EMAIL_HELP_SELECTOR) }
         assertThat(find(EMAIL_HELP_SELECTOR).text).isEqualTo(errorMessage)
     }
 
