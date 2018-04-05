@@ -1,7 +1,6 @@
-package com.anahoret.lunchtime.features.users
+package com.anahoret.lunchtime.features
 
 import com.anahoret.lunchtime.domain.Role
-import com.anahoret.lunchtime.features.BaseFeatureTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -9,29 +8,23 @@ import org.openqa.selenium.By.*
 import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
-class ViewUsersTests : BaseFeatureTest() {
+class UsersTests : BaseFeatureTest() {
     @Test
     fun regularUserCanViewOnly() {
         loginWith(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
         fluentUtils.waitFor { cssSelector(USERS_LINK_SELECTOR) }
         find(USERS_LINK_SELECTOR).click()
+
         assertThat(find(TABLE_ROW_SELECTOR).count()).isEqualTo(2)
         assertThat(find(USERS_FORM_SELECTOR)).isEmpty()
     }
 
     @Test
-    fun adminCanSeeUsersForm() {
+    fun adminCanCreate() {
         loginAsAdmin()
         fluentUtils.waitFor { cssSelector(USERS_LINK_SELECTOR) }
         find(USERS_LINK_SELECTOR).click()
-        assertThat(find(NAME_INPUT_SELECTOR)).isNotEmpty
-    }
 
-    @Test
-    fun adminCanAddNewUsers() {
-        loginAsAdmin()
-        fluentUtils.waitFor { cssSelector(USERS_LINK_SELECTOR) }
-        find(USERS_LINK_SELECTOR).click()
         assertThat(find(TABLE_ROW_SELECTOR).count()).isEqualTo(2)
         fill(NAME_INPUT_SELECTOR).with(NEW_FULL_NAME)
         fill(EMAIL_INPUT_SELECTOR).with(NEW_EMAIL)
