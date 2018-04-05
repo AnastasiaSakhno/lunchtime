@@ -5,6 +5,7 @@ import com.anahoret.lunchtime.FluentUtils
 import com.anahoret.lunchtime.LunchtimeApplication
 import com.anahoret.lunchtime.domain.Role
 import com.anahoret.lunchtime.domain.User
+import com.anahoret.lunchtime.repositories.RestaurantRepository
 import com.anahoret.lunchtime.repositories.UserRepository
 import io.github.bonigarcia.wdm.ChromeDriverManager
 import org.fluentlenium.adapter.FluentTest
@@ -27,6 +28,9 @@ class BaseFeatureTest : FluentTest() {
 
     @field:Autowired
     private lateinit var userRepository: UserRepository
+
+    @field:Autowired
+    protected lateinit var restaurantRepository: RestaurantRepository
 
     init {
         ChromeDriverManager.getInstance().setup()
@@ -98,6 +102,7 @@ class BaseFeatureTest : FluentTest() {
         const val PREV_WEEK_LINK_SELECTOR = ".users-menu-prev"
 
         const val USERS_LINK_SELECTOR = "a[href='/admin/users']"
+        const val RESTAURANTS_LINK_SELECTOR = "a[href='/admin/restaurants']"
 
         const val TABLE_ROW_SELECTOR = "table tbody tr"
     }

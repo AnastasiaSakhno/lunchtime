@@ -81,4 +81,5 @@ dependencies {
     testCompile("junit:junit")
     testCompile("org.seleniumhq.selenium:selenium-chrome-driver:$seleniumChromedriverVersion")
     testCompile("io.github.bonigarcia:webdrivermanager:$webDriverManagerVersion")
+    testCompile("org.springframework.security:spring-security-test")
 }
