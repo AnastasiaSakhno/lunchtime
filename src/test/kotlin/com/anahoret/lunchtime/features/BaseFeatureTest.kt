@@ -3,8 +3,11 @@ package com.anahoret.lunchtime.features
 import com.anahoret.lunchtime.DatabaseCleanupService
 import com.anahoret.lunchtime.FluentUtils
 import com.anahoret.lunchtime.LunchtimeApplication
+import com.anahoret.lunchtime.domain.Menu
+import com.anahoret.lunchtime.domain.Restaurant
 import com.anahoret.lunchtime.domain.Role
 import com.anahoret.lunchtime.domain.User
+import com.anahoret.lunchtime.repositories.MenuRepository
 import com.anahoret.lunchtime.repositories.RestaurantRepository
 import com.anahoret.lunchtime.repositories.UserRepository
 import io.github.bonigarcia.wdm.ChromeDriverManager
@@ -31,6 +34,9 @@ class BaseFeatureTest : FluentTest() {
 
     @field:Autowired
     protected lateinit var restaurantRepository: RestaurantRepository
+
+    @field:Autowired
+    protected lateinit var menuRepository: MenuRepository
 
     init {
         ChromeDriverManager.getInstance().setup()
@@ -64,6 +70,12 @@ class BaseFeatureTest : FluentTest() {
         user.fullName = fullName
         userRepository.save(user)
     }
+
+    fun createRestaurant(id: Long, name: String, address: String, archive: Boolean) =
+        restaurantRepository.save(Restaurant(id, name, address, archive))
+
+    fun createMenu(id: Long, name: String, weekDays: String?, archive: Boolean, restaurant: Restaurant?) =
+        menuRepository.save(Menu(id, name, weekDays, archive, restaurant))
 
     fun loginAsAdmin() = loginWith(ADMIN_EMAIL, ADMIN_PASSWORD)
 
@@ -103,6 +115,7 @@ class BaseFeatureTest : FluentTest() {
 
         const val USERS_LINK_SELECTOR = "a[href='/admin/users']"
         const val RESTAURANTS_LINK_SELECTOR = "a[href='/admin/restaurants']"
+        const val MENU_LINK_SELECTOR = "a[href='/admin/menu']"
 
         const val TABLE_ROW_SELECTOR = "table tbody tr"
     }

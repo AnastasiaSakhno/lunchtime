@@ -1,13 +1,13 @@
 package com.anahoret.lunchtime.features.admin
 
-import com.anahoret.lunchtime.domain.Restaurant
 import com.anahoret.lunchtime.domain.Role
 import com.anahoret.lunchtime.features.BaseFeatureTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.openqa.selenium.By.*
+import org.openqa.selenium.By.cssSelector
+import org.openqa.selenium.By.xpath
 import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.context.junit4.SpringRunner
 
@@ -36,6 +36,7 @@ class RestaurantsTests : BaseFeatureTest() {
     @Test
     fun archiveIsShownAsCrossedOut() {
         assertThat(findFirst("del").text).isEqualTo("Mendis")
+        assertThat(find(TABLE_ROW_SELECTOR)[3].find(".fa-remove")).isEmpty()
     }
 
     @Test
@@ -51,11 +52,6 @@ class RestaurantsTests : BaseFeatureTest() {
         createRestaurant(2, "LeGrand", "пр. Яворницкого, 50", false)
         createRestaurant(3, "Primus", "ул. Баррикадная, 1", false)
         createRestaurant(4, "Mendis", "ул. Шолом Алейхема, 4/26", true)
-    }
-
-    fun createRestaurant(id: Long, name: String, address: String, archive: Boolean) {
-        val restaurant = Restaurant(id, name, address, archive)
-        restaurantRepository.save(restaurant)
     }
 
     companion object {
