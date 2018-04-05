@@ -72,7 +72,12 @@ class SignUp extends Component {
               id='password_input'
               onChange={this.handleChange}/>
           </div>
-          <button type='submit' className='btn btn-dark mb-2'>Sign Up</button>
+          <button
+            type='submit'
+            className='btn btn-dark mb-2'
+            disabled={!this.state.fullName || !this.state.email || !this.state.password}>
+            Sign Up
+          </button>
           <Link to='/login'>Sign In</Link>
         </form>
       </div>
