@@ -25,7 +25,7 @@ class LoginTests : BaseSeleniumTest() {
 
     @Test
     fun cannotLoginWithWrongCredentials() {
-        loginWith("admin@anadeainc.com", "guess")
+        loginWith(ADMIN_EMAIL, "guess")
         fluentUtils.waitForId("emailHelp")
         assertThat(find("#emailHelp").text).isEqualTo("Bad credentials")
     }

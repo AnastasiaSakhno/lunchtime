@@ -29,9 +29,16 @@ class BaseSeleniumTest : FluentTest() {
 
     fun loginAsAdmin() = loginWith("admin@anadeainc.com", "admin")
 
+    fun loginAsAdmin() = loginWith(ADMIN_EMAIL, ADMIN_PASSWORD)
+
     fun loginWith(email:String, password: String) {
         fill("#email_input").with(email)
         fill("#password_input").with(password)
         submit(".login-form")
+    }
+
+    companion object {
+        const val ADMIN_EMAIL = "admin@anadeainc.com"
+        const val ADMIN_PASSWORD = "admin"
     }
 }
