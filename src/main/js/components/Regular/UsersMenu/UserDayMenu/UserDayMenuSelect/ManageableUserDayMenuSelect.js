@@ -3,6 +3,7 @@ import {string, number, array, shape, func} from 'prop-types'
 
 import {weekDateLong} from '../../../../../utils/date'
 import {href} from '../../../../../utils/object'
+import {weekDays} from '../../../../../selectors/users_menu'
 
 const ManageableUserDayMenuSelect = ({startDate, id, dayOfWeek, menu, user, menuList, onSubmit, onUpdate}) => {
   const handleSubmit = (e) => {
@@ -22,9 +23,10 @@ const ManageableUserDayMenuSelect = ({startDate, id, dayOfWeek, menu, user, menu
   }
 
   let selected = href(menu)
+  let dayOfWeekName = weekDays[dayOfWeek - 1].toLowerCase()
   return (
     <select
-      className="form-control custom-select"
+      className={`form-control custom-select user-day-menu-select user-day-menu-select-${dayOfWeekName}`}
       value={selected}
       onChange={handleSubmit}>
       {menuList.map((m) => (

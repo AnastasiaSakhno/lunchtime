@@ -5,7 +5,7 @@ import UserDayMenu from '../UserDayMenu'
 import {formattedDate, weekDateJson} from '../../../../utils/date'
 
 const UserWeekMenu = (props) => (
-  <div className='row'>
+  <div className='row users-menu-sheet-table-row'>
     <div className='col-2'>{props.user.fullName}</div>
     {[...Array(5).keys()].map((i) => {
       let dayOfWeek = i + 1
@@ -19,7 +19,7 @@ const UserWeekMenu = (props) => (
         }
       }
 
-      let day = props.days.find(d => formattedDate(d.date) === formattedDate(found.date))
+      let day = props.days ? props.days.find(d => formattedDate(d.date) === formattedDate(found.date)) : null
 
       return (<UserDayMenu key={key} dayOfWeek={dayOfWeek} day={day} {...props} {...found}/>)
     })}
