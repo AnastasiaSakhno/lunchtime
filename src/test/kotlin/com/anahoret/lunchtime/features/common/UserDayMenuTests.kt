@@ -39,7 +39,7 @@ class UserDayMenuTests : BaseFeatureTest() {
 
     @Test
     fun currentUserInTheFirstLine() {
-        TODO("check if logged in user is on the top")
+        assertThat(findFirst(".users-menu-sheet-table-row .col-2").text).isEqualTo(FIRST_REGULAR_USER_FULL_NAME)
     }
 
     @Test
@@ -81,9 +81,6 @@ class UserDayMenuTests : BaseFeatureTest() {
         // in order to make sure we do not see menu with archived restaurant (Mendis) even though it (the Old Mendis menu) is not archived
         createMenu(6, "Old Mendis", null, false, mendis)
     }
-
-    fun waitForDate(date: LocalDate) =
-        fluentUtils.waitFor { xpath("//div[contains(text(), '${DateFormatUtils.format(date.toDate(), DATE_FORMAT_PATTERN)}')]") }
 
     companion object {
         const val DATE_FORMAT_PATTERN = "yyyy-MM-dd"

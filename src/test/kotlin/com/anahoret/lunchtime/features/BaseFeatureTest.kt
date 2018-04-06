@@ -7,12 +7,16 @@ import com.anahoret.lunchtime.domain.Menu
 import com.anahoret.lunchtime.domain.Restaurant
 import com.anahoret.lunchtime.domain.Role
 import com.anahoret.lunchtime.domain.User
+import com.anahoret.lunchtime.features.common.UserDayMenuTests
 import com.anahoret.lunchtime.repositories.MenuRepository
 import com.anahoret.lunchtime.repositories.RestaurantRepository
 import com.anahoret.lunchtime.repositories.UserRepository
 import io.github.bonigarcia.wdm.ChromeDriverManager
+import org.apache.commons.lang3.time.DateFormatUtils
 import org.fluentlenium.adapter.FluentTest
+import org.joda.time.LocalDate
 import org.junit.Before
+import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.springframework.beans.factory.annotation.Autowired
@@ -84,6 +88,9 @@ class BaseFeatureTest : FluentTest() {
         fill(PASSWORD_INPUT_SELECTOR).with(password)
         submit(LOGIN_FORM_SELECTOR)
     }
+
+    fun waitForDate(date: LocalDate) =
+        fluentUtils.waitFor { By.xpath("//div[contains(text(), '${DateFormatUtils.format(date.toDate(), UserDayMenuTests.DATE_FORMAT_PATTERN)}')]") }
 
     companion object {
         const val ADMIN_EMAIL = "admin@anadeainc.com"

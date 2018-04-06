@@ -3,6 +3,7 @@ package com.anahoret.lunchtime.features.regular
 import com.anahoret.lunchtime.domain.Role
 import com.anahoret.lunchtime.features.BaseFeatureTest
 import org.assertj.core.api.Assertions.assertThat
+import org.joda.time.LocalDate
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -27,6 +28,15 @@ class UserDayMenuTests : BaseFeatureTest() {
     @Test
     fun canEditOnlyYourself() {
         assertThat(find(".user-day-menu-select").count()).isEqualTo(5)
+    }
+
+    @Test
+    fun cannotEditInThePast() {
+        val date = LocalDate()
+        waitForDate(date)
+        click(PREV_WEEK_LINK_SELECTOR)
+        waitForDate(date.plusWeeks(-1))
+        assertThat(find(".user-day-menu-select")).isEmpty()
     }
 
     override fun setupInitialData() {
