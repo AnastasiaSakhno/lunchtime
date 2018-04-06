@@ -2,6 +2,7 @@ import CanCan from 'cancan'
 
 import {href} from '../utils/object'
 import moment from 'moment/moment'
+import {formattedDate} from '../utils/date'
 
 const cancan = new CanCan()
 export const {allow, can, cannot} = cancan
@@ -29,20 +30,20 @@ export const cancanUser = (currentUser) => {
   return currentUser.role === 'ROLE_ADMIN' ? new AdminUser() : new RegularUser({user: currentUser})
 }
 
-const canManageDayByTime = (day) => !day.props.id || moment(day.props.date).diff(moment(), 'days') >= 0
+const canManageDayByTime = (udm) => moment(formattedDate(udm.props.date)).diff(moment(), 'days') >= 0
 const canManageUdmDay = (udm) => !udm.props.day || !udm.props.day.closed
+const canManageUdmMandatory = (udm) => canManageUdmDay(udm) && canManageDayByTime(udm)
 
 allow(RegularUser, 'view', [MenuDocument, User, UserDayMenu])
 allow(RegularUser, 'manage', UserDayMenu,
-  (user, udm) => href(user.props.user) === href(udm.props.user) && canManageUdmDay(udm)
+  (user, udm) => href(user.props.user) === href(udm.props.user) && canManageUdmMandatory(udm)
 )
 
 allow(AdminUser, 'manage', [Menu, MenuDocument, Restaurant, User])
 
 allow(AdminUser, 'view', UserDayMenu)
 allow(AdminUser, 'manage', UserDayMenu,
-  (_, udm) => canManageUdmDay(udm)
+  (_, udm) => canManageUdmMandatory(udm)
 )
 
-allow(AdminUser, 'close', Day,
-  (_, day) => canManageDayByTime(day))
+allow(AdminUser, 'close', Day)
