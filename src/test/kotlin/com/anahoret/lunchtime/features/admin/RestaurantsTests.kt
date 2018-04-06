@@ -18,7 +18,7 @@ class RestaurantsTests : BaseFeatureTest() {
     fun loginAndNavigate() {
         loginAsAdmin()
         fluentUtils.waitFor { cssSelector(RESTAURANTS_LINK_SELECTOR) }
-        find(RESTAURANTS_LINK_SELECTOR).click()
+        click(RESTAURANTS_LINK_SELECTOR)
 
         fluentUtils.waitFor { cssSelector("table") }
     }

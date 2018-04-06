@@ -14,7 +14,7 @@ class UsersTests : BaseFeatureTest() {
     fun canCreate() {
         loginAsAdmin()
         fluentUtils.waitFor { cssSelector(USERS_LINK_SELECTOR) }
-        find(USERS_LINK_SELECTOR).click()
+        click(USERS_LINK_SELECTOR)
 
         assertThat(find(TABLE_ROW_SELECTOR).count()).isEqualTo(2)
         fill(NAME_INPUT_SELECTOR).with(NEW_FULL_NAME)

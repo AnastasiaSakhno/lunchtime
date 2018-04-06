@@ -13,7 +13,7 @@ class SignUpTests : BaseFeatureTest() {
 
     @Before
     fun goToSignUp() {
-        find(SIGN_UP_LINK_SELECTOR).click()
+        click(SIGN_UP_LINK_SELECTOR)
     }
 
     @Test

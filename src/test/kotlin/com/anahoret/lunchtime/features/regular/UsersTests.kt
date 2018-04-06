@@ -14,7 +14,7 @@ class UsersTests : BaseFeatureTest() {
     fun canViewOnly() {
         loginWith(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
         fluentUtils.waitFor { cssSelector(USERS_LINK_SELECTOR) }
-        find(USERS_LINK_SELECTOR).click()
+        click(USERS_LINK_SELECTOR)
 
         assertThat(find(TABLE_ROW_SELECTOR).count()).isEqualTo(2)
         assertThat(find(USERS_FORM_SELECTOR)).isEmpty()
