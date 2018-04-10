@@ -22,14 +22,15 @@ class UserDayMenuTests : BaseFeatureTest() {
 
     @Test
     fun canEditAllUsers() {
-        assertThat(find(".user-day-menu-select").count()).isEqualTo(10)
+        assertThat(find(".user-day-menu-select").count()).isEqualTo(expectedUserDayMenuSelectCount(2))
     }
 
     @Test
     fun canCloseDays() {
+        assertThat(find(".user-day-menu-select").count()).isEqualTo(expectedUserDayMenuSelectCount(2, 5))
         find(".day-status_manageable").last().click()
         Thread.sleep(1500)
-        assertThat(find(".user-day-menu-select")).isEmpty()
+        assertThat(find(".user-day-menu-select").count()).isEqualTo(expectedUserDayMenuSelectCount(2, 4))
         assertThat(find(".users-menu-sheet-table-row").first().find(".user-day-menu_readonly")).isNotEmpty
         assertThat(find(".users-menu-sheet-table-row").last().find(".user-day-menu_readonly")).isNotEmpty
     }

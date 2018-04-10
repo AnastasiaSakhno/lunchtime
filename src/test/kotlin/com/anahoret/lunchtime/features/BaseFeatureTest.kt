@@ -92,6 +92,9 @@ class BaseFeatureTest : FluentTest() {
     fun waitForDate(date: LocalDate) =
         fluentUtils.waitFor { By.xpath("//div[contains(text(), '${DateFormatUtils.format(date.toDate(), UserDayMenuTests.DATE_FORMAT_PATTERN)}')]") }
 
+    fun expectedUserDayMenuSelectCount(usersCount: Int, openDays: Int = 5) =
+        usersCount * (openDays - LocalDate().dayOfWeek + 1)
+
     companion object {
         const val ADMIN_EMAIL = "admin@anadeainc.com"
         const val ADMIN_PASSWORD = "admin"

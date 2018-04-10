@@ -27,7 +27,7 @@ class UserDayMenuTests : BaseFeatureTest() {
 
     @Test
     fun canEditOnlyYourself() {
-        assertThat(find(".user-day-menu-select").count()).isEqualTo(5)
+        assertThat(find(".user-day-menu-select").count()).isEqualTo(expectedUserDayMenuSelectCount(1))
     }
 
     @Test
