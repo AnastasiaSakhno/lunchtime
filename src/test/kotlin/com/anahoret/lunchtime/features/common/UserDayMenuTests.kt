@@ -61,10 +61,10 @@ class UserDayMenuTests : BaseFeatureTest() {
 
     @Test
     fun canEdit() {
-        fillSelect(".user-day-menu-select-wednesday").withText("Loft")
+        fillSelect(".user-day-menu-wednesday .user-day-menu-select").withText("Loft")
         Thread.sleep(1500)
-        val selected = find(".user-day-menu-select-wednesday").value
-        assertThat(find(".user-day-menu-select-wednesday option[value='$selected']").text).isEqualTo("Loft")
+        val selected = find(".user-day-menu-wednesday .user-day-menu-select").value
+        assertThat(find(".user-day-menu-wednesday .user-day-menu-select option[value='$selected']").text).isEqualTo("Loft")
     }
 
     override fun setupInitialData() {

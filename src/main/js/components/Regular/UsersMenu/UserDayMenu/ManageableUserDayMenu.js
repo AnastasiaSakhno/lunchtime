@@ -3,11 +3,14 @@ import {string, bool, number, array, object, shape, func} from 'prop-types'
 
 import ManageableUserDayMenuSelect from '../UserDayMenu/UserDayMenuSelect/ManageableUserDayMenuSelect'
 import ManageableUserDayMenuOut from '../UserDayMenu/UserDayMenuOut/ManageableUserDayMenuOut'
+import {weekDays} from '../../../../selectors/users_menu'
 
 const ManageableUserDayMenu =
-  ({startDate, id, dayOfWeek, out, menu, user, activeMenu, onSubmit, onUpdate, onOutUpdate}) => (
-    <div className='col-2'>
-      <div className="user-day-menu_manageable input-group mb-3">
+  ({startDate, id, dayOfWeek, out, menu, user, activeMenu, onSubmit, onUpdate, onOutUpdate}) => {
+    let dayOfWeekName = weekDays[dayOfWeek - 1].toLowerCase()
+
+    return (<div className='col-2'>
+      <div className={`user-day-menu_manageable input-group mb-3 user-day-menu-${dayOfWeekName}`}>
         <ManageableUserDayMenuSelect
           startDate={startDate}
           id={id}
@@ -25,8 +28,8 @@ const ManageableUserDayMenu =
           dayOfWeek={dayOfWeek}
           onOutUpdate={onOutUpdate}/>
       </div>
-    </div>
-  )
+    </div>)
+  }
 
 ManageableUserDayMenu.propTypes = {
   startDate: string,

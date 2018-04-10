@@ -6,7 +6,7 @@ import selectors from '../../../../selectors'
 const UsersMenuSheetSummary = ({summaryValues}) => {
   const menuSummaryView = (menu, index) => {
     let outText = menu.out === 0 ? '' : `, ${menu.out} out`
-    return (<div className='col-2' key={`summary_${menu.name}_${index}`}>
+    return (<div className='col-2 users-menu-sheet-table-summary-item' key={`summary_${menu.name}_${index}`}>
       {`${menu.name} ${menu.count} ${outText}`}
     </div>)
   }
@@ -26,7 +26,7 @@ const UsersMenuSheetSummary = ({summaryValues}) => {
   const headers = selectors.usersMenu.weekDays.map(day => <div key={`summary_${day}`} className='col-2'>{day}</div>)
 
   return (
-    <div className="users-menu-sheet-table users-menu-sheet-table-statistics">
+    <div className="users-menu-sheet-table users-menu-sheet-table-summary">
       <div className='row'>
         <div className='col-2'/>
         {headers}
