@@ -17,22 +17,22 @@ class UserDayMenuTests : BaseFeatureTest() {
     @Before
     fun loginAndNavigate() {
         loginAsAdmin()
-        fluentUtils.waitFor { cssSelector(".users-menu-sheet") }
+        fluentUtils.waitFor { cssSelector(USERS_MENU_SHEET) }
     }
 
     @Test
     fun canEditAllUsers() {
-        assertThat(find(".user-day-menu-select").count()).isEqualTo(expectedUserDayMenuSelectCount(2))
+        assertThat(find(USER_DAY_MENU_SELECT).count()).isEqualTo(expectedUserDayMenuSelectCount(2))
     }
 
     @Test
     fun canCloseDays() {
-        assertThat(find(".user-day-menu-select").count()).isEqualTo(expectedUserDayMenuSelectCount(2, 5))
+        assertThat(find(USER_DAY_MENU_SELECT).count()).isEqualTo(expectedUserDayMenuSelectCount(2, 5))
         find(".day-status_manageable").last().click()
         Thread.sleep(1500)
-        assertThat(find(".user-day-menu-select").count()).isEqualTo(expectedUserDayMenuSelectCount(2, 4))
-        assertThat(find(".users-menu-sheet-table-row").first().find(".user-day-menu_readonly")).isNotEmpty
-        assertThat(find(".users-menu-sheet-table-row").last().find(".user-day-menu_readonly")).isNotEmpty
+        assertThat(find(USER_DAY_MENU_SELECT).count()).isEqualTo(expectedUserDayMenuSelectCount(2, 4))
+        assertThat(find(USERS_MENU_SHEET_TABLE_ROW).first().find(USER_DAY_MENU_READONLY)).isNotEmpty
+        assertThat(find(USERS_MENU_SHEET_TABLE_ROW).last().find(USER_DAY_MENU_READONLY)).isNotEmpty
     }
 
     @Test
@@ -50,7 +50,7 @@ class UserDayMenuTests : BaseFeatureTest() {
         waitForDate(date)
         click(PREV_WEEK_LINK_SELECTOR)
         waitForDate(date.plusWeeks(-1))
-        assertThat(find(".user-day-menu-select")).isEmpty()
+        assertThat(find(USER_DAY_MENU_SELECT)).isEmpty()
     }
 
     override fun setupInitialData() {

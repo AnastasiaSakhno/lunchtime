@@ -17,17 +17,17 @@ class UserDayMenuTests : BaseFeatureTest() {
     @Before
     fun loginAndNavigate() {
         loginWith(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
-        fluentUtils.waitFor { cssSelector(".users-menu-sheet") }
+        fluentUtils.waitFor { cssSelector(USERS_MENU_SHEET) }
     }
 
     @Test
     fun canViewAllUsers() {
-        assertThat(find(".users-menu-sheet-table-row").count()).isEqualTo(2)
+        assertThat(find(USERS_MENU_SHEET_TABLE_ROW).count()).isEqualTo(2)
     }
 
     @Test
     fun canEditOnlyYourself() {
-        assertThat(find(".user-day-menu-select").count()).isEqualTo(expectedUserDayMenuSelectCount(1))
+        assertThat(find(USER_DAY_MENU_SELECT).count()).isEqualTo(expectedUserDayMenuSelectCount(1))
     }
 
     @Test
@@ -36,7 +36,7 @@ class UserDayMenuTests : BaseFeatureTest() {
         waitForDate(date)
         click(PREV_WEEK_LINK_SELECTOR)
         waitForDate(date.plusWeeks(-1))
-        assertThat(find(".user-day-menu-select")).isEmpty()
+        assertThat(find(USER_DAY_MENU_SELECT)).isEmpty()
     }
 
     override fun setupInitialData() {

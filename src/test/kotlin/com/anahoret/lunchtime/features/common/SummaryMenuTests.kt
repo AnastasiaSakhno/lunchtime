@@ -3,7 +3,6 @@ package com.anahoret.lunchtime.features.common
 import com.anahoret.lunchtime.domain.Role
 import com.anahoret.lunchtime.features.BaseFeatureTest
 import org.assertj.core.api.Assertions.assertThat
-import org.joda.time.LocalDate
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -17,21 +16,21 @@ class SummaryMenuTests : BaseFeatureTest() {
     @Before
     fun loginAndNavigate() {
         loginWith(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
-        fluentUtils.waitFor { cssSelector(".users-menu-sheet") }
+        fluentUtils.waitFor { cssSelector(USERS_MENU_SHEET) }
     }
 
     @Test
     fun allInNone() {
-        assertThat(find(".users-menu-sheet-table-summary-item").count()).isEqualTo(5)
-        find(".users-menu-sheet-table-summary-item")
+        assertThat(find(USERS_MENU_SHEET_TABLE_SUMMARY_ITEM).count()).isEqualTo(5)
+        find(USERS_MENU_SHEET_TABLE_SUMMARY_ITEM)
             .forEach { assertThat(it.text).isEqualTo("None 2") }
     }
 
     @Test
     fun changeSummaryAfterChangeUserDayMenu() {
-        fillSelect(".user-day-menu-thursday .user-day-menu-select").withText("Loft")
+        fillSelect(".user-day-menu-thursday $USER_DAY_MENU_SELECT").withText("Loft")
         Thread.sleep(1500)
-        find(".users-menu-sheet-table-summary-item")
+        find(USERS_MENU_SHEET_TABLE_SUMMARY_ITEM)
             .forEachIndexed { index, element ->
                 if (index < 5)
                     assertThat(element.text).isEqualTo( if (index == 3) "None 1" else "None 2")
@@ -42,10 +41,10 @@ class SummaryMenuTests : BaseFeatureTest() {
 
     @Test
     fun changeSummaryOutAfterChangeUserDayMenu() {
-        fillSelect(".user-day-menu-wednesday .user-day-menu-select").withText("Loft")
+        fillSelect("$USER_DAY_MENU_WEDNESDAY $USER_DAY_MENU_SELECT").withText("Loft")
         Thread.sleep(1500)
-        click(".user-day-menu-wednesday .user-day-menu-out-input")
-        find(".users-menu-sheet-table-summary-item")
+        click("$USER_DAY_MENU_WEDNESDAY .user-day-menu-out-input")
+        find(USERS_MENU_SHEET_TABLE_SUMMARY_ITEM)
             .forEachIndexed { index, element ->
                 if (index < 5)
                     assertThat(element.text).isEqualTo( if (index == 2) "None 1" else "None 2")

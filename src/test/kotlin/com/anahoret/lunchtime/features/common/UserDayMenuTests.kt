@@ -2,7 +2,6 @@ package com.anahoret.lunchtime.features.common
 
 import com.anahoret.lunchtime.domain.Role
 import com.anahoret.lunchtime.features.BaseFeatureTest
-import org.apache.commons.lang3.time.DateFormatUtils
 import org.assertj.core.api.Assertions.assertThat
 import org.joda.time.LocalDate
 import org.junit.Before
@@ -18,7 +17,7 @@ class UserDayMenuTests : BaseFeatureTest() {
     @Before
     fun loginAndNavigate() {
         loginWith(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
-        fluentUtils.waitFor { cssSelector(".users-menu-sheet") }
+        fluentUtils.waitFor { cssSelector(USERS_MENU_SHEET) }
     }
 
     @Test
@@ -39,32 +38,32 @@ class UserDayMenuTests : BaseFeatureTest() {
 
     @Test
     fun currentUserInTheFirstLine() {
-        assertThat(findFirst(".users-menu-sheet-table-row .col-2").text).isEqualTo(FIRST_REGULAR_USER_FULL_NAME)
+        assertThat(findFirst("$USERS_MENU_SHEET_TABLE_ROW .col-2").text).isEqualTo(FIRST_REGULAR_USER_FULL_NAME)
     }
 
     @Test
     fun cannotChooseOutForNoneMenu() {
-        fillSelect(".user-day-menu-select").withText("None")
+        fillSelect(USER_DAY_MENU_SELECT).withText("None")
         fluentUtils.waitFor { xpath("//input[@disabled]") }
     }
 
     @Test
     fun canChooseOutForNotNoneMenu() {
-        fillSelect(".user-day-menu-select").withText("Loft")
+        fillSelect(USER_DAY_MENU_SELECT).withText("Loft")
         fluentUtils.waitFor { xpath("//input[not(@disabled = 'true')]") }
     }
 
     @Test
     fun doNotSeeArchivedMenu() {
-        assertThat(findFirst(".user-day-menu-select").find("option").count()).isEqualTo(4)
+        assertThat(findFirst(USER_DAY_MENU_SELECT).find("option").count()).isEqualTo(4)
     }
 
     @Test
     fun canEdit() {
-        fillSelect(".user-day-menu-wednesday .user-day-menu-select").withText("Loft")
+        fillSelect("$USER_DAY_MENU_WEDNESDAY $USER_DAY_MENU_SELECT").withText("Loft")
         Thread.sleep(1500)
-        val selected = find(".user-day-menu-wednesday .user-day-menu-select").value
-        assertThat(find(".user-day-menu-wednesday .user-day-menu-select option[value='$selected']").text).isEqualTo("Loft")
+        val selected = find("$USER_DAY_MENU_WEDNESDAY $USER_DAY_MENU_SELECT").value
+        assertThat(find("$USER_DAY_MENU_WEDNESDAY $USER_DAY_MENU_SELECT option[value='$selected']").text).isEqualTo("Loft")
     }
 
     override fun setupInitialData() {
