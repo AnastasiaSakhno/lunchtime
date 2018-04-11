@@ -1,13 +1,15 @@
 import * as actionTypes from '../actions/types'
+import {removeCollectionProjection} from '../utils/api'
 
 export const initialState = []
 
-const findMethod = (md, action) => md.restaurantName === action.menuDocument.restaurantName
+const findMethod = (md, action) => md.restaurant.name === action.menuDocument.restaurant.name
 
 const menuDocuments = (state = initialState, action) => {
   switch(action.type) {
   case actionTypes.MENU_DOCUMENTS_LOADED:
-    return [...action.menuDocuments]
+    let data = removeCollectionProjection(action, 'menuDocuments', ['user', 'restaurant'])
+    return [...data]
 
   case actionTypes.MENU_DOCUMENT_CONTENT_LOADED_SUCCESSFULLY:
     return state.map((md) => {

@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react'
-import { array, func } from 'prop-types'
-import { connect } from 'react-redux'
+import React, {PureComponent} from 'react'
+import {array, func} from 'prop-types'
+import {connect} from 'react-redux'
 
 import actions from '../../../../actions'
 import MenuDocumentsList from '../MenuDocumentsList'
@@ -18,22 +18,13 @@ class MenuDocumentsContainer extends PureComponent {
     restaurants: array
   }
 
-  render() {
-    let data = this.props.restaurants.map((restaurant) => {
-      let found = this.props.menuDocuments.find((r) => (r.restaurantName === restaurant.name))
-      return {
-        ...found,
-        restaurantName: restaurant.name
-      }
-    })
-    return (
-      <div className="menu-documents-container">
-        <MenuDocumentsList
-          data={ data }
-          onSubmit={ this.props.submitMenuDocument } />
-      </div>
-    )
-  }
+  render = () => (
+    <div className="menu-documents-container">
+      <MenuDocumentsList
+        data={this.props.menuDocuments}
+        onSubmit={this.props.submitMenuDocument}/>
+    </div>
+  )
 }
 
 const mapDispatchToProps = (dispatch) => ({

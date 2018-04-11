@@ -1,9 +1,9 @@
-import { takeLatest, takeEvery, put, call, all } from 'redux-saga/effects'
+import { takeLatest, takeEvery, put, call } from 'redux-saga/effects'
 import { sessionService } from 'redux-react-session'
 
 import actions from '../actions'
 import * as actionTypes from '../actions/types'
-import { get, apiCall, getMenuDocumentContent } from '../utils/rest'
+import { get, apiCall } from '../utils/rest'
 import { MENU_DOCUMENTS_URI } from '../utils/api'
 
 const loadUser = sessionService.loadUser
@@ -11,14 +11,6 @@ const loadUser = sessionService.loadUser
 export function* loadMenuDocuments() {
   const menuDocuments = yield call(get, MENU_DOCUMENTS_URI)
   yield put(actions.menuDocuments.loaded(menuDocuments))
-
-  const menuDocumentsContent = yield all(menuDocuments.map((md) => {
-    return call(getMenuDocumentContent, md)
-  }))
-
-  yield all(menuDocumentsContent.map((content, index) => (
-    put(actions.menuDocuments.contentLoadedSuccessfully({ menuDocument: menuDocuments[index], content: content }))
-  )))
 }
 
 export function* uploadMenuDocument({ menuDocument }) {
