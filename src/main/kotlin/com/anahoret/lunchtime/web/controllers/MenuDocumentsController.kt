@@ -6,6 +6,7 @@ import com.anahoret.lunchtime.repositories.RestaurantRepository
 import com.anahoret.lunchtime.repositories.UserRepository
 import org.springframework.http.HttpEntity
 import org.springframework.http.ResponseEntity
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 
@@ -26,10 +27,15 @@ class MenuDocumentsController(
 
     @PostMapping
     @ResponseBody
+    @Transactional
     fun upload(
             @RequestParam(value = "file") file: MultipartFile,
             @RequestParam(value = "restaurant_id") restaurantId: Long,
             @RequestParam(value = "user_email") userEmail: String): Map<String, Any?> {
+
+        menuDocumentRepository.findByRestaurantId(restaurantId)?.let {
+            menuDocumentRepository.delete(it.id)
+        }
 
         val document = MenuDocument()
         document.fileData = file.bytes
