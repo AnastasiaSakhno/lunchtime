@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat
 import org.hibernate.annotations.Type
 import org.joda.time.LocalDate
 import javax.persistence.*
-import javax.persistence.GeneratedValue
+import kotlin.collections.HashMap
 
 @Entity
 @Table(name = "menu_documents")
@@ -33,4 +33,15 @@ class MenuDocument {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     var user: User? = null
+
+    fun metadata() : Map<String, Any?> {
+        val props = HashMap<String, Any?>()
+        props["id"] = id
+        props["fileName"] = fileName
+        val restaurantProps = HashMap<String, Any?>()
+        restaurantProps["id"] = restaurant?.id
+        restaurantProps["name"] = restaurant?.name
+        props["restaurant"] = restaurantProps
+        return props
+    }
 }

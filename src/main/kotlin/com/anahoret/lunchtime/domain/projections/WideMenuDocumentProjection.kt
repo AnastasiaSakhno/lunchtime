@@ -8,7 +8,6 @@ import org.springframework.data.rest.core.config.Projection
 interface WideMenuDocumentProjection {
     val id: Long
     val fileName: String
-    val fileData: ByteArray
     val uploadedAt: LocalDate
     val restaurant: WideRestaurantProjection
     val user: ShortUserProjection

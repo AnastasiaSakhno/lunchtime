@@ -1,14 +1,15 @@
 import React from 'react'
 import {string, number, object, func} from 'prop-types'
-import {href} from '../../../../utils/object'
 
-const ManageableMenuDocument = ({currentUser, restaurant, user, uploadedAt, fileData, onSubmit}) => {
+import {formattedDate} from '../../../../utils/date'
+
+const ManageableMenuDocument = ({restaurant, user, uploadedAt, content, onSubmit}) => {
   let file = null
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    onSubmit({file: file, restaurant: href(restaurant), user: href(currentUser)})
+    onSubmit({file: file, restaurant: restaurant})
 
     e.target.reset()
   }
@@ -17,11 +18,9 @@ const ManageableMenuDocument = ({currentUser, restaurant, user, uploadedAt, file
     file = e.target.files[0]
   }
 
-  let uploadedText = `Uploaded at: ${ new Date(uploadedAt) } by ${ user.name }`
-
   let text = `Restaurant name: \
       ${ restaurant.name }, \
-      ${ uploadedAt ? uploadedText : '' }`
+      ${ uploadedAt ? `Uploaded at ${ formattedDate(uploadedAt) } by ${ user.fullName }` : '' }`
 
   return (
     <div className='col'>
@@ -32,18 +31,17 @@ const ManageableMenuDocument = ({currentUser, restaurant, user, uploadedAt, file
         <input type='file' onChange={onChange}/>
         <input type='submit' className='btn btn-dark' value='Upload'/>
       </form>
-      <div dangerouslySetInnerHTML={{__html: fileData}}/>
+      <div dangerouslySetInnerHTML={{__html: content}}/>
     </div>
   )
 }
 
 ManageableMenuDocument.propTypes = {
-  currentUser: object.isRequired,
   restaurant: object.isRequired,
   user: object,
   fileName: string,
-  fileData: string,
-  uploadedAt: number,
+  content: string,
+  uploadedAt: object,
   onSubmit: func.isRequired
 }
 

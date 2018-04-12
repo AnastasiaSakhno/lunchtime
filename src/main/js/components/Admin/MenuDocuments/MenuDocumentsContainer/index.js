@@ -18,13 +18,23 @@ class MenuDocumentsContainer extends PureComponent {
     restaurants: array
   }
 
-  render = () => (
-    <div className="menu-documents-container">
-      <MenuDocumentsList
-        data={this.props.menuDocuments}
-        onSubmit={this.props.submitMenuDocument}/>
-    </div>
-  )
+  render() {
+    let data = this.props.restaurants.map((restaurant) => {
+      let found = this.props.menuDocuments.find((r) => (r.restaurant.name === restaurant.name))
+      return {
+        ...found,
+        restaurant: restaurant
+      }
+    })
+
+    return (
+      <div className="menu-documents-container">
+        <MenuDocumentsList
+          data={data}
+          onSubmit={this.props.submitMenuDocument}/>
+      </div>
+    )
+  }
 }
 
 const mapDispatchToProps = (dispatch) => ({

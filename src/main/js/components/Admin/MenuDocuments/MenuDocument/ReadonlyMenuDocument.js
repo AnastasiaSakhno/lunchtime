@@ -1,15 +1,17 @@
 import React from 'react'
 import {string, number, object} from 'prop-types'
 
-const ReadonlyMenuDocument = ({restaurant, user, uploadedAt, fileData}) => {
+import {formattedDate} from '../../../../utils/date'
+
+const ReadonlyMenuDocument = ({restaurant, user, uploadedAt, content}) => {
   let text = `Restaurant name: \
       ${ restaurant.name }, \
-      ${ uploadedAt ? `Uploaded at: ${ new Date(uploadedAt) } by ${ user.name }` : '' }`
+      ${ uploadedAt ? `Uploaded at ${ formattedDate(uploadedAt) } by ${ user.fullName }` : '' }`
 
   return (
     <div className='col'>
       <div>{text}</div>
-      <div dangerouslySetInnerHTML={{__html: fileData}}/>
+      <div dangerouslySetInnerHTML={{__html: content}}/>
     </div>
   )
 }
@@ -17,8 +19,8 @@ const ReadonlyMenuDocument = ({restaurant, user, uploadedAt, fileData}) => {
 ReadonlyMenuDocument.propTypes = {
   restaurant: object.isRequired,
   user: object,
-  uploadedAt: number,
-  fileData: string
+  uploadedAt: object,
+  content: string
 }
 
 export default ReadonlyMenuDocument

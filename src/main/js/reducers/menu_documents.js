@@ -3,7 +3,7 @@ import {removeCollectionProjection} from '../utils/api'
 
 export const initialState = []
 
-const findMethod = (md, action) => md.restaurant.name === action.menuDocument.restaurant.name
+const findMethod = (md, action) => md.restaurant.id === action.menuDocument.restaurant.id
 
 const menuDocuments = (state = initialState, action) => {
   switch(action.type) {
