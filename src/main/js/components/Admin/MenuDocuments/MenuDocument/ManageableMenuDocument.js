@@ -1,13 +1,15 @@
 import React from 'react'
-import {string, number, func} from 'prop-types'
+import {string, number, object, func} from 'prop-types'
 
-const ManageableMenuDocument = ({restaurantName, userName, uploadedAt, content, onSubmit}) => {
+import {formattedDate} from '../../../../utils/date'
+
+const ManageableMenuDocument = ({restaurant, user, uploadedAt, content, onSubmit}) => {
   let file = null
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    onSubmit({file: file, restaurant: restaurantName})
+    onSubmit({file: file, restaurant: restaurant})
 
     e.target.reset()
   }
@@ -16,11 +18,9 @@ const ManageableMenuDocument = ({restaurantName, userName, uploadedAt, content, 
     file = e.target.files[0]
   }
 
-  let uploadedText = `Uploaded at: ${ new Date(uploadedAt) } by ${ userName }`
-
   let text = `Restaurant name: \
-      ${ restaurantName }, \
-      ${ uploadedAt ? uploadedText : '' }`
+      ${ restaurant.name }, \
+      ${ uploadedAt ? `Uploaded at ${ formattedDate(uploadedAt) } by ${ user.fullName }` : '' }`
 
   return (
     <div className='col'>
@@ -37,11 +37,11 @@ const ManageableMenuDocument = ({restaurantName, userName, uploadedAt, content, 
 }
 
 ManageableMenuDocument.propTypes = {
-  restaurantName: string.isRequired,
+  restaurant: object.isRequired,
+  user: object,
   fileName: string,
-  uploadedAt: number,
-  userName: string,
   content: string,
+  uploadedAt: object,
   onSubmit: func.isRequired
 }
 

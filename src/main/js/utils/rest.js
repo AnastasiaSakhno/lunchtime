@@ -1,5 +1,6 @@
-import {LOGIN_URI, USERS_MENU_URI, MENU_DOCUMENTS_URI, USERS_URI} from './api'
 import mammoth from 'mammoth'
+
+import {LOGIN_URI, USERS_MENU_URI, USERS_URI, MENU_DOCUMENTS_UPLOAD_URI} from './api'
 
 export const apiCall = (path, options) => (
   fetch(path, options)
@@ -38,7 +39,7 @@ export const put = (path, authToken, data) => apiCall(path, {
   body: JSON.stringify(data)
 })
 
-export const getMenuDocumentContent = (md) => fetch(`${MENU_DOCUMENTS_URI}/${md.uuid}`, {
+export const getMenuDocumentContent = (md) => fetch(`${MENU_DOCUMENTS_UPLOAD_URI}/${md.id}`, {
   method: 'GET',
   responseType: 'arraybuffer'
 }).then(r => r.arrayBuffer())
@@ -47,6 +48,21 @@ export const getMenuDocumentContent = (md) => fetch(`${MENU_DOCUMENTS_URI}/${md.
     {includeDefaultStyleMap: true}
   ))
   .then((r) => r.value.toString())
+
+export const postMenuDocument = (md, user) => {
+  let formData = new FormData()
+  formData.append('file', md.file)
+  formData.append('restaurant_id', md.restaurant.id)
+  formData.append('user_email', user.email)
+
+  return apiCall(MENU_DOCUMENTS_UPLOAD_URI, {
+    method: 'POST',
+    body: formData,
+    headers: {
+      Authorization: user.auth_token
+    }
+  })
+}
 
 export const putUserDayMenu = (authToken, udm) => fetch(`${USERS_MENU_URI}/${udm.id}/menu`, {
   method: 'PUT',
@@ -77,7 +93,7 @@ export const signUp = (user) => fetch(USERS_URI, {
   method: 'POST',
   headers: {
     Accept: 'application/json',
-    'Content-Type': 'application/json; charset=utf-8',
+    'Content-Type': 'application/json; charset=utf-8'
   },
   body: JSON.stringify(user)
 }).then(r => ({

@@ -9,7 +9,7 @@ export const loaded = (menuDocuments) => ({
   menuDocuments
 })
 
-export const contentLoadedSuccessfully = ({ menuDocument, content }) => ({
+export const contentLoadedSuccessfully = ({menuDocument, content}) => ({
   type: actionTypes.MENU_DOCUMENT_CONTENT_LOADED_SUCCESSFULLY,
   menuDocument, content
 })
