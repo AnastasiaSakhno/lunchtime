@@ -34,7 +34,7 @@ class MenuDocumentsController(
             @RequestParam(value = "user_email") userEmail: String): Map<String, Any?> {
 
         menuDocumentRepository.findByRestaurantId(restaurantId)?.let {
-            menuDocumentRepository.delete(it.id)
+            menuDocumentRepository.delete(it)
         }
 
         val document = MenuDocument()

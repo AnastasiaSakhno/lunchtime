@@ -49,6 +49,21 @@ export const getMenuDocumentContent = (md) => fetch(`${MENU_DOCUMENTS_UPLOAD_URI
   ))
   .then((r) => r.value.toString())
 
+export const postMenuDocument = (md, user) => {
+  let formData = new FormData()
+  formData.append('file', md.file)
+  formData.append('restaurant_id', md.restaurant.id)
+  formData.append('user_email', user.email)
+
+  return apiCall(MENU_DOCUMENTS_UPLOAD_URI, {
+    method: 'POST',
+    body: formData,
+    headers: {
+      Authorization: user.auth_token
+    }
+  })
+}
+
 export const putUserDayMenu = (authToken, udm) => fetch(`${USERS_MENU_URI}/${udm.id}/menu`, {
   method: 'PUT',
   headers: {

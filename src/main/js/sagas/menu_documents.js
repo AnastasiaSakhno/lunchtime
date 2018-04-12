@@ -3,7 +3,7 @@ import {sessionService} from 'redux-react-session'
 
 import actions from '../actions'
 import * as actionTypes from '../actions/types'
-import {get, apiCall, getMenuDocumentContent} from '../utils/rest'
+import {get, apiCall, getMenuDocumentContent, postMenuDocument} from '../utils/rest'
 import {MENU_DOCUMENTS_UPLOAD_URI, MENU_DOCUMENTS_URI} from '../utils/api'
 
 const loadUser = sessionService.loadUser
@@ -29,18 +29,7 @@ export function* loadMenuDocuments() {
 export function* uploadMenuDocument({menuDocument}) {
   const user = yield call(loadUser)
 
-  let formData = new FormData()
-  formData.append('file', menuDocument.file)
-  formData.append('restaurant_id', menuDocument.restaurant.id)
-  formData.append('user_email', user.email)
-
-  const newMenuDocument = yield call(apiCall, MENU_DOCUMENTS_UPLOAD_URI, {
-    method: 'POST',
-    body: formData,
-    headers: {
-      Authorization: user.auth_token
-    }
-  })
+  const newMenuDocument = yield call(postMenuDocument, menuDocument, user)
 
   if (newMenuDocument.id) {
     yield put(actions.menuDocuments.uploadedSuccessfully(newMenuDocument))
