@@ -19,6 +19,7 @@ const ManageableUserDayMenuOut = ({startDate, id, dayOfWeek, out, menu, onOutUpd
     <div className='input-group-append'>
       <div className="input-group-text">
         <input
+          className='user-day-menu-out-input'
           type='checkbox'
           checked={out}
           disabled={!id || menu && menu.name === NONE}

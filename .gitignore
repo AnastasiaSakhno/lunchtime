@@ -5,7 +5,6 @@ node_modules
 package-lock.json
 src/main/resources/static/built
 out
-documents
 config/jmxremote.password
 config/jmxremote.access
 

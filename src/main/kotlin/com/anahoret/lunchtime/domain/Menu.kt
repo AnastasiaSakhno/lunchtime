@@ -21,7 +21,7 @@ class Menu(
 
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "restaurant_id")
-    var restaurant: Restaurant,
+    var restaurant: Restaurant?,
 
     @OneToMany(cascade = [CascadeType.ALL], mappedBy = "menu")
     var userDayMenu: MutableSet<UserDayMenu> = LinkedHashSet()

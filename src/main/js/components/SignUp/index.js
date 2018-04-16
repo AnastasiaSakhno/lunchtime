@@ -42,8 +42,8 @@ class SignUp extends Component {
     this.props.authenticated ?
       <Redirect to='/'/>
       :
-      <div className='login-box'>
-        <form className='login-form' onSubmit={this.handleSubmit}>
+      <div className='signup-box'>
+        <form className='signup-form' onSubmit={this.handleSubmit}>
           <div className='form-group'>
             <label htmlFor='name_input'>Full name</label>
             <input
@@ -72,7 +72,12 @@ class SignUp extends Component {
               id='password_input'
               onChange={this.handleChange}/>
           </div>
-          <button type='submit' className='btn btn-dark mb-2'>Sign Up</button>
+          <button
+            type='submit'
+            className='btn btn-dark mb-2'
+            disabled={!this.state.fullName || !this.state.email || !this.state.password}>
+            Sign Up
+          </button>
           <Link to='/login'>Sign In</Link>
         </form>
       </div>

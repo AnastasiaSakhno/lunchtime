@@ -30,7 +30,7 @@ class UsersMenuSheetTable extends Component {
 
     let headers = weekDays.map((day, index) => {
       let date = weekDateFormattedFromString(this.props.startDate, index + 1)
-      let found = this.props.days.find(d => formattedDate(d.date) === date)
+      let found = this.props.days ? this.props.days.find(d => formattedDate(d.date) === date) : null
       return (
         <div key={`date_${day}`} className='col-2'>
           {date}
@@ -60,7 +60,7 @@ class UsersMenuSheetTable extends Component {
 UsersMenuSheetTable.propTypes = {
   startDate: string,
   dataGroupedByUser: object,
-  days: array,
+  days: array.isRequired,
   onSubmit: func.isRequired,
   onUpdate: func.isRequired,
   onSubmitDay: func.isRequired,

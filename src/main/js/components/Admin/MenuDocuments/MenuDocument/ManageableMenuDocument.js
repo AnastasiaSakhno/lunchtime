@@ -25,7 +25,7 @@ const ManageableMenuDocument = ({restaurant, user, uploadedAt, content, onSubmit
   return (
     <div className='col'>
       <form
-        className='menu-document-form'
+        className={`menu-document-form menu-document-form-${restaurant.name.toLowerCase()}`}
         onSubmit={handleSubmit}>
         {text}
         <input type='file' onChange={onChange}/>
