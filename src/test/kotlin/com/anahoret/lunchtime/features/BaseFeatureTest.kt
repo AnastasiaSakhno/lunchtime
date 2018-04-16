@@ -16,7 +16,7 @@ import org.apache.commons.lang3.time.DateFormatUtils
 import org.fluentlenium.adapter.FluentTest
 import org.joda.time.LocalDate
 import org.junit.Before
-import org.openqa.selenium.By
+import org.openqa.selenium.By.*
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.springframework.beans.factory.annotation.Autowired
@@ -81,6 +81,12 @@ class BaseFeatureTest : FluentTest() {
     fun createMenu(id: Long, name: String, weekDays: String?, archive: Boolean, restaurant: Restaurant?) =
         menuRepository.save(Menu(id, name, weekDays, archive, restaurant))
 
+    fun loginAndNavigate(linkSelector: String, email: String = ADMIN_EMAIL, password: String = ADMIN_PASSWORD) {
+        loginWith(email, password)
+        fluentUtils.waitFor { cssSelector(linkSelector) }
+        click(linkSelector)
+    }
+
     fun loginAsAdmin() = loginWith(ADMIN_EMAIL, ADMIN_PASSWORD)
 
     fun loginWith(email: String, password: String) {
@@ -90,7 +96,7 @@ class BaseFeatureTest : FluentTest() {
     }
 
     fun waitForDate(date: LocalDate) =
-        fluentUtils.waitFor { By.xpath("//div[contains(text(), '${DateFormatUtils.format(date.toDate(), UserDayMenuTests.DATE_FORMAT_PATTERN)}')]") }
+        fluentUtils.waitFor { xpath("//div[contains(text(), '${DateFormatUtils.format(date.toDate(), UserDayMenuTests.DATE_FORMAT_PATTERN)}')]") }
 
     fun expectedUserDayMenuSelectCount(usersCount: Int, openDays: Int = 5) =
         usersCount * (openDays - LocalDate().dayOfWeek + 1)
@@ -126,6 +132,7 @@ class BaseFeatureTest : FluentTest() {
         const val USERS_LINK_SELECTOR = "a[href='/admin/users']"
         const val RESTAURANTS_LINK_SELECTOR = "a[href='/admin/restaurants']"
         const val MENU_LINK_SELECTOR = "a[href='/admin/menu']"
+        const val MENU_DOCUMENTS_LINK_SELECTOR = "a[href='/admin/menu_documents']"
 
         const val TABLE_ROW_SELECTOR = "table tbody tr"
 
@@ -135,5 +142,7 @@ class BaseFeatureTest : FluentTest() {
         const val USERS_MENU_SHEET_TABLE_ROW = ".users-menu-sheet-table-row"
         const val USERS_MENU_SHEET_TABLE_SUMMARY_ITEM = ".users-menu-sheet-table-summary-item"
         const val USER_DAY_MENU_READONLY = ".user-day-menu_readonly"
+
+        const val MENU_DOCUMENTS_CONTAINER = ".menu-documents-container"
     }
 }

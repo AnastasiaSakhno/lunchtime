@@ -7,6 +7,7 @@ import MenuDocumentsList from '../MenuDocumentsList'
 import withHeader from '../../../../HOC/withHeader'
 import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
 import withNeededStores from '../../../../HOC/withNeededStores'
+import selectors from '../../../../selectors'
 
 @withNeededStores(['restaurants', 'menuDocuments'])
 @withRedirectToLogin
@@ -15,11 +16,12 @@ class MenuDocumentsContainer extends PureComponent {
   static propTypes = {
     submitMenuDocument: func.isRequired,
     menuDocuments: array,
-    restaurants: array
+    restaurants: array,
+    activeRestaurants: array
   }
 
   render() {
-    let data = this.props.restaurants.map((restaurant) => {
+    let data = this.props.activeRestaurants.map((restaurant) => {
       let found = this.props.menuDocuments.find((r) => (r.restaurant.name === restaurant.name))
       return {
         ...found,
@@ -36,6 +38,9 @@ class MenuDocumentsContainer extends PureComponent {
     )
   }
 }
+const mapStateToProps = (state) => ({
+  activeRestaurants: selectors.restaurants.active(state)
+})
 
 const mapDispatchToProps = (dispatch) => ({
   submitMenuDocument: (menuDocument) => {
@@ -43,4 +48,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-export default connect(null, mapDispatchToProps)(MenuDocumentsContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(MenuDocumentsContainer)
