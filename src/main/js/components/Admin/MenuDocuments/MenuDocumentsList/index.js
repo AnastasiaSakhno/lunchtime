@@ -1,10 +1,10 @@
 import React from 'react'
-import {string, number, arrayOf, shape, func} from 'prop-types'
+import {string, number, object, arrayOf, shape, func} from 'prop-types'
 import MenuDocument from '../MenuDocument'
 
 const MenuDocumentsList = ({data, onSubmit}) => {
   const map = data.map((md) => (
-    <MenuDocument {...md} key={`menu_document_${md.restaurantName}`} onSubmit={onSubmit}/>
+    <MenuDocument {...md} key={`menu_document_${md.restaurant.name}`} onSubmit={onSubmit}/>
   ))
 
   return (
@@ -19,11 +19,11 @@ const MenuDocumentsList = ({data, onSubmit}) => {
 MenuDocumentsList.propTypes = {
   data: arrayOf(
     shape({
-      restaurantName: string.isRequired,
+      restaurant: object.isRequired,
+      user: object,
       fileName: string,
-      uploadedAt: number,
-      userName: string,
-      content: string
+      content: string,
+      uploadedAt: object
     })
   ).isRequired,
   onSubmit: func.isRequired
