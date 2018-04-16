@@ -12,9 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner
 class UsersTests : BaseFeatureTest() {
     @Test
     fun canCreate() {
-        loginAsAdmin()
-        fluentUtils.waitFor { cssSelector(USERS_LINK_SELECTOR) }
-        click(USERS_LINK_SELECTOR)
+        loginAndNavigate(USERS_LINK_SELECTOR)
 
         assertThat(find(TABLE_ROW_SELECTOR).count()).isEqualTo(2)
         fill(NAME_INPUT_SELECTOR).with(NEW_FULL_NAME)
