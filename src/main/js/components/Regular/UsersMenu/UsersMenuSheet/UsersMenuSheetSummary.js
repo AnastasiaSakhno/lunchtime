@@ -23,7 +23,7 @@ const UsersMenuSheetSummary = ({summaryValues}) => {
 
   let weekSummary = summaryValues.map((menuSummary, index) => summaryRowView(menuSummary, index))
 
-  const headers = selectors.usersMenu.weekDays.map(day => <div key={`summary_${day}`} className='col-2'>{day}</div>)
+  const headers = selectors.usersMenu.WEEK_DAYS.map(day => <div key={`summary_${day}`} className='col-2'>{day}</div>)
 
   return (
     <div className="users-menu-sheet-table users-menu-sheet-table-summary">

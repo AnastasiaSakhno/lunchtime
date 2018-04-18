@@ -139,6 +139,7 @@ class BaseFeatureTest : FluentTest() {
         const val USERS_MENU_SHEET = ".users-menu-sheet"
         const val USER_DAY_MENU_SELECT = ".user-day-menu-select"
         const val USER_DAY_MENU_WEDNESDAY = ".user-day-menu-wednesday"
+        const val USER_DAY_MENU_THURSDAY = ".user-day-menu-thursday"
         const val USERS_MENU_SHEET_TABLE_ROW = ".users-menu-sheet-table-row"
         const val USERS_MENU_SHEET_TABLE_SUMMARY_ITEM = ".users-menu-sheet-table-summary-item"
         const val USER_DAY_MENU_READONLY = ".user-day-menu_readonly"

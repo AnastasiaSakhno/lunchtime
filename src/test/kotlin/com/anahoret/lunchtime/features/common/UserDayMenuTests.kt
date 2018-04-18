@@ -55,7 +55,12 @@ class UserDayMenuTests : BaseFeatureTest() {
 
     @Test
     fun doNotSeeArchivedMenu() {
-        assertThat(findFirst(USER_DAY_MENU_SELECT).find("option").count()).isEqualTo(4)
+        assertThat(find("$USER_DAY_MENU_WEDNESDAY $USER_DAY_MENU_SELECT").find("option").count()).isEqualTo(3)
+    }
+
+    @Test
+    fun takeIntoAccountSpecificWeekDaysMenu() {
+        assertThat(find("$USER_DAY_MENU_THURSDAY $USER_DAY_MENU_SELECT").find("option").count()).isEqualTo(4)
     }
 
     @Test
