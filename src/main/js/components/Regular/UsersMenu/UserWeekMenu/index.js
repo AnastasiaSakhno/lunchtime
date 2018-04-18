@@ -3,6 +3,7 @@ import {string, number, bool, object, array, arrayOf, shape, func} from 'prop-ty
 
 import UserDayMenu from '../UserDayMenu'
 import {formattedDate, weekDateJson} from '../../../../utils/date'
+import {WEEK_DAYS_ABBREVIATIONS} from '../../../../selectors/users_menu'
 
 const UserWeekMenu = (props) => (
   <div className='row users-menu-sheet-table-row'>
@@ -20,8 +21,11 @@ const UserWeekMenu = (props) => (
       }
 
       let day = props.days ? props.days.find(d => formattedDate(d.date) === formattedDate(found.date)) : null
+      let activeMenu = props.activeMenu.filter(
+        m => !m.weekDays || m.weekDays.includes(WEEK_DAYS_ABBREVIATIONS[dayOfWeek - 1])
+      )
 
-      return (<UserDayMenu key={key} dayOfWeek={dayOfWeek} day={day} {...props} {...found}/>)
+      return (<UserDayMenu key={key} dayOfWeek={dayOfWeek} day={day} {...props} {...found} activeMenu={activeMenu}/>)
     })}
   </div>
 )

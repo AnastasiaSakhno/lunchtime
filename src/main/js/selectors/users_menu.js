@@ -7,7 +7,8 @@ import {weekDateFormattedFromString, formattedDate} from '../utils/date'
 import {href} from '../utils/object'
 
 export const udmDateString = udm => formattedDate(udm.date)
-export const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+export const WEEK_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+export const WEEK_DAYS_ABBREVIATIONS = ['MON', 'TUE', 'WED', 'THU', 'FRI']
 
 export const getUsersMenu = (state) => state.usersMenu
 
@@ -54,7 +55,7 @@ const menuDayCount = (menu, date, users, byDate, arr) => {
 const menuDayOutCount = (arr) => arr ? arr.filter(udm => udm.out).length : 0
 
 const menuSummaryRow = (menu, users, byDate, menuStatistics, usersMenu) => (
-  weekDays.map((day, index) => {
+  WEEK_DAYS.map((day, index) => {
     let date = weekDateFormattedFromString(usersMenu.startDate, index + 1)
     let arr = menuStatistics ? menuStatistics.groupedByDate[date] : []
     let count = menuDayCount(menu, date, users, byDate, arr)
