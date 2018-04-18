@@ -3,7 +3,7 @@ import {string, number, bool, func} from 'prop-types'
 import cssModules from 'react-css-modules'
 
 import styles from './index.scss'
-import {dateLong} from '../../../../../utils/date'
+import {dateLong} from '../../../../../../utils/date'
 
 const ManageableDayStatus = ({id, closed, date, onSubmit, onUpdate}) => {
   const handleClick = (e) => {

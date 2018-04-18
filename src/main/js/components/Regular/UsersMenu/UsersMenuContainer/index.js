@@ -8,8 +8,9 @@ import withHeader from '../../../../HOC/withHeader'
 import UsersMenuSheet from '../UsersMenuSheet'
 import withNeededStores from '../../../../HOC/withNeededStores'
 import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
-import UsersMenuPrevWeekLink from '../UsersMenuLinks/UsersMenuPrevWeekLink'
-import UsersMenuNextWeekLink from '../UsersMenuLinks/UsersMenuNextWeekLink'
+import UsersMenuPrevWeekLink from '../UsersMenuActions/UsersMenuPrevWeekLink'
+import UsersMenuNextWeekLink from '../UsersMenuActions/UsersMenuNextWeekLink'
+import UsersMenuDestroyButton from '../UsersMenuActions/UsersMenuDestroyButton'
 import selectors from '../../../../selectors'
 
 @withNeededStores(['menu', 'users'])
@@ -30,7 +31,8 @@ class UsersMenuContainer extends PureComponent {
     dataGroupedByUser: object,
     summaryValues: array,
     loadUsersMenu: func.isRequired,
-    loadDays: func.isRequired
+    loadDays: func.isRequired,
+    destroyTillDate: func.isRequired
   }
 
   state = {
@@ -46,6 +48,9 @@ class UsersMenuContainer extends PureComponent {
     <div className="users-menu-container">
       <UsersMenuPrevWeekLink startDate={this.state.startDate}/>
       <UsersMenuNextWeekLink startDate={this.state.startDate}/>
+      <div className='float-right'>
+        <UsersMenuDestroyButton startDate={this.state.startDate}/>
+      </div>
       <UsersMenuSheet
         startDate={this.props.usersMenu.startDate}
         days={this.props.days.data}

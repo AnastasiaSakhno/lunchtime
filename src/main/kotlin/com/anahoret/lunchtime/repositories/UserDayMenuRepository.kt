@@ -16,6 +16,10 @@ interface UserDayMenuRepository : CrudRepository<UserDayMenu, Long> {
     fun findByDateBetween(@DateTimeFormat(pattern = "yyyy-MM-dd") @Param("from") fromDate: LocalDate,
                           @DateTimeFormat(pattern = "yyyy-MM-dd") @Param("to") toDate: LocalDate) : List<UserDayMenu>
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Query("delete udm from UserDayMenu udm where udm.date < :till")
+    fun deleteByDate(@DateTimeFormat(pattern = "yyyy-MM-dd") @Param("till") tillDate: LocalDate)
+
     @PreAuthorize("hasRole('ROLE_ADMIN') or #udm.user.email == authentication.name")
     fun save(@Param("udm") udm: UserDayMenu) : UserDayMenu
 }
