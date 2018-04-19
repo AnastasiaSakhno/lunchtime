@@ -1,7 +1,7 @@
 import {takeLatest, takeEvery, put, call} from 'redux-saga/effects'
 import {sessionService} from 'redux-react-session'
 
-import {get, post, putUserDayMenu, put as putRest, del} from '../utils/rest'
+import {get, post, putUserDayMenu, put as putRest, deleteUserDayMenuTill} from '../utils/rest'
 import {weekRange} from '../utils/date'
 import {USERS_MENU_URI, USERS_MENU_SEARCH_URI, USERS_MENU_BY_ID_URI} from '../utils/api'
 import actions from '../actions'
@@ -61,7 +61,10 @@ export function* updateUserDayMenuOut({userDayMenu: udm}) {
 
 export function* destroyTillDate({startDate}) {
   const user = yield call(loadUser)
-  yield call(del, `${USERS_MENU_URI}?till=${startDate}`, user.auth_token)
+  const response = yield call(deleteUserDayMenuTill, user.auth_token, startDate)
+  if(response.status === 200) {
+    // TODO handle both cases with alerts
+  } else {}
 }
 
 export default function* watchUsersMenu() {

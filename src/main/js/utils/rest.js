@@ -1,6 +1,7 @@
 import mammoth from 'mammoth'
 
-import {LOGIN_URI, USERS_MENU_URI, USERS_URI, MENU_DOCUMENTS_UPLOAD_URI} from './api'
+import {LOGIN_URI, USERS_MENU_URI, USERS_URI, MENU_DOCUMENTS_UPLOAD_URI, USERS_MENU_CUSTOM_URI} from './api'
+import {weekDateFormattedFromObject} from './date'
 
 export const apiCall = (path, options) => (
   fetch(path, options)
@@ -72,6 +73,15 @@ export const putUserDayMenu = (authToken, udm) => fetch(`${USERS_MENU_URI}/${udm
     Authorization: authToken
   },
   body: udm.menu
+}).then(r => ({
+  status: r.status
+}))
+
+export const deleteUserDayMenuTill = (authToken, tillDate) => fetch(`${USERS_MENU_CUSTOM_URI}?tillDate=${weekDateFormattedFromObject(tillDate, 1)}`, {
+  method: 'DELETE',
+  headers: {
+    Authorization: authToken
+  }
 }).then(r => ({
   status: r.status
 }))
