@@ -16,7 +16,9 @@ ManageableUsersMenuDestroyButton.propTypes = ({
 
 const mapDispatchToProps = dispatch => ({
   destroyTillDate: (startDate) => {
-    dispatch(actions.usersMenu.destroyTillDate(startDate))
+    if (confirm('Are you sure?')) {
+      dispatch(actions.usersMenu.destroyTillDate(startDate))
+    }
   }
 })
 
