@@ -23,7 +23,7 @@ const usersMenu = (state = initialState, action) => {
       ]
     }
 
-  case actionTypes.USER_DAY_MENU_UPDATEED_SUCCESSFULLY:
+  case actionTypes.USER_DAY_MENU_UPDATED_SUCCESSFULLY:
     let updated = removeProjectionMembers(action.userDayMenu, ['user', 'menu'])
     return {
       ...state,
@@ -35,7 +35,7 @@ const usersMenu = (state = initialState, action) => {
       })
     }
 
-  case actionTypes.USER_DAY_MENU_OUT_UPDATEED_SUCCESSFULLY:
+  case actionTypes.USER_DAY_MENU_OUT_UPDATED_SUCCESSFULLY:
     return {
       ...state,
       data: state.data.map((udm) => {

@@ -3,13 +3,11 @@ package com.anahoret.lunchtime.features
 import com.anahoret.lunchtime.DatabaseCleanupService
 import com.anahoret.lunchtime.FluentUtils
 import com.anahoret.lunchtime.LunchtimeApplication
-import com.anahoret.lunchtime.domain.Menu
-import com.anahoret.lunchtime.domain.Restaurant
-import com.anahoret.lunchtime.domain.Role
-import com.anahoret.lunchtime.domain.User
+import com.anahoret.lunchtime.domain.*
 import com.anahoret.lunchtime.features.common.UserDayMenuTests
 import com.anahoret.lunchtime.repositories.MenuRepository
 import com.anahoret.lunchtime.repositories.RestaurantRepository
+import com.anahoret.lunchtime.repositories.UserDayMenuRepository
 import com.anahoret.lunchtime.repositories.UserRepository
 import io.github.bonigarcia.wdm.ChromeDriverManager
 import org.apache.commons.lang3.time.DateFormatUtils
@@ -23,6 +21,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
+import org.openqa.selenium.UnexpectedAlertBehaviour
+import org.openqa.selenium.remote.CapabilityType
+import org.openqa.selenium.remote.DesiredCapabilities
+
+
 
 @SpringBootTest(classes = [LunchtimeApplication::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -30,24 +33,27 @@ class BaseFeatureTest : FluentTest() {
     @Value("\${local.server.port}")
     private val serverPort: Int = 0
 
-    @field:Autowired
+    @Autowired
     private lateinit var truncateDatabaseService: DatabaseCleanupService
 
-    @field:Autowired
+    @Autowired
     private lateinit var userRepository: UserRepository
 
-    @field:Autowired
+    @Autowired
     protected lateinit var restaurantRepository: RestaurantRepository
 
-    @field:Autowired
+    @Autowired
     protected lateinit var menuRepository: MenuRepository
+
+    @Autowired
+    protected lateinit var userDayMenuRepository: UserDayMenuRepository
 
     init {
         ChromeDriverManager.getInstance().setup()
     }
 
-    val webDriver: WebDriver = ChromeDriver()
-    val fluentUtils: FluentUtils = FluentUtils(webDriver)
+    protected val webDriver: WebDriver = ChromeDriver()
+    protected val fluentUtils: FluentUtils = FluentUtils(webDriver)
 
     override fun getDefaultDriver() = webDriver
 
@@ -66,13 +72,13 @@ class BaseFeatureTest : FluentTest() {
         createUser(ADMIN_FULL_NAME, ADMIN_EMAIL, ADMIN_PASSWORD_ENCRYPTED, Role.ROLE_ADMIN)
     }
 
-    fun createUser(fullName: String, email: String, password: String, role: Role) {
+    fun createUser(fullName: String, email: String, password: String, role: Role): User {
         val user = User()
         user.role = role
         user.email = email
         user.password = password
         user.fullName = fullName
-        userRepository.save(user)
+        return userRepository.save(user)
     }
 
     fun createRestaurant(id: Long, name: String, address: String, archive: Boolean) =
@@ -80,6 +86,9 @@ class BaseFeatureTest : FluentTest() {
 
     fun createMenu(id: Long, name: String, weekDays: String?, archive: Boolean, restaurant: Restaurant?) =
         menuRepository.save(Menu(id, name, weekDays, archive, restaurant))
+
+    fun createUdm(id: Long, user: User, menu: Menu, date: LocalDate, out: Boolean = false) =
+        userDayMenuRepository.save(UserDayMenu(id, date, out, menu, user))
 
     fun loginAndNavigate(linkSelector: String, email: String = ADMIN_EMAIL, password: String = ADMIN_PASSWORD) {
         loginWith(email, password)

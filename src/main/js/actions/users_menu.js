@@ -36,7 +36,7 @@ export const update = (userDayMenu) => ({
 })
 
 export const updatedSuccessfully = (userDayMenu) => ({
-  type: actionTypes.USER_DAY_MENU_UPDATEED_SUCCESSFULLY,
+  type: actionTypes.USER_DAY_MENU_UPDATED_SUCCESSFULLY,
   userDayMenu
 })
 
@@ -46,6 +46,11 @@ export const updateOut = (userDayMenu) => ({
 })
 
 export const outUpdatedSuccessfully = (userDayMenu) => ({
-  type: actionTypes.USER_DAY_MENU_OUT_UPDATEED_SUCCESSFULLY,
+  type: actionTypes.USER_DAY_MENU_OUT_UPDATED_SUCCESSFULLY,
   userDayMenu
+})
+
+export const destroyTillDate = (startDate) => ({
+  type: actionTypes.DESTROY_TILL_DATE,
+  startDate
 })

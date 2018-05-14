@@ -11,6 +11,11 @@ class FluentUtils(private val webDriver: WebDriver) {
         wait.until(visibilityOfElementLocated(method()))
     }
 
+    fun waitForInvisibility(timeout: Long = TIME_OUT_SECONDS, method: () -> By) {
+        val wait = WebDriverWait(webDriver, timeout)
+        wait.until(invisibilityOfElementLocated(method()))
+    }
+
     companion object {
         const val TIME_OUT_SECONDS = 5L
     }
