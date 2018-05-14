@@ -17,5 +17,5 @@ interface DayRepository : CrudRepository<Day, Long> {
                           @DateTimeFormat(pattern = "yyyy-MM-dd") @Param("to") toDate: LocalDate) : List<Day>
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    fun save(@Param("menu") day: Day) : Day
+    fun save(day: Day) : Day
 }

@@ -14,22 +14,21 @@ import org.apache.commons.lang3.time.DateFormatUtils
 import org.fluentlenium.adapter.FluentTest
 import org.joda.time.LocalDate
 import org.junit.Before
-import org.openqa.selenium.By.*
+import org.openqa.selenium.By.cssSelector
+import org.openqa.selenium.By.xpath
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.context.ActiveProfiles
-import org.openqa.selenium.UnexpectedAlertBehaviour
-import org.openqa.selenium.remote.CapabilityType
-import org.openqa.selenium.remote.DesiredCapabilities
-
 
 
 @SpringBootTest(classes = [LunchtimeApplication::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@WithMockUser(username = "admin", roles = ["ADMIN"])
 @ActiveProfiles("test")
-class BaseFeatureTest : FluentTest() {
+abstract class BaseFeatureTest : FluentTest() {
     @Value("\${local.server.port}")
     private val serverPort: Int = 0
 

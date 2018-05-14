@@ -13,8 +13,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 class WebApplicationConfig : WebMvcConfigurerAdapter() {
 
     // TODO remove in a future. resolve on client side
-    override fun addViewControllers(registry: ViewControllerRegistry?) {
-        registry!!.addViewController("/notFound").setViewName("forward:/")
+    override fun addViewControllers(registry: ViewControllerRegistry) {
+        registry.addViewController("/notFound").setViewName("forward:/")
     }
 
 

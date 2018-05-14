@@ -30,7 +30,7 @@ class JWTAuthenticationFilter(authenticationManager: AuthenticationManager, priv
         val authenticationToken = UsernamePasswordAuthenticationToken(
                 user.email,
                 user.password,
-                listOf(SimpleGrantedAuthority(user.role?.name)))
+                listOf(SimpleGrantedAuthority(user.role.name)))
 
         return authenticationManager.authenticate(authenticationToken)
     }

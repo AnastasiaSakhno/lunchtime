@@ -10,5 +10,5 @@ interface UserRepository : CrudRepository<User, Long> {
     @RestResource(path = "emails")
     fun findByEmail(@Param("email") email: String): User?
 
-    fun save(@Param("user") user: User) : User
+    fun save(user: User) : User
 }

@@ -33,8 +33,8 @@ class WebSecurityConfig(private val userDetailsService: UserDetailsService, var 
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }
 
-    public override fun configure(auth: AuthenticationManagerBuilder?) {
-        auth!!.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder())
+    public override fun configure(auth: AuthenticationManagerBuilder) {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder())
     }
 
     @Bean

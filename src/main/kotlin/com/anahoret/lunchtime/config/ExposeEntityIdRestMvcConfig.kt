@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component
 @Component
 class ExposeEntityIdRestMvcConfig : RepositoryRestConfigurerAdapter() {
 
-    override fun configureRepositoryRestConfiguration(config: RepositoryRestConfiguration?) {
-        config!!.exposeIdsFor(
+    override fun configureRepositoryRestConfiguration(config: RepositoryRestConfiguration) {
+        config.exposeIdsFor(
             Restaurant::class.java,
             Menu::class.java,
             User::class.java,

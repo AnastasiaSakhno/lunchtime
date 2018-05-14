@@ -21,7 +21,7 @@ class UserEventHandler(@NotNull private val passwordEncoder: BCryptPasswordEncod
 
     @HandleBeforeSave
     fun handleUserUpdate(user: User) {
-        if (user.password == null || user.password == "") {
+        if (user.password == "") {
             //keeps the last password
             val storedUser = userRepository.findOne(user.id)
             user.password = storedUser.password

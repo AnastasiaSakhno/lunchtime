@@ -9,7 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize
 interface MenuDocumentRepository : CrudRepository<MenuDocument, Long> {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    fun save(@Param("menuDocument") menuDocument: MenuDocument) : MenuDocument
+    fun save(menuDocument: MenuDocument) : MenuDocument
 
     @RestResource(path = "restaurants")
     fun findByRestaurantId(@Param("id") restaurantId: Long): MenuDocument?

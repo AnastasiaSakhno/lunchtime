@@ -1,6 +1,5 @@
 package com.anahoret.lunchtime.domain
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
@@ -15,14 +14,14 @@ class User {
     var email: String? = null
 
     @Column(name = "password", nullable = false)
-    var password: String? = "password"
+    var password: String = "password"
 
     @Column(name = "full_name", nullable = false)
     var fullName: String? = null
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
-    var role: Role? = Role.ROLE_REGULAR
+    var role: Role = Role.ROLE_REGULAR
 
     @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user")
     var userDayMenu: MutableSet<UserDayMenu> = LinkedHashSet()

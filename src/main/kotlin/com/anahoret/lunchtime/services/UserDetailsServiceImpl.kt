@@ -15,6 +15,6 @@ class UserDetailsServiceImpl(private val userRepository: UserRepository) : UserD
     override fun loadUserByUsername(email: String): UserDetails {
         val user = userRepository.findByEmail(email)
                 ?: throw UsernameNotFoundException(email)
-        return User(user.email, user.password, listOf(SimpleGrantedAuthority(user.role?.name)))
+        return User(user.email, user.password, listOf(SimpleGrantedAuthority(user.role.name)))
     }
 }

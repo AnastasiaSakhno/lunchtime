@@ -7,12 +7,11 @@ import org.joda.time.LocalDate
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.openqa.selenium.By.*
-import org.springframework.security.test.context.support.WithMockUser
+import org.openqa.selenium.By.cssSelector
+import org.openqa.selenium.By.xpath
 import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
-@WithMockUser(username = "admin", roles=["ADMIN"])
 class UserDayMenuTests : BaseFeatureTest() {
     @Before
     fun loginAndNavigate() {
