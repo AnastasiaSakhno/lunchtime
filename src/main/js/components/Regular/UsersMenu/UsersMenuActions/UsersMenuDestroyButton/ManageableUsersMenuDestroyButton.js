@@ -6,7 +6,7 @@ import actions from '../../../../../actions'
 import ActionButton from '../../../../ActionButton'
 
 const ManageableUsersMenuDestroyButton = ({startDate, destroyTillDate}) => (
-  <ActionButton text='Destroy previous' onSubmit={() => destroyTillDate(startDate)}/>
+  <ActionButton text='Destroy previous' classes='destroy-old-udm' onSubmit={() => destroyTillDate(startDate)}/>
 )
 
 ManageableUsersMenuDestroyButton.propTypes = ({
