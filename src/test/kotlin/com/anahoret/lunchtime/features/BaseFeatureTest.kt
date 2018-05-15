@@ -58,13 +58,9 @@ abstract class BaseFeatureTest : FluentTest() {
 
     @Before
     fun goToBaseUrl() {
-        goTo("http://localhost:$serverPort")
-    }
-
-    @Before
-    fun cleanupAndSetupInitialData() {
         truncateDatabaseService.truncate()
         setupInitialData()
+        goTo("http://localhost:$serverPort")
     }
 
     fun setupInitialData() {
