@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        kotlinVersion = '1.2.31'
+        kotlinVersion = '1.2.41'
         springBootVersion = '1.5.10.RELEASE'
         hikariCPVersion = '2.7.6'
         jodaTimeVersion = '2.9.9'
