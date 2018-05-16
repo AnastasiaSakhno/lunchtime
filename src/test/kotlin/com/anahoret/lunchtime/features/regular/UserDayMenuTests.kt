@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner
 class UserDayMenuTests : BaseFeatureTest() {
     @Before
     fun loginAndNavigate() {
-        loginWith(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
+        rootPage.loginWith(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
         fluentUtils.waitFor { cssSelector(USERS_MENU_SHEET) }
     }
 
@@ -25,15 +25,15 @@ class UserDayMenuTests : BaseFeatureTest() {
 
     @Test
     fun canEditOnlyYourself() {
-        assertThat(find(USER_DAY_MENU_SELECT).count()).isEqualTo(expectedUserDayMenuSelectCount(1))
+        assertThat(find(USER_DAY_MENU_SELECT).count()).isEqualTo(rootPage.expectedUserDayMenuSelectCount(1))
     }
 
     @Test
     fun cannotEditInThePast() {
         val date = LocalDate()
-        waitForDate(date)
+        rootPage.waitForDate(date)
         click(PREV_WEEK_LINK_SELECTOR)
-        waitForDate(date.plusWeeks(-1))
+        rootPage.waitForDate(date.plusWeeks(-1))
         assertThat(find(USER_DAY_MENU_SELECT)).isEmpty()
     }
 

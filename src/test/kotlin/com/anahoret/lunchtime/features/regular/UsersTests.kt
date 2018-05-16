@@ -2,6 +2,7 @@ package com.anahoret.lunchtime.features.regular
 
 import com.anahoret.lunchtime.domain.Role
 import com.anahoret.lunchtime.features.BaseFeatureTest
+import com.anahoret.lunchtime.features.pages.UsersPage
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -12,18 +13,14 @@ import org.springframework.test.context.junit4.SpringRunner
 class UsersTests : BaseFeatureTest() {
     @Test
     fun canViewOnly() {
-        loginAndNavigate(USERS_LINK_SELECTOR, FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
+        rootPage.getUsersPage().loginAndNavigate(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
 
         assertThat(find(TABLE_ROW_SELECTOR).count()).isEqualTo(2)
-        assertThat(find(USERS_FORM_SELECTOR)).isEmpty()
+        assertThat(find(UsersPage.FORM_SELECTOR)).isEmpty()
     }
 
     override fun setupInitialData() {
         super.setupInitialData()
         createUser(FIRST_REGULAR_USER_FULL_NAME, FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD_ENCRYPTED, Role.ROLE_REGULAR)
-    }
-
-    companion object {
-        const val USERS_FORM_SELECTOR = ".user-form"
     }
 }

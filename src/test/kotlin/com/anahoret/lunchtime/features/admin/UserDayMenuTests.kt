@@ -15,21 +15,21 @@ import org.springframework.test.context.junit4.SpringRunner
 class UserDayMenuTests : BaseFeatureTest() {
     @Before
     fun loginAndNavigate() {
-        loginAsAdmin()
+        rootPage.loginAsAdmin()
         fluentUtils.waitFor { cssSelector(USERS_MENU_SHEET) }
     }
 
     @Test
     fun canEditAllUsers() {
-        assertThat(find(USER_DAY_MENU_SELECT).count()).isEqualTo(expectedUserDayMenuSelectCount(2))
+        assertThat(find(USER_DAY_MENU_SELECT).count()).isEqualTo(rootPage.expectedUserDayMenuSelectCount(2))
     }
 
     @Test
     fun canCloseDays() {
-        assertThat(find(USER_DAY_MENU_SELECT).count()).isEqualTo(expectedUserDayMenuSelectCount(2, 5))
+        assertThat(find(USER_DAY_MENU_SELECT).count()).isEqualTo(rootPage.expectedUserDayMenuSelectCount(2, 5))
         find(".day-status_manageable").last().click()
         Thread.sleep(1500)
-        assertThat(find(USER_DAY_MENU_SELECT).count()).isEqualTo(expectedUserDayMenuSelectCount(2, 4))
+        assertThat(find(USER_DAY_MENU_SELECT).count()).isEqualTo(rootPage.expectedUserDayMenuSelectCount(2, 4))
         assertThat(find(USERS_MENU_SHEET_TABLE_ROW).first().find(USER_DAY_MENU_READONLY)).isNotEmpty
         assertThat(find(USERS_MENU_SHEET_TABLE_ROW).last().find(USER_DAY_MENU_READONLY)).isNotEmpty
     }
@@ -46,9 +46,9 @@ class UserDayMenuTests : BaseFeatureTest() {
     @Test
     fun cannotEditInThePast() {
         val date = LocalDate()
-        waitForDate(date)
+        rootPage.waitForDate(date)
         click(PREV_WEEK_LINK_SELECTOR)
-        waitForDate(date.plusWeeks(-1))
+        rootPage.waitForDate(date.plusWeeks(-1))
         assertThat(find(USER_DAY_MENU_SELECT)).isEmpty()
     }
 
@@ -56,7 +56,7 @@ class UserDayMenuTests : BaseFeatureTest() {
     fun destroyPreviousUserDayMenu() {
         val date = LocalDate()
         click(PREV_WEEK_LINK_SELECTOR)
-        waitForDate(date.plusWeeks(-1))
+        rootPage.waitForDate(date.plusWeeks(-1))
         fluentUtils.waitFor { xpath("//div[text()='LeGrand']") }
         click(NEXT_WEEK_LINK_SELECTOR)
         click(".destroy-old-udm")

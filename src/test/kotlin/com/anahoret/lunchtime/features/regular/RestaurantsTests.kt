@@ -2,6 +2,7 @@ package com.anahoret.lunchtime.features.regular
 
 import com.anahoret.lunchtime.domain.Role
 import com.anahoret.lunchtime.features.BaseFeatureTest
+import com.anahoret.lunchtime.features.pages.RestaurantsPage
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -12,9 +13,9 @@ import org.springframework.test.context.junit4.SpringRunner
 class RestaurantsTests : BaseFeatureTest() {
     @Test
     fun cannotView() {
-        loginWith(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
+        rootPage.loginWith(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
         fluentUtils.waitFor { cssSelector(NEXT_WEEK_LINK_SELECTOR) }
-        assertThat(find(RESTAURANTS_LINK_SELECTOR)).isEmpty()
+        assertThat(find(RestaurantsPage.LINK_SELECTOR)).isEmpty()
     }
 
     override fun setupInitialData() {

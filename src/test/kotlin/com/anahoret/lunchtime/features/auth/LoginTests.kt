@@ -19,14 +19,14 @@ class LoginTests : BaseFeatureTest() {
 
     @Test
     fun canLoginWithRightCredentials() {
-        loginAsAdmin()
+        rootPage.loginAsAdmin()
         fluentUtils.waitFor { cssSelector(NEXT_WEEK_LINK_SELECTOR) }
         assertThat(find(NEXT_WEEK_LINK_SELECTOR).text).isEqualTo("Next")
     }
 
     @Test
     fun cannotLoginWithWrongCredentials() {
-        loginWith(ADMIN_EMAIL, "guess")
+        rootPage.loginWith(ADMIN_EMAIL, "guess")
         fluentUtils.waitFor { cssSelector(EMAIL_HELP_SELECTOR) }
         assertThat(find(EMAIL_HELP_SELECTOR).text).isEqualTo("Bad credentials")
     }

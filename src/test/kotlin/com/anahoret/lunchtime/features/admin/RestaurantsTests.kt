@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner
 class RestaurantsTests : BaseFeatureTest() {
     @Before
     fun loginAndNavigate() {
-        loginAndNavigate(RESTAURANTS_LINK_SELECTOR)
+        rootPage.getRestaurantsPage().loginAndNavigate()
 
         fluentUtils.waitFor { cssSelector("table") }
     }

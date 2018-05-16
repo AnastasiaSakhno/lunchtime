@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner
 class MenuTests : BaseFeatureTest() {
     @Before
     fun loginAndNavigate() {
-        loginAndNavigate(MENU_LINK_SELECTOR)
+        rootPage.getMenuPage().loginAndNavigate()
 
         fluentUtils.waitFor { cssSelector("table") }
     }

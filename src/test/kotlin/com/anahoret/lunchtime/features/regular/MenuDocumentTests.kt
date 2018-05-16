@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner
 class MenuDocumentTests : BaseFeatureTest() {
     @Before
     fun loginAndNavigate() {
-        loginAndNavigate(MENU_DOCUMENTS_LINK_SELECTOR, FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
+        rootPage.getMenuDocumentsPage().loginAndNavigate(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
 
         fluentUtils.waitFor { cssSelector(MENU_DOCUMENTS_CONTAINER) }
     }
