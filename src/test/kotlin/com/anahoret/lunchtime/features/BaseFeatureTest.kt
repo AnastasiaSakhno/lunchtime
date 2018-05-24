@@ -5,6 +5,7 @@ import com.anahoret.lunchtime.FluentUtils
 import com.anahoret.lunchtime.LunchtimeApplication
 import com.anahoret.lunchtime.domain.*
 import com.anahoret.lunchtime.features.common.UserDayMenuTests
+import com.anahoret.lunchtime.features.pages.RootPage
 import com.anahoret.lunchtime.repositories.MenuRepository
 import com.anahoret.lunchtime.repositories.RestaurantRepository
 import com.anahoret.lunchtime.repositories.UserDayMenuRepository
@@ -52,19 +53,16 @@ abstract class BaseFeatureTest : FluentTest() {
     }
 
     protected val webDriver: WebDriver = ChromeDriver()
-    protected val fluentUtils: FluentUtils = FluentUtils(webDriver)
+    protected val rootPage: RootPage = RootPage(this, serverPort)
+    protected val fluentUtils: FluentUtils = rootPage.fluentUtils
 
     override fun getDefaultDriver() = webDriver
 
     @Before
     fun goToBaseUrl() {
-        goTo("http://localhost:$serverPort")
-    }
-
-    @Before
-    fun cleanupAndSetupInitialData() {
         truncateDatabaseService.truncate()
         setupInitialData()
+        goTo("http://localhost:$serverPort")
     }
 
     fun setupInitialData() {
@@ -88,26 +86,6 @@ abstract class BaseFeatureTest : FluentTest() {
 
     fun createUdm(id: Long, user: User, menu: Menu, date: LocalDate, out: Boolean = false) =
         userDayMenuRepository.save(UserDayMenu(id, date, out, menu, user))
-
-    fun loginAndNavigate(linkSelector: String, email: String = ADMIN_EMAIL, password: String = ADMIN_PASSWORD) {
-        loginWith(email, password)
-        fluentUtils.waitFor { cssSelector(linkSelector) }
-        click(linkSelector)
-    }
-
-    fun loginAsAdmin() = loginWith(ADMIN_EMAIL, ADMIN_PASSWORD)
-
-    fun loginWith(email: String, password: String) {
-        fill(EMAIL_INPUT_SELECTOR).with(email)
-        fill(PASSWORD_INPUT_SELECTOR).with(password)
-        submit(LOGIN_FORM_SELECTOR)
-    }
-
-    fun waitForDate(date: LocalDate) =
-        fluentUtils.waitFor { xpath("//div[contains(text(), '${DateFormatUtils.format(date.toDate(), UserDayMenuTests.DATE_FORMAT_PATTERN)}')]") }
-
-    fun expectedUserDayMenuSelectCount(usersCount: Int, openDays: Int = 5) =
-        usersCount * (openDays - LocalDate().dayOfWeek + 1)
 
     companion object {
         const val ADMIN_EMAIL = "admin@anadeainc.com"
@@ -137,16 +115,11 @@ abstract class BaseFeatureTest : FluentTest() {
         const val NEXT_WEEK_LINK_SELECTOR = ".users-menu-next"
         const val PREV_WEEK_LINK_SELECTOR = ".users-menu-prev"
 
-        const val USERS_LINK_SELECTOR = "a[href='/admin/users']"
-        const val RESTAURANTS_LINK_SELECTOR = "a[href='/admin/restaurants']"
-        const val MENU_LINK_SELECTOR = "a[href='/admin/menu']"
-        const val MENU_DOCUMENTS_LINK_SELECTOR = "a[href='/admin/menu_documents']"
-
         const val TABLE_ROW_SELECTOR = "table tbody tr"
 
         const val USERS_MENU_SHEET = ".users-menu-sheet"
         const val USER_DAY_MENU_SELECT = ".user-day-menu-select"
-        const val USER_DAY_MENU_WEDNESDAY = ".user-day-menu-wednesday"
+        const val USER_DAY_MENU_FRIDAY = ".user-day-menu-friday"
         const val USER_DAY_MENU_THURSDAY = ".user-day-menu-thursday"
         const val USERS_MENU_SHEET_TABLE_ROW = ".users-menu-sheet-table-row"
         const val USERS_MENU_SHEET_TABLE_SUMMARY_ITEM = ".users-menu-sheet-table-summary-item"

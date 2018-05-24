@@ -12,9 +12,11 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 class RestaurantsTests : BaseFeatureTest() {
+    private val restaurantsPage= rootPage.getRestaurantsPage()
+
     @Before
     fun loginAndNavigate() {
-        loginAndNavigate(RESTAURANTS_LINK_SELECTOR)
+        restaurantsPage.loginAndNavigate()
 
         fluentUtils.waitFor { cssSelector("table") }
     }
@@ -22,10 +24,7 @@ class RestaurantsTests : BaseFeatureTest() {
     @Test
     fun canCreate() {
         assertThat(find(TABLE_ROW_SELECTOR).count()).isEqualTo(4)
-        fill(NAME_INPUT_SELECTOR).with("Пузата хата")
-        fill(ADDRESS_INPUT_SELECTOR).with("ул. Глинки, 1")
-        submit(RESTAURANTS_FORM_SELECTOR)
-        fluentUtils.waitFor { xpath("//td[contains(text(),'Пузата хата')]") }
+        restaurantsPage.submit("Пузата хата", "ул. Глинки, 1")
         assertThat(find(TABLE_ROW_SELECTOR).count()).isEqualTo(5)
     }
 
@@ -48,10 +47,5 @@ class RestaurantsTests : BaseFeatureTest() {
         createRestaurant(2, "LeGrand", "пр. Яворницкого, 50", false)
         createRestaurant(3, "Primus", "ул. Баррикадная, 1", false)
         createRestaurant(4, "Mendis", "ул. Шолом Алейхема, 4/26", true)
-    }
-
-    companion object {
-        const val RESTAURANTS_FORM_SELECTOR = ".restaurant-form"
-        const val ADDRESS_INPUT_SELECTOR = "#address_input"
     }
 }

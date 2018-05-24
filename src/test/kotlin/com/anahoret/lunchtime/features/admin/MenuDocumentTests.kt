@@ -11,18 +11,18 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 class MenuDocumentTests : BaseFeatureTest() {
+    private val menuDocumentsPage= rootPage.getMenuDocumentsPage()
+
     @Before
     fun loginAndNavigate() {
-        loginAndNavigate(MENU_DOCUMENTS_LINK_SELECTOR)
+        menuDocumentsPage.loginAndNavigate()
 
         fluentUtils.waitFor { cssSelector(MENU_DOCUMENTS_CONTAINER) }
     }
 
     @Test
     fun canUpload() {
-        driver.findElement(cssSelector(".menu-document-form-legrand input[type='file']"))
-            .sendKeys("${System.getProperty("user.dir")}/documents/restaurants/LeGrand/lunches.docx")
-        click(".menu-document-form-legrand input[type='submit']")
+        menuDocumentsPage.upload("legrand", "documents/restaurants/LeGrand/lunches.docx")
         fluentUtils.waitFor { xpath("//strong[text()='Понедельник']") }
         assertThat(findFirst("strong").text).isEqualTo("ОБЕДЫ с 05.02 – 09.02.2018г")
     }

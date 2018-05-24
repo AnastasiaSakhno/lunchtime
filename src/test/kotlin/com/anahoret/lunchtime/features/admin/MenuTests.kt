@@ -12,9 +12,11 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 class MenuTests : BaseFeatureTest() {
+    private val menuPage= rootPage.getMenuPage()
+
     @Before
     fun loginAndNavigate() {
-        loginAndNavigate(MENU_LINK_SELECTOR)
+        menuPage.loginAndNavigate()
 
         fluentUtils.waitFor { cssSelector("table") }
     }
@@ -22,11 +24,7 @@ class MenuTests : BaseFeatureTest() {
     @Test
     fun canCreate() {
         assertThat(find(TABLE_ROW_SELECTOR).count()).isEqualTo(5)
-        fillSelect(RESTAURANT_INPUT_SELECTOR).withText("Loft")
-        fill(NAME_INPUT_SELECTOR).with("Loft мясо")
-        fill(WEEK_DAYS_INPUT_SELECTOR).with("THU")
-        submit(MENU_FORM_SELECTOR)
-        fluentUtils.waitFor { xpath("//td[contains(text(),'Loft мясо')]") }
+        menuPage.submit("Loft", "Loft мясо", "THU")
         assertThat(find(TABLE_ROW_SELECTOR).count()).isEqualTo(6)
     }
 
@@ -53,11 +51,5 @@ class MenuTests : BaseFeatureTest() {
         createMenu(3, "Loft рыба", "THU", false, loft)
         createMenu(4, "LeGrand", null, false, leGrand)
         createMenu(5, "Mendis", null, true, mendis)
-    }
-
-    companion object {
-        const val MENU_FORM_SELECTOR = ".menu-form"
-        const val WEEK_DAYS_INPUT_SELECTOR = "#week_days_input"
-        const val RESTAURANT_INPUT_SELECTOR = "#restaurant_input"
     }
 }

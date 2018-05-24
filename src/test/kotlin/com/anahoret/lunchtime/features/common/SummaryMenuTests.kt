@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner
 class SummaryMenuTests : BaseFeatureTest() {
     @Before
     fun loginAndNavigate() {
-        loginWith(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
+        rootPage.loginWith(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
         fluentUtils.waitFor { cssSelector(USERS_MENU_SHEET) }
     }
 
@@ -26,28 +26,26 @@ class SummaryMenuTests : BaseFeatureTest() {
 
     @Test
     fun changeSummaryAfterChangeUserDayMenu() {
-        fillSelect(".user-day-menu-thursday $USER_DAY_MENU_SELECT").withText("Loft")
-        Thread.sleep(1500)
+        rootPage.fillDay("friday", "Loft")
         find(USERS_MENU_SHEET_TABLE_SUMMARY_ITEM)
             .forEachIndexed { index, element ->
                 if (index < 5)
-                    assertThat(element.text).isEqualTo( if (index == 3) "None 1" else "None 2")
+                    assertThat(element.text).isEqualTo(if (index == 4) "None 1" else "None 2")
                 else
-                    assertThat(element.text).isEqualTo( if (index == 8) "Loft 1" else "Loft 0")
+                    assertThat(element.text).isEqualTo(if (index == 9) "Loft 1" else "Loft 0")
             }
     }
 
     @Test
     fun changeSummaryOutAfterChangeUserDayMenu() {
-        fillSelect("$USER_DAY_MENU_WEDNESDAY $USER_DAY_MENU_SELECT").withText("Loft")
-        Thread.sleep(1500)
-        click("$USER_DAY_MENU_WEDNESDAY .user-day-menu-out-input")
+        rootPage.fillDay("friday", "Loft")
+        rootPage.clickDayOut("friday")
         find(USERS_MENU_SHEET_TABLE_SUMMARY_ITEM)
             .forEachIndexed { index, element ->
                 if (index < 5)
-                    assertThat(element.text).isEqualTo( if (index == 2) "None 1" else "None 2")
+                    assertThat(element.text).isEqualTo(if (index == 4) "None 1" else "None 2")
                 else
-                    assertThat(element.text).isEqualTo( if (index == 7) "Loft 1 , 1 out" else "Loft 0")
+                    assertThat(element.text).isEqualTo(if (index == 9) "Loft 1 , 1 out" else "Loft 0")
             }
     }
 

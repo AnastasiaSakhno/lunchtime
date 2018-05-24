@@ -2,6 +2,7 @@ package com.anahoret.lunchtime.features.admin
 
 import com.anahoret.lunchtime.domain.Role
 import com.anahoret.lunchtime.features.BaseFeatureTest
+import com.anahoret.lunchtime.features.pages.RootPage.Companion.DAY_STATUS_MANAGEABLE
 import org.assertj.core.api.Assertions.assertThat
 import org.joda.time.LocalDate
 import org.junit.Before
@@ -15,61 +16,57 @@ import org.springframework.test.context.junit4.SpringRunner
 class UserDayMenuTests : BaseFeatureTest() {
     @Before
     fun loginAndNavigate() {
-        loginAsAdmin()
+        rootPage.loginAsAdmin()
         fluentUtils.waitFor { cssSelector(USERS_MENU_SHEET) }
     }
 
     @Test
     fun canEditAllUsers() {
-        assertThat(find(USER_DAY_MENU_SELECT).count()).isEqualTo(expectedUserDayMenuSelectCount(2))
+        assertThat(find(USER_DAY_MENU_SELECT).count())
+            .isEqualTo(rootPage.expectedUserDayMenuSelectCount(2))
     }
 
     @Test
     fun canCloseDays() {
-        assertThat(find(USER_DAY_MENU_SELECT).count()).isEqualTo(expectedUserDayMenuSelectCount(2, 5))
-        find(".day-status_manageable").last().click()
-        Thread.sleep(1500)
-        assertThat(find(USER_DAY_MENU_SELECT).count()).isEqualTo(expectedUserDayMenuSelectCount(2, 4))
-        assertThat(find(USERS_MENU_SHEET_TABLE_ROW).first().find(USER_DAY_MENU_READONLY)).isNotEmpty
-        assertThat(find(USERS_MENU_SHEET_TABLE_ROW).last().find(USER_DAY_MENU_READONLY)).isNotEmpty
+        assertThat(find(USER_DAY_MENU_SELECT).count())
+            .isEqualTo(rootPage.expectedUserDayMenuSelectCount(2, 5))
+        rootPage.closeDay(4)
+        assertThat(find(USER_DAY_MENU_SELECT).count())
+            .isEqualTo(rootPage.expectedUserDayMenuSelectCount(2, 4))
+        find(USERS_MENU_SHEET_TABLE_ROW).forEach {
+            assertThat(it.find(USER_DAY_MENU_READONLY)).isNotEmpty
+        }
     }
 
     @Test
     fun canReopenDays() {
-        find(".day-status_manageable")[1].click()
-        fluentUtils.waitFor { xpath("//span[text()='Reopen']") }
-        find(".day-status_manageable")[1].click()
-        Thread.sleep(1500)
-        assertThat(find(".day-status_manageable")[1].text).isEqualTo("Close")
+        val index = 0
+        rootPage.closeDay(index)
+        assertThat(find(DAY_STATUS_MANAGEABLE)[index].text).isEqualTo("Reopen")
+        rootPage.reopenDay(index)
+        assertThat(find(DAY_STATUS_MANAGEABLE)[index].text).isEqualTo("Close")
     }
 
     @Test
     fun cannotEditInThePast() {
-        val date = LocalDate()
-        waitForDate(date)
-        click(PREV_WEEK_LINK_SELECTOR)
-        waitForDate(date.plusWeeks(-1))
+        rootPage.prevWeek()
         assertThat(find(USER_DAY_MENU_SELECT)).isEmpty()
     }
 
     @Test
     fun destroyPreviousUserDayMenu() {
-        val date = LocalDate()
-        click(PREV_WEEK_LINK_SELECTOR)
-        waitForDate(date.plusWeeks(-1))
+        var date = LocalDate()
+        date = rootPage.prevWeek(date)
         fluentUtils.waitFor { xpath("//div[text()='LeGrand']") }
-        click(NEXT_WEEK_LINK_SELECTOR)
-        click(".destroy-old-udm")
-        val alert = webDriver.switchTo().alert()
-        alert.accept()
-        click(PREV_WEEK_LINK_SELECTOR)
+        date = rootPage.nextWeek(date)
+        rootPage.destroyOldUdm()
+        date = rootPage.prevWeek(date)
         fluentUtils.waitForInvisibility { xpath("//div[text()='LeGrand']") }
-        click(PREV_WEEK_LINK_SELECTOR)
+        date = rootPage.prevWeek(date)
         fluentUtils.waitForInvisibility { xpath("//div[text()='LeGrand']") }
-        click(NEXT_WEEK_LINK_SELECTOR)
-        click(NEXT_WEEK_LINK_SELECTOR)
+        date = rootPage.navigateToWeeksPlus(date, 2)
         fluentUtils.waitFor { xpath("//div[contains(text(),'Loft 1')]") }
-        click(NEXT_WEEK_LINK_SELECTOR)
+        rootPage.nextWeek(date)
         fluentUtils.waitFor { xpath("//div[contains(text(),'Loft рыба 1')]") }
     }
 

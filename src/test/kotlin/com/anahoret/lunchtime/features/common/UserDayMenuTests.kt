@@ -15,24 +15,18 @@ import org.springframework.test.context.junit4.SpringRunner
 class UserDayMenuTests : BaseFeatureTest() {
     @Before
     fun loginAndNavigate() {
-        loginWith(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
+        rootPage.loginWith(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
         fluentUtils.waitFor { cssSelector(USERS_MENU_SHEET) }
     }
 
     @Test
     fun canGoOverPrevWeek() {
-        val date = LocalDate()
-        waitForDate(date)
-        click(PREV_WEEK_LINK_SELECTOR)
-        waitForDate(date.plusWeeks(-1))
+        rootPage.prevWeek() // we have asserts inside
     }
 
     @Test
     fun canGoOverNextWeek() {
-        val date = LocalDate()
-        waitForDate(date)
-        click(NEXT_WEEK_LINK_SELECTOR)
-        waitForDate(date.plusWeeks(1))
+        rootPage.nextWeek()
     }
 
     @Test
@@ -42,19 +36,19 @@ class UserDayMenuTests : BaseFeatureTest() {
 
     @Test
     fun cannotChooseOutForNoneMenu() {
-        fillSelect(USER_DAY_MENU_SELECT).withText("None")
+        rootPage.fillDay("friday", "None")
         fluentUtils.waitFor { xpath("//input[@disabled]") }
     }
 
     @Test
     fun canChooseOutForNotNoneMenu() {
-        fillSelect(USER_DAY_MENU_SELECT).withText("Loft")
+        rootPage.fillDay("friday", "Loft")
         fluentUtils.waitFor { xpath("//input[not(@disabled = 'true')]") }
     }
 
     @Test
     fun doNotSeeArchivedMenu() {
-        assertThat(find("$USER_DAY_MENU_WEDNESDAY $USER_DAY_MENU_SELECT").find("option").count()).isEqualTo(3)
+        assertThat(find("$USER_DAY_MENU_FRIDAY $USER_DAY_MENU_SELECT").find("option").count()).isEqualTo(3)
     }
 
     @Test
@@ -64,10 +58,9 @@ class UserDayMenuTests : BaseFeatureTest() {
 
     @Test
     fun canEdit() {
-        fillSelect("$USER_DAY_MENU_WEDNESDAY $USER_DAY_MENU_SELECT").withText("Loft")
-        Thread.sleep(1500)
-        val selected = find("$USER_DAY_MENU_WEDNESDAY $USER_DAY_MENU_SELECT").value
-        assertThat(find("$USER_DAY_MENU_WEDNESDAY $USER_DAY_MENU_SELECT option[value='$selected']").text).isEqualTo("Loft")
+        rootPage.fillDay("friday", "Loft")
+        val selected = find("$USER_DAY_MENU_FRIDAY $USER_DAY_MENU_SELECT").value
+        assertThat(find("$USER_DAY_MENU_FRIDAY $USER_DAY_MENU_SELECT option[value='$selected']").text).isEqualTo("Loft")
     }
 
     override fun setupInitialData() {
