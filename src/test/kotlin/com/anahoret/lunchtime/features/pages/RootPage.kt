@@ -15,6 +15,7 @@ class RootPage(fluentTest: FluentTest, private val serverPort: Int) : Page(fluen
     fun getUsersPage() = UsersPage(fluentTest)
     fun getMenuPage() = MenuPage(fluentTest)
     fun getMenuDocumentsPage() = MenuDocumentsPage(fluentTest)
+    fun getSignUpPage() = SignUpPage(fluentTest)
 
     override fun navigate() {
         fluentTest.goTo("http://localhost:$serverPort")
