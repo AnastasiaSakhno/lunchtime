@@ -55,22 +55,18 @@ class UserDayMenuTests : BaseFeatureTest() {
 
     @Test
     fun destroyPreviousUserDayMenu() {
-        val date = LocalDate()
-        click(PREV_WEEK_LINK_SELECTOR)
-        rootPage.waitForDate(date.plusWeeks(-1))
+        var date = LocalDate()
+        date = rootPage.prevWeek(date)
         fluentUtils.waitFor { xpath("//div[text()='LeGrand']") }
-        click(NEXT_WEEK_LINK_SELECTOR)
-        click(".destroy-old-udm")
-        val alert = webDriver.switchTo().alert()
-        alert.accept()
-        click(PREV_WEEK_LINK_SELECTOR)
+        date = rootPage.nextWeek(date)
+        rootPage.destroyOldUdm()
+        date = rootPage.prevWeek(date)
         fluentUtils.waitForInvisibility { xpath("//div[text()='LeGrand']") }
-        click(PREV_WEEK_LINK_SELECTOR)
+        date = rootPage.prevWeek(date)
         fluentUtils.waitForInvisibility { xpath("//div[text()='LeGrand']") }
-        click(NEXT_WEEK_LINK_SELECTOR)
-        click(NEXT_WEEK_LINK_SELECTOR)
+        date = rootPage.navigateToWeeksPlus(date, 2)
         fluentUtils.waitFor { xpath("//div[contains(text(),'Loft 1')]") }
-        click(NEXT_WEEK_LINK_SELECTOR)
+        rootPage.nextWeek(date)
         fluentUtils.waitFor { xpath("//div[contains(text(),'Loft рыба 1')]") }
     }
 

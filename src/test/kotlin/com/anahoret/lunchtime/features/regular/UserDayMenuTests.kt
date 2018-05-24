@@ -30,10 +30,7 @@ class UserDayMenuTests : BaseFeatureTest() {
 
     @Test
     fun cannotEditInThePast() {
-        val date = LocalDate()
-        rootPage.waitForDate(date)
-        click(PREV_WEEK_LINK_SELECTOR)
-        rootPage.waitForDate(date.plusWeeks(-1))
+        rootPage.prevWeek()
         assertThat(find(USER_DAY_MENU_SELECT)).isEmpty()
     }
 

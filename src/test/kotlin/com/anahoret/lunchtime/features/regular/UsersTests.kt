@@ -13,7 +13,8 @@ import org.springframework.test.context.junit4.SpringRunner
 class UsersTests : BaseFeatureTest() {
     @Test
     fun canViewOnly() {
-        rootPage.getUsersPage().loginAndNavigate(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
+        rootPage.getUsersPage()
+            .loginAndNavigate(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
 
         assertThat(find(TABLE_ROW_SELECTOR).count()).isEqualTo(2)
         assertThat(find(UsersPage.FORM_SELECTOR)).isEmpty()

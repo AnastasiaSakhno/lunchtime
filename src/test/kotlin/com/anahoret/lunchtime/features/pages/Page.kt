@@ -13,7 +13,7 @@ abstract class Page(val fluentTest: FluentTest) {
         navigate()
     }
 
-    abstract fun navigate();
+    abstract fun navigate()
 
     fun navigate(linkSelector: String) {
         fluentUtils.waitFor { By.cssSelector(linkSelector) }
