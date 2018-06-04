@@ -29,19 +29,19 @@ export function* loadNextWeek({startDate}) {
   yield loadUserDayMenu(startDate, 1)
 }
 
+export function* getUserDayMenu({userDayMenu}) {
+  const gotten = yield call(get, USERS_MENU_BY_ID_URI({id: userDayMenu.id}))
+  yield put(actions.usersMenu.gottenSuccessfully(gotten))
+}
+
 export function* addUserDayMenu({userDayMenu: udm}) {
   const user = yield call(loadUser)
   const newUserDayMenu = yield call(post, USERS_MENU_URI, user.auth_token, udm)
 
   if (newUserDayMenu.id) {
-    const usersMenu = yield call(get, USERS_MENU_BY_ID_URI({id: newUserDayMenu.id}))
-    yield put(actions.usersMenu.addedSuccessfully(usersMenu))
+    yield getUserDayMenu({userDayMenu: newUserDayMenu})
+    sendMessage('change', {...newUserDayMenu})
   }
-}
-
-export function* getUserDayMenu({userDayMenu}) {
-  const usersMenu = yield call(get, USERS_MENU_BY_ID_URI({id: userDayMenu.id}))
-  yield put(actions.usersMenu.gottenSuccessfully(usersMenu))
 }
 
 export function* updateUserDayMenu({userDayMenu: udm}) {
@@ -63,6 +63,7 @@ export function* updateUserDayMenuOut({userDayMenu: udm}) {
 
   if (newUserDayMenu.id) {
     yield put(actions.usersMenu.outUpdatedSuccessfully(newUserDayMenu))
+    sendMessage('change', {...newUserDayMenu})
   }
 }
 
