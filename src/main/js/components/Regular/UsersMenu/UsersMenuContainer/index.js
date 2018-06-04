@@ -12,12 +12,14 @@ import UsersMenuPrevWeekLink from '../UsersMenuActions/UsersMenuPrevWeekLink'
 import UsersMenuNextWeekLink from '../UsersMenuActions/UsersMenuNextWeekLink'
 import UsersMenuDestroyButton from '../UsersMenuActions/UsersMenuDestroyButton'
 import selectors from '../../../../selectors'
+import {webSocket, sendMessage} from '../../../../utils/webSocket'
 
 @withNeededStores(['menu', 'users'])
 @withRedirectToLogin
 @withHeader
 class UsersMenuContainer extends PureComponent {
   static propTypes = {
+    currentUser: object,
     usersMenu: object.isRequired,
     days: object.isRequired,
     menu: array,
@@ -27,6 +29,7 @@ class UsersMenuContainer extends PureComponent {
     updateOut: func.isRequired,
     addDay: func.isRequired,
     updateDay: func.isRequired,
+    getUserDayMenu: func.isRequired,
     orderedUsers: array.isRequired,
     dataGroupedByUser: object,
     summaryValues: array,
@@ -42,6 +45,9 @@ class UsersMenuContainer extends PureComponent {
   componentDidMount() {
     this.props.loadUsersMenu(this.state.startDate)
     this.props.loadDays(this.state.startDate)
+
+    webSocket.onopen = () => sendMessage('join', {id: this.props.currentUser.id})
+    webSocket.onmessage = (msg) => this.props.getUserDayMenu({...JSON.parse(msg.data).data})
   }
 
   render = () => (
@@ -71,6 +77,7 @@ class UsersMenuContainer extends PureComponent {
 const mapStateToProps = (state) => ({
   usersMenu: state.usersMenu,
   days: state.days,
+  currentUser: selectors.auth.getCurrentUser(state),
   orderedUsers: selectors.users.orderedUsers(state),
   dataGroupedByUser: selectors.usersMenu.groupedByUser(state),
   summaryValues: selectors.usersMenu.summaryValues(state),
@@ -92,6 +99,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   updateOut: (userDayMenu) => {
     dispatch(actions.usersMenu.updateOut(userDayMenu))
+  },
+  getUserDayMenu: (userDayMenu) => {
+    dispatch(actions.usersMenu.get(userDayMenu))
   },
   addDay: (day) => {
     dispatch(actions.days.add(day))

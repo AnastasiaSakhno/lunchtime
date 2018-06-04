@@ -3,6 +3,8 @@ import {removeCollectionProjection, removeProjectionMembers} from '../utils/api'
 
 export const initialState = {}
 
+const findMethod = (udm, action) => udm.id === action.userDayMenu.id
+
 const usersMenu = (state = initialState, action) => {
   switch (action.type) {
   case actionTypes.USERS_MENU_LOADED:
@@ -23,12 +25,35 @@ const usersMenu = (state = initialState, action) => {
       ]
     }
 
+  case actionTypes.USER_DAY_MENU_GOTTEN_SUCCESSFULLY:
+    let gotten = removeProjectionMembers(action.userDayMenu, ['user', 'menu'])
+    let found = state.data.find((md) => findMethod(md, action))
+
+    if(found) {
+      return {
+        ...state,
+        data: state.data.map((udm) => {
+          if (findMethod(udm, action)) {
+            return gotten
+          }
+          return udm
+        })
+      }
+    }
+    return {
+      ...state,
+      data: [
+        ...state.data,
+        gotten
+      ]
+    }
+
   case actionTypes.USER_DAY_MENU_UPDATED_SUCCESSFULLY:
     let updated = removeProjectionMembers(action.userDayMenu, ['user', 'menu'])
     return {
       ...state,
       data: state.data.map((udm) => {
-        if (udm.id === action.userDayMenu.id) {
+        if (findMethod(udm, action)) {
           return updated
         }
         return udm

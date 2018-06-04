@@ -72,6 +72,7 @@ dependencies {
     compile("joda-time:joda-time:$jodaTimeVersion")
     compile("org.apache.commons:commons-lang$apacheCommonsVersion")
     compile("org.jadira.usertype:usertype.core:$userTypeCoreVersion") // Should match Hibernate version
+    compile('org.springframework.boot:spring-boot-starter-websocket')
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('org.postgresql:postgresql')
     testCompile('org.springframework.boot:spring-boot-starter-test')
