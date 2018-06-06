@@ -12,7 +12,7 @@ import UsersMenuPrevWeekLink from '../UsersMenuActions/UsersMenuPrevWeekLink'
 import UsersMenuNextWeekLink from '../UsersMenuActions/UsersMenuNextWeekLink'
 import UsersMenuDestroyButton from '../UsersMenuActions/UsersMenuDestroyButton'
 import selectors from '../../../../selectors'
-import {webSocket, sendMessage} from '../../../../utils/webSocket'
+import {webSocket, sendMessage, CHANGE_UDM_MESSAGE, CHANGE_DAY_STATUS_MESSAGE} from '../../../../utils/webSocket'
 
 @withNeededStores(['menu', 'users'])
 @withRedirectToLogin
@@ -29,6 +29,7 @@ class UsersMenuContainer extends PureComponent {
     updateOut: func.isRequired,
     addDay: func.isRequired,
     updateDay: func.isRequired,
+    getDay: func.isRequired,
     getUserDayMenu: func.isRequired,
     orderedUsers: array.isRequired,
     dataGroupedByUser: object,
@@ -47,7 +48,20 @@ class UsersMenuContainer extends PureComponent {
     this.props.loadDays(this.state.startDate)
 
     webSocket.onopen = () => sendMessage('join', {id: this.props.currentUser.id})
-    webSocket.onmessage = (msg) => this.props.getUserDayMenu({...JSON.parse(msg.data).data})
+    webSocket.onmessage = (msg) => {
+      let msgJson = JSON.parse(msg.data)
+
+      switch (msgJson.msgType) {
+        case CHANGE_UDM_MESSAGE:
+          return this.props.getUserDayMenu({...msgJson.data})
+
+        case CHANGE_DAY_STATUS_MESSAGE:
+          return this.props.getDay({...msgJson.data})
+
+        default:
+          return
+      }
+    }
   }
 
   render = () => (
@@ -108,6 +122,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   updateDay: (day) => {
     dispatch(actions.days.update(day))
+  },
+  getDay: (day) => {
+    dispatch(actions.days.get(day))
   }
 })
 

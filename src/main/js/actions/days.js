@@ -25,8 +25,18 @@ export const add = (day) => ({
   day
 })
 
+export const gottenSuccessfully = (day) => ({
+  type: actionTypes.DAY_GOTTEN_SUCCESSFULLY,
+  day
+})
+
 export const addedSuccessfully = (day) => ({
   type: actionTypes.DAY_ADDED_SUCCESSFULLY,
+  day
+})
+
+export const get = (day) => ({
+  type: actionTypes.GET_DAY,
   day
 })
 

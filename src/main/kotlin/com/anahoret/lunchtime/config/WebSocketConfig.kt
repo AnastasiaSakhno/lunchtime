@@ -26,20 +26,30 @@ class ChatHandler : TextWebSocketHandler() {
     public override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
         val json = ObjectMapper().readTree(message.payload)
         when (json.get("type").asText()) {
-            "join" -> {
+            JOIN_MESSAGE -> {
                 // {type: "join", data: {id: "user_id"}}
                 val user = User(uids.getAndIncrement(), json.get("data").get("id").asText())
                 sessionList.put(session, user)
             }
-            "change" -> {
-                // {type: "change", data: {id: "udm_id", out: true/false, menu: {href: "http://..."}}}
-                broadcastToOthers(session, Message("change", json.get("data")))
+            CHANGE_UDM_MESSAGE -> {
+                // {type: "change_udm", data: {id: "udm_id", out: true/false, menu: {href: "http://..."}}}
+                broadcastToOthers(session, Message(CHANGE_UDM_MESSAGE, json.get("data")))
+            }
+            CHANGE_DAY_STATUS_MESSAGE -> {
+                // {type: "change_day_status", data: {id: "day_id", closed: true/false}}
+                broadcastToOthers(session, Message(CHANGE_DAY_STATUS_MESSAGE, json.get("data")))
             }
         }
     }
 
     fun emit(session: WebSocketSession, msg: Message) = session.sendMessage(TextMessage(ObjectMapper().writeValueAsString(msg)))
     private fun broadcastToOthers(me: WebSocketSession, msg: Message) = sessionList.filterNot { it.key == me }.forEach { emit(it.key, msg) }
+
+    companion object {
+        const val JOIN_MESSAGE = "join"
+        const val CHANGE_UDM_MESSAGE = "change_udm"
+        const val CHANGE_DAY_STATUS_MESSAGE = "change_day_status"
+    }
 }
 
 @Configuration

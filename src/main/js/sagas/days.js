@@ -4,8 +4,9 @@ import { sessionService } from 'redux-react-session'
 import actions from '../actions'
 import * as actionTypes from '../actions/types'
 import { get, post, put as putRest } from '../utils/rest'
-import {DAYS_URI, DAYS_SEARCH_URI, getWithoutProjection} from '../utils/api'
+import {DAYS_URI, DAYS_SEARCH_URI, getWithoutProjection, DAYS_BY_ID_URI} from '../utils/api'
 import {weekRange} from '../utils/date'
+import {CHANGE_DAY_STATUS_MESSAGE, sendMessage} from "../utils/webSocket";
 
 const loadUser = sessionService.loadUser
 
@@ -28,12 +29,21 @@ export function* loadNextWeek({startDate}) {
   yield loadDaysRange(startDate, 1)
 }
 
+export function* getDay({ day }) {
+  const gottenDay = yield call(get, DAYS_BY_ID_URI({id: day.id}))
+
+  if(gottenDay.id) {
+    yield put(actions.days.gottenSuccessfully(gottenDay))
+  }
+}
+
 export function* addDay({ day }) {
   const user = yield call(loadUser)
   const newDay = yield call(post, DAYS_URI, user.auth_token, day)
 
   if(newDay.id) {
     yield put(actions.days.addedSuccessfully(newDay))
+    sendMessage(CHANGE_DAY_STATUS_MESSAGE, {...newDay})
   }
 }
 
@@ -45,6 +55,7 @@ export function* updateDay({ day }) {
 
   if(newDay.id) {
     yield put(actions.days.updatedSuccessfully(day))
+    sendMessage(CHANGE_DAY_STATUS_MESSAGE, {...newDay})
   }
 }
 
@@ -53,6 +64,7 @@ export default function* watchDays() {
     takeLatest(actionTypes.LOAD_DAYS, loadDays),
     takeEvery(actionTypes.LOAD_NEXT_WEEK_DAYS, loadNextWeek),
     takeEvery(actionTypes.LOAD_PREV_WEEK_DAYS, loadPrevWeek),
+    takeLatest(actionTypes.GET_DAY, getDay),
     takeEvery(actionTypes.ADD_DAY, addDay),
     takeEvery(actionTypes.UPDATE_DAY, updateDay)
   ]
