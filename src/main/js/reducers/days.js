@@ -3,8 +3,10 @@ import {removeCollectionProjection, removeProjection} from '../utils/api'
 
 export const initialState = {}
 
+const findMethod = (day, action) => day.id === action.day.id
+
 const days = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
   case actionTypes.DAYS_LOADED:
     let data = removeCollectionProjection(action, 'days')
     return {
@@ -27,7 +29,7 @@ const days = (state = initialState, action) => {
     return {
       ...state,
       data: state.data.map((day) => {
-        if (day.id === action.day.id) {
+        if (findMethod(day, action)) {
           return {
             ...day,
             closed: action.day.closed
@@ -35,6 +37,29 @@ const days = (state = initialState, action) => {
         }
         return day
       })
+    }
+
+  case actionTypes.DAY_GOTTEN_SUCCESSFULLY:
+    let gotten = removeProjection(action.day)
+    let found = state.data.find((day) => findMethod(day, action))
+
+    if(found) {
+      return {
+        ...state,
+        data: state.data.map((day) => {
+          if (findMethod(day, action)) {
+            return gotten
+          }
+          return day
+        })
+      }
+    }
+    return {
+      ...state,
+      data: [
+        ...state.data,
+        gotten
+      ]
     }
 
   default:

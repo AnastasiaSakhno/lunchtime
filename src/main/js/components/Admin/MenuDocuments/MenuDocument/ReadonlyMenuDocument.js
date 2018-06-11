@@ -1,5 +1,5 @@
 import React from 'react'
-import {string, number, object} from 'prop-types'
+import {string, object} from 'prop-types'
 
 import {formattedDate} from '../../../../utils/date'
 

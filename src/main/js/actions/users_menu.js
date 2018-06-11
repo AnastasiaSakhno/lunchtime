@@ -25,8 +25,18 @@ export const add = (userDayMenu) => ({
   userDayMenu
 })
 
+export const get = (userDayMenu) => ({
+  type: actionTypes.GET_USER_DAY_MENU,
+  userDayMenu
+})
+
 export const addedSuccessfully = (userDayMenu) => ({
   type: actionTypes.USER_DAY_MENU_ADDED_SUCCESSFULLY,
+  userDayMenu
+})
+
+export const gottenSuccessfully = (userDayMenu) => ({
+  type: actionTypes.USER_DAY_MENU_GOTTEN_SUCCESSFULLY,
   userDayMenu
 })
 

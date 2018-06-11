@@ -9,7 +9,7 @@ const ManageableUserDayMenu =
   ({startDate, id, dayOfWeek, out, menu, user, activeMenu, onSubmit, onUpdate, onOutUpdate}) => {
     let dayOfWeekName = WEEK_DAYS[dayOfWeek - 1].toLowerCase()
 
-    return (<div className='col-2'>
+    return (
       <div className={`user-day-menu_manageable input-group mb-3 user-day-menu-${dayOfWeekName}`}>
         <ManageableUserDayMenuSelect
           startDate={startDate}
@@ -27,8 +27,7 @@ const ManageableUserDayMenu =
           menu={menu}
           dayOfWeek={dayOfWeek}
           onOutUpdate={onOutUpdate}/>
-      </div>
-    </div>)
+      </div>)
   }
 
 ManageableUserDayMenu.propTypes = {

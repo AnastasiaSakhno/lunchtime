@@ -6,6 +6,7 @@ import {weekRange} from '../utils/date'
 import {USERS_MENU_URI, USERS_MENU_SEARCH_URI, USERS_MENU_BY_ID_URI} from '../utils/api'
 import actions from '../actions'
 import * as actionTypes from '../actions/types'
+import {sendMessage, CHANGE_UDM_MESSAGE} from '../utils/webSocket'
 
 const loadUser = sessionService.loadUser
 
@@ -28,13 +29,21 @@ export function* loadNextWeek({startDate}) {
   yield loadUserDayMenu(startDate, 1)
 }
 
+export function* getUserDayMenu({userDayMenu}) {
+  const gotten = yield call(get, USERS_MENU_BY_ID_URI({id: userDayMenu.id}))
+
+  if(gotten.id) {
+    yield put(actions.usersMenu.gottenSuccessfully(gotten))
+  }
+}
+
 export function* addUserDayMenu({userDayMenu: udm}) {
   const user = yield call(loadUser)
   const newUserDayMenu = yield call(post, USERS_MENU_URI, user.auth_token, udm)
 
   if (newUserDayMenu.id) {
-    const usersMenu = yield call(get, USERS_MENU_BY_ID_URI({id: newUserDayMenu.id}))
-    yield put(actions.usersMenu.addedSuccessfully(usersMenu))
+    yield getUserDayMenu({userDayMenu: newUserDayMenu})
+    sendMessage(CHANGE_UDM_MESSAGE, {...newUserDayMenu})
   }
 }
 
@@ -47,6 +56,8 @@ export function* updateUserDayMenu({userDayMenu: udm}) {
     yield put(actions.usersMenu.updateOut({id: udm.id, out: false, date: udm.date}))
     const usersMenu = yield call(get, USERS_MENU_BY_ID_URI({id: udm.id}))
     yield put(actions.usersMenu.updatedSuccessfully(usersMenu))
+
+    sendMessage(CHANGE_UDM_MESSAGE, {...udm})
   }
 }
 
@@ -56,6 +67,7 @@ export function* updateUserDayMenuOut({userDayMenu: udm}) {
 
   if (newUserDayMenu.id) {
     yield put(actions.usersMenu.outUpdatedSuccessfully(newUserDayMenu))
+    sendMessage(CHANGE_UDM_MESSAGE, {...newUserDayMenu})
   }
 }
 
@@ -73,6 +85,7 @@ export default function* watchUsersMenu() {
     takeEvery(actionTypes.LOAD_NEXT_WEEK, loadNextWeek),
     takeEvery(actionTypes.LOAD_PREV_WEEK, loadPrevWeek),
     takeEvery(actionTypes.ADD_USER_DAY_MENU, addUserDayMenu),
+    takeLatest(actionTypes.GET_USER_DAY_MENU, getUserDayMenu),
     takeEvery(actionTypes.UPDATE_USER_DAY_MENU, updateUserDayMenu),
     takeEvery(actionTypes.UPDATE_USER_DAY_MENU_OUT, updateUserDayMenuOut),
     takeEvery(actionTypes.DESTROY_TILL_DATE, destroyTillDate)

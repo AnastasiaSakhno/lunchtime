@@ -8,7 +8,6 @@ import {Menu} from '../../../../abilities'
 import archiveBranch from '../../../../../HOC/branch/archiveBranch'
 
 const PureMenuDestroyAction = (props) => {
-
   const handleDestroy = (e) => {
     e.preventDefault()
     props.onDestroy({...props})

@@ -8,7 +8,6 @@ import {Restaurant} from '../../../../abilities'
 import archiveBranch from '../../../../../HOC/branch/archiveBranch'
 
 const PureRestaurantDestroyAction = (props) => {
-
   const handleDestroy = (e) => {
     e.preventDefault()
     props.onDestroy({...props})

@@ -5,7 +5,8 @@ import {weekDateFormattedFromObject} from './date'
 
 export const apiCall = (path, options) => (
   fetch(path, options)
-    .then(r => r.json()) // TODO add status and refactor api
+  // TODO add status and refactor api
+    .then(r => r.json())
 )
 
 export const post = (path, authToken, data = {}) => apiCall(path, {
@@ -77,14 +78,15 @@ export const putUserDayMenu = (authToken, udm) => fetch(`${USERS_MENU_URI}/${udm
   status: r.status
 }))
 
-export const deleteUserDayMenuTill = (authToken, tillDate) => fetch(`${USERS_MENU_CUSTOM_URI}?tillDate=${weekDateFormattedFromObject(tillDate, 1)}`, {
-  method: 'DELETE',
-  headers: {
-    Authorization: authToken
-  }
-}).then(r => ({
-  status: r.status
-}))
+export const deleteUserDayMenuTill = (authToken, tillDate) =>
+  fetch(`${USERS_MENU_CUSTOM_URI}?tillDate=${weekDateFormattedFromObject(tillDate, 1)}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: authToken
+    }
+  }).then(r => ({
+    status: r.status
+  }))
 
 export const getSession = (data) => fetch(LOGIN_URI, {
   method: 'POST',
