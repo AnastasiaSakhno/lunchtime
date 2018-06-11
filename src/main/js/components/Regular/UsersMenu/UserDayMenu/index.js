@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {bool, string, number, shape, object, array, func} from 'prop-types'
 import {eqProps} from 'ramda'
 
-import BranchedUserDayMenu from "./BranchedUserDayMenu"
+import BranchedUserDayMenu from './BranchedUserDayMenu'
 
 class UserDayMenu extends Component {
   componentWillReceiveProps(newProps) {
@@ -14,13 +14,13 @@ class UserDayMenu extends Component {
   }
 
   render = () =>
-    <div
+    (<div
       className='col-2'
       ref={(el) => {
         this.udmContainer = el
       }}>
       <BranchedUserDayMenu {...this.props}/>
-    </div>
+    </div>)
 }
 
 UserDayMenu.propTypes = {

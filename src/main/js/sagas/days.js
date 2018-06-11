@@ -6,7 +6,7 @@ import * as actionTypes from '../actions/types'
 import { get, post, put as putRest } from '../utils/rest'
 import {DAYS_URI, DAYS_SEARCH_URI, getWithoutProjection, DAYS_BY_ID_URI} from '../utils/api'
 import {weekRange} from '../utils/date'
-import {CHANGE_DAY_STATUS_MESSAGE, sendMessage} from "../utils/webSocket";
+import {CHANGE_DAY_STATUS_MESSAGE, sendMessage} from '../utils/webSocket'
 
 const loadUser = sessionService.loadUser
 

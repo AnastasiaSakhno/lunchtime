@@ -1,11 +1,9 @@
 import React, {Component} from 'react'
 import {bool, string, func} from 'prop-types'
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 import {Redirect} from 'react-router'
 import {Link} from 'react-router-dom'
 
-import * as sessionActions from '../../actions/auth'
 import withHeader from '../../HOC/withHeader'
 import actions from '../../actions'
 

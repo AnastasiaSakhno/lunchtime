@@ -52,14 +52,14 @@ class UsersMenuContainer extends PureComponent {
       let msgJson = JSON.parse(msg.data)
 
       switch (msgJson.msgType) {
-        case CHANGE_UDM_MESSAGE:
-          return this.props.getUserDayMenu({...msgJson.data})
+      case CHANGE_UDM_MESSAGE:
+        return this.props.getUserDayMenu({...msgJson.data})
 
-        case CHANGE_DAY_STATUS_MESSAGE:
-          return this.props.getDay({...msgJson.data})
+      case CHANGE_DAY_STATUS_MESSAGE:
+        return this.props.getDay({...msgJson.data})
 
-        default:
-          return
+      default:
+        return
       }
     }
   }

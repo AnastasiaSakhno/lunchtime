@@ -31,11 +31,11 @@ export const groupedByDate = createSelector(
 
 export const groupedByMenuAndDate = createSelector(
   [groupedByMenu],
-  (groupedByMenu) => (
-    Object.entries(groupedByMenu).map(entry => {
+  (byMenu) => (
+    Object.entries(byMenu).map(entry => {
       const [menuHref, arr] = entry
-      let groupedByDate = groupBy(udmDateString)(arr)
-      return {menu: {href: menuHref}, groupedByDate: groupedByDate}
+      let byDate = groupBy(udmDateString)(arr)
+      return {menu: {href: menuHref}, groupedByDate: byDate}
     })
   )
 )

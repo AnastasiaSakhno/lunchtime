@@ -3,8 +3,8 @@ import {sessionService} from 'redux-react-session'
 
 import actions from '../actions'
 import * as actionTypes from '../actions/types'
-import {get, apiCall, getMenuDocumentContent, postMenuDocument} from '../utils/rest'
-import {MENU_DOCUMENTS_UPLOAD_URI, MENU_DOCUMENTS_URI} from '../utils/api'
+import {get, getMenuDocumentContent, postMenuDocument} from '../utils/rest'
+import {MENU_DOCUMENTS_URI} from '../utils/api'
 
 const loadUser = sessionService.loadUser
 
