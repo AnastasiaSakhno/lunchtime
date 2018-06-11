@@ -5,8 +5,8 @@ import {Link} from 'react-router-dom'
 
 import {logout} from '../../actions/auth'
 
-const LogoutLink = () => (
-  <Link onClick={logout} className='nav-link' to='#'>Logout</Link>
+const LogoutLink = ({logout}) => (
+  <Link onClick={logout} className='nav-link logout' to='#'>Logout</Link>
 )
 
 LogoutLink.propTypes = ({

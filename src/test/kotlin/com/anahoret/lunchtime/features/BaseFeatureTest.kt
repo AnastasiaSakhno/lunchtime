@@ -125,6 +125,8 @@ abstract class BaseFeatureTest : FluentTest() {
         const val USERS_MENU_SHEET_TABLE_SUMMARY_ITEM = ".users-menu-sheet-table-summary-item"
         const val USER_DAY_MENU_READONLY = ".user-day-menu_readonly"
 
+        const val LOGOUT_LINK = ".logout"
+
         const val MENU_DOCUMENTS_CONTAINER = ".menu-documents-container"
     }
 }
