@@ -56,6 +56,9 @@ class ChatHandler : TextWebSocketHandler() {
 @EnableWebSocket
 class WebSocketConfig : WebSocketConfigurer {
     override fun registerWebSocketHandlers(registry: WebSocketHandlerRegistry) {
-        registry.addHandler(ChatHandler(), "/udm").withSockJS()
+        registry
+            .addHandler(ChatHandler(), "/udm")
+            .setAllowedOrigins("*")
+            .withSockJS()
     }
 }
