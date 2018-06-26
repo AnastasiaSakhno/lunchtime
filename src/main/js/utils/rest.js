@@ -2,6 +2,7 @@ import mammoth from 'mammoth'
 
 import {LOGIN_URI, USERS_MENU_URI, USERS_URI, MENU_DOCUMENTS_UPLOAD_URI, USERS_MENU_CUSTOM_URI} from './api'
 import {weekDateFormattedFromObject} from './date'
+import decode from 'jwt-decode'
 
 export const apiCall = (path, options) => (
   fetch(path, options)
@@ -112,3 +113,13 @@ export const signUp = (user) => fetch(USERS_URI, {
   status: r.status,
   body: r.json()
 }))
+
+
+export const isTokenExpired = (token) => {
+  try {
+    const decoded = decode(token)
+    return decoded.exp < Date.now() / 1000
+  } catch (err) {
+    return true
+  }
+}

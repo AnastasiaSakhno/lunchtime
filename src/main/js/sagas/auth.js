@@ -10,7 +10,7 @@ export const saveUser = sessionService.saveUser
 
 
 export function* login({user}) {
-  let data = yield call(getSession, {email: user.email, password: user.password})
+  let data = yield call(getSession, {...user})
   if (data.status === 200) {
     yield put(actions.auth.loggedInSuccessfully({ email: user.email, ...data }))
   } else {
