@@ -10,8 +10,7 @@ import {isTokenExpired} from '../../utils/rest'
 
 const defaultState = {
   email: null,
-  password: null,
-  rememberMe: false
+  password: null
 }
 
 @withHeader
