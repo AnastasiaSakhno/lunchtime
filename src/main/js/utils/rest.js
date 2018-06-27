@@ -110,8 +110,7 @@ export const signUp = (user) => fetch(USERS_URI, {
   },
   body: JSON.stringify(user)
 }).then(r => ({
-  status: r.status,
-  body: r.json()
+  status: r.status
 }))
 
 
