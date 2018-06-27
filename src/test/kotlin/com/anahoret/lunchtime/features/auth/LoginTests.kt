@@ -20,8 +20,8 @@ class LoginTests : BaseFeatureTest() {
     @Test
     fun canLoginWithRightCredentials() {
         rootPage.loginAsAdmin()
-        fluentUtils.waitFor { cssSelector(NEXT_WEEK_LINK_SELECTOR) }
-        assertThat(find(NEXT_WEEK_LINK_SELECTOR).text).isEqualTo("Next")
+        fluentUtils.waitFor { cssSelector(USERS_MENU_SHEET) }
+        assertThat(findFirst("$USERS_MENU_SHEET_TABLE_ROW .col-2").text).isEqualTo(ADMIN_FULL_NAME)
     }
 
     @Test
