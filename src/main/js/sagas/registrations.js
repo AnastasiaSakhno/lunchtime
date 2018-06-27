@@ -9,6 +9,8 @@ export function* signup({user}) {
 
   if(response.status === 201) {
     yield put(actions.auth.login(user))
+    // TODO do not load all users, add new user to loaded
+    yield put(actions.users.load())
   } else {
     yield put(actions.registrations.signupFailed(response.status))
   }
