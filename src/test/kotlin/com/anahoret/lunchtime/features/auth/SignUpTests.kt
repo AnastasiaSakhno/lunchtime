@@ -30,8 +30,8 @@ class SignUpTests : BaseFeatureTest() {
     @Test
     fun canSignUpWithRightCredentials() {
         signUpPage.signUpWith(NEW_FULL_NAME, NEW_EMAIL, NEW_PASSWORD)
-        fluentUtils.waitFor { cssSelector(NEXT_WEEK_LINK_SELECTOR) }
-        assertThat(find(NEXT_WEEK_LINK_SELECTOR).text).isEqualTo("Next")
+        fluentUtils.waitFor { cssSelector(USERS_MENU_SHEET) }
+        assertThat(findFirst("$USERS_MENU_SHEET_TABLE_ROW .col-2").text).isEqualTo(NEW_FULL_NAME)
     }
 
     @Test
