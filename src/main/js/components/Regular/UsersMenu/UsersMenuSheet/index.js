@@ -5,7 +5,7 @@ import withSpinner from '../../../../HOC/withSpinner'
 import UsersMenuSheetSummary from './UsersMenuSheetSummary'
 import UsersMenuSheetTable from './UsersMenuSheetTable'
 
-@withSpinner(['startDate', 'menuList'])
+@withSpinner(['startDate'])
 class UsersMenuSheet extends Component {
   render = () => (
     <div className='users-menu-sheet'>
