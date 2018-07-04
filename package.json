@@ -58,7 +58,8 @@
     "sass-loader": "^6.0.6",
     "style-loader": "^0.20.2",
     "webpack": "^3.10.0",
-    "jwt-decode": "2.2.0"
+    "jwt-decode": "2.2.0",
+    "react-google-login": "3.2.1"
   },
   "scripts": {
     "watch": "webpack --watch -d",
@@ -68,6 +69,7 @@
     "babel-eslint": "^8.2.2",
     "babel-plugin-transform-runtime": "^6.23.0",
     "eslint": "^4.4.1",
-    "eslint-plugin-react": "^7.2.1"
+    "eslint-plugin-react": "^7.2.1",
+    "json-loader": "^0.5.7"
   }
 }

@@ -2,38 +2,18 @@ import React, {Component} from 'react'
 import {object, func, bool, string} from 'prop-types'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router'
-import {Link} from 'react-router-dom'
+import {GoogleLogin} from 'react-google-login'
+import config from '../../config.json'
 
 import withHeader from '../../HOC/withHeader'
 import actions from '../../actions'
 import {isTokenExpired} from '../../utils/rest'
 
-const defaultState = {
-  email: null,
-  password: null
-}
-
 @withHeader
 class Login extends Component {
   static propTypes = {
-    login: func.isRequired
-  }
-
-  state = defaultState
-
-  handleChange = (e) => {
-    const target = e.target
-    this.setState({...this.state, [target.name]: target.value.trim()})
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault()
-
-    if (!this.state.email || !this.state.password) {
-      return
-    }
-
-    this.props.login({...this.state})
+    loginSuccess: func.isRequired,
+    loginFailure: func.isRequired
   }
 
   render = () => (
@@ -41,29 +21,10 @@ class Login extends Component {
       <Redirect to='/'/>
       :
       <div className='login-box'>
-        <form className='login-form' onSubmit={this.handleSubmit}>
-          <div className='form-group'>
-            <label htmlFor='email_input'>Email</label>
-            <input
-              type='email'
-              className='form-control mb-2'
-              id='email_input'
-              name='email'
-              onChange={this.handleChange}/>
-            <small id='emailHelp' className='form-text text-muted'>{this.props.error}</small>
-          </div>
-          <div className='form-group'>
-            <label htmlFor='password_input'>Password</label>
-            <input
-              type='password'
-              className='form-control mb-2'
-              id='password_input'
-              name='password'
-              onChange={this.handleChange}/>
-          </div>
-          <button type='submit' className='btn btn-dark mb-2'>Sign In</button>
-          <Link to='/signup'>Sign Up</Link>
-        </form>
+        <a href="/auth/google">
+          <i className='fa fa-google'/>
+          <span> Login with Google</span>
+        </a>
       </div>
   )
 }
@@ -81,8 +42,11 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (user) => {
-    dispatch(actions.auth.login(user))
+  loginSuccess: (data) => {
+    dispatch(actions.auth.googleAuthSuccessfully(data))
+  },
+  loginFailure: (data) => {
+    dispatch(actions.auth.googleAuthFailed(data))
   }
 })
 

@@ -1,13 +1,26 @@
-import {takeEvery, put, call} from 'redux-saga/effects'
+import {takeLatest, put, call} from 'redux-saga/effects'
 import * as actionTypes from '../actions/types'
 import actions from '../actions'
 import {sessionService} from 'redux-react-session'
-import {getSession} from '../utils/rest'
+import {getSession, signUp} from '../utils/rest'
 
 export const deleteSession = sessionService.deleteSession
 export const saveSession = sessionService.saveSession
 export const saveUser = sessionService.saveUser
 
+export function* googleAuthSuccessfully({data}) {
+  console.log('--------', data)
+  yield put(actions.auth.signup({
+    email: data.profileObj.email,
+    fullName: data.profileObj.name,
+    uid: data.googleId,
+    provider: 'google'
+  }))
+}
+
+export function* googleAuthFailed({data}) {
+  console.log('--------', data)
+}
 
 export function* login({user}) {
   let data = yield call(getSession, {...user})
@@ -29,10 +42,24 @@ export function* logout() {
   yield call(deleteSession)
 }
 
+export function* signup({user}) {
+  const response = yield call(signUp, user)
+
+  if(response.status === 201) {
+    yield put(actions.auth.login(user))
+    yield put(actions.users.load())
+  } else {
+    yield put(actions.registrations.signupFailed(response.status))
+  }
+}
+
 export default function* watchAuth() {
   yield [
-    takeEvery(actionTypes.LOGIN, login),
-    takeEvery(actionTypes.LOGIN_SUCCESS, loggedInSuccessfully),
-    takeEvery(actionTypes.LOGOUT, logout)
+    takeLatest(actionTypes.GOOGLE_AUTH_SUCCESSFULLY, googleAuthSuccessfully),
+    takeLatest(actionTypes.GOOGLE_AUTH_FAILED, googleAuthFailed),
+    takeLatest(actionTypes.LOGIN, login),
+    takeLatest(actionTypes.LOGIN_SUCCESS, loggedInSuccessfully),
+    takeLatest(actionTypes.LOGOUT, logout),
+    takeLatest(actionTypes.SIGNUP, signup)
   ]
 }

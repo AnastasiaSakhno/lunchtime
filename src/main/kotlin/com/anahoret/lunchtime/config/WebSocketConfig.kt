@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicLong
 class User(val id: Long, val name: String)
 class Message(val msgType: String, val data: Any)
 
-class ChatHandler : TextWebSocketHandler() {
+class LunchtimeHandler : TextWebSocketHandler() {
 
     val sessionList = HashMap<WebSocketSession, User>()
     var uids = AtomicLong(0)
@@ -57,7 +57,7 @@ class ChatHandler : TextWebSocketHandler() {
 class WebSocketConfig : WebSocketConfigurer {
     override fun registerWebSocketHandlers(registry: WebSocketHandlerRegistry) {
         registry
-            .addHandler(ChatHandler(), "/udm")
+            .addHandler(LunchtimeHandler(), "/udm")
             .setAllowedOrigins("*")
             .withSockJS()
     }

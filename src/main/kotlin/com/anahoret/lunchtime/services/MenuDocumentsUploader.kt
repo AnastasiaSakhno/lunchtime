@@ -27,7 +27,7 @@ class MenuDocumentsUploaderImpl(
         val document = MenuDocument()
         document.fileData = file.bytes
         document.fileName = file.originalFilename
-        document.user = userRepository.findByEmail(userEmail)
+        document.user = userRepository.findByUsername(userEmail)
         document.restaurant = restaurantRepository.findOne(restaurantId)
 
         return menuDocumentRepository.save(document)

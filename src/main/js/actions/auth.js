@@ -15,10 +15,30 @@ export const loginFailed = (error) => ({
   error
 })
 
+export const googleAuthSuccessfully = (data) => ({
+  type: actionTypes.GOOGLE_AUTH_SUCCESSFULLY,
+  data
+})
+
+export const googleAuthFailed = (data) => ({
+  type: actionTypes.GOOGLE_AUTH_FAILED,
+  data
+})
+
 export const logout = () => ({
   type: actionTypes.LOGOUT
 })
 
-export const logoutSuccess = () => ({
-  type: actionTypes.LOGOUT_SUCCESS
+export const logoutSuccessfully = () => ({
+  type: actionTypes.LOGOUT_SUCCESSFULLY
+})
+
+export const signup = (user) => ({
+  type: actionTypes.SIGNUP,
+  user
+})
+
+export const signupFailed = (status) => ({
+  type: actionTypes.SIGNUP_FAILED,
+  status
 })

@@ -1,7 +1,9 @@
 buildscript {
     ext {
-        kotlinVersion = '1.2.41'
+        kotlinVersion = '1.2.50'
         springBootVersion = '1.5.10.RELEASE'
+        springSocialVersion = '1.1.2.RELEASE'
+        springSocialGoogleVersion = '1.0.0.RELEASE'
         hikariCPVersion = '2.7.6'
         jodaTimeVersion = '2.9.9'
         apacheCommonsVersion = '3:3.6'
@@ -73,6 +75,9 @@ dependencies {
     compile("org.apache.commons:commons-lang$apacheCommonsVersion")
     compile("org.jadira.usertype:usertype.core:$userTypeCoreVersion") // Should match Hibernate version
     compile('org.springframework.boot:spring-boot-starter-websocket')
+    compile("org.springframework.social:spring-social-security:$springSocialVersion")
+    compile("org.springframework.social:spring-social-config:$springSocialVersion")
+    compile("org.springframework.social:spring-social-google:$springSocialGoogleVersion")
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('org.postgresql:postgresql')
     testCompile('org.springframework.boot:spring-boot-starter-test')

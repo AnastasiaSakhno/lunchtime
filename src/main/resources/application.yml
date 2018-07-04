@@ -47,6 +47,10 @@ spring:
   profiles: default
   datasource:
     url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/lunchtime}
+  social:
+    google:
+      appId: 138194414139-l774a6vknijd5ufuhbnoidsp3np56nf5.apps.googleusercontent.com
+      appSecret: YK0Txi69fd6vGowy145qdIzH
 
 ---
 
