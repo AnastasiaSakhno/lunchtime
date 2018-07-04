@@ -1,6 +1,5 @@
 package com.anahoret.lunchtime.security
 
-import com.anahoret.lunchtime.config.social.SocialAuthenticationFailureHandler
 import com.anahoret.lunchtime.config.social.SocialAuthenticationSuccessHandler
 import com.anahoret.lunchtime.config.social.SocialUserService
 import com.anahoret.lunchtime.config.social.StatelessAuthenticationFilter
@@ -30,8 +29,7 @@ class WebSecurityConfig(
     private val userService: SocialUserService,
     private val userIdSource: UserIdSource,
     private val statelessAuthenticationFilter: StatelessAuthenticationFilter,
-    private val socialAuthenticationSuccessHandler: SocialAuthenticationSuccessHandler,
-    private val socialAuthenticationFailureHandler: SocialAuthenticationFailureHandler) : WebSecurityConfigurerAdapter() {
+    private val socialAuthenticationSuccessHandler: SocialAuthenticationSuccessHandler) : WebSecurityConfigurerAdapter() {
 
     @Bean
     fun passwordEncoder() = BCryptPasswordEncoder(12)
@@ -67,7 +65,10 @@ class WebSecurityConfig(
             .and().addFilterBefore(statelessAuthenticationFilter, AbstractPreAuthenticatedProcessingFilter::class.java)
 
             // apply the configuration from the socialConfigurer (adds the SocialAuthenticationFilter)
-            .apply(springSocialConfigurer.userIdSource(userIdSource))
+            .apply(springSocialConfigurer
+                .userIdSource(userIdSource)
+                .postLoginUrl("/")
+                .defaultFailureUrl("/login"))
 
             // this disables session creation on Spring Security
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

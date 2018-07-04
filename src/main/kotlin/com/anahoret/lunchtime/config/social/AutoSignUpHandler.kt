@@ -25,7 +25,7 @@ class AutoSignUpHandler(
         user.accessToken = connection.createData().accessToken
         grantRoles(user)
         userRepository.save(user)
-        return user.getUserId()
+        return user.userId
     }
 
     private fun grantRoles(user: User) {
