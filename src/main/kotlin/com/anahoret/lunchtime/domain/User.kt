@@ -46,7 +46,7 @@ class User : SocialUserDetails {
     private val credentialsExpired: Boolean = false
 
     @NotNull
-    private val accountEnabled: Boolean = false
+    private val accountEnabled: Boolean = true
 
     @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user")
     var userDayMenu: MutableSet<UserDayMenu> = LinkedHashSet()
