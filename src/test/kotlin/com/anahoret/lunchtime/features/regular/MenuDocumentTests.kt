@@ -1,6 +1,5 @@
 package com.anahoret.lunchtime.features.regular
 
-import com.anahoret.lunchtime.domain.Role
 import com.anahoret.lunchtime.features.BaseFeatureTest
 import com.anahoret.lunchtime.features.pages.MenuDocumentsPage.Companion.MENU_DOCUMENT_FORM_SELECTOR
 import org.assertj.core.api.Assertions.assertThat

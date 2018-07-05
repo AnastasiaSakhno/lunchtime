@@ -1,5 +1,7 @@
-package com.anahoret.lunchtime.config.social
+package com.anahoret.lunchtime.security
 
+import com.anahoret.lunchtime.domain.auth.UserAuthentication
+import com.anahoret.lunchtime.services.social.TokenAuthenticationService
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.GenericFilterBean

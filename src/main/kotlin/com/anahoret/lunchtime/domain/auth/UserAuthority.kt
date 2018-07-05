@@ -1,4 +1,4 @@
-package com.anahoret.lunchtime.config.social
+package com.anahoret.lunchtime.domain.auth
 
 import com.anahoret.lunchtime.domain.User
 import com.fasterxml.jackson.annotation.JsonIgnore

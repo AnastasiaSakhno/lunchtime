@@ -1,4 +1,4 @@
-package com.anahoret.lunchtime.config.social
+package com.anahoret.lunchtime.services.social
 
 import com.anahoret.lunchtime.domain.User
 import org.springframework.security.core.userdetails.UserDetailsService

@@ -1,7 +1,6 @@
 package com.anahoret.lunchtime.domain
 
-import com.anahoret.lunchtime.config.social.UserAuthority
-import com.anahoret.lunchtime.config.social.UserRole
+import com.anahoret.lunchtime.domain.auth.UserAuthority
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.social.security.SocialUserDetails
 import java.util.*

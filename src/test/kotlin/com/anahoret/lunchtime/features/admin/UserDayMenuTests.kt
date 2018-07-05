@@ -1,6 +1,5 @@
 package com.anahoret.lunchtime.features.admin
 
-import com.anahoret.lunchtime.domain.Role
 import com.anahoret.lunchtime.features.BaseFeatureTest
 import com.anahoret.lunchtime.features.pages.RootPage.Companion.DAY_STATUS_MANAGEABLE
 import org.assertj.core.api.Assertions.assertThat

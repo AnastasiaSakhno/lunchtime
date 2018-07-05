@@ -1,10 +1,8 @@
-package com.anahoret.lunchtime.config.social
+package com.anahoret.lunchtime.web.handlers.social
 
 import com.anahoret.lunchtime.domain.User
 import com.fasterxml.jackson.databind.ObjectMapper
 import java.io.ByteArrayInputStream
-import java.security.InvalidKeyException
-import java.security.NoSuchAlgorithmException
 import java.util.*
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
@@ -12,17 +10,10 @@ import javax.xml.bind.DatatypeConverter
 
 class TokenHandler(secretKey: ByteArray) {
 
-    private val hmac: Mac
+    private val hmac: Mac = Mac.getInstance(HMAC_ALGO)
 
     init {
-        try {
-            hmac = Mac.getInstance(HMAC_ALGO)
-            hmac.init(SecretKeySpec(secretKey, HMAC_ALGO))
-        } catch (e: NoSuchAlgorithmException) {
-            throw IllegalStateException("failed to initialize HMAC: " + e.message, e)
-        } catch (e: InvalidKeyException) {
-            throw IllegalStateException("failed to initialize HMAC: " + e.message, e)
-        }
+        hmac.init(SecretKeySpec(secretKey, HMAC_ALGO))
     }
 
     fun parseUserFromToken(token: String): User? {

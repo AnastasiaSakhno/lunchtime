@@ -1,8 +1,7 @@
 package com.anahoret.lunchtime.security
 
-import com.anahoret.lunchtime.config.social.SocialAuthenticationSuccessHandler
-import com.anahoret.lunchtime.config.social.SocialUserService
-import com.anahoret.lunchtime.config.social.StatelessAuthenticationFilter
+import com.anahoret.lunchtime.web.handlers.social.SocialAuthenticationSuccessHandler
+import com.anahoret.lunchtime.services.social.SocialUserService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order

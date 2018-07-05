@@ -1,5 +1,7 @@
-package com.anahoret.lunchtime.config.social
+package com.anahoret.lunchtime.services.social
 
+import com.anahoret.lunchtime.domain.auth.UserAuthentication
+import com.anahoret.lunchtime.web.handlers.social.TokenHandler
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Service

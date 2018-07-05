@@ -1,6 +1,6 @@
 package com.anahoret.lunchtime.services
 
-import com.anahoret.lunchtime.config.social.SocialUserService
+import com.anahoret.lunchtime.services.social.SocialUserService
 import com.anahoret.lunchtime.domain.User
 import com.anahoret.lunchtime.repositories.UserRepository
 import org.springframework.context.annotation.Bean

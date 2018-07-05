@@ -1,6 +1,7 @@
-package com.anahoret.lunchtime.config.social
+package com.anahoret.lunchtime.web.handlers.social
 
 import com.anahoret.lunchtime.domain.User
+import com.anahoret.lunchtime.domain.UserRole
 import com.anahoret.lunchtime.repositories.UserRepository
 import org.springframework.social.connect.Connection
 import org.springframework.social.connect.ConnectionSignUp

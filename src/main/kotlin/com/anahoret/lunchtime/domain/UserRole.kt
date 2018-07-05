@@ -1,6 +1,6 @@
-package com.anahoret.lunchtime.config.social
+package com.anahoret.lunchtime.domain
 
-import com.anahoret.lunchtime.domain.User
+import com.anahoret.lunchtime.domain.auth.UserAuthority
 
 enum class UserRole {
     REGULAR, ADMIN;

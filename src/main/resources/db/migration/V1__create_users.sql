@@ -10,5 +10,3 @@ CREATE TABLE users (
   account_locked BOOL NOT NULL DEFAULT FALSE,
   credentials_expired BOOL NOT NULL DEFAULT FALSE
 );
-
-CREATE UNIQUE INDEX users_email_uindex ON users (username);

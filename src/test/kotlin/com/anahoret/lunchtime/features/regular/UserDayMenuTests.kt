@@ -1,9 +1,7 @@
 package com.anahoret.lunchtime.features.regular
 
-import com.anahoret.lunchtime.domain.Role
 import com.anahoret.lunchtime.features.BaseFeatureTest
 import org.assertj.core.api.Assertions.assertThat
-import org.joda.time.LocalDate
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

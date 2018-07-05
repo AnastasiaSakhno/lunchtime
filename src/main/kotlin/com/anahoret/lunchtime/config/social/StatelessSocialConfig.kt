@@ -1,5 +1,8 @@
 package com.anahoret.lunchtime.config.social
 
+import com.anahoret.lunchtime.social.SimpleUsersConnectionRepository
+import com.anahoret.lunchtime.services.social.SocialUserService
+import com.anahoret.lunchtime.domain.auth.UserAuthenticationUserIdSource
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.env.Environment
 import org.springframework.social.config.annotation.ConnectionFactoryConfigurer

@@ -1,5 +1,6 @@
-package com.anahoret.lunchtime.config.social
+package com.anahoret.lunchtime.social
 
+import com.anahoret.lunchtime.services.social.SocialUserService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.social.connect.Connection
 import org.springframework.social.connect.ConnectionFactoryLocator

@@ -1,6 +1,5 @@
 package com.anahoret.lunchtime.features.common
 
-import com.anahoret.lunchtime.domain.Role
 import com.anahoret.lunchtime.features.BaseFeatureTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
