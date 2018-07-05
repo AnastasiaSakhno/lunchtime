@@ -20,6 +20,7 @@ class SocialAuthenticationSuccessHandler(
         // Add UserAuthentication to the response
         val userAuthentication = UserAuthentication(authenticatedUser)
         tokenAuthenticationService.addAuthentication(response, userAuthentication)
+
         super.onAuthenticationSuccess(request, response, authentication)
     }
 }

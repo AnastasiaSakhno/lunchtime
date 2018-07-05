@@ -1,10 +1,8 @@
 package com.anahoret.lunchtime.config.social
 
 import com.anahoret.lunchtime.domain.User
-import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
 import java.io.ByteArrayInputStream
-import java.io.IOException
 import java.security.InvalidKeyException
 import java.security.NoSuchAlgorithmException
 import java.util.*
@@ -25,27 +23,21 @@ class TokenHandler(secretKey: ByteArray) {
         } catch (e: InvalidKeyException) {
             throw IllegalStateException("failed to initialize HMAC: " + e.message, e)
         }
-
     }
 
     fun parseUserFromToken(token: String): User? {
         val parts = token.split(SEPARATOR_SPLITTER.toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        if (parts.size == 2 && parts[0].length > 0 && parts[1].length > 0) {
-            try {
-                val userBytes = fromBase64(parts[0])
-                val hash = fromBase64(parts[1])
+        if (parts.size == 2 && parts[0].isNotEmpty() && parts[1].isNotEmpty()) {
+            val userBytes = fromBase64(parts[0])
+            val hash = fromBase64(parts[1])
 
-                val validHash = Arrays.equals(createHmac(userBytes), hash)
-                if (validHash) {
-                    val user = fromJSON(userBytes)
-                    if (Date().time < user.expires) {
-                        return user
-                    }
+            val validHash = Arrays.equals(createHmac(userBytes), hash)
+            if (validHash) {
+                val user = fromJSON(userBytes)
+                if (Date().time < user.expires) {
+                    return user
                 }
-            } catch (e: IllegalArgumentException) {
-                //log tempering attempt here
             }
-
         }
         return null
     }
@@ -53,55 +45,38 @@ class TokenHandler(secretKey: ByteArray) {
     fun createTokenForUser(user: User): String {
         val userBytes = toJSON(user)
         val hash = createHmac(userBytes)
-        val sb = StringBuilder(170)
-        sb.append(toBase64(userBytes))
-        sb.append(SEPARATOR)
-        sb.append(toBase64(hash))
-        return sb.toString()
+        return StringBuilder(170)
+            .append(toBase64(userBytes))
+            .append(SEPARATOR)
+            .append(toBase64(hash)).toString()
     }
 
-    private fun fromJSON(userBytes: ByteArray): User {
-        try {
-            return ObjectMapper().readValue(ByteArrayInputStream(userBytes), User::class.java)
-        } catch (e: IOException) {
-            throw IllegalStateException(e)
-        }
+    private fun fromJSON(userBytes: ByteArray) = ObjectMapper().readValue(ByteArrayInputStream(userBytes), User::class.java)
 
-    }
+    private fun toJSON(user: User) = ObjectMapper().writeValueAsBytes(user)
 
-    private fun toJSON(user: User): ByteArray {
-        try {
-            return ObjectMapper().writeValueAsBytes(user)
-        } catch (e: JsonProcessingException) {
-            throw IllegalStateException(e)
-        }
-
-    }
-
-    private fun toBase64(content: ByteArray): String {
-        return DatatypeConverter.printBase64Binary(content).replace('+', '-').replace('/', '_').replace("=".toRegex(), "")
-    }
+    private fun toBase64(content: ByteArray) =
+        DatatypeConverter.printBase64Binary(content)
+            .replace('+', '-')
+            .replace('/', '_')
+            .replace("=".toRegex(), "")
 
     private fun fromBase64(urlsafeBase64: String): ByteArray {
-        var urlsafeBase64 = urlsafeBase64
-        urlsafeBase64 = urlsafeBase64.replace('-', '+').replace('_', '/')
-        val rest = urlsafeBase64.length % 4
+        var url = urlsafeBase64.replace('-', '+').replace('_', '/')
+        val rest = url.length % 4
         if (rest != 0) {
-            urlsafeBase64 += if (rest == 3) "=" else "=="
+            url += if (rest == 3) "=" else "=="
         }
-        return DatatypeConverter.parseBase64Binary(urlsafeBase64)
+        return DatatypeConverter.parseBase64Binary(url)
     }
 
     // synchronized to guard internal hmac object
     @Synchronized
-    private fun createHmac(content: ByteArray): ByteArray {
-        return hmac.doFinal(content)
-    }
+    private fun createHmac(content: ByteArray) = hmac.doFinal(content)
 
     companion object {
-
-        private val HMAC_ALGO = "HmacSHA256"
-        private val SEPARATOR = "."
-        private val SEPARATOR_SPLITTER = "\\."
+        private const val HMAC_ALGO = "HmacSHA256"
+        private const val SEPARATOR = "."
+        private const val SEPARATOR_SPLITTER = "\\."
     }
 }

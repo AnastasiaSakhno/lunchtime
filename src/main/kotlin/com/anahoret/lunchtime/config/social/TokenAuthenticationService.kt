@@ -25,24 +25,14 @@ class TokenAuthenticationService(@Value("\${jwt.secret}") private val secret: St
         response.addCookie(createCookieForToken(token))
     }
 
-    fun getAuthentication(request: HttpServletRequest): UserAuthentication? {
+    fun getAuthentication(request: HttpServletRequest): UserAuthentication? =
         // to prevent CSRF attacks we still only allow authentication using a custom HTTP header
         // (it is up to the client to read our previously set cookie and put it in the header)
-        val token = request.getHeader(AUTH_HEADER_NAME)
-        if (token != null) {
-            val user = tokenHandler().parseUserFromToken(token)
-            if (user != null) {
-                return UserAuthentication(user)
-            }
+        request.getHeader(AUTH_HEADER_NAME)?.let { token ->
+            tokenHandler().parseUserFromToken(token)?.let { user -> UserAuthentication(user) }
         }
-        return null
-    }
 
-    private fun createCookieForToken(token: String): Cookie {
-        val authCookie = Cookie(AUTH_COOKIE_NAME, token)
-        authCookie.path = "/"
-        return authCookie
-    }
+    private fun createCookieForToken(token: String) = Cookie(AUTH_COOKIE_NAME, token).also { it.path = "/" }
 
     companion object {
         private const val AUTH_HEADER_NAME = "X-AUTH-TOKEN"

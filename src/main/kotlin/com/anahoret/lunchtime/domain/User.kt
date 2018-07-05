@@ -18,6 +18,9 @@ class User : SocialUserDetails {
     var id: Long? = null
 
     @NotNull
+    var fullName: String? = null
+
+    @NotNull
     @JsonIgnore
     var providerId: String? = null
 
@@ -48,10 +51,10 @@ class User : SocialUserDetails {
     @NotNull
     private val accountEnabled: Boolean = true
 
-    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user")
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user", fetch = FetchType.EAGER)
     var userDayMenu: MutableSet<UserDayMenu> = LinkedHashSet()
 
-    @OneToMany(cascade = arrayOf(CascadeType.ALL), mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true)
     private var authorities: MutableSet<UserAuthority>? = null
 
     // Use Roles as external API
@@ -72,22 +75,16 @@ class User : SocialUserDetails {
         }
 
     @JsonIgnore
-    override fun getUserId(): String {
-        return id!!.toString()
-    }
+    override fun getUserId() = id!!.toString()
 
-    override fun getUsername(): String? {
-        return username
-    }
+    override fun getUsername() = username
 
     fun setUsername(username: String) {
         this.username = username
     }
 
     @JsonIgnore
-    override fun getAuthorities(): Set<UserAuthority>? {
-        return authorities
-    }
+    override fun getAuthorities() = authorities
 
     fun grantRole(role: UserRole) {
         if (authorities == null) {
@@ -102,38 +99,24 @@ class User : SocialUserDetails {
         }
     }
 
-    fun hasRole(role: UserRole): Boolean {
-        return authorities!!.contains(role.asAuthorityFor(this))
-    }
+    fun hasRole(role: UserRole) = authorities!!.contains(role.asAuthorityFor(this))
 
     @JsonIgnore
-    override fun isAccountNonExpired(): Boolean {
-        return !accountExpired
-    }
+    override fun isAccountNonExpired() = !accountExpired
 
     @JsonIgnore
-    override fun isAccountNonLocked(): Boolean {
-        return !accountLocked
-    }
+    override fun isAccountNonLocked() = !accountLocked
 
     @JsonIgnore
-    override fun isCredentialsNonExpired(): Boolean {
-        return !credentialsExpired
-    }
+    override fun isCredentialsNonExpired() = !credentialsExpired
 
     @JsonIgnore
-    override fun isEnabled(): Boolean {
-        return !accountEnabled
-    }
+    override fun isEnabled() = accountEnabled
 
-    override fun toString(): String {
-        return javaClass.simpleName + ": " + getUsername()
-    }
+    override fun toString() = "$javaClass.simpleName : ${getUsername()}"
 
     @JsonIgnore
-    override fun getPassword(): String {
-        throw IllegalStateException("password should never be used")
-    }
+    override fun getPassword() = throw IllegalStateException("password should never be used")
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -146,7 +129,5 @@ class User : SocialUserDetails {
         return true
     }
 
-    override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
-    }
+    override fun hashCode() = id?.hashCode() ?: 0
 }

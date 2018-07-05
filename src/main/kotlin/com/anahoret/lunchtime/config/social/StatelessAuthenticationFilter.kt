@@ -19,11 +19,9 @@ class StatelessAuthenticationFilter(private val tokenAuthenticationService: Toke
     }
 
     private fun setAuthenticationFromHeader(request: HttpServletRequest) {
-        val authentication = SecurityContextHolder.getContext().authentication
-        if (authentication !is UserAuthentication) {
-            val userAuthentication = tokenAuthenticationService.getAuthentication(request)
-            if (userAuthentication != null) {
-                SecurityContextHolder.getContext().authentication = userAuthentication
+        SecurityContextHolder.getContext().authentication.takeIf { it !is UserAuthentication }.apply {
+            tokenAuthenticationService.getAuthentication(request)?.let {
+                SecurityContextHolder.getContext().authentication = it
             }
         }
     }

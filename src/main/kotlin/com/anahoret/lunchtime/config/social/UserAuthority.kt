@@ -7,7 +7,6 @@ import javax.persistence.*
 import javax.validation.constraints.NotNull
 
 @Entity
-//@IdClass(UserAuthority::class)
 @Table(name = "user_authorities")
 class UserAuthority : GrantedAuthority {
 
@@ -21,9 +20,7 @@ class UserAuthority : GrantedAuthority {
     @Id
     private var authority: String? = null
 
-    override fun getAuthority(): String? {
-        return authority
-    }
+    override fun getAuthority() = authority
 
     fun setAuthority(authority: String) {
         this.authority = authority
@@ -37,11 +34,7 @@ class UserAuthority : GrantedAuthority {
         return ua!!.getAuthority() === this.getAuthority() || ua!!.getAuthority() == this.getAuthority()
     }
 
-    override fun hashCode(): Int {
-        return if (getAuthority() == null) 0 else getAuthority()!!.hashCode()
-    }
+    override fun hashCode() = if (getAuthority() == null) 0 else getAuthority()!!.hashCode()
 
-    override fun toString(): String {
-        return javaClass.simpleName + ": " + getAuthority()
-    }
+    override fun toString() = javaClass.simpleName + ": " + getAuthority()
 }

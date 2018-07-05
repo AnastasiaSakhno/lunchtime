@@ -36,7 +36,9 @@ class UserService(private val userRepository: UserRepository) : SocialUserServic
     }
 
     override fun updateUserDetails(user: User) {
-        userRepository.save(user)
+        // TODO wtf! what is wrong with user?
+        val found = loadUserByUserId(user.userId)
+        userRepository.save(found)
     }
 
     private fun checkUser(user: User?): User {

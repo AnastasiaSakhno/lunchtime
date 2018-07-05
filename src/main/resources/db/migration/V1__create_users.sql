@@ -1,6 +1,7 @@
 CREATE TABLE users (
   id BIGSERIAL PRIMARY KEY,
   username VARCHAR(50) UNIQUE,
+  full_name VARCHAR(100),
   provider_id VARCHAR(50),
   provider_user_id VARCHAR(50),
   access_token VARCHAR(1023) NOT NULL,

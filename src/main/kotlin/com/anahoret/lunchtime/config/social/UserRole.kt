@@ -5,12 +5,11 @@ import com.anahoret.lunchtime.domain.User
 enum class UserRole {
     REGULAR, ADMIN;
 
-    fun asAuthorityFor(user: User): UserAuthority {
-        val authority = UserAuthority()
-        authority.setAuthority("ROLE_" + toString())
-        authority.user = user
-        return authority
-    }
+    fun asAuthorityFor(user: User) =
+        UserAuthority().also {
+            it.setAuthority("ROLE_" + toString())
+            it.user = user
+        }
 
     companion object {
 
