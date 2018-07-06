@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.RestController
 class GoogleController(val google: Google) {
 
     @GetMapping(value = "details")
-    fun getSocialDetails(): Person = google.plusOperations().googleProfile
+    fun getSocialDetails(): Person = google.plusOperations().getPerson("me")
 }

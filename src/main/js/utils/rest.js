@@ -15,20 +15,24 @@ export const post = (path, authToken, data = {}) => apiCall(path, {
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json; charset=utf-8',
-    Authorization: authToken
+    'X-AUTH-TOKEN': authToken
   },
   body: JSON.stringify(data)
 })
 
-export const get = path => apiCall(path, {
-  method: 'GET'
+export const get = (path, authToken) => apiCall(path, {
+  method: 'GET',
+  headers: {
+    Accept: 'application/json',
+    'X-AUTH-TOKEN': authToken
+  }
 })
 
 export const del = (path, authToken) => apiCall(path, {
   method: 'DELETE',
   headers: {
     Accept: 'application/json',
-    Authorization: authToken
+    'X-AUTH-TOKEN': authToken
   }
 })
 
@@ -37,7 +41,7 @@ export const put = (path, authToken, data) => apiCall(path, {
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json; charset=utf-8',
-    Authorization: authToken
+    'X-AUTH-TOKEN': authToken
   },
   body: JSON.stringify(data)
 })
@@ -62,7 +66,7 @@ export const postMenuDocument = (md, user) => {
     method: 'POST',
     body: formData,
     headers: {
-      Authorization: user.auth_token
+      'X-AUTH-TOKEN': user.auth_token
     }
   })
 }
@@ -72,7 +76,7 @@ export const putUserDayMenu = (authToken, udm) => fetch(`${USERS_MENU_URI}/${udm
   headers: {
     Accept: 'application/json',
     'Content-Type': 'text/uri-list',
-    Authorization: authToken
+    'X-AUTH-TOKEN': authToken
   },
   body: udm.menu
 }).then(r => ({
@@ -83,7 +87,7 @@ export const deleteUserDayMenuTill = (authToken, tillDate) =>
   fetch(`${USERS_MENU_CUSTOM_URI}?tillDate=${weekDateFormattedFromObject(tillDate, 1)}`, {
     method: 'DELETE',
     headers: {
-      Authorization: authToken
+      'X-AUTH-TOKEN': authToken
     }
   }).then(r => ({
     status: r.status
@@ -94,12 +98,12 @@ export const getSession = (data) => fetch(LOGIN_URI, {
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json; charset=utf-8',
-    'Access-Control-Expose-Headers': 'Authorization'
+    'Access-Control-Expose-Headers': 'X-AUTH-TOKEN'
   },
   body: JSON.stringify(data)
 }).then(r => ({
   status: r.status,
-  auth_token: r.headers.get('Authorization')
+  auth_token: r.headers.get('X-AUTH-TOKEN')
 }))
 
 export const signUp = (user) => fetch(USERS_URI, {

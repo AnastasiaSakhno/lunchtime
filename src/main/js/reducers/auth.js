@@ -1,6 +1,6 @@
 import * as actionTypes from '../actions/types'
 
-export const initialState = { error: null, email: null, token: null }
+export const initialState = { error: null, email: null, fullName: null, token: null }
 
 const auth = (state = initialState, action) => {
   switch(action.type) {
@@ -11,7 +11,7 @@ const auth = (state = initialState, action) => {
     return { ...state, error: action.error }
 
   case actionTypes.GOOGLE_AUTH_SUCCESSFULLY:
-    return { ...state, token: action.data.token, email: action.data.email }
+    return { ...state, token: action.data.token, email: action.data.email, fullName: action.data.fullName }
 
   default:
     return state

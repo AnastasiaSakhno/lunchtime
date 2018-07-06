@@ -16,10 +16,12 @@ export function* saveAuthData({authToken}) {
   yield call(saveSession, {token: authToken})
   yield call(saveUser, {token: authToken})
   // TODO get user's data and save them
-  const sessionUser = yield call(loadUser)
-  const user = yield call(get, USER_DETAILS_URI, sessionUser.auth_token)
-  console.log('user=', user)
-  yield put(actions.auth.googleAuthSuccessfully({token: authToken, email: user.username}))
+  const user = yield call(get, USER_DETAILS_URI, authToken)
+  yield put(actions.auth.googleAuthSuccessfully({
+    token: authToken,
+    fullName: user.displayName,
+    email: user.accountEmail
+  }))
 }
 
 export function* logout() {
