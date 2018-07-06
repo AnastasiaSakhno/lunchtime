@@ -1,5 +1,10 @@
 import * as actionTypes from './types'
 
+export const saveAuthData = (authToken) => ({
+  type: actionTypes.SAVE_AUTH_DATA,
+  authToken
+})
+
 export const login = (user) => ({
   type: actionTypes.LOGIN,
   user

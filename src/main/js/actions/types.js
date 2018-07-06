@@ -1,3 +1,4 @@
+export const SAVE_AUTH_DATA = 'SAVE_AUTH_DATA'
 export const LOGIN = 'LOGIN'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILED = 'LOGIN_FAILED'
