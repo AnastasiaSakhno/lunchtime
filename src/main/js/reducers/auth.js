@@ -4,13 +4,10 @@ export const initialState = { error: null, email: null, fullName: null, token: n
 
 const auth = (state = initialState, action) => {
   switch(action.type) {
-  case actionTypes.LOGIN_SUCCESS:
-    return { ...state, error: null }
-
   case actionTypes.LOGIN_FAILED:
     return { ...state, error: action.error }
 
-  case actionTypes.GOOGLE_AUTH_SUCCESSFULLY:
+  case actionTypes.LOGGED_IN_SUCCESSFULLY:
     return { ...state, token: action.data.token, email: action.data.email, fullName: action.data.fullName }
 
   default:

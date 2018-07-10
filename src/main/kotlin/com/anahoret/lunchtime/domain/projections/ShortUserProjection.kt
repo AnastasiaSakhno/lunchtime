@@ -8,6 +8,6 @@ import org.springframework.data.rest.core.config.Projection
 interface ShortUserProjection {
     val id: Long
     val fullName: String
-    val email: String
+    val username: String
     val roles: Set<UserRole>
 }
