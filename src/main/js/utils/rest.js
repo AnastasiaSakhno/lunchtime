@@ -2,7 +2,6 @@ import mammoth from 'mammoth'
 
 import {LOGIN_URI, USERS_MENU_URI, USERS_URI, MENU_DOCUMENTS_UPLOAD_URI, USERS_MENU_CUSTOM_URI} from './api'
 import {weekDateFormattedFromObject} from './date'
-import decode from 'jwt-decode'
 
 export const apiCall = (path, options) => (
   fetch(path, options)
@@ -118,11 +117,23 @@ export const signUp = (user) => fetch(USERS_URI, {
 }))
 
 
+const fromBase64 = (urlsafeBase64) => {
+  let url = urlsafeBase64.replace('-', '+').replace('_', '/')
+  const rest = url.length % 4
+  if (rest !== 0) {
+    url = url + ((rest === 3) ? '=' : '==')
+  }
+  return atob(url)
+}
+
 export const isTokenExpired = (token) => {
   try {
-    const decoded = decode(token)
-    return decoded.exp < Date.now() / 1000
+    const parts = token.split('.')
+    const userBytes = fromBase64(parts[0])
+    const user = JSON.parse(JSON.parse(JSON.stringify(userBytes)))
+    return user.expires < Date.now() / 1000
   } catch (err) {
+    console.log(`error '${err}' occurred while decoding jwt token=${token}`)
     return true
   }
 }

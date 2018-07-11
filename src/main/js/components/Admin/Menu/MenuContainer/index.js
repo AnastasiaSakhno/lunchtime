@@ -5,11 +5,11 @@ import {connect} from 'react-redux'
 import actions from '../../../../actions'
 import {MenuList, MenuForm} from '../../Menu'
 import withHeader from '../../../../HOC/withHeader'
-// import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
+import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
 import withNeededStores from '../../../../HOC/withNeededStores'
 
 @withNeededStores(['restaurants', 'menu'])
-// @withRedirectToLogin
+@withRedirectToLogin
 @withHeader
 class MenuContainer extends PureComponent {
   static propTypes = {
