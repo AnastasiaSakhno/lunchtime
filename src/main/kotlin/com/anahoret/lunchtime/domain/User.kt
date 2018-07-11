@@ -50,9 +50,6 @@ class User : SocialUserDetails {
     @NotNull
     private val accountEnabled: Boolean = true
 
-    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user", fetch = FetchType.EAGER)
-    var userDayMenu: MutableSet<UserDayMenu> = LinkedHashSet()
-
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true)
     private var authorities: MutableSet<UserAuthority>? = null
 
