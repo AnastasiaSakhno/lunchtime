@@ -8,7 +8,12 @@ const auth = (state = initialState, action) => {
     return { ...state, error: action.error }
 
   case actionTypes.LOGGED_IN_SUCCESSFULLY:
-    return { ...state, token: action.data.token, email: action.data.email, fullName: action.data.fullName }
+    return {
+      ...state,
+      token: action.data.token,
+      email: action.data.email,
+      fullName: action.data.fullName
+    }
 
   default:
     return state
