@@ -7,7 +7,7 @@ import {logout} from '../../actions/auth'
 
 const LogoutLink = ({logout}) => {
   return (
-    <Link onClick={logout} className='nav-link logout' to='#'/>
+    <Link onClick={logout} className='nav-link logout' to='#'>Logout</Link>
   )
 }
 
@@ -16,9 +16,7 @@ LogoutLink.propTypes = ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  logout: () => {
-    dispatch(logout())
-  }
+  logout: () => dispatch(logout())
 })
 
 export default connect(null, mapDispatchToProps)(LogoutLink)
