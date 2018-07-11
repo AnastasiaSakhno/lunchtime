@@ -4,13 +4,15 @@ import {compose, branch, renderComponent} from 'recompose'
 import {isTokenExpired} from '../../utils/rest'
 import {getCookie} from '../../utils/document'
 
-export default ({LoginComponent, LogoutComponent}) =>
+const DefaultLoginComponent = () => <none/>
+
+export default ({LoginComponent = DefaultLoginComponent, LogoutComponent}) =>
   compose(
     branch(
       (props) => {
         if(!props.authenticated) {
           let authToken = getCookie('AUTH-TOKEN')
-          if(authToken/* && !isTokenExpired(authToken)*/) {
+          if(authToken && !isTokenExpired(authToken)) {
             props.saveAuthData(authToken)
           }
         }

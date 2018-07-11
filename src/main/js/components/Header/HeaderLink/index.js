@@ -3,7 +3,6 @@ import {string, object} from 'prop-types'
 import {Link} from 'react-router-dom'
 import {NavItem} from 'reactstrap'
 
-import Login from '../../Login'
 import LogoutLink from '../../LogoutLink'
 import cancanBranch from '../../../HOC/branch/cancanBranch'
 import authBranch from '../../../HOC/branch/authBranch'
@@ -40,6 +39,5 @@ export const UsersHeaderLink = headerLink(User)
 export const MenuDocumentsHeaderLink = headerLink(MenuDocument)
 
 export const AuthBranched = authBranch({
-  LoginComponent: Login,
   LogoutComponent: LogoutLink
 })()
