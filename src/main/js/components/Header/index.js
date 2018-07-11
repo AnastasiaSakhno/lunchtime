@@ -41,7 +41,6 @@ class Header extends Component {
             <NavItem>
               <AuthBranched
                 authenticated={this.props.authenticated}
-                email={this.props.email}
                 saveAuthData={this.props.saveAuthData}/>
             </NavItem>
           </Nav>
@@ -55,13 +54,11 @@ class Header extends Component {
 
 Header.propTypes = {
   authenticated: bool.isRequired,
-  email: string,
   saveAuthData: func.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  authenticated: state.session.authenticated,
-  email: state.auth.email
+  authenticated: state.session.authenticated
 })
 
 const mapDispatchToProps = (dispatch) => ({
