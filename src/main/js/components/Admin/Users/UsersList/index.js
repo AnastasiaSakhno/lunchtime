@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { string, number, arrayOf, shape } from 'prop-types'
+import { string, number, arrayOf, shape, array } from 'prop-types'
 
 import { User } from '../../Users'
 import withSpinner from '../../../../HOC/withSpinner'
@@ -33,8 +33,8 @@ UsersList.propTypes = {
     shape({
       id: number,
       fullName: string,
-      email: string,
-      role: string
+      username: string,
+      roles: array
     })
   ).isRequired
 }
