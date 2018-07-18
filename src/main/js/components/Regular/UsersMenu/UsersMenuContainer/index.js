@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import moment from 'moment/moment'
 
 import actions from '../../../../actions'
-import withHeader from '../../../../HOC/withHeader'
 import UsersMenuSheet from '../UsersMenuSheet'
 import withNeededStores from '../../../../HOC/withNeededStores'
 import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
@@ -16,7 +15,6 @@ import {webSocket, sendMessage, CHANGE_UDM_MESSAGE, CHANGE_DAY_STATUS_MESSAGE} f
 
 @withNeededStores(['menu', 'users'])
 @withRedirectToLogin
-@withHeader
 class UsersMenuContainer extends PureComponent {
   static propTypes = {
     currentUser: object,
