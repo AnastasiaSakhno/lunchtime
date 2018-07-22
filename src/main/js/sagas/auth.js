@@ -13,28 +13,27 @@ export const saveUser = sessionService.saveUser
 export const loadUser = sessionService.loadUser
 
 export function* saveAuthData({authToken}) {
-  const user = yield call(get, USER_DETAILS_URI, authToken)
+  const response = yield call(get, USER_DETAILS_URI, authToken)
 
-  if(user.id) {
-    const data = {token: authToken, email: user.accountEmail}
+  if(response.id) {
+    const data = {token: authToken, email: response.accountEmail}
     yield call(saveSession, data)
     yield call(saveUser, data)
     yield put(actions.auth.loggedInSuccessfully({
       token: authToken,
-      fullName: user.displayName,
-      email: user.accountEmail
+      fullName: response.displayName,
+      email: response.accountEmail
     }))
   } else {
-    yield put(actions.auth.loginFailed())
+    yield put(actions.auth.loginFailed(response.message))
+    yield put(actions.auth.logout())
   }
 }
 
 export function* logout() {
-  yield call(saveUser, null)
-  yield call(saveSession, null)
-  yield call(deleteSession)
   delCoockie('AUTH-TOKEN')
-  window.location.reload()
+  delCoockie('USER-SESSION')
+  delCoockie('USER-DATA')
 }
 
 export default function* watchAuth() {
