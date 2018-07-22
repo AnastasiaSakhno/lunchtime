@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration
 class JwtConfig(
     @Value("\${jwt.secret}")
     val secret: String,
-    @Value("\${jwt.token_prefix}")
-    val tokenPrefix: String,
+    @Value("\${jwt.cookie}")
+    val cookie: String,
     @Value("\${jwt.header}")
     val header: String,
     @Value("\${jwt.expiration_time}")
