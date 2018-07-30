@@ -8,6 +8,7 @@ import {get} from '../utils/rest'
 import {USER_DETAILS_URI} from '../utils/api'
 
 export const deleteSession = sessionService.deleteSession
+export const deleteUser = sessionService.deleteUser
 export const saveSession = sessionService.saveSession
 export const saveUser = sessionService.saveUser
 export const loadUser = sessionService.loadUser
@@ -31,9 +32,9 @@ export function* saveAuthData({authToken}) {
 }
 
 export function* logout() {
+  yield call(deleteSession)
+  yield call(deleteUser)
   delCoockie('AUTH-TOKEN')
-  delCoockie('USER-SESSION')
-  delCoockie('USER-DATA')
 }
 
 export default function* watchAuth() {
