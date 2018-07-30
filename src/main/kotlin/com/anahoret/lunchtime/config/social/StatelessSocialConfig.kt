@@ -19,6 +19,9 @@ import org.springframework.social.connect.mem.InMemoryUsersConnectionRepository
 import org.springframework.social.google.api.Google
 import org.springframework.social.google.connect.GoogleConnectionFactory
 import java.util.*
+import org.springframework.social.connect.web.ReconnectFilter
+import org.springframework.social.UserIdSource
+import org.springframework.social.connect.UsersConnectionRepository
 
 @Configuration
 @EnableSocial
@@ -38,6 +41,10 @@ class StatelessSocialConfig(
 
     override fun getUsersConnectionRepository(connectionFactoryLocator: ConnectionFactoryLocator) =
         SimpleUsersConnectionRepository(userService, connectionFactoryLocator, autoSignUpHandler)
+
+    @Bean
+    fun apiExceptionHandler(usersConnectionRepository: UsersConnectionRepository, userIdSource: UserIdSource): ReconnectFilter =
+        ReconnectFilter(usersConnectionRepository, userIdSource)
 
     @Bean
     @Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
