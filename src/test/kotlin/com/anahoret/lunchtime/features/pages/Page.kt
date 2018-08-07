@@ -8,11 +8,6 @@ import org.openqa.selenium.By
 abstract class Page(val fluentTest: FluentTest) {
     val fluentUtils: FluentUtils = FluentUtils(fluentTest.defaultDriver)
 
-    fun loginAndNavigate(email: String = BaseFeatureTest.ADMIN_EMAIL, password: String = BaseFeatureTest.ADMIN_PASSWORD) {
-        loginWith(email, password)
-        navigate()
-    }
-
     abstract fun navigate()
 
     fun navigate(linkSelector: String) {

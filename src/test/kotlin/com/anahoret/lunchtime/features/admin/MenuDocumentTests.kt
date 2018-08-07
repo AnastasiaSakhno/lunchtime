@@ -15,7 +15,7 @@ class MenuDocumentTests : BaseFeatureTest() {
 
     @Before
     fun loginAndNavigate() {
-        menuDocumentsPage.loginAndNavigate()
+        menuDocumentsPage.navigate()
 
         fluentUtils.waitFor { cssSelector(MENU_DOCUMENTS_CONTAINER) }
     }

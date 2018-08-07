@@ -7,15 +7,21 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.openqa.selenium.By.cssSelector
 import org.openqa.selenium.By.xpath
+import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
+@TestPropertySource(properties = [
+    "username=ask@anadeainc.com",
+    "displayName=App Admin",
+    "role=ADMIN"
+])
 class RestaurantsTests : BaseFeatureTest() {
-    private val restaurantsPage= rootPage.getRestaurantsPage()
+    private val restaurantsPage = rootPage.getRestaurantsPage()
 
     @Before
     fun loginAndNavigate() {
-        restaurantsPage.loginAndNavigate()
+        restaurantsPage.navigate()
 
         fluentUtils.waitFor { cssSelector("table") }
     }
@@ -41,7 +47,6 @@ class RestaurantsTests : BaseFeatureTest() {
 
     override fun setupInitialData() {
         super.setupInitialData()
-        createUser(FIRST_REGULAR_USER_FULL_NAME, FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD_ENCRYPTED, Role.ROLE_REGULAR)
         createRestaurant(1, "Loft", "пр. Яворницкого, 50", false)
         createRestaurant(2, "LeGrand", "пр. Яворницкого, 50", false)
         createRestaurant(3, "Primus", "ул. Баррикадная, 1", false)

@@ -16,9 +16,4 @@ class MenuTests : BaseFeatureTest() {
         fluentUtils.waitFor { cssSelector(NEXT_WEEK_LINK_SELECTOR) }
         assertThat(find(RestaurantsPage.LINK_SELECTOR)).isEmpty()
     }
-
-    override fun setupInitialData() {
-        super.setupInitialData()
-        createUser(FIRST_REGULAR_USER_FULL_NAME, FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD_ENCRYPTED, Role.ROLE_REGULAR)
-    }
 }

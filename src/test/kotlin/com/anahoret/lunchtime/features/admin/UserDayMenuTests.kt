@@ -9,9 +9,17 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.openqa.selenium.By.cssSelector
 import org.openqa.selenium.By.xpath
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
+//@DataJpaTest
+@TestPropertySource(properties = [
+    "username=ask@anadeainc.com",
+    "displayName=App Admin",
+    "role=ADMIN"
+])
 class UserDayMenuTests : BaseFeatureTest() {
     @Before
     fun loginAndNavigate() {
@@ -71,7 +79,7 @@ class UserDayMenuTests : BaseFeatureTest() {
 
     override fun setupInitialData() {
         super.setupInitialData()
-        val user = createUser(FIRST_REGULAR_USER_FULL_NAME, FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD_ENCRYPTED, Role.ROLE_REGULAR)
+        val user = userRepository.findByUsername("aaa@anadeainc.com")!!
         val loft = createRestaurant(1, "Loft", "пр. Яворницкого, 50", false)
         val leGrand = createRestaurant(2, "LeGrand", "пр. Яворницкого, 50", false)
         createMenu(1, "None", null, false, null)

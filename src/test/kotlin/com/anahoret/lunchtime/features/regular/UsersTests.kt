@@ -11,15 +11,9 @@ import org.springframework.test.context.junit4.SpringRunner
 class UsersTests : BaseFeatureTest() {
     @Test
     fun canViewOnly() {
-        rootPage.getUsersPage()
-            .loginAndNavigate(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
+        rootPage.getUsersPage().navigate()
 
         assertThat(find(TABLE_ROW_SELECTOR).count()).isEqualTo(2)
         assertThat(find(UsersPage.FORM_SELECTOR)).isEmpty()
-    }
-
-    override fun setupInitialData() {
-        super.setupInitialData()
-        createUser(FIRST_REGULAR_USER_FULL_NAME, FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD_ENCRYPTED, Role.ROLE_REGULAR)
     }
 }

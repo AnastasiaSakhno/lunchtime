@@ -3,20 +3,19 @@ package com.anahoret.lunchtime.features
 import com.anahoret.lunchtime.DatabaseCleanupService
 import com.anahoret.lunchtime.FluentUtils
 import com.anahoret.lunchtime.LunchtimeApplication
-import com.anahoret.lunchtime.domain.*
-import com.anahoret.lunchtime.features.common.UserDayMenuTests
+import com.anahoret.lunchtime.domain.Menu
+import com.anahoret.lunchtime.domain.Restaurant
+import com.anahoret.lunchtime.domain.User
+import com.anahoret.lunchtime.domain.UserDayMenu
 import com.anahoret.lunchtime.features.pages.RootPage
 import com.anahoret.lunchtime.repositories.MenuRepository
 import com.anahoret.lunchtime.repositories.RestaurantRepository
 import com.anahoret.lunchtime.repositories.UserDayMenuRepository
 import com.anahoret.lunchtime.repositories.UserRepository
 import io.github.bonigarcia.wdm.ChromeDriverManager
-import org.apache.commons.lang3.time.DateFormatUtils
 import org.fluentlenium.adapter.FluentTest
 import org.joda.time.LocalDate
 import org.junit.Before
-import org.openqa.selenium.By.cssSelector
-import org.openqa.selenium.By.xpath
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.springframework.beans.factory.annotation.Autowired
@@ -27,7 +26,7 @@ import org.springframework.test.context.ActiveProfiles
 
 
 @SpringBootTest(classes = [LunchtimeApplication::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@WithMockUser(username = "admin", roles = ["ADMIN"])
+@WithMockUser(username = "ask@anadeainc.com", authorities = ["ADMIN", "REGULAR"])
 @ActiveProfiles("test")
 abstract class BaseFeatureTest : FluentTest() {
     @Value("\${local.server.port}")
@@ -37,7 +36,7 @@ abstract class BaseFeatureTest : FluentTest() {
     private lateinit var truncateDatabaseService: DatabaseCleanupService
 
     @Autowired
-    private lateinit var userRepository: UserRepository
+    protected lateinit var userRepository: UserRepository
 
     @Autowired
     protected lateinit var restaurantRepository: RestaurantRepository
@@ -56,27 +55,18 @@ abstract class BaseFeatureTest : FluentTest() {
     protected val rootPage: RootPage = RootPage(this, serverPort)
     protected val fluentUtils: FluentUtils = rootPage.fluentUtils
 
+
     override fun getDefaultDriver() = webDriver
 
     @Before
     fun goToBaseUrl() {
         truncateDatabaseService.truncate()
         setupInitialData()
+
         goTo("http://localhost:$serverPort")
     }
 
-    fun setupInitialData() {
-        createUser(ADMIN_FULL_NAME, ADMIN_EMAIL, ADMIN_PASSWORD_ENCRYPTED, Role.ROLE_ADMIN)
-    }
-
-    fun createUser(fullName: String, email: String, password: String, role: Role): User {
-        val user = User()
-        user.role = role
-        user.email = email
-        user.password = password
-        user.fullName = fullName
-        return userRepository.save(user)
-    }
+    fun setupInitialData(){}
 
     fun createRestaurant(id: Long, name: String, address: String, archive: Boolean) =
         restaurantRepository.save(Restaurant(id, name, address, archive))

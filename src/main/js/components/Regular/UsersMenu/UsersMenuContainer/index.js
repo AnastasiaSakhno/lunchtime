@@ -13,7 +13,7 @@ import UsersMenuDestroyButton from '../UsersMenuActions/UsersMenuDestroyButton'
 import selectors from '../../../../selectors'
 import {webSocket, sendMessage, CHANGE_UDM_MESSAGE, CHANGE_DAY_STATUS_MESSAGE} from '../../../../utils/webSocket'
 
-@withNeededStores(['menu', 'users'])
+@withNeededStores(['restaurants', 'menu', 'users'])
 @withRedirectToLogin
 class UsersMenuContainer extends PureComponent {
   static propTypes = {

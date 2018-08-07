@@ -13,8 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner
 class MenuDocumentTests : BaseFeatureTest() {
     @Before
     fun loginAndNavigate() {
-        rootPage.getMenuDocumentsPage()
-            .loginAndNavigate(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
+        rootPage.getMenuDocumentsPage().navigate()
 
         fluentUtils.waitFor { cssSelector(MENU_DOCUMENTS_CONTAINER) }
     }
@@ -26,7 +25,6 @@ class MenuDocumentTests : BaseFeatureTest() {
 
     override fun setupInitialData() {
         super.setupInitialData()
-        createUser(FIRST_REGULAR_USER_FULL_NAME, FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD_ENCRYPTED, Role.ROLE_REGULAR)
         createRestaurant(1, "Loft", "пр. Яворницкого, 50", false)
     }
 }
