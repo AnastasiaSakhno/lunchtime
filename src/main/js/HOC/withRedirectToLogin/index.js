@@ -24,7 +24,7 @@ const withRedirectToLogin = (WrappedComponent) => {
             window.location.href = '/auth/google'
           }
         }
-      }, 5000)
+      }, 1000)
     }
 
     render = () =>
