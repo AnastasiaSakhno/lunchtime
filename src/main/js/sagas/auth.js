@@ -16,7 +16,7 @@ export const loadUser = sessionService.loadUser
 export function* saveAuthData({authToken}) {
   const response = yield call(get, USER_DETAILS_URI, authToken)
 
-  if(response.id) {
+  if(response.accountEmail) {
     const data = {token: authToken, email: response.accountEmail}
     yield call(saveSession, data)
     yield call(saveUser, data)

@@ -11,11 +11,7 @@ import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
-@TestPropertySource(properties = [
-    "username=ask@anadeainc.com",
-    "displayName=App Admin",
-    "role=ADMIN"
-])
+@TestPropertySource(properties = ["username=admin@anadeainc.com"])
 class RestaurantsTests : BaseFeatureTest() {
     private val restaurantsPage = rootPage.getRestaurantsPage()
 

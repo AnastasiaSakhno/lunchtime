@@ -3,10 +3,8 @@ package com.anahoret.lunchtime.features
 import com.anahoret.lunchtime.DatabaseCleanupService
 import com.anahoret.lunchtime.FluentUtils
 import com.anahoret.lunchtime.LunchtimeApplication
-import com.anahoret.lunchtime.domain.Menu
-import com.anahoret.lunchtime.domain.Restaurant
-import com.anahoret.lunchtime.domain.User
-import com.anahoret.lunchtime.domain.UserDayMenu
+import com.anahoret.lunchtime.config.JwtConfig
+import com.anahoret.lunchtime.domain.*
 import com.anahoret.lunchtime.features.pages.RootPage
 import com.anahoret.lunchtime.repositories.MenuRepository
 import com.anahoret.lunchtime.repositories.RestaurantRepository
@@ -47,6 +45,9 @@ abstract class BaseFeatureTest : FluentTest() {
     @Autowired
     protected lateinit var userDayMenuRepository: UserDayMenuRepository
 
+    @Autowired
+    private lateinit var jwtConfig: JwtConfig
+
     init {
         ChromeDriverManager.getInstance().setup()
     }
@@ -66,7 +67,20 @@ abstract class BaseFeatureTest : FluentTest() {
         goTo("http://localhost:$serverPort")
     }
 
-    fun setupInitialData(){}
+    fun setupInitialData(){
+        createUser(ADMIN_EMAIL, ADMIN_FULL_NAME, setOf(UserRole.ADMIN, UserRole.REGULAR))
+    }
+
+    fun createUser(email: String, fullName: String, roles: Set<UserRole>) =
+        userRepository.save(User().also {
+            it.fullName = fullName
+            it.setUsername(email)
+            it.providerId = "google"
+            it.providerUserId = "123"
+            it.accessToken = "token"
+            it.expires = System.currentTimeMillis() + jwtConfig.expirationTime
+            it.roles = roles
+        })
 
     fun createRestaurant(id: Long, name: String, address: String, archive: Boolean) =
         restaurantRepository.save(Restaurant(id, name, address, archive))
@@ -79,16 +93,10 @@ abstract class BaseFeatureTest : FluentTest() {
 
     companion object {
         const val ADMIN_EMAIL = "admin@anadeainc.com"
-        const val ADMIN_PASSWORD = "admin"
-        const val ADMIN_PASSWORD_ENCRYPTED = "\$2a\$12\$6yiK4/ar7AfbL/VAjJd1M.u4SC5NHTwEvNfhCQLh.2ktmxUstEZJu"
         const val ADMIN_FULL_NAME = "App Admin"
         const val FIRST_REGULAR_USER_EMAIL = "test1@anadeainc.com"
-        const val FIRST_REGULAR_USER_PASSWORD = "some_password1"
-        const val FIRST_REGULAR_USER_PASSWORD_ENCRYPTED = "\$2a\$12\$z3GvA.LKJENQtVjvLZFoguCVNrJsx/Wr/xkuu7AAicVtA7qrLuCZW"
         const val FIRST_REGULAR_USER_FULL_NAME = "Иван Иванов"
         const val SECOND_REGULAR_USER_EMAIL = "test2@anadeainc.com"
-        const val SECOND_REGULAR_USER_PASSWORD = "some_password1"
-        const val SECOND_REGULAR_USER_PASSWORD_ENCRYPTED = "\$2a\$12\$z3GvA.LKJENQtVjvLZFoguCVNrJsx/Wr/xkuu7AAicVtA7qrLuCZW"
         const val SECOND_REGULAR_USER_FULL_NAME = "Пётр Петров"
         const val NEW_EMAIL = "some_new_email@anadeainc.com"
         const val NEW_PASSWORD = "some_password1"

@@ -1,6 +1,5 @@
 package com.anahoret.lunchtime.config
 
-import com.anahoret.lunchtime.web.interceptors.LoginInterceptor
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer
 import org.springframework.boot.web.servlet.ErrorPage
 import org.springframework.context.annotation.Bean
