@@ -57,9 +57,6 @@ class WebSecurityConfig(
             //allow anonymous GETs to API
             .mvcMatchers(HttpMethod.GET, "/api/**").permitAll()
 
-            //defined Admin only API area
-            .mvcMatchers("/admin/**").hasRole("ADMIN")
-
             // add custom authentication filter for complete stateless JWT based authentication
             .and().addFilterBefore(statelessAuthenticationFilter, AbstractPreAuthenticatedProcessingFilter::class.java)
 
