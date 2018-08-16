@@ -9,10 +9,8 @@ import org.springframework.data.repository.query.Param
 import org.springframework.data.rest.core.annotation.RestResource
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 
-@Repository("userDayMenus")
 interface UserDayMenuRepository : CrudRepository<UserDayMenu, Long> {
 
     @Query("select udm from UserDayMenu udm where udm.date between :from and :to")
