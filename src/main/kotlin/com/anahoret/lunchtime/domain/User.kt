@@ -27,8 +27,7 @@ class User : SocialUserDetails {
     @JsonIgnore
     var providerUserId: String? = null
 
-    @NotNull
-    @JsonIgnore
+    @Transient
     var accessToken: String? = null
 
     @NotNull
@@ -84,18 +83,14 @@ class User : SocialUserDetails {
 
     fun grantRole(role: UserRole) {
         if (authorities == null) {
-            authorities = HashSet<UserAuthority>()
+            authorities = HashSet()
         }
         authorities!!.add(role.asAuthorityFor(this))
     }
 
-    fun revokeRole(role: UserRole) {
-        if (authorities != null) {
-            authorities!!.remove(role.asAuthorityFor(this))
-        }
-    }
+    fun revokeRole(role: UserRole) = authorities?.remove(role.asAuthorityFor(this))
 
-    fun hasRole(role: UserRole) = authorities!!.contains(role.asAuthorityFor(this))
+    fun hasRole(role: UserRole) = authorities?.contains(role.asAuthorityFor(this))
 
     @JsonIgnore
     override fun isAccountNonExpired() = !accountExpired

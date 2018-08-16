@@ -1,4 +1,3 @@
--- -- password - admin
--- INSERT INTO users (username, provider_id, provider_user_id, role)
---   VALUES
---     ('ask@anadeainc.com', 'google', '117707368458654553505', 'Anastasiia Sakhno', 'ROLE_ADMIN');
+INSERT INTO users (username, full_name, provider_id, provider_user_id)
+  VALUES
+    ('ask@anadeainc.com', 'Анастасия Сахно', 'google', '117707368458654553505');

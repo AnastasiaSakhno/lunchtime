@@ -38,11 +38,6 @@ class UserService(private val userRepository: UserRepository) : SocialUserServic
         userRepository.save(found)
     }
 
-    private fun checkUser(user: User?): User {
-        if (user == null) {
-            throw UsernameNotFoundException("user not found")
-        }
-        detailsChecker().check(user)
-        return user
-    }
+    private fun checkUser(user: User?): User =
+        user?.apply { detailsChecker().check(user) } ?: throw UsernameNotFoundException("user not found")
 }
