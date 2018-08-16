@@ -8,7 +8,10 @@ import org.springframework.social.security.SocialUserDetailsService
 interface SocialUserService : SocialUserDetailsService, UserDetailsService {
 
     fun loadUserByConnectionKey(connectionKey: ConnectionKey): User
+
     override fun loadUserByUserId(userId: String): User
+
     override fun loadUserByUsername(username: String): User
+
     fun updateUserDetails(user: User)
 }

@@ -1,4 +1,4 @@
-package com.anahoret.lunchtime.features.interceptors
+package com.anahoret.lunchtime.features.web.interceptors
 
 import com.anahoret.lunchtime.config.JwtConfig
 import com.anahoret.lunchtime.web.interceptors.LoginInterceptor
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse
 
 @Component
 @Profile("test")
-class TestLoginInterceptor(private val jwtConfig: JwtConfig) : LoginInterceptor {
+class TestLoginInterceptor(private val jwtConfig: JwtConfig) : LoginInterceptor() {
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         val url = request.requestURI
         if(url.contains(AUTH_REGEX)) {

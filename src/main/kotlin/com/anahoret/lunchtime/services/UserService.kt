@@ -17,19 +17,16 @@ class UserService(private val userRepository: UserRepository) : SocialUserServic
     @Bean
     fun detailsChecker() = AccountStatusUserDetailsChecker()
 
-    @Transactional(readOnly = true)
     override fun loadUserByUserId(userId: String): User {
         val user = userRepository.findById(java.lang.Long.valueOf(userId))
         return checkUser(user)
     }
 
-    @Transactional(readOnly = true)
     override fun loadUserByUsername(username: String): User {
         val user = userRepository.findByUsername(username)
         return checkUser(user)
     }
 
-    @Transactional(readOnly = true)
     override fun loadUserByConnectionKey(connectionKey: ConnectionKey): User {
         val user = userRepository.findByProviderIdAndProviderUserId(connectionKey.providerId, connectionKey.providerUserId)
         return checkUser(user)

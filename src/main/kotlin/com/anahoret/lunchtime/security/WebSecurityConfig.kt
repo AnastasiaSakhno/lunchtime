@@ -25,10 +25,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @Configuration
 @Order(1)
 class WebSecurityConfig(
-    private val userService: SocialUserService,
-    private val userIdSource: UserIdSource,
-    private val statelessAuthenticationFilter: StatelessAuthenticationFilter,
-    private val socialAuthenticationSuccessHandler: SocialAuthenticationSuccessHandler) : WebSecurityConfigurerAdapter() {
+    val userService: SocialUserService,
+    val userIdSource: UserIdSource,
+    val statelessAuthenticationFilter: StatelessAuthenticationFilter,
+    val socialAuthenticationSuccessHandler: SocialAuthenticationSuccessHandler) : WebSecurityConfigurerAdapter() {
 
     @Bean
     fun passwordEncoder() = BCryptPasswordEncoder(12)

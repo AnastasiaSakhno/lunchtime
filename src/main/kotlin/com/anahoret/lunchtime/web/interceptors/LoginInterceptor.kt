@@ -1,5 +1,5 @@
 package com.anahoret.lunchtime.web.interceptors
 
-import org.springframework.web.servlet.HandlerInterceptor
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 
-interface LoginInterceptor: HandlerInterceptor
+abstract class LoginInterceptor: HandlerInterceptorAdapter()

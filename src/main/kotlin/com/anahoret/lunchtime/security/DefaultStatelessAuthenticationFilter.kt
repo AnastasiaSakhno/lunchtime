@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest
 
 @Component
 @Profile("default")
-class NormalStatelessAuthenticationFilter(private val tokenAuthenticationService: TokenAuthenticationService) : StatelessAuthenticationFilter() {
+class DefaultStatelessAuthenticationFilter(private val tokenAuthenticationService: TokenAuthenticationService) : StatelessAuthenticationFilter() {
 
     override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
 
