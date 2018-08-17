@@ -53,6 +53,7 @@ class UserDayMenuTests : BaseFeatureTest() {
 
     @Test
     fun takeIntoAccountSpecificWeekDaysMenu() {
+        rootPage.nextWeek()
         assertThat(find("$USER_DAY_MENU_THURSDAY $USER_DAY_MENU_SELECT").find("option").count()).isEqualTo(4)
     }
 

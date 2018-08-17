@@ -23,7 +23,7 @@ import org.springframework.test.context.ActiveProfiles
 
 
 @SpringBootTest(classes = [LunchtimeApplication::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@WithMockUser(username = "ask@anadeainc.com", authorities = ["ADMIN", "REGULAR"])
+@WithMockUser(username = "admin", roles = ["ADMIN"])
 @ActiveProfiles("test")
 abstract class BaseFeatureTest : FluentTest() {
     @Value("\${local.server.port}")
