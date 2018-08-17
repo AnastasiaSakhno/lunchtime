@@ -23,7 +23,6 @@ class AutoSignUpHandler(
             it.fullName = profile.name
             it.providerId = connection.key.providerId
             it.providerUserId = connection.key.providerUserId
-            it.accessToken = connection.createData().accessToken
             grantRoles(it)
             userRepository.save(it)
         }.userId
