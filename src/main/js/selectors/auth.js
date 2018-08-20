@@ -1,1 +1,1 @@
-export const getCurrentUser = (state) => state.users.find((u) => (u.email === state.session.user.email))
+export const getCurrentUser = (state) => state.users.find((u) => (u.username === state.session.user.email))

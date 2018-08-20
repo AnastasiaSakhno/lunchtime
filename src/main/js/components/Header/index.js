@@ -1,11 +1,14 @@
 import React, {Component} from 'react'
-import {bool} from 'prop-types'
+import {bool, string, func} from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem} from 'reactstrap'
 
-import LogoutLink from '../LogoutLink'
-import {UsersHeaderLink, MenuHeaderLink, MenuDocumentsHeaderLink, RestaurantsHeaderLink} from './HeaderLink'
+import {
+  UsersHeaderLink, MenuHeaderLink, MenuDocumentsHeaderLink, RestaurantsHeaderLink,
+  AuthBranched
+} from './HeaderLink'
+import actions from '../../actions'
 
 const defaultState = {
   isOpen: false
@@ -35,7 +38,11 @@ class Header extends Component {
             <RestaurantsHeaderLink path='/admin/restaurants' name='Restaurants'/>
             <MenuHeaderLink path='/admin/menu' name='Menu'/>
             <MenuDocumentsHeaderLink path='/admin/menu_documents' name='Menu documents'/>
-            {this.props.authenticated ? <NavItem><LogoutLink/></NavItem> : ''}
+            <NavItem>
+              <AuthBranched
+                authenticated={this.props.authenticated}
+                saveAuthData={this.props.saveAuthData}/>
+            </NavItem>
           </Nav>
         </Collapse>
       </Navbar>
@@ -46,11 +53,16 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  authenticated: bool.isRequired
+  authenticated: bool.isRequired,
+  saveAuthData: func.isRequired
 }
 
 const mapStateToProps = (state) => ({
   authenticated: state.session.authenticated
 })
 
-export default connect(mapStateToProps)(Header)
+const mapDispatchToProps = (dispatch) => ({
+  saveAuthData: (authToken) => dispatch(actions.auth.saveAuthData(authToken))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

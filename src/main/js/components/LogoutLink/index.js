@@ -5,18 +5,18 @@ import {Link} from 'react-router-dom'
 
 import {logout} from '../../actions/auth'
 
-const LogoutLink = ({logout}) => (
-  <Link onClick={logout} className='nav-link logout' to='#'>Logout</Link>
-)
+const LogoutLink = ({logout}) => {
+  return (
+    <Link onClick={logout} className='nav-link logout' to='#'>Logout</Link>
+  )
+}
 
 LogoutLink.propTypes = ({
   logout: func.isRequired
 })
 
 const mapDispatchToProps = dispatch => ({
-  logout: () => {
-    dispatch(logout())
-  }
+  logout: () => dispatch(logout())
 })
 
 export default connect(null, mapDispatchToProps)(LogoutLink)

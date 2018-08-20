@@ -7,15 +7,17 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.openqa.selenium.By.cssSelector
 import org.openqa.selenium.By.xpath
+import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
+@TestPropertySource(properties = ["username=admin@anadeainc.com"])
 class MenuDocumentTests : BaseFeatureTest() {
     private val menuDocumentsPage= rootPage.getMenuDocumentsPage()
 
     @Before
-    fun loginAndNavigate() {
-        menuDocumentsPage.loginAndNavigate()
+    fun init() {
+        menuDocumentsPage.navigate()
 
         fluentUtils.waitFor { cssSelector(MENU_DOCUMENTS_CONTAINER) }
     }

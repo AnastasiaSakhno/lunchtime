@@ -27,7 +27,7 @@ export const cancanUser = (currentUser) => {
   if (!currentUser) {
     return new GuestUser()
   }
-  return currentUser.role === 'ROLE_ADMIN' ? new AdminUser() : new RegularUser({user: currentUser})
+  return currentUser.roles.includes('ADMIN') ? new AdminUser() : new RegularUser({user: currentUser})
 }
 
 const canManageDayByTime = (udm) => moment(formattedDate(udm.props.date)).diff(moment(), 'days') >= 0

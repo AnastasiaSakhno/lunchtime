@@ -1,9 +1,11 @@
 CREATE TABLE users (
   id BIGSERIAL PRIMARY KEY,
-  email VARCHAR(50) UNIQUE,
-  password VARCHAR(255),
+  username VARCHAR(50) UNIQUE,
   full_name VARCHAR(100),
-  role VARCHAR(50)
+  provider_id VARCHAR(50),
+  provider_user_id VARCHAR(50),
+  account_enabled BOOL NOT NULL DEFAULT TRUE,
+  account_expired BOOL NOT NULL DEFAULT FALSE,
+  account_locked BOOL NOT NULL DEFAULT FALSE,
+  credentials_expired BOOL NOT NULL DEFAULT FALSE
 );
-
-CREATE UNIQUE INDEX users_email_uindex ON users (email);

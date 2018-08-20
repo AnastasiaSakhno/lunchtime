@@ -1,38 +1,45 @@
-import {takeEvery, put, call} from 'redux-saga/effects'
+import {takeLatest, put, call} from 'redux-saga/effects'
+import {sessionService} from 'redux-react-session'
+
 import * as actionTypes from '../actions/types'
 import actions from '../actions'
-import {sessionService} from 'redux-react-session'
-import {getSession} from '../utils/rest'
+import {delCoockie} from '../utils/document'
+import {get} from '../utils/rest'
+import {USER_DETAILS_URI} from '../utils/api'
 
 export const deleteSession = sessionService.deleteSession
+export const deleteUser = sessionService.deleteUser
 export const saveSession = sessionService.saveSession
 export const saveUser = sessionService.saveUser
+export const loadUser = sessionService.loadUser
 
+export function* saveAuthData({authToken}) {
+  const response = yield call(get, USER_DETAILS_URI, authToken)
 
-export function* login({user}) {
-  let data = yield call(getSession, {...user})
-  if (data.status === 200) {
-    yield put(actions.auth.loggedInSuccessfully({ email: user.email, ...data }))
+  if(response.accountEmail) {
+    const data = {token: authToken, email: response.accountEmail}
+    yield call(saveSession, data)
+    yield call(saveUser, data)
+    yield put(actions.auth.loggedInSuccessfully({
+      token: authToken,
+      fullName: response.displayName,
+      email: response.accountEmail
+    }))
   } else {
-    yield put(actions.auth.loginFailed(data.status === 401 ? 'Bad credentials' : 'Server error'))
+    yield put(actions.auth.loginFailed(response.message))
+    yield put(actions.auth.logout())
   }
 }
 
-export function* loggedInSuccessfully({ data }) {
-  yield call(saveSession, {token: data.auth_token})
-  yield call(saveUser, data)
-}
-
 export function* logout() {
-  yield call(saveUser, null)
-  yield call(saveSession, null)
+  delCoockie('AUTH-TOKEN')
+  yield call(deleteUser)
   yield call(deleteSession)
 }
 
 export default function* watchAuth() {
   yield [
-    takeEvery(actionTypes.LOGIN, login),
-    takeEvery(actionTypes.LOGIN_SUCCESS, loggedInSuccessfully),
-    takeEvery(actionTypes.LOGOUT, logout)
+    takeLatest(actionTypes.SAVE_AUTH_DATA, saveAuthData),
+    takeLatest(actionTypes.LOGOUT, logout)
   ]
 }

@@ -10,12 +10,6 @@ const users = (state = initialState, action) => {
     let usersList = removeCollectionProjection(action, 'users')
     return [...usersList]
 
-  case actionTypes.USER_ADDED_SUCCESSFULLY:
-    return [
-      ...state,
-      action.user
-    ]
-
   default:
     return state
   }

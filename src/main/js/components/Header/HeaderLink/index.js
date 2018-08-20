@@ -3,7 +3,9 @@ import {string, object} from 'prop-types'
 import {Link} from 'react-router-dom'
 import {NavItem} from 'reactstrap'
 
+import LogoutLink from '../../LogoutLink'
 import cancanBranch from '../../../HOC/branch/cancanBranch'
+import authBranch from '../../../HOC/branch/authBranch'
 import {Menu, MenuDocument, Restaurant, User} from '../../abilities'
 
 class PureHeaderLink extends Component {
@@ -35,3 +37,7 @@ export const RestaurantsHeaderLink = headerLink(Restaurant)
 export const MenuHeaderLink = headerLink(Menu)
 export const UsersHeaderLink = headerLink(User)
 export const MenuDocumentsHeaderLink = headerLink(MenuDocument)
+
+export const AuthBranched = authBranch({
+  LogoutComponent: LogoutLink
+})()

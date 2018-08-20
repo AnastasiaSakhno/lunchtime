@@ -1,13 +1,8 @@
 import * as actionTypes from './types'
 
-export const login = (user) => ({
-  type: actionTypes.LOGIN,
-  user
-})
-
-export const loggedInSuccessfully = (data) => ({
-  type: actionTypes.LOGIN_SUCCESS,
-  data
+export const saveAuthData = (authToken) => ({
+  type: actionTypes.SAVE_AUTH_DATA,
+  authToken
 })
 
 export const loginFailed = (error) => ({
@@ -15,10 +10,20 @@ export const loginFailed = (error) => ({
   error
 })
 
+export const loggedInSuccessfully = (data) => ({
+  type: actionTypes.LOGGED_IN_SUCCESSFULLY,
+  data
+})
+
+export const googleAuthFailed = (data) => ({
+  type: actionTypes.GOOGLE_AUTH_FAILED,
+  data
+})
+
 export const logout = () => ({
   type: actionTypes.LOGOUT
 })
 
-export const logoutSuccess = () => ({
-  type: actionTypes.LOGOUT_SUCCESS
+export const logoutSuccessfully = () => ({
+  type: actionTypes.LOGOUT_SUCCESSFULLY
 })

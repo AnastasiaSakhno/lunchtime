@@ -1,5 +1,3 @@
-import Login from './Login'
-import SignUp from './SignUp'
 import {RestaurantsContainer} from './Admin/Restaurants'
 import {MenuContainer} from './Admin/Menu'
 import {MenuDocumentsContainer} from './Admin/MenuDocuments'
@@ -11,14 +9,6 @@ const routes = [
     path: '/',
     exact: true,
     component: UsersMenuContainer
-  },
-  {
-    path: '/login',
-    component: Login
-  },
-  {
-    path: '/signup',
-    component: SignUp
   },
   {
     path: '/admin/restaurants',

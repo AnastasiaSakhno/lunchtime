@@ -2,7 +2,6 @@ import mammoth from 'mammoth'
 
 import {LOGIN_URI, USERS_MENU_URI, USERS_URI, MENU_DOCUMENTS_UPLOAD_URI, USERS_MENU_CUSTOM_URI} from './api'
 import {weekDateFormattedFromObject} from './date'
-import decode from 'jwt-decode'
 
 export const apiCall = (path, options) => (
   fetch(path, options)
@@ -15,20 +14,24 @@ export const post = (path, authToken, data = {}) => apiCall(path, {
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json; charset=utf-8',
-    Authorization: authToken
+    'X-AUTH-TOKEN': authToken
   },
   body: JSON.stringify(data)
 })
 
-export const get = path => apiCall(path, {
-  method: 'GET'
+export const get = (path, authToken) => apiCall(path, {
+  method: 'GET',
+  headers: {
+    Accept: 'application/json',
+    'X-AUTH-TOKEN': authToken
+  }
 })
 
 export const del = (path, authToken) => apiCall(path, {
   method: 'DELETE',
   headers: {
     Accept: 'application/json',
-    Authorization: authToken
+    'X-AUTH-TOKEN': authToken
   }
 })
 
@@ -37,7 +40,7 @@ export const put = (path, authToken, data) => apiCall(path, {
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json; charset=utf-8',
-    Authorization: authToken
+    'X-AUTH-TOKEN': authToken
   },
   body: JSON.stringify(data)
 })
@@ -62,7 +65,7 @@ export const postMenuDocument = (md, user) => {
     method: 'POST',
     body: formData,
     headers: {
-      Authorization: user.auth_token
+      'X-AUTH-TOKEN': user.auth_token
     }
   })
 }
@@ -72,7 +75,7 @@ export const putUserDayMenu = (authToken, udm) => fetch(`${USERS_MENU_URI}/${udm
   headers: {
     Accept: 'application/json',
     'Content-Type': 'text/uri-list',
-    Authorization: authToken
+    'X-AUTH-TOKEN': authToken
   },
   body: udm.menu
 }).then(r => ({
@@ -83,7 +86,7 @@ export const deleteUserDayMenuTill = (authToken, tillDate) =>
   fetch(`${USERS_MENU_CUSTOM_URI}?tillDate=${weekDateFormattedFromObject(tillDate, 1)}`, {
     method: 'DELETE',
     headers: {
-      Authorization: authToken
+      'X-AUTH-TOKEN': authToken
     }
   }).then(r => ({
     status: r.status
@@ -94,12 +97,12 @@ export const getSession = (data) => fetch(LOGIN_URI, {
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json; charset=utf-8',
-    'Access-Control-Expose-Headers': 'Authorization'
+    'Access-Control-Expose-Headers': 'X-AUTH-TOKEN'
   },
   body: JSON.stringify(data)
 }).then(r => ({
   status: r.status,
-  auth_token: r.headers.get('Authorization')
+  auth_token: r.headers.get('X-AUTH-TOKEN')
 }))
 
 export const signUp = (user) => fetch(USERS_URI, {
@@ -114,11 +117,23 @@ export const signUp = (user) => fetch(USERS_URI, {
 }))
 
 
+const fromBase64 = (urlsafeBase64) => {
+  let url = urlsafeBase64.replace('-', '+').replace('_', '/')
+  const rest = url.length % 4
+  if (rest !== 0) {
+    url = url + ((rest === 3) ? '=' : '==')
+  }
+  return atob(url)
+}
+
 export const isTokenExpired = (token) => {
   try {
-    const decoded = decode(token)
-    return decoded.exp < Date.now() / 1000
+    const parts = token.split('.')
+    const userBytes = fromBase64(parts[0])
+    const user = JSON.parse(JSON.parse(JSON.stringify(userBytes)))
+    return user.expires < Date.now() / 1000
   } catch (err) {
+    console.log(`error '${err}' occurred while decoding jwt token=${token}`)
     return true
   }
 }

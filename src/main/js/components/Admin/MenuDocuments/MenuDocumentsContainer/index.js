@@ -4,14 +4,12 @@ import {connect} from 'react-redux'
 
 import actions from '../../../../actions'
 import MenuDocumentsList from '../MenuDocumentsList'
-import withHeader from '../../../../HOC/withHeader'
 import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
 import withNeededStores from '../../../../HOC/withNeededStores'
 import selectors from '../../../../selectors'
 
 @withNeededStores(['restaurants', 'menuDocuments'])
 @withRedirectToLogin
-@withHeader
 class MenuDocumentsContainer extends PureComponent {
   static propTypes = {
     submitMenuDocument: func.isRequired,
@@ -38,6 +36,7 @@ class MenuDocumentsContainer extends PureComponent {
     )
   }
 }
+
 const mapStateToProps = (state) => ({
   activeRestaurants: selectors.restaurants.active(state)
 })

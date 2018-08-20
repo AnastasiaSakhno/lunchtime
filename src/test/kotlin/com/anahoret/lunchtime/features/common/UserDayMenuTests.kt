@@ -1,22 +1,22 @@
 package com.anahoret.lunchtime.features.common
 
-import com.anahoret.lunchtime.domain.Role
+import com.anahoret.lunchtime.domain.UserRole
 import com.anahoret.lunchtime.features.BaseFeatureTest
 import org.assertj.core.api.Assertions.assertThat
-import org.joda.time.LocalDate
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.openqa.selenium.By.cssSelector
 import org.openqa.selenium.By.xpath
+import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
+@TestPropertySource(properties = ["username=test1@anadeainc.com"])
 class UserDayMenuTests : BaseFeatureTest() {
     @Before
-    fun loginAndNavigate() {
-        rootPage.loginWith(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD)
-        fluentUtils.waitFor { cssSelector(USERS_MENU_SHEET) }
+    fun init() {
+        fluentUtils.waitFor { cssSelector(USER_DAY_MENU_SELECT) }
     }
 
     @Test
@@ -53,6 +53,7 @@ class UserDayMenuTests : BaseFeatureTest() {
 
     @Test
     fun takeIntoAccountSpecificWeekDaysMenu() {
+        rootPage.nextWeek()
         assertThat(find("$USER_DAY_MENU_THURSDAY $USER_DAY_MENU_SELECT").find("option").count()).isEqualTo(4)
     }
 
@@ -65,7 +66,7 @@ class UserDayMenuTests : BaseFeatureTest() {
 
     override fun setupInitialData() {
         super.setupInitialData()
-        createUser(FIRST_REGULAR_USER_FULL_NAME, FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD_ENCRYPTED, Role.ROLE_REGULAR)
+        createUser(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_FULL_NAME, setOf(UserRole.REGULAR))
         val loft = createRestaurant(1, "Loft", "пр. Яворницкого, 50", false)
         val leGrand = createRestaurant(2, "LeGrand", "пр. Яворницкого, 50", false)
         val mendis = createRestaurant(3, "Mendis", "ул. Шолом Алейхема, 4/26", true)

@@ -1,6 +1,3 @@
--- password - admin
-INSERT INTO users (email, password, full_name, role)
+INSERT INTO users (username, full_name, provider_id, provider_user_id)
   VALUES
-    ('admin@anadeainc.com', '$2a$12$6yiK4/ar7AfbL/VAjJd1M.u4SC5NHTwEvNfhCQLh.2ktmxUstEZJu', 'App Admin', 'ROLE_ADMIN'),
-    ('test1@anadeainc.com', '$2a$12$6yiK4/ar7AfbL/VAjJd1M.u4SC5NHTwEvNfhCQLh.2ktmxUstEZJu', 'Иван Иванов', 'ROLE_REGULAR'),
-    ('test2@anadeainc.com', '$2a$12$6yiK4/ar7AfbL/VAjJd1M.u4SC5NHTwEvNfhCQLh.2ktmxUstEZJu', 'Пётр Петров', 'ROLE_REGULAR');
+    ('ask@anadeainc.com', 'Анастасия Сахно', 'google', '117707368458654553505');

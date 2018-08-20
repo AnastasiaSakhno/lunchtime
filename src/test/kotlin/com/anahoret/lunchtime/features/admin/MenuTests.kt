@@ -1,6 +1,5 @@
 package com.anahoret.lunchtime.features.admin
 
-import com.anahoret.lunchtime.domain.Role
 import com.anahoret.lunchtime.features.BaseFeatureTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
@@ -8,15 +7,17 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.openqa.selenium.By.cssSelector
 import org.openqa.selenium.By.xpath
+import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
+@TestPropertySource(properties = ["username=admin@anadeainc.com"])
 class MenuTests : BaseFeatureTest() {
     private val menuPage= rootPage.getMenuPage()
 
     @Before
     fun loginAndNavigate() {
-        menuPage.loginAndNavigate()
+        menuPage.navigate()
 
         fluentUtils.waitFor { cssSelector("table") }
     }
@@ -42,7 +43,6 @@ class MenuTests : BaseFeatureTest() {
 
     override fun setupInitialData() {
         super.setupInitialData()
-        createUser(FIRST_REGULAR_USER_FULL_NAME, FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_PASSWORD_ENCRYPTED, Role.ROLE_REGULAR)
         val loft = createRestaurant(1, "Loft", "пр. Яворницкого, 50", false)
         val leGrand = createRestaurant(2, "LeGrand", "пр. Яворницкого, 50", false)
         val mendis = createRestaurant(3, "Mendis", "ул. Шолом Алейхема, 4/26", true)
