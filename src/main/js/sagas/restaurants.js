@@ -33,10 +33,22 @@ export function* removeRestaurant({ restaurant }) {
   }
 }
 
+export function* restoreRestaurant({ restaurant }) {
+  const user = yield call(loadUser)
+  const newRestaurant = yield call(putRest,
+    `${RESTAURANTS_URI}/${restaurant.id}`,
+    user.auth_token, {...restaurant, archive: false})
+
+  if(newRestaurant.id) {
+    yield put(actions.restaurants.restoredSuccessfully(restaurant))
+  }
+}
+
 export default function* watchRestaurants() {
   yield [
     takeLatest(actionTypes.LOAD_RESTAURANTS, loadRestaurants),
     takeEvery(actionTypes.ADD_RESTAURANT, addRestaurant),
-    takeEvery(actionTypes.REMOVE_RESTAURANT, removeRestaurant)
+    takeEvery(actionTypes.REMOVE_RESTAURANT, removeRestaurant),
+    takeEvery(actionTypes.RESTORE_RESTAURANT, restoreRestaurant)
   ]
 }

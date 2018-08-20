@@ -24,7 +24,8 @@ PureMenu.propTypes = {
     archive: bool
   }),
   archive: bool.isRequired,
-  onDestroy: func.isRequired
+  onDestroy: func.isRequired,
+  onRestore: func.isRequired
 }
 
 export default archiveBranch({

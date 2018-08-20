@@ -28,3 +28,13 @@ export const removedSuccessfully = (menu) => ({
   type: actionTypes.MENU_REMOVED_SUCCESSFULLY,
   menu
 })
+
+export const restore = (menu) => ({
+  type: actionTypes.RESTORE_MENU,
+  menu
+})
+
+export const restoredSuccessfully = (menu) => ({
+  type: actionTypes.MENU_RESTORED_SUCCESSFULLY,
+  menu
+})

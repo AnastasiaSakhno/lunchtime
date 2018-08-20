@@ -1,5 +1,6 @@
 import * as actionTypes from '../actions/types'
 import {removeCollectionProjection} from '../utils/api'
+import {changeArchiveMethod} from './index'
 
 export const initialState = []
 
@@ -16,12 +17,10 @@ const menus = (state = initialState, action) => {
     ]
 
   case actionTypes.MENU_REMOVED_SUCCESSFULLY:
-    return state.map((menu) => {
-      if (menu.id === action.menu.id) {
-        return { ...menu, archive: true }
-      }
-      return menu
-    })
+    return state.map((m) => changeArchiveMethod(m, action.menu.id))
+
+  case actionTypes.MENU_RESTORED_SUCCESSFULLY:
+    return state.map((m) => changeArchiveMethod(m, action.menu.id))
 
   default:
     return state

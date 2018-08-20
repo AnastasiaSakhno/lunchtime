@@ -13,3 +13,11 @@ const reducers = combineReducers({
 })
 
 export default reducers
+
+
+export const changeArchiveMethod = (item, id) => {
+  if (item.id === id) {
+    return { ...item, archive: !item.archive }
+  }
+  return item
+}

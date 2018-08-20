@@ -28,3 +28,13 @@ export const removedSuccessfully = (restaurant) => ({
   type: actionTypes.RESTAURANT_REMOVED_SUCCESSFULLY,
   restaurant
 })
+
+export const restore = (restaurant) => ({
+  type: actionTypes.RESTORE_RESTAURANT,
+  restaurant
+})
+
+export const restoredSuccessfully = (restaurant) => ({
+  type: actionTypes.RESTAURANT_RESTORED_SUCCESSFULLY,
+  restaurant
+})

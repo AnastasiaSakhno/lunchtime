@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/types'
+import {changeArchiveMethod} from './index'
 
 export const initialState = []
 
@@ -14,12 +15,10 @@ const restaurants = (state = initialState, action) => {
     ]
 
   case actionTypes.RESTAURANT_REMOVED_SUCCESSFULLY:
-    return state.map((restaurant) => {
-      if (restaurant.id === action.restaurant.id) {
-        return { ...restaurant, archive: true }
-      }
-      return restaurant
-    })
+    return state.map((r) => changeArchiveMethod(r, action.restaurant.id))
+
+  case actionTypes.RESTAURANT_RESTORED_SUCCESSFULLY:
+    return state.map((r) => changeArchiveMethod(r, action.restaurant.id))
 
   default:
     return state
