@@ -30,6 +30,7 @@ export function* removeRestaurant({ restaurant }) {
 
   if(newRestaurant.id) {
     yield put(actions.restaurants.removedSuccessfully(restaurant))
+    yield put(actions.menu.load())
   }
 }
 
@@ -41,6 +42,7 @@ export function* restoreRestaurant({ restaurant }) {
 
   if(newRestaurant.id) {
     yield put(actions.restaurants.restoredSuccessfully(restaurant))
+    yield put(actions.menu.load())
   }
 }
 

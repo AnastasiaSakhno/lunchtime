@@ -15,7 +15,7 @@ const PureMenuDestroyAction = (props) => {
 PureMenuDestroyAction.propTypes = {
   id: number.isRequired,
   name: string.isRequired,
-  weekDays: string.isRequired,
+  weekDays: string,
   archive: bool.isRequired,
   onDestroy: func.isRequired
 }

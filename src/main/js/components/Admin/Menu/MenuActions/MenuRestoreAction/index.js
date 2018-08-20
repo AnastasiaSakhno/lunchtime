@@ -15,7 +15,7 @@ const PureMenuRestoreAction = (props) => {
 PureMenuRestoreAction.propTypes = {
   id: number.isRequired,
   name: string.isRequired,
-  weekDays: string.isRequired,
+  weekDays: string,
   archive: bool.isRequired,
   onRestore: func.isRequired
 }
