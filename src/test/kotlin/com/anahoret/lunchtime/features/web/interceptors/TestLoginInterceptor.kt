@@ -1,7 +1,11 @@
 package com.anahoret.lunchtime.features.web.interceptors
 
 import com.anahoret.lunchtime.config.JwtConfig
+import com.anahoret.lunchtime.features.web.AuthenticationStub
+import com.anahoret.lunchtime.repositories.UserRepository
+import com.anahoret.lunchtime.services.social.TokenAuthenticationService
 import com.anahoret.lunchtime.web.interceptors.LoginInterceptor
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.ModelAndView
@@ -11,11 +15,17 @@ import javax.servlet.http.HttpServletResponse
 
 @Component
 @Profile("test")
-class TestLoginInterceptor(private val jwtConfig: JwtConfig) : LoginInterceptor() {
+class TestLoginInterceptor(
+    val authenticationStub: AuthenticationStub,
+    val jwtConfig: JwtConfig) : LoginInterceptor() {
+
+    @Value("\${username:admin@anadeainc.com}")
+    private lateinit var username: String
+
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         val url = request.requestURI
         if(url.contains(AUTH_REGEX)) {
-            val token = "eyJpZCI6MSwiZnVsbE5hbWUiOiLQkNC90LDRgdGC0LDRgdC40Y8g0KHQsNGF0L3QviIsInVzZXJuYW1lIjoiYXNrQGFuYWRlYWluYy5jb20iLCJleHBpcmVzIjoxNTM1NzEyODIzMTg1LCJyb2xlcyI6WyJSRUdVTEFSIiwiQURNSU4iXX0.TM7xAhV5Fbtg-vhTA30FpXRdS_5CKnHz03wXyjy0zjU"
+            val token = authenticationStub.authToken()
             response.setHeader("Set-Cookie", "${jwtConfig.cookie}=$token")
             response.sendRedirect("/")
             return false
