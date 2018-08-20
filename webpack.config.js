@@ -30,10 +30,6 @@ module.exports = {
           // use style-loader in development
           fallback: 'style-loader'
         })
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader'
       }
     ]
   },
