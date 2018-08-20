@@ -32,9 +32,9 @@ export function* saveAuthData({authToken}) {
 }
 
 export function* logout() {
-  yield call(deleteSession)
-  yield call(deleteUser)
   delCoockie('AUTH-TOKEN')
+  yield call(deleteUser)
+  yield call(deleteSession)
 }
 
 export default function* watchAuth() {
