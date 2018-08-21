@@ -37,8 +37,16 @@ class RestaurantsTests : BaseFeatureTest() {
 
     @Test
     fun canDelete() {
+        fluentUtils.waitForInvisibility { xpath("//td/del[contains(text(), 'Loft')]") }
         find(".fa-remove").first().click()
         fluentUtils.waitFor { xpath("//td/del[contains(text(), 'Loft')]") }
+    }
+
+    @Test
+    fun canRestore() {
+        fluentUtils.waitFor { xpath("//td/del[contains(text(), 'Mendis')]") }
+        find(".fa-undo").first().click()
+        fluentUtils.waitForInvisibility { xpath("//td/del[contains(text(), 'Mendis')]") }
     }
 
     override fun setupInitialData() {
