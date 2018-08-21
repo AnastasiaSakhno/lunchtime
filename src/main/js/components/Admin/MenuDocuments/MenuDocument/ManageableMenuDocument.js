@@ -28,7 +28,7 @@ const ManageableMenuDocument = ({restaurant, user, uploadedAt, content, onSubmit
         className={`menu-document-form menu-document-form-${restaurant.name.toLowerCase()}`}
         onSubmit={handleSubmit}>
         {text}
-        <input type='file' onChange={onChange}/>
+        <input type='file' onChange={onChange} accept=".docx"/>
         <input type='submit' className='btn btn-dark' value='Upload'/>
       </form>
       <div dangerouslySetInnerHTML={{__html: content}}/>
