@@ -1,11 +1,7 @@
 import React from 'react'
 import {bool, number, string, func} from 'prop-types'
-import {compose} from 'recompose'
 
 import IconButton from '../../../../IconButton'
-import cancanBranch from '../../../../../HOC/branch/cancanBranch'
-import {Menu} from '../../../../abilities'
-import archiveBranch from '../../../../../HOC/branch/archiveBranch'
 
 const PureMenuDestroyAction = (props) => {
   const handleDestroy = (e) => {
@@ -17,19 +13,11 @@ const PureMenuDestroyAction = (props) => {
 }
 
 PureMenuDestroyAction.propTypes = {
-  id: number,
-  name: string,
+  id: number.isRequired,
+  name: string.isRequired,
   weekDays: string,
-  archive: bool,
-  onDestroy: func
+  archive: bool.isRequired,
+  onDestroy: func.isRequired
 }
 
-export default compose(
-  cancanBranch({
-    VerifiableClass: Menu,
-    CanComponent: PureMenuDestroyAction
-  }),
-  archiveBranch({
-    NotArchiveComponent: PureMenuDestroyAction
-  })
-)()
+export default PureMenuDestroyAction

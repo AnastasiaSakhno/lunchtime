@@ -3,9 +3,9 @@ import {string, bool, number, arrayOf, shape, func} from 'prop-types'
 
 import {Restaurant} from '../../Restaurants'
 
-const RestaurantsList = ({data, onDestroy}) => {
+const RestaurantsList = ({data, onDestroy, onRestore}) => {
   const map = data.map((restaurant) => (
-    <Restaurant {...restaurant} key={`restaurant_${restaurant.id}`} onDestroy={onDestroy}/>
+    <Restaurant {...restaurant} key={`restaurant_${restaurant.id}`} onDestroy={onDestroy} onRestore={onRestore}/>
   ))
 
   return (
@@ -33,7 +33,8 @@ RestaurantsList.propTypes = {
       archive: bool
     })
   ).isRequired,
-  onDestroy: func.isRequired
+  onDestroy: func.isRequired,
+  onRestore: func.isRequired
 }
 
 export default RestaurantsList

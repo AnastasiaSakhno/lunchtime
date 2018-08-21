@@ -24,7 +24,8 @@ export function* addMenu({ menu }) {
 
 export function* removeMenu({ menu }) {
   const user = yield call(loadUser)
-  const newMenu = yield call(putRest,
+  const newMenu = yield call(
+    putRest,
     getWithoutProjection(MENU_URI) + '/' + menu.id,
     user.auth_token, {id: menu.id, name: menu.name, weekDays: menu.weekDays, archive: true})
 
@@ -33,10 +34,23 @@ export function* removeMenu({ menu }) {
   }
 }
 
+export function* restoreMenu({ menu }) {
+  const user = yield call(loadUser)
+  const newMenu = yield call(
+    putRest,
+    getWithoutProjection(MENU_URI) + '/' + menu.id,
+    user.auth_token, {id: menu.id, name: menu.name, weekDays: menu.weekDays, archive: false})
+
+  if(newMenu.id) {
+    yield put(actions.menu.restoredSuccessfully(menu))
+  }
+}
+
 export default function* watchMenus() {
   yield [
     takeLatest(actionTypes.LOAD_MENU, loadMenu),
     takeEvery(actionTypes.ADD_MENU, addMenu),
-    takeEvery(actionTypes.REMOVE_MENU, removeMenu)
+    takeEvery(actionTypes.REMOVE_MENU, removeMenu),
+    takeEvery(actionTypes.RESTORE_MENU, restoreMenu)
   ]
 }

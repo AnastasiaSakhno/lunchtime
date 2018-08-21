@@ -1,30 +1,33 @@
 import React from 'react'
-import {string, bool, number, shape} from 'prop-types'
+import {string, bool, number, shape, func} from 'prop-types'
 
-const ArchiveMenu = ({name, restaurant, weekDays}) => (
+import MenuRestoreAction from '../MenuActions/MenuRestoreAction'
+
+const ArchiveMenu = (props) => (
   <tr>
     <td>
-      <del>{restaurant.name}</del>
+      <del>{props.restaurant.name}</del>
     </td>
     <td>
-      <del>{name}</del>
+      <del>{props.name}</del>
     </td>
     <td>
-      <del>{weekDays ? weekDays : 'All'}</del>
+      <del>{props.weekDays ? props.weekDays : 'All'}</del>
     </td>
-    <td/>
+    <td><MenuRestoreAction {...props}/></td>
   </tr>
 )
 
 ArchiveMenu.propTypes = {
-  id: number,
+  id: number.isRequired,
   name: string.isRequired,
   weekDays: string,
   restaurant: shape({
     id: number,
     name: string,
     archive: bool
-  })
+  }),
+  onRestore: func.isRequired
 }
 
 export default ArchiveMenu

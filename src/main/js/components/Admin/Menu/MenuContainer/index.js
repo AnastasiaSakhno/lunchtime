@@ -14,7 +14,8 @@ class MenuContainer extends PureComponent {
     menu: array,
     restaurants: array,
     addMenu: func.isRequired,
-    removeMenu: func.isRequired
+    removeMenu: func.isRequired,
+    restoreMenu: func.isRequired
   }
 
   render = () => (
@@ -22,18 +23,16 @@ class MenuContainer extends PureComponent {
       <MenuForm onSubmit={this.props.addMenu} restaurants={this.props.restaurants}/>
       <MenuList
         data={this.props.menu}
-        onDestroy={this.props.removeMenu}/>
+        onDestroy={this.props.removeMenu}
+        onRestore={this.props.restoreMenu}/>
     </div>
   )
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  addMenu: (menu) => {
-    dispatch(actions.menu.add(menu))
-  },
-  removeMenu: (menu) => {
-    dispatch(actions.menu.remove(menu))
-  }
+  addMenu: (menu) => dispatch(actions.menu.add(menu)),
+  removeMenu: (menu) => dispatch(actions.menu.remove(menu)),
+  restoreMenu: (menu) => dispatch(actions.menu.restore(menu))
 })
 
 export default connect(null, mapDispatchToProps)(MenuContainer)

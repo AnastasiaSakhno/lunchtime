@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 
 import { Menu } from '../../Menu'
 
-const MenuList = ({ data, onDestroy }) => {
+const MenuList = ({ data, onDestroy, onRestore }) => {
   const map = data.map((menu) => (
-    <Menu { ...menu } key={ `menu_${menu.id}` } onDestroy={ onDestroy } />
+    <Menu { ...menu } key={ `menu_${menu.id}` } onDestroy={ onDestroy } onRestore={ onRestore } />
   ))
 
   return (
@@ -37,7 +37,8 @@ MenuList.propTypes = {
       archive: bool
     })
   ).isRequired,
-  onDestroy: func.isRequired
+  onDestroy: func.isRequired,
+  onRestore: func.isRequired
 }
 
 export default MenuList

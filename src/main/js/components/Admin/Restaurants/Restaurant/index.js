@@ -18,7 +18,8 @@ PureRestaurant.propTypes = {
   name: string.isRequired,
   address: string,
   archive: bool.isRequired,
-  onDestroy: func.isRequired
+  onDestroy: func.isRequired,
+  onRestore: func.isRequired
 }
 
 export default archiveBranch({

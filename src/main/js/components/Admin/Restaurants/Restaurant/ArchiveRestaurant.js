@@ -1,22 +1,24 @@
 import React from 'react'
-import {string, number} from 'prop-types'
+import {string, number, func} from 'prop-types'
+import RestaurantRestoreAction from '../RestaurantActions/RestaurantRestoreAction'
 
-const ArchiveRestaurant = ({name, address}) => (
+const ArchiveRestaurant = (props) => (
   <tr>
     <td>
-      <del>{name}</del>
+      <del>{props.name}</del>
     </td>
     <td>
-      <del>{address}</del>
+      <del>{props.address}</del>
     </td>
-    <td/>
+    <td><RestaurantRestoreAction {...props}/></td>
   </tr>
 )
 
 ArchiveRestaurant.propTypes = {
-  id: number,
+  id: number.isRequired,
   name: string.isRequired,
-  address: string
+  address: string.isRequired,
+  onRestore: func.isRequired
 }
 
 export default ArchiveRestaurant
