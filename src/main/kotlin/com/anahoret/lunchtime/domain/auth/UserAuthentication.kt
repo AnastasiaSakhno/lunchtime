@@ -8,7 +8,7 @@ class UserAuthentication(private val user: User) : Authentication {
 
     override fun getName() = user.username!!
 
-    override fun getAuthorities() = user.authorities!!
+    override fun getAuthorities() = user.authorities
 
     override fun getCredentials() = null
 

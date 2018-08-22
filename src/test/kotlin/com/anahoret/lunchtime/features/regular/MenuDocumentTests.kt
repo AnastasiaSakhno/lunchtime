@@ -1,6 +1,5 @@
 package com.anahoret.lunchtime.features.regular
 
-import com.anahoret.lunchtime.domain.UserRole
 import com.anahoret.lunchtime.features.BaseFeatureTest
 import com.anahoret.lunchtime.features.pages.MenuDocumentsPage.Companion.MENU_DOCUMENT_FORM_SELECTOR
 import org.assertj.core.api.Assertions.assertThat
@@ -28,7 +27,7 @@ class MenuDocumentTests : BaseFeatureTest() {
 
     override fun setupInitialData() {
         super.setupInitialData()
-        createUser(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_FULL_NAME, setOf(UserRole.REGULAR))
+        createUser(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_FULL_NAME, setOf(ROLE_REGULAR))
         createRestaurant(1, "Loft", "пр. Яворницкого, 50", false)
     }
 }

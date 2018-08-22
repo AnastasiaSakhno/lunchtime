@@ -1,6 +1,6 @@
 package com.anahoret.lunchtime.domain
 
-import com.anahoret.lunchtime.domain.auth.UserAuthority
+import com.anahoret.lunchtime.domain.auth.Authority
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.social.security.SocialUserDetails
 import java.util.*
@@ -49,25 +49,15 @@ class User : SocialUserDetails {
     @NotNull
     private val accountEnabled: Boolean = true
 
-    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true)
-    private var authorities: MutableSet<UserAuthority>? = null
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_authorities",
+        joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
+        inverseJoinColumns = [JoinColumn(name = "authority_id", referencedColumnName = "id")])
+    private var authorities: MutableSet<Authority> = LinkedHashSet()
 
     // Use Roles as external API
-    var roles: Set<UserRole>
-        get() {
-            val roles = EnumSet.noneOf(UserRole::class.java)
-            if (authorities != null) {
-                for (authority in authorities!!) {
-                    roles.add(UserRole.valueOf(authority))
-                }
-            }
-            return roles
-        }
-        set(roles) {
-            for (role in roles) {
-                grantRole(role)
-            }
-        }
+    val roles: List<String>
+        get() = authorities.map { it.name }
 
     @JsonIgnore
     override fun getUserId() = id!!.toString()
@@ -79,18 +69,11 @@ class User : SocialUserDetails {
     }
 
     @JsonIgnore
-    override fun getAuthorities() = authorities
+    override fun getAuthorities() = authorities.flatMap { it.userAuthorities }
 
-    fun grantRole(role: UserRole) {
-        if (authorities == null) {
-            authorities = HashSet()
-        }
-        authorities!!.add(role.asAuthorityFor(this))
+    fun grantAuthority(authority: Authority) {
+        authorities.add(authority)
     }
-
-    fun revokeRole(role: UserRole) = authorities?.remove(role.asAuthorityFor(this))
-
-    fun hasRole(role: UserRole) = authorities?.contains(role.asAuthorityFor(this))
 
     @JsonIgnore
     override fun isAccountNonExpired() = !accountExpired

@@ -1,7 +1,7 @@
 package com.anahoret.lunchtime.web.handlers.social
 
 import com.anahoret.lunchtime.domain.User
-import com.anahoret.lunchtime.domain.UserRole
+import com.anahoret.lunchtime.repositories.AuthorityRepository
 import com.anahoret.lunchtime.repositories.UserRepository
 import org.springframework.social.connect.Connection
 import org.springframework.social.connect.ConnectionSignUp
@@ -10,7 +10,8 @@ import org.springframework.transaction.annotation.Transactional
 
 @Component
 class AutoSignUpHandler(
-    private val userRepository: UserRepository) : ConnectionSignUp {
+    val userRepository: UserRepository,
+    val authorityRepository: AuthorityRepository) : ConnectionSignUp {
 
     @Volatile
     private var userCount: Long = userRepository.count()
@@ -28,11 +29,13 @@ class AutoSignUpHandler(
         }.userId
 
     private fun grantRoles(user: User) {
-        user.grantRole(UserRole.REGULAR)
+        user.grantAuthority(authorityByName("ROLE_REGULAR"))
 
         //grant admin rights to the first user
         if (userCount == 0L) {
-            user.grantRole(UserRole.ADMIN)
+            user.grantAuthority(authorityByName("ROLE_ADMIN"))
         }
     }
+
+    private fun authorityByName(name: String) = authorityRepository.findByName(name)!!
 }

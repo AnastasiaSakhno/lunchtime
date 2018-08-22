@@ -8,23 +8,19 @@ import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "user_authorities")
-class UserAuthority : GrantedAuthority {
-
+class UserAuthority(
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @Id
-    var user: User? = null
+    val user: User,
 
     @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
     @Id
-    private var authority: String? = null
+    val authority: Authority) : GrantedAuthority {
 
-    override fun getAuthority() = authority
-
-    fun setAuthority(authority: String) {
-        this.authority = authority
-    }
+    override fun getAuthority() = authority.name
 
     override fun equals(other: Any?): Boolean {
         if (other !is UserAuthority)
@@ -34,7 +30,7 @@ class UserAuthority : GrantedAuthority {
         return ua!!.getAuthority() === this.getAuthority() || ua!!.getAuthority() == this.getAuthority()
     }
 
-    override fun hashCode() = if (getAuthority() == null) 0 else getAuthority()!!.hashCode()
+    override fun hashCode() = getAuthority().hashCode()
 
     override fun toString() = javaClass.simpleName + ": " + getAuthority()
 }
