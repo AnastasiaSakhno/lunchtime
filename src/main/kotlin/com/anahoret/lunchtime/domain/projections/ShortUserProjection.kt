@@ -8,5 +8,5 @@ interface ShortUserProjection {
     val id: Long
     val fullName: String
     val username: String
-    val roles: List<String>
+    val roles: Set<String>
 }

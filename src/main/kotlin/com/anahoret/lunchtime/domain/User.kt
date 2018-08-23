@@ -56,8 +56,8 @@ class User : SocialUserDetails {
     private var authorities: MutableSet<Authority> = LinkedHashSet()
 
     // Use Roles as external API
-    val roles: List<String>
-        get() = authorities.map { it.name }
+    val roles: Set<String>
+        get() = authorities.map { it.name }.toHashSet()
 
     @JsonIgnore
     override fun getUserId() = id!!.toString()
