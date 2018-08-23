@@ -5,10 +5,7 @@ import com.anahoret.lunchtime.FluentUtils
 import com.anahoret.lunchtime.LunchtimeApplication
 import com.anahoret.lunchtime.domain.*
 import com.anahoret.lunchtime.features.pages.RootPage
-import com.anahoret.lunchtime.repositories.MenuRepository
-import com.anahoret.lunchtime.repositories.RestaurantRepository
-import com.anahoret.lunchtime.repositories.UserDayMenuRepository
-import com.anahoret.lunchtime.repositories.UserRepository
+import com.anahoret.lunchtime.repositories.*
 import io.github.bonigarcia.wdm.ChromeDriverManager
 import org.fluentlenium.adapter.FluentTest
 import org.joda.time.LocalDate
@@ -34,6 +31,9 @@ abstract class BaseFeatureTest : FluentTest() {
 
     @Autowired
     protected lateinit var userRepository: UserRepository
+
+    @Autowired
+    protected lateinit var authorityRepository: AuthorityRepository
 
     @Autowired
     protected lateinit var restaurantRepository: RestaurantRepository
@@ -64,17 +64,17 @@ abstract class BaseFeatureTest : FluentTest() {
     }
 
     fun setupInitialData(){
-        createUser(ADMIN_EMAIL, ADMIN_FULL_NAME, setOf(UserRole.ADMIN, UserRole.REGULAR))
+        createUser(ADMIN_EMAIL, ADMIN_FULL_NAME, setOf(ROLE_ADMIN, ROLE_REGULAR))
     }
 
-    fun createUser(email: String, fullName: String, roles: Set<UserRole>) =
+    fun createUser(email: String, fullName: String, roles: Set<String>) =
         userRepository.save(User().also {
             it.fullName = fullName
             it.setUsername(email)
             it.providerId = "google"
             it.providerUserId = "123"
             it.accessToken = "token"
-            it.roles = roles
+            roles.forEach { role -> it.grantAuthority(authorityRepository.findByName(role)!!) }
         })
 
     fun createRestaurant(id: Long, name: String, address: String, archive: Boolean) =
@@ -87,6 +87,8 @@ abstract class BaseFeatureTest : FluentTest() {
         userDayMenuRepository.save(UserDayMenu(id, date, out, menu, user))
 
     companion object {
+        const val ROLE_ADMIN = "ROLE_ADMIN"
+        const val ROLE_REGULAR = "ROLE_REGULAR"
         const val ADMIN_EMAIL = "admin@anadeainc.com"
         const val ADMIN_FULL_NAME = "App Admin"
         const val FIRST_REGULAR_USER_EMAIL = "test1@anadeainc.com"

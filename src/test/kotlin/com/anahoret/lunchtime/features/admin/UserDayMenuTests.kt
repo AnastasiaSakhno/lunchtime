@@ -1,6 +1,5 @@
 package com.anahoret.lunchtime.features.admin
 
-import com.anahoret.lunchtime.domain.UserRole
 import com.anahoret.lunchtime.features.BaseFeatureTest
 import com.anahoret.lunchtime.features.pages.RootPage.Companion.DAY_STATUS_MANAGEABLE
 import org.assertj.core.api.Assertions.assertThat
@@ -73,7 +72,7 @@ class UserDayMenuTests : BaseFeatureTest() {
 
     override fun setupInitialData() {
         super.setupInitialData()
-        val user = createUser(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_FULL_NAME, setOf(UserRole.REGULAR))
+        val user = createUser(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_FULL_NAME, setOf(ROLE_REGULAR))
         val loft = createRestaurant(1, "Loft", "пр. Яворницкого, 50", false)
         val leGrand = createRestaurant(2, "LeGrand", "пр. Яворницкого, 50", false)
         createMenu(1, "None", null, false, null)

@@ -19,14 +19,15 @@ class DatabaseCleanupService @Autowired constructor(private val entityManager: E
         val metaModel: Metamodel = entityManager.metamodel
         tableNames = metaModel.managedTypes
             .filter {
-                it.javaType.kotlin.findAnnotation<Table>() != null
+                it.javaType.kotlin.findAnnotation<Table>() != null &&
+                it.javaType.kotlin.simpleName != "Authority"
             }
             .map {
                 val tableAnnotation: Table? = it.javaType.kotlin.findAnnotation()
                 tableAnnotation?.name ?: throw IllegalStateException("should never get here")
             }
     }
-    
+
     @Transactional
     fun truncate() {
         tableNames.forEach { tableName ->
