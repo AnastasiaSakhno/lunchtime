@@ -16,6 +16,7 @@ const withNeededStores = (neededStores) => (WrappedComponent) => {
       loadMenu: func.isRequired,
       loadRestaurants: func.isRequired,
       loadUsers: func.isRequired,
+      loadAuthorities: func.isRequired,
       loadMenuDocuments: func.isRequired
     }
 
@@ -38,22 +39,16 @@ const withNeededStores = (neededStores) => (WrappedComponent) => {
     menu: state.menu,
     restaurants: state.restaurants,
     users: state.users,
+    authorities: state.authorities,
     menuDocuments: state.menuDocuments
   })
 
   const mapDispatchToProps = (dispatch) => ({
-    loadMenu: () => {
-      dispatch(actions.menu.load())
-    },
-    loadRestaurants: () => {
-      dispatch(actions.restaurants.load())
-    },
-    loadUsers: () => {
-      dispatch(actions.users.load())
-    },
-    loadMenuDocuments: () => {
-      dispatch(actions.menuDocuments.load())
-    }
+    loadMenu: () => dispatch(actions.menu.load()),
+    loadRestaurants: () => dispatch(actions.restaurants.load()),
+    loadUsers: () => dispatch(actions.users.load()),
+    loadAuthorities: () => dispatch(actions.authorities.load()),
+    loadMenuDocuments: () => dispatch(actions.menuDocuments.load())
   })
 
   return connect(mapStateToProps, mapDispatchToProps)(NeededStoresWrapper)

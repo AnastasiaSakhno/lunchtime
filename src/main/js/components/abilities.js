@@ -34,7 +34,7 @@ const canManageDayByTime = (udm) => moment(formattedDate(udm.props.date)).diff(m
 const canManageUdmDay = (udm) => !udm.props.day || !udm.props.day.closed
 const canManageUdmMandatory = (udm) => canManageUdmDay(udm) && canManageDayByTime(udm)
 
-allow(RegularUser, 'view', [MenuDocument, User, UserDayMenu])
+allow(RegularUser, 'view', [MenuDocument, UserDayMenu])
 allow(RegularUser, 'manage', UserDayMenu,
   (user, udm) => href(user.props.user) === href(udm.props.user) && canManageUdmMandatory(udm)
 )

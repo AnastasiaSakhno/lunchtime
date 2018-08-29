@@ -1,6 +1,7 @@
 import watchAuth from './auth'
 import watchRestaurants from './restaurants'
 import watchUsers from './users'
+import watchAuthorities from './authorities'
 import watchMenu from './menu'
 import watchMenuDocuments from './menu_documents'
 import watchUsersMenu from './users_menu'
@@ -11,6 +12,7 @@ export default function* rootSaga() {
     watchAuth(),
     watchRestaurants(),
     watchUsers(),
+    watchAuthorities(),
     watchMenu(),
     watchMenuDocuments(),
     watchUsersMenu(),

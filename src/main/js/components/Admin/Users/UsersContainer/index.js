@@ -4,19 +4,27 @@ import {array, func} from 'prop-types'
 import {UsersList} from '../../Users'
 import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
 import withNeededStores from '../../../../HOC/withNeededStores'
+import actions from '../../../../actions'
+import {connect} from 'react-redux'
 
-@withNeededStores(['users'])
+@withNeededStores(['users', 'authorities'])
 @withRedirectToLogin
 class UsersContainer extends PureComponent {
   static propTypes = {
-    users: array
+    users: array,
+    authorities: array,
+    updateUser: func.isRequired
   }
 
   render = () => (
     <div className="users-container">
-      <UsersList data={this.props.users}/>
+      <UsersList users={this.props.users} authorities={this.props.authorities} onChange={this.props.updateUser}/>
     </div>
   )
 }
 
-export default UsersContainer
+const mapDispatchToProps = (dispatch) => ({
+  updateUser: (user) => dispatch(actions.users.update(user))
+})
+
+export default connect(null, mapDispatchToProps)(UsersContainer)

@@ -7,8 +7,7 @@ export const initialState = []
 const menus = (state = initialState, action) => {
   switch(action.type) {
   case actionTypes.MENU_LOADED:
-    let menu = removeCollectionProjection(action, 'menus')
-    return [...menu]
+    return removeCollectionProjection(action, 'menus')
 
   case actionTypes.MENU_ADDED_SUCCESSFULLY:
     return [

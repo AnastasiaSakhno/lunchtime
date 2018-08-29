@@ -1,22 +1,21 @@
-package com.anahoret.lunchtime.features.common
+package com.anahoret.lunchtime.features.regular
 
 import com.anahoret.lunchtime.features.BaseFeatureTest
 import com.anahoret.lunchtime.features.pages.UsersPage
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.openqa.selenium.By.cssSelector
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
-@TestPropertySource(properties = ["username=admin@anadeainc.com"])
+@TestPropertySource(properties = ["username=test1@anadeainc.com"])
 class UsersTests : BaseFeatureTest() {
     @Test
-    fun canView() {
-        rootPage.getUsersPage().navigate()
-
-        assertThat(find(TABLE_ROW_SELECTOR).count()).isEqualTo(2)
-        assertThat(find(UsersPage.FORM_SELECTOR)).isEmpty()
+    fun cannotView() {
+        fluentUtils.waitFor { cssSelector(USER_DAY_MENU_SELECT) }
+        assertThat(find(UsersPage.LINK_SELECTOR)).isEmpty()
     }
 
     override fun setupInitialData() {
