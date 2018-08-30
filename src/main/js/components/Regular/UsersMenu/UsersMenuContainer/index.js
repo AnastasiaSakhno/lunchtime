@@ -97,33 +97,15 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  loadUsersMenu: (startDate) => {
-    dispatch(actions.usersMenu.load(startDate))
-  },
-  loadDays: (startDate) => {
-    dispatch(actions.days.load(startDate))
-  },
-  addUserDayMenu: (userDayMenu) => {
-    dispatch(actions.usersMenu.add(userDayMenu))
-  },
-  updateUserDayMenu: (userDayMenu) => {
-    dispatch(actions.usersMenu.update(userDayMenu))
-  },
-  updateOut: (userDayMenu) => {
-    dispatch(actions.usersMenu.updateOut(userDayMenu))
-  },
-  getUserDayMenu: (userDayMenu) => {
-    dispatch(actions.usersMenu.get(userDayMenu))
-  },
-  addDay: (day) => {
-    dispatch(actions.days.add(day))
-  },
-  updateDay: (day) => {
-    dispatch(actions.days.update(day))
-  },
-  getDay: (day) => {
-    dispatch(actions.days.get(day))
-  }
+  loadUsersMenu: (startDate) => dispatch(actions.usersMenu.load(startDate)),
+  loadDays: (startDate) => dispatch(actions.days.load(startDate)),
+  addUserDayMenu: (userDayMenu) => dispatch(actions.usersMenu.add(userDayMenu)),
+  updateUserDayMenu: (userDayMenu) => dispatch(actions.usersMenu.update(userDayMenu)),
+  updateOut: (userDayMenu) => dispatch(actions.usersMenu.updateOut(userDayMenu)),
+  getUserDayMenu: (userDayMenu) => dispatch(actions.usersMenu.get(userDayMenu)),
+  addDay: (day) => dispatch(actions.days.add(day)),
+  updateDay: (day) => dispatch(actions.days.update(day)),
+  getDay: (day) => dispatch(actions.days.get(day))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersMenuContainer)

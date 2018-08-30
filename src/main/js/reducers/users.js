@@ -10,6 +10,14 @@ const users = (state = initialState, action) => {
     let usersList = removeCollectionProjection(action, 'users')
     return [...usersList]
 
+  case actionTypes.USER_UPDATED_SUCCESSFULLY:
+    return state.map((user) => {
+      if (user.id === action.user.id) {
+        return action.user
+      }
+      return user
+    })
+
   default:
     return state
   }

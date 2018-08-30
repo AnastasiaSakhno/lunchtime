@@ -11,8 +11,8 @@ class Authority(
     var id: Long,
 
     @Column(name = "name", nullable = false)
-    var name: String,
-
+    var name: String
+) {
     @OneToMany(cascade = [CascadeType.ALL], mappedBy = "authority", fetch = FetchType.EAGER)
-    var userAuthorities: MutableSet<UserAuthority>
-)
+    var userAuthorities: MutableSet<UserAuthority> = LinkedHashSet()
+}
