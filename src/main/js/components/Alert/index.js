@@ -1,22 +1,26 @@
 import React from 'react'
-import {string} from 'prop-types'
+import {object} from 'prop-types'
 import {connect} from 'react-redux'
 
-const Alert = ({message}) => (
-  message ? <div className="alert alert-warning alert-dismissible fade show" role="alert">
-    {message}
-    <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div> : <none/>
-)
+const Alert = ({alerts}) => {
+  const map = Object.keys(alerts).map(type =>
+    (
+      alerts[type] ?
+        <div className={`alert alert-${type} alert-dismissible fade show`} role="alert">
+          {alerts[type]}
+        </div>
+        : <none/>
+    )
+  )
+  return <div>{map}</div>
+}
 
 Alert.propTypes = {
-  message: string
+  alerts: object
 }
 
 const mapStateToProps = (state) => ({
-  message: state.auth.error
+  alerts: state.alerts
 })
 
 export default connect(mapStateToProps, null)(Alert)

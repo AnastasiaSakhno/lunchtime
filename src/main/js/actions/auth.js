@@ -5,11 +5,6 @@ export const saveAuthData = (authToken) => ({
   authToken
 })
 
-export const loginFailed = (error) => ({
-  type: actionTypes.LOGIN_FAILED,
-  error
-})
-
 export const loggedInSuccessfully = (data) => ({
   type: actionTypes.LOGGED_IN_SUCCESSFULLY,
   data

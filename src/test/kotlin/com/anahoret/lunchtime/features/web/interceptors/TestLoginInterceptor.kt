@@ -19,9 +19,6 @@ class TestLoginInterceptor(
     val authenticationStub: AuthenticationStub,
     val jwtConfig: JwtConfig) : LoginInterceptor() {
 
-    @Value("\${username:admin@anadeainc.com}")
-    private lateinit var username: String
-
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         val url = request.requestURI
         if(url.contains(AUTH_REGEX)) {
