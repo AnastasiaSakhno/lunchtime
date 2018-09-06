@@ -64,3 +64,13 @@ export const destroyTillDate = (startDate) => ({
   type: actionTypes.DESTROY_TILL_DATE,
   startDate
 })
+
+export const changed = (userDayMenu) => ({
+  type: actionTypes.USER_DAY_MENU_CHANGED,
+  userDayMenu
+})
+
+export const duplicate = (userDayMenu) => ({
+  type: actionTypes.DUPLICATE_USER_DAY_MENU,
+  userDayMenu
+})

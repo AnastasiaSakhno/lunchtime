@@ -1,7 +1,11 @@
 import * as actionTypes from '../actions/types'
 import {removeCollectionProjection, removeProjectionMembers} from '../utils/api'
 
-export const initialState = {}
+export const initialState = {
+  wholeWeekDuplication: {
+    active: false
+  }
+}
 
 const findMethod = (udm, action) => udm.id === action.userDayMenu.id
 
@@ -72,6 +76,14 @@ const usersMenu = (state = initialState, action) => {
         ...state.data,
         gotten
       ]
+    }
+
+  case actionTypes.USER_DAY_MENU_CHANGED:
+    return {
+      ...state,
+      wholeWeekDuplication: {
+        ...action.userDayMenu
+      }
     }
 
 

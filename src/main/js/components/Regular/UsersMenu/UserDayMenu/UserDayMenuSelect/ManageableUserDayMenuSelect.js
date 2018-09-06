@@ -1,10 +1,28 @@
 import React from 'react'
 import {string, number, array, shape, func} from 'prop-types'
 
-import {weekDateLong} from '../../../../../utils/date'
+import {weekDateFormattedFromString, weekDateLong} from '../../../../../utils/date'
 import {href} from '../../../../../utils/object'
 
-const ManageableUserDayMenuSelect = ({startDate, id, dayOfWeek, menu, user, menuList, onSubmit, onUpdate}) => {
+const ManageableUserDayMenuSelect = ({startDate, id, dayOfWeek, menu, user,
+  menuList, onSubmit, onUpdate, onChange, weekUdms}) => {
+  const htmlId = () => `manageable-udm-select_${user.id}_${dayOfWeek}`
+
+  const showWholeWeekDuplicationOffer = (menu) => {
+    let selectedMenu = menuList.find(m => href(m) === menu)
+    if(weekUdms.length === 0 && !selectedMenu.weekDays) {
+      onChange({
+        date: weekDateFormattedFromString(startDate, dayOfWeek),
+        active: true,
+        user: user,
+        menu: selectedMenu,
+        target: htmlId()
+      })
+    } else {
+      onChange({active: false, target: null})
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -18,12 +36,14 @@ const ManageableUserDayMenuSelect = ({startDate, id, dayOfWeek, menu, user, menu
       onUpdate({id: id, ...attrs})
     } else {
       onSubmit({...attrs})
+      showWholeWeekDuplicationOffer(attrs.menu)
     }
   }
 
   let selected = href(menu)
   return (
     <select
+      id={htmlId()}
       className='form-control custom-select user-day-menu-select'
       value={selected}
       onChange={handleSubmit}>
@@ -52,7 +72,9 @@ ManageableUserDayMenuSelect.propTypes = {
   }).isRequired,
   onSubmit: func.isRequired,
   onUpdate: func.isRequired,
-  menuList: array.isRequired
+  onChange: func.isRequired,
+  menuList: array.isRequired,
+  weekUdms: array.isRequired
 }
 
 export default ManageableUserDayMenuSelect

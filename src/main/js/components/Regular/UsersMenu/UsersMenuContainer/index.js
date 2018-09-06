@@ -10,6 +10,7 @@ import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
 import UsersMenuPrevWeekLink from '../UsersMenuActions/UsersMenuPrevWeekLink'
 import UsersMenuNextWeekLink from '../UsersMenuActions/UsersMenuNextWeekLink'
 import UsersMenuDestroyButton from '../UsersMenuActions/UsersMenuDestroyButton'
+import WholeWeekDuplication from '../WholeWeekDuplication'
 import selectors from '../../../../selectors'
 import {webSocket, sendMessage, CHANGE_UDM_MESSAGE, CHANGE_DAY_STATUS_MESSAGE} from '../../../../utils/webSocket'
 
@@ -24,6 +25,7 @@ class UsersMenuContainer extends PureComponent {
     activeMenu: array,
     addUserDayMenu: func.isRequired,
     updateUserDayMenu: func.isRequired,
+    userDayMenuChanged: func.isRequired,
     updateOut: func.isRequired,
     addDay: func.isRequired,
     updateDay: func.isRequired,
@@ -32,9 +34,11 @@ class UsersMenuContainer extends PureComponent {
     orderedUsers: array.isRequired,
     dataGroupedByUser: object,
     summaryValues: array,
+    wholeWeekDuplication: object,
     loadUsersMenu: func.isRequired,
     loadDays: func.isRequired,
-    destroyTillDate: func.isRequired
+    destroyTillDate: func.isRequired,
+    duplicateWholeWeekMenu: func.isRequired
   }
 
   state = {
@@ -76,12 +80,16 @@ class UsersMenuContainer extends PureComponent {
         summaryValues={this.props.summaryValues}
         onSubmit={this.props.addUserDayMenu}
         onUpdate={this.props.updateUserDayMenu}
+        onChange={this.props.userDayMenuChanged}
         onSubmitDay={this.props.addDay}
         onUpdateDay={this.props.updateDay}
         onOutUpdate={this.props.updateOut}
         menuList={this.props.menu}
         activeMenu={this.props.activeMenu}
         orderedUsers={this.props.orderedUsers}/>
+      <WholeWeekDuplication
+        {...this.props.wholeWeekDuplication}
+        duplicateWholeWeekMenu={this.props.duplicateWholeWeekMenu}/>
     </div>
   )
 }
@@ -89,6 +97,7 @@ class UsersMenuContainer extends PureComponent {
 const mapStateToProps = (state) => ({
   usersMenu: state.usersMenu,
   days: state.days,
+  wholeWeekDuplication: state.usersMenu.wholeWeekDuplication,
   currentUser: selectors.auth.getCurrentUser(state),
   orderedUsers: selectors.users.orderedUsers(state),
   dataGroupedByUser: selectors.usersMenu.groupedByUser(state),
@@ -101,11 +110,13 @@ const mapDispatchToProps = (dispatch) => ({
   loadDays: (startDate) => dispatch(actions.days.load(startDate)),
   addUserDayMenu: (userDayMenu) => dispatch(actions.usersMenu.add(userDayMenu)),
   updateUserDayMenu: (userDayMenu) => dispatch(actions.usersMenu.update(userDayMenu)),
+  userDayMenuChanged: (userDayMenu) => dispatch(actions.usersMenu.changed(userDayMenu)),
   updateOut: (userDayMenu) => dispatch(actions.usersMenu.updateOut(userDayMenu)),
   getUserDayMenu: (userDayMenu) => dispatch(actions.usersMenu.get(userDayMenu)),
   addDay: (day) => dispatch(actions.days.add(day)),
   updateDay: (day) => dispatch(actions.days.update(day)),
-  getDay: (day) => dispatch(actions.days.get(day))
+  getDay: (day) => dispatch(actions.days.get(day)),
+  duplicateWholeWeekMenu: (userDayMenu) => dispatch(actions.usersMenu.duplicate(userDayMenu))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersMenuContainer)

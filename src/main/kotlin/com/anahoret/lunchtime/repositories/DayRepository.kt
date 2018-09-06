@@ -1,5 +1,6 @@
 package com.anahoret.lunchtime.repositories
 
+import com.anahoret.lunchtime.config.Constants.Companion.DATE_FORMAT_PATTERN
 import com.anahoret.lunchtime.domain.Day
 import org.joda.time.LocalDate
 import org.springframework.data.jpa.repository.Query
@@ -13,8 +14,8 @@ interface DayRepository : CrudRepository<Day, Long> {
 
     @Query("select d from Day d where d.date between :from and :to")
     @RestResource(path = "date", rel = "date")
-    fun findByDateBetween(@DateTimeFormat(pattern = "yyyy-MM-dd") @Param("from") fromDate: LocalDate,
-                          @DateTimeFormat(pattern = "yyyy-MM-dd") @Param("to") toDate: LocalDate) : List<Day>
+    fun findByDateBetween(@DateTimeFormat(pattern = DATE_FORMAT_PATTERN) @Param("from") fromDate: LocalDate,
+                          @DateTimeFormat(pattern = DATE_FORMAT_PATTERN) @Param("to") toDate: LocalDate) : List<Day>
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     fun save(day: Day) : Day

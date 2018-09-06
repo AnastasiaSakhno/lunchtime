@@ -77,8 +77,4 @@ class UserDayMenuTests : BaseFeatureTest() {
         // in order to make sure we do not see menu with archived restaurant (Mendis) even though it (the Old Mendis menu) is not archived
         createMenu(6, "Old Mendis", null, false, mendis)
     }
-
-    companion object {
-        const val DATE_FORMAT_PATTERN = "yyyy-MM-dd"
-    }
 }

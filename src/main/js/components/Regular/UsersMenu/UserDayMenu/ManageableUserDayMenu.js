@@ -6,7 +6,7 @@ import ManageableUserDayMenuOut from '../UserDayMenu/UserDayMenuOut/ManageableUs
 import {WEEK_DAYS} from '../../../../selectors/users_menu'
 
 const ManageableUserDayMenu =
-  ({startDate, id, dayOfWeek, out, menu, user, activeMenu, onSubmit, onUpdate, onOutUpdate}) => {
+  ({startDate, id, dayOfWeek, out, menu, user, activeMenu, onSubmit, onUpdate, onOutUpdate, onChange, weekUdms}) => {
     let dayOfWeekName = WEEK_DAYS[dayOfWeek - 1].toLowerCase()
 
     return (
@@ -19,7 +19,9 @@ const ManageableUserDayMenu =
           menu={menu}
           onSubmit={onSubmit}
           onUpdate={onUpdate}
-          menuList={activeMenu}/>
+          onChange={onChange}
+          menuList={activeMenu}
+          weekUdms={weekUdms}/>
         <ManageableUserDayMenuOut
           startDate={startDate}
           id={id}
@@ -46,8 +48,10 @@ ManageableUserDayMenu.propTypes = {
   day: object,
   onSubmit: func.isRequired,
   onUpdate: func.isRequired,
+  onChange: func.isRequired,
   onOutUpdate: func.isRequired,
-  activeMenu: array.isRequired
+  activeMenu: array.isRequired,
+  weekUdms: array.isRequired
 }
 
 export default ManageableUserDayMenu

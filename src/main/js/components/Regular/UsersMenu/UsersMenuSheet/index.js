@@ -25,6 +25,7 @@ UsersMenuSheet.propTypes = {
   summaryValues: array,
   onSubmit: func.isRequired,
   onUpdate: func.isRequired,
+  onChange: func.isRequired,
   onSubmitDay: func.isRequired,
   onUpdateDay: func.isRequired,
   onOutUpdate: func.isRequired
