@@ -25,7 +25,14 @@ const UserWeekMenu = (props) => (
         m => !m.weekDays || m.weekDays.includes(WEEK_DAYS_ABBREVIATIONS[dayOfWeek - 1])
       )
 
-      return (<UserDayMenu key={key} dayOfWeek={dayOfWeek} day={day} {...props} {...found} activeMenu={activeMenu}/>)
+      return (<UserDayMenu
+        key={key}
+        dayOfWeek={dayOfWeek}
+        day={day}
+        {...props}
+        {...found}
+        activeMenu={activeMenu}
+        weekUdms={props.data}/>)
     })}
   </div>
 )
@@ -50,6 +57,7 @@ UserWeekMenu.propTypes = {
   ).isRequired,
   onSubmit: func.isRequired,
   onUpdate: func.isRequired,
+  onChange: func.isRequired,
   onOutUpdate: func.isRequired,
   menuList: array.isRequired,
   activeMenu: array.isRequired,

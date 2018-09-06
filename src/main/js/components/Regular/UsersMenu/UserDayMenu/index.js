@@ -39,9 +39,11 @@ UserDayMenu.propTypes = {
   day: object,
   onSubmit: func.isRequired,
   onUpdate: func.isRequired,
+  onChange: func.isRequired,
   onOutUpdate: func.isRequired,
   activeMenu: array.isRequired,
-  menuList: array.isRequired
+  menuList: array.isRequired,
+  weekUdms: array.isRequired
 }
 
 export default UserDayMenu

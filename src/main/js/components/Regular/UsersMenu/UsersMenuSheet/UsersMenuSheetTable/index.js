@@ -20,6 +20,7 @@ class UsersMenuSheetTable extends Component {
         startDate={this.props.startDate}
         onSubmit={this.props.onSubmit}
         onUpdate={this.props.onUpdate}
+        onChange={this.props.onChange}
         onOutUpdate={this.props.onOutUpdate}
         menuList={this.props.menuList}
         activeMenu={this.props.activeMenu}
@@ -63,6 +64,7 @@ UsersMenuSheetTable.propTypes = {
   days: array.isRequired,
   onSubmit: func.isRequired,
   onUpdate: func.isRequired,
+  onChange: func.isRequired,
   onSubmitDay: func.isRequired,
   onUpdateDay: func.isRequired,
   onOutUpdate: func.isRequired,

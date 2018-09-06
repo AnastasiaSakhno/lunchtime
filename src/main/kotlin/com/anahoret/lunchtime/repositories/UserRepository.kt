@@ -11,8 +11,6 @@ interface UserRepository : CrudRepository<User, Long> {
     @RestResource(path = "usernames")
     fun findByUsername(@Param("username") username: String): User?
 
-    fun findById(id: Long): User?
-
     fun findByProviderIdAndProviderUserId(providerId: String, providerUserId: String): User?
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

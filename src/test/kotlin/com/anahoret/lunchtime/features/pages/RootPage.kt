@@ -1,9 +1,9 @@
 package com.anahoret.lunchtime.features.pages
 
+import com.anahoret.lunchtime.config.Constants.Companion.DATE_FORMAT_PATTERN
 import com.anahoret.lunchtime.features.BaseFeatureTest
 import com.anahoret.lunchtime.features.BaseFeatureTest.Companion.NEXT_WEEK_LINK_SELECTOR
 import com.anahoret.lunchtime.features.BaseFeatureTest.Companion.PREV_WEEK_LINK_SELECTOR
-import com.anahoret.lunchtime.features.common.UserDayMenuTests
 import org.apache.commons.lang3.time.DateFormatUtils
 import org.fluentlenium.adapter.FluentTest
 import org.joda.time.LocalDate
@@ -61,7 +61,7 @@ class RootPage(fluentTest: FluentTest, private val serverPort: Int) : Page(fluen
     }
 
     private fun waitForDate(date: LocalDate) =
-        fluentUtils.waitFor { By.xpath("//div[contains(text(), '${DateFormatUtils.format(date.toDate(), UserDayMenuTests.DATE_FORMAT_PATTERN)}')]") }
+        fluentUtils.waitFor { By.xpath("//div[contains(text(), '${DateFormatUtils.format(date.toDate(), DATE_FORMAT_PATTERN)}')]") }
 
     fun expectedUserDayMenuSelectCount(usersCount: Int, openDays: Int = 5) =
         usersCount * (openDays - LocalDate().dayOfWeek + 1)

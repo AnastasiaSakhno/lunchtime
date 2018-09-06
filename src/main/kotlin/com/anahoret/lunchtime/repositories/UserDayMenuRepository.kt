@@ -1,5 +1,6 @@
 package com.anahoret.lunchtime.repositories
 
+import com.anahoret.lunchtime.config.Constants.Companion.DATE_FORMAT_PATTERN
 import com.anahoret.lunchtime.domain.UserDayMenu
 import org.joda.time.LocalDate
 import org.springframework.data.jpa.repository.Modifying
@@ -15,8 +16,8 @@ interface UserDayMenuRepository : CrudRepository<UserDayMenu, Long> {
 
     @Query("select udm from UserDayMenu udm where udm.date between :from and :to")
     @RestResource(path = "date", rel = "date")
-    fun findByDateBetween(@DateTimeFormat(pattern = "yyyy-MM-dd") @Param("from") fromDate: LocalDate,
-                          @DateTimeFormat(pattern = "yyyy-MM-dd") @Param("to") toDate: LocalDate) : List<UserDayMenu>
+    fun findByDateBetween(@DateTimeFormat(pattern = DATE_FORMAT_PATTERN) @Param("from") fromDate: LocalDate,
+                          @DateTimeFormat(pattern = DATE_FORMAT_PATTERN) @Param("to") toDate: LocalDate) : List<UserDayMenu>
 
     @Transactional
     @Modifying

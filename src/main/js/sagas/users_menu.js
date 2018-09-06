@@ -1,8 +1,8 @@
 import {takeLatest, takeEvery, put, call} from 'redux-saga/effects'
 import {sessionService} from 'redux-react-session'
 
-import {get, post, putUserDayMenu, put as putRest, deleteUserDayMenuTill} from '../utils/rest'
-import {weekRange} from '../utils/date'
+import {get, post, putUserDayMenu, put as putRest, deleteUserDayMenuTill, duplicateWholeWeekMenu} from '../utils/rest'
+import {dateMomentFromString, weekRange} from '../utils/date'
 import {USERS_MENU_URI, USERS_MENU_SEARCH_URI, USERS_MENU_BY_ID_URI} from '../utils/api'
 import actions from '../actions'
 import * as actionTypes from '../actions/types'
@@ -79,6 +79,15 @@ export function* destroyTillDate({startDate}) {
   } else {}
 }
 
+function* duplicateWholeWeek({userDayMenu: udm}) {
+  const user = yield call(loadUser)
+  const response = yield call(duplicateWholeWeekMenu, user.auth_token, udm)
+  yield put(actions.usersMenu.changed({active: false, target: null}))
+  if(response.status === 200) {
+    yield loadUserDayMenu(dateMomentFromString(udm.date))
+  } else {}
+}
+
 export default function* watchUsersMenu() {
   yield [
     takeLatest(actionTypes.LOAD_USERS_MENU, loadUsersMenu),
@@ -88,6 +97,7 @@ export default function* watchUsersMenu() {
     takeLatest(actionTypes.GET_USER_DAY_MENU, getUserDayMenu),
     takeEvery(actionTypes.UPDATE_USER_DAY_MENU, updateUserDayMenu),
     takeEvery(actionTypes.UPDATE_USER_DAY_MENU_OUT, updateUserDayMenuOut),
-    takeEvery(actionTypes.DESTROY_TILL_DATE, destroyTillDate)
+    takeEvery(actionTypes.DESTROY_TILL_DATE, destroyTillDate),
+    takeLatest(actionTypes.DUPLICATE_USER_DAY_MENU, duplicateWholeWeek)
   ]
 }

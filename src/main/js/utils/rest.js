@@ -94,6 +94,16 @@ export const deleteUserDayMenuTill = (authToken, tillDate) =>
     status: r.status
   }))
 
+export const duplicateWholeWeekMenu = (authToken, udm) =>
+  fetch(`${USERS_MENU_CUSTOM_URI}/duplicate_whole_week?date=${udm.date}&userId=${udm.user.id}&menuId=${udm.menu.id}`, {
+    method: 'POST',
+    headers: {
+      'X-AUTH-TOKEN': authToken
+    }
+  }).then(r => ({
+    status: r.status
+  }))
+
 export const putUserAuthorities = (authToken, user) => fetch(USER_AUTHORITIES_URI({id: user.id}), {
   method: 'PUT',
   headers: {

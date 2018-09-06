@@ -18,7 +18,7 @@ class UserService(private val userRepository: UserRepository) : SocialUserServic
     fun detailsChecker() = AccountStatusUserDetailsChecker()
 
     override fun loadUserByUserId(userId: String): User {
-        val user = userRepository.findById(java.lang.Long.valueOf(userId))
+        val user = userRepository.findOne(java.lang.Long.valueOf(userId))
         return checkUser(user)
     }
 
