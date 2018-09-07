@@ -4,11 +4,9 @@ import {connect} from 'react-redux'
 
 import actions from '../../../../actions'
 import {MenuList, MenuForm} from '../../Menu'
-import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
 import withNeededStores from '../../../../HOC/withNeededStores'
 
 @withNeededStores(['restaurants', 'menu'])
-@withRedirectToLogin
 class MenuContainer extends PureComponent {
   static propTypes = {
     menu: array,

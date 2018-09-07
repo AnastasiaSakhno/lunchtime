@@ -4,12 +4,10 @@ import {connect} from 'react-redux'
 
 import actions from '../../../../actions'
 import MenuDocumentsList from '../MenuDocumentsList'
-import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
 import withNeededStores from '../../../../HOC/withNeededStores'
 import selectors from '../../../../selectors'
 
 @withNeededStores(['restaurants', 'menuDocuments'])
-@withRedirectToLogin
 class MenuDocumentsContainer extends PureComponent {
   static propTypes = {
     submitMenuDocument: func.isRequired,

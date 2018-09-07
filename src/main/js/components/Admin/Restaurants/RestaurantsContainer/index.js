@@ -4,11 +4,9 @@ import {connect} from 'react-redux'
 
 import actions from '../../../../actions'
 import {RestaurantsList, RestaurantForm} from '../../Restaurants'
-import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
 import withNeededStores from '../../../../HOC/withNeededStores'
 
 @withNeededStores(['restaurants'])
-@withRedirectToLogin
 class RestaurantsContainer extends PureComponent {
   static propTypes = {
     addRestaurant: func.isRequired,

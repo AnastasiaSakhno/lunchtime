@@ -6,7 +6,6 @@ import moment from 'moment/moment'
 import actions from '../../../../actions'
 import UsersMenuSheet from '../UsersMenuSheet'
 import withNeededStores from '../../../../HOC/withNeededStores'
-import withRedirectToLogin from '../../../../HOC/withRedirectToLogin'
 import UsersMenuPrevWeekLink from '../UsersMenuActions/UsersMenuPrevWeekLink'
 import UsersMenuNextWeekLink from '../UsersMenuActions/UsersMenuNextWeekLink'
 import UsersMenuDestroyButton from '../UsersMenuActions/UsersMenuDestroyButton'
@@ -15,7 +14,6 @@ import selectors from '../../../../selectors'
 import {webSocket, sendMessage, CHANGE_UDM_MESSAGE, CHANGE_DAY_STATUS_MESSAGE} from '../../../../utils/webSocket'
 
 @withNeededStores(['restaurants', 'menu', 'users'])
-@withRedirectToLogin
 class UsersMenuContainer extends PureComponent {
   static propTypes = {
     currentUser: object,

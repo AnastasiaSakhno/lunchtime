@@ -28,11 +28,12 @@ class TokenAuthenticationService(val jwtConfig: JwtConfig) {
     }
 
     fun getAuthentication(request: HttpServletRequest): UserAuthentication? =
-        // to prevent CSRF attacks we still only allow authentication using a custom HTTP header
-        // (it is up to the client to read our previously set cookie and put it in the header)
-        request.getHeader(jwtConfig.header)?.let { token ->
+        getAuthToken(request)?.let { token ->
             tokenHandler().parseUserFromToken(token)?.let { user -> UserAuthentication(user) }
         }
+
+    fun getAuthToken(request: HttpServletRequest): String? =
+        request.cookies?.find { it.name == jwtConfig.cookie }?.value
 
     private fun createCookieForToken(token: String) = Cookie(jwtConfig.cookie, token).also { it.path = "/" }
 }
