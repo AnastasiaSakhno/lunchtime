@@ -22,7 +22,8 @@ class DefaultStatelessAuthenticationFilter(private val tokenAuthenticationServic
         // if the url is not /auth/google, redirect to /auth/google
 
         // if authentication is not null, check if token is expired and redirect to /auth/google if so
-        val authentication: UserAuthentication? = tokenAuthenticationService.getAuthentication(request as HttpServletRequest)
+        val authentication = tokenAuthenticationService.getAuthentication(request as HttpServletRequest)
+
         if(authentication == null) {
             if(!request.requestURI.endsWith(AUTH_PATTERN)) {
                 chain.doFilter(request, getSendRedirectWrapper(response))
@@ -31,15 +32,18 @@ class DefaultStatelessAuthenticationFilter(private val tokenAuthenticationServic
             }
         } else {
             // if token is expired, also send redirect to /auth/google
-            if(authentication.principal.expires < System.currentTimeMillis()) {
-                setAuthenticationFromCookies(request)
+            if(isTokenExpired(authentication)) {
                 chain.doFilter(request, getSendRedirectWrapper(response))
             } else {
+                setAuthenticationFromCookies(request)
                 chain.doFilter(request, response)
             }
         }
 
     }
+
+    private fun isTokenExpired(authentication: UserAuthentication) =
+        authentication.principal.expires < System.currentTimeMillis()
 
     private fun setAuthenticationFromCookies(request: HttpServletRequest) {
         SecurityContextHolder.getContext().authentication.takeIf { it !is UserAuthentication }.apply {
