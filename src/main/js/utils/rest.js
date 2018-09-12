@@ -138,25 +138,3 @@ export const signUp = (user) => fetch(USERS_URI, {
 }).then(r => ({
   status: r.status
 }))
-
-
-const fromBase64 = (urlsafeBase64) => {
-  let url = urlsafeBase64.replace('-', '+').replace('_', '/')
-  const rest = url.length % 4
-  if (rest !== 0) {
-    url = url + ((rest === 3) ? '=' : '==')
-  }
-  return atob(url)
-}
-
-export const isTokenExpired = (token) => {
-  try {
-    const parts = token.split('.')
-    const userBytes = fromBase64(parts[0])
-    const user = JSON.parse(JSON.parse(JSON.stringify(userBytes)))
-    return user.expires < Date.now() / 1000
-  } catch (err) {
-    console.log(`error '${err}' occurred while decoding jwt token=${token}`)
-    return true
-  }
-}
