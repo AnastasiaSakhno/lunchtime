@@ -19,11 +19,13 @@ class Header extends Component {
     })
   }
 
+  inactivateAllNavs = () => $('.nav-link.active').toggleClass('active')
+
   render = () => (
     <header>
       <Navbar color="dark" dark expand="md" fixed='top'>
         <NavbarBrand>
-          <Link className='navbar-brand' to='/'>Lunch time</Link>
+          <Link className='navbar-brand' to='/' onClick={this.inactivateAllNavs}>Lunch time</Link>
         </NavbarBrand>
 
         <NavbarToggler onClick={this.toggle}/>

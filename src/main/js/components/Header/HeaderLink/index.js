@@ -1,20 +1,21 @@
 import React, {Component} from 'react'
-import {string, object} from 'prop-types'
-import {Link} from 'react-router-dom'
+import {string} from 'prop-types'
 import {NavItem} from 'reactstrap'
+import {LinkContainer} from 'react-router-bootstrap'
 
 import cancanBranch from '../../../HOC/branch/cancanBranch'
 import {Menu, MenuDocument, Restaurant, User} from '../../abilities'
 
 class PureHeaderLink extends Component {
-  static contextTypes = {
-    router: object
+  toggleActive = (e) => {
+    $('.nav-link.active').toggleClass('active')
+    $(e.target).toggleClass('active')
   }
 
   render = () => (
-    <NavItem active={this.props.path === this.context.router.history.location.pathname}>
-      <Link className='nav-link' to={this.props.path}>{this.props.name}</Link>
-    </NavItem>
+    <LinkContainer to={this.props.path}>
+      <NavItem className='nav-link' onClick={this.toggleActive}>{this.props.name}</NavItem>
+    </LinkContainer>
   )
 }
 
