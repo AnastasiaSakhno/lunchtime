@@ -35,6 +35,7 @@ export function* logout() {
   delCoockie('AUTH-TOKEN')
   yield call(deleteUser)
   yield call(deleteSession)
+  window.location = '/auth/google'
 }
 
 export default function* watchAuth() {

@@ -1,14 +1,9 @@
 import React, {Component} from 'react'
-import {bool, string, func} from 'prop-types'
-import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem} from 'reactstrap'
 
-import {
-  UsersHeaderLink, MenuHeaderLink, MenuDocumentsHeaderLink, RestaurantsHeaderLink,
-  AuthBranched
-} from './HeaderLink'
-import actions from '../../actions'
+import {UsersHeaderLink, MenuHeaderLink, MenuDocumentsHeaderLink, RestaurantsHeaderLink} from './HeaderLink'
+import LogoutLink from '../LogoutLink'
 
 const defaultState = {
   isOpen: false
@@ -24,11 +19,13 @@ class Header extends Component {
     })
   }
 
+  inactivateAllNavs = () => $('.nav-link.active').toggleClass('active')
+
   render = () => (
     <header>
       <Navbar color="dark" dark expand="md" fixed='top'>
         <NavbarBrand>
-          <Link className='navbar-brand' to='/'>Lunch time</Link>
+          <Link className='navbar-brand' to='/' onClick={this.inactivateAllNavs}>Lunch time</Link>
         </NavbarBrand>
 
         <NavbarToggler onClick={this.toggle}/>
@@ -39,9 +36,7 @@ class Header extends Component {
             <MenuHeaderLink path='/admin/menu' name='Menu'/>
             <MenuDocumentsHeaderLink path='/admin/menu_documents' name='Menu documents'/>
             <NavItem>
-              <AuthBranched
-                authenticated={this.props.authenticated}
-                saveAuthData={this.props.saveAuthData}/>
+              <LogoutLink/>
             </NavItem>
           </Nav>
         </Collapse>
@@ -52,17 +47,4 @@ class Header extends Component {
   )
 }
 
-Header.propTypes = {
-  authenticated: bool.isRequired,
-  saveAuthData: func.isRequired
-}
-
-const mapStateToProps = (state) => ({
-  authenticated: state.session.authenticated
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  saveAuthData: (authToken) => dispatch(actions.auth.saveAuthData(authToken))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default Header

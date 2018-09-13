@@ -9,6 +9,8 @@ import javax.servlet.FilterChain
 import javax.servlet.ServletRequest
 import javax.servlet.ServletResponse
 import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
+import javax.servlet.http.HttpServletResponseWrapper
 
 @Component
 @Profile("default")
@@ -16,16 +18,50 @@ class DefaultStatelessAuthenticationFilter(private val tokenAuthenticationServic
 
     override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
 
-        setAuthenticationFromHeader(request as HttpServletRequest)
+        // if no authentication in cookies, check if the url is /auth/google
+        // if the url is not /auth/google, redirect to /auth/google
 
-        chain.doFilter(request, response)
+        // if authentication is not null, check if token is expired and redirect to /auth/google if so
+        val authentication = tokenAuthenticationService.getAuthentication(request as HttpServletRequest)
+
+        if(authentication == null) {
+            if(!request.requestURI.endsWith(AUTH_PATTERN)) {
+                chain.doFilter(request, getSendRedirectWrapper(response))
+            } else {
+                chain.doFilter(request, response)
+            }
+        } else {
+            // if token is expired, also send redirect to /auth/google
+            if(isTokenExpired(authentication)) {
+                chain.doFilter(request, getSendRedirectWrapper(response))
+            } else {
+                setAuthenticationFromCookies(request)
+                chain.doFilter(request, response)
+            }
+        }
+
     }
 
-    private fun setAuthenticationFromHeader(request: HttpServletRequest) {
+    private fun isTokenExpired(authentication: UserAuthentication) =
+        authentication.principal.expires < System.currentTimeMillis()
+
+    private fun setAuthenticationFromCookies(request: HttpServletRequest) {
         SecurityContextHolder.getContext().authentication.takeIf { it !is UserAuthentication }.apply {
             tokenAuthenticationService.getAuthentication(request)?.let {
                 SecurityContextHolder.getContext().authentication = it
             }
         }
+    }
+
+    private fun getSendRedirectWrapper(response: ServletResponse)
+        = object: HttpServletResponseWrapper(response as HttpServletResponse) {
+            init {
+                setHeader("Location", AUTH_PATTERN)
+                status = HttpServletResponse.SC_MOVED_TEMPORARILY
+            }
+        }
+
+    companion object {
+        private const val AUTH_PATTERN = "/auth/google"
     }
 }

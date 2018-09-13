@@ -12,6 +12,6 @@ export function* loadAuthorities() {
 
 export default function* watchAuthorities() {
   yield [
-    takeLatest(actionTypes.LOAD_MENU, loadAuthorities)
+    takeLatest(actionTypes.LOAD_AUTHORITIES, loadAuthorities)
   ]
 }
