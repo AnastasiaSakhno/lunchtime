@@ -17,7 +17,7 @@ class UsersPage(fluentTest: FluentTest) : Page(fluentTest) {
     }
 
     companion object {
-        const val LINK_SELECTOR = "a[href='/admin/users']"
+        const val LINK_SELECTOR = "li[href='/admin/users']"
         const val FORM_SELECTOR = ".user-form"
     }
 }

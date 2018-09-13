@@ -17,7 +17,7 @@ class RestaurantsPage(fluentTest: FluentTest) : Page(fluentTest) {
     }
 
     companion object {
-        const val LINK_SELECTOR = "a[href='/admin/restaurants']"
+        const val LINK_SELECTOR = "li[href='/admin/restaurants']"
         const val FORM_SELECTOR = ".restaurant-form"
         const val ADDRESS_INPUT_SELECTOR = "#address_input"
     }

@@ -15,7 +15,7 @@ class MenuDocumentsPage(fluentTest: FluentTest) : Page(fluentTest) {
     }
 
     companion object {
-        const val LINK_SELECTOR = "a[href='/admin/menu_documents']"
+        const val LINK_SELECTOR = "li[href='/admin/menu_documents']"
         const val MENU_DOCUMENT_FORM_SELECTOR = ".menu-document-form input[type='submit']"
     }
 }
