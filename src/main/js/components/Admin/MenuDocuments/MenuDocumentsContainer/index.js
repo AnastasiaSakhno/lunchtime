@@ -7,7 +7,7 @@ import MenuDocumentsList from '../MenuDocumentsList'
 import withNeededStores from '../../../../HOC/withNeededStores'
 import selectors from '../../../../selectors'
 
-@withNeededStores(['restaurants', 'menuDocuments'])
+@withNeededStores(['users', 'restaurants', 'menuDocuments'])
 class MenuDocumentsContainer extends PureComponent {
   static propTypes = {
     submitMenuDocument: func.isRequired,

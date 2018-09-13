@@ -6,7 +6,7 @@ import actions from '../../../../actions'
 import {MenuList, MenuForm} from '../../Menu'
 import withNeededStores from '../../../../HOC/withNeededStores'
 
-@withNeededStores(['restaurants', 'menu'])
+@withNeededStores(['users', 'restaurants', 'menu'])
 class MenuContainer extends PureComponent {
   static propTypes = {
     menu: array,

@@ -6,7 +6,7 @@ import withNeededStores from '../../../../HOC/withNeededStores'
 import actions from '../../../../actions'
 import {connect} from 'react-redux'
 
-@withNeededStores(['users', 'authorities'])
+@withNeededStores(['authorities', 'users'])
 class UsersContainer extends PureComponent {
   static propTypes = {
     users: array,

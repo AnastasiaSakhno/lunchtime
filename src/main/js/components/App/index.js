@@ -2,7 +2,7 @@ import React from 'react'
 import {Switch, Route} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {bool, func} from 'prop-types'
-import { BrowserRouter } from 'react-router-dom'
+import {BrowserRouter} from 'react-router-dom'
 
 import routes from '../routes'
 import Footer from '../Footer'
@@ -44,9 +44,9 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   branch(
     (props) => {
-      if(!props.authenticated) {
+      if (!props.authenticated) {
         let authToken = getCookie('AUTH-TOKEN')
-        if(authToken) {
+        if (authToken) {
           props.saveAuthData(authToken)
         }
       }

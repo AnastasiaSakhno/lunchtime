@@ -6,7 +6,7 @@ import actions from '../../../../actions'
 import {RestaurantsList, RestaurantForm} from '../../Restaurants'
 import withNeededStores from '../../../../HOC/withNeededStores'
 
-@withNeededStores(['restaurants'])
+@withNeededStores(['users', 'restaurants'])
 class RestaurantsContainer extends PureComponent {
   static propTypes = {
     addRestaurant: func.isRequired,
