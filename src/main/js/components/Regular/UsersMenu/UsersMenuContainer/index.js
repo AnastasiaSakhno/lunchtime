@@ -88,7 +88,8 @@ class UsersMenuContainer extends PureComponent {
         orderedUsers={this.props.orderedUsers}/>
       <WholeWeekDuplication
         {...this.props.wholeWeekDuplication}
-        duplicateWholeWeekMenu={this.props.duplicateWholeWeekMenu}/>
+        duplicateWholeWeekMenu={this.props.duplicateWholeWeekMenu}
+        deactivate={() => this.props.userDayMenuChanged({active: false, target: null})}/>
     </div>
   )
 }
