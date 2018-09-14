@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
 import {object, array, func} from 'prop-types'
 import {connect} from 'react-redux'
-import moment from 'moment/moment'
+import moment from 'moment-timezone'
 
 import actions from '../../../../actions'
 import UsersMenuSheet from '../UsersMenuSheet'
@@ -13,9 +13,10 @@ import WholeWeekDuplication from '../WholeWeekDuplication'
 import selectors from '../../../../selectors'
 import {webSocket, sendMessage, CHANGE_UDM_MESSAGE, CHANGE_DAY_STATUS_MESSAGE} from '../../../../utils/webSocket'
 
-@withNeededStores(['restaurants', 'menu', 'users'])
+@withNeededStores(['config', 'restaurants', 'menu', 'users'])
 class UsersMenuContainer extends PureComponent {
   static propTypes = {
+    config: object.isRequired,
     currentUser: object,
     usersMenu: object.isRequired,
     days: object.isRequired,
@@ -40,7 +41,7 @@ class UsersMenuContainer extends PureComponent {
   }
 
   state = {
-    startDate: moment().day(1)
+    startDate: moment.tz(this.props.config.currentDate, 'utc').day(1)
   }
 
   componentDidMount() {

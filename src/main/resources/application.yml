@@ -45,6 +45,8 @@ documents:
 
 spring:
   profiles: default,test
+  jackson:
+    time-zone: UTC
   social:
     google:
       appId: 138194414139-l774a6vknijd5ufuhbnoidsp3np56nf5.apps.googleusercontent.com

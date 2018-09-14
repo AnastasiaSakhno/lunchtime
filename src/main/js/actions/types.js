@@ -1,3 +1,6 @@
+export const LOAD_CONFIG = 'LOAD_CONFIG'
+export const CONFIG_LOADED = 'CONFIG_LOADED'
+
 export const SAVE_AUTH_DATA = 'SAVE_AUTH_DATA'
 export const LOGIN = 'LOGIN'
 export const LOGGED_IN_SUCCESSFULLY = 'LOGGED_IN_SUCCESSFULLY'

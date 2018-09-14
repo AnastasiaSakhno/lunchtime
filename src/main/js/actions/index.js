@@ -7,9 +7,10 @@ import * as menuDocuments from './menu_documents'
 import * as usersMenu from './users_menu'
 import * as days from './days'
 import * as alerts from './alerts'
+import * as config from './config'
 
 const actions = {
-  auth, restaurants, users, authorities, menu, menuDocuments, usersMenu, days, alerts
+  auth, restaurants, users, authorities, menu, menuDocuments, usersMenu, days, alerts, config
 }
 
 export default actions
