@@ -3,6 +3,7 @@ package com.anahoret.lunchtime.features
 import com.anahoret.lunchtime.DatabaseCleanupService
 import com.anahoret.lunchtime.FluentUtils
 import com.anahoret.lunchtime.LunchtimeApplication
+import com.anahoret.lunchtime.config.social.SocialSignInAdapter.Companion.DOMAIN
 import com.anahoret.lunchtime.domain.*
 import com.anahoret.lunchtime.features.pages.RootPage
 import com.anahoret.lunchtime.repositories.*
@@ -89,9 +90,9 @@ abstract class BaseFeatureTest : FluentTest() {
     companion object {
         const val ROLE_ADMIN = "ROLE_ADMIN"
         const val ROLE_REGULAR = "ROLE_REGULAR"
-        const val ADMIN_EMAIL = "admin@anadeainc.com"
+        const val ADMIN_EMAIL = "admin@$DOMAIN"
         const val ADMIN_FULL_NAME = "App Admin"
-        const val FIRST_REGULAR_USER_EMAIL = "test1@anadeainc.com"
+        const val FIRST_REGULAR_USER_EMAIL = "test1@$DOMAIN"
         const val FIRST_REGULAR_USER_FULL_NAME = "Иван Иванов"
 
         const val EMAIL_INPUT_SELECTOR = "#email_input"
@@ -106,6 +107,7 @@ abstract class BaseFeatureTest : FluentTest() {
         const val USER_DAY_MENU_FRIDAY = ".user-day-menu-friday"
         const val USER_DAY_MENU_THURSDAY = ".user-day-menu-thursday"
         const val USERS_MENU_SHEET_TABLE_ROW = ".users-menu-sheet-table-row"
+        const val USERS_MENU_SHEET_TABLE_SUMMARY = ".users-menu-sheet-table-summary"
         const val USERS_MENU_SHEET_TABLE_SUMMARY_ITEM = ".users-menu-sheet-table-summary-item"
         const val USER_DAY_MENU_READONLY = ".user-day-menu_readonly"
         const val WHOLE_WEEK_DUPLICATION_CHECKBOX = ".whole-week-duplication-input"
