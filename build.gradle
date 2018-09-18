@@ -14,6 +14,7 @@ buildscript {
         fluentleniumAssertjVersion = '0.10.3'
         seleniumChromedriverVersion = '2.53.0'
         webDriverManagerVersion = '1.4.5'
+        nameMachineVersion = '1.0.0'
     }
     repositories {
         mavenCentral()
@@ -88,4 +89,5 @@ dependencies {
     testCompile("org.seleniumhq.selenium:selenium-chrome-driver:$seleniumChromedriverVersion")
     testCompile("io.github.bonigarcia:webdrivermanager:$webDriverManagerVersion")
     testCompile("org.springframework.security:spring-security-test")
+    testCompile("org.ajbrown:name-machine:$nameMachineVersion")
 }
