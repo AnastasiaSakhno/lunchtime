@@ -25,7 +25,9 @@ export const get = (path, authToken) => apiCall(path, {
   method: 'GET',
   headers: {
     Accept: 'application/json',
-    'X-AUTH-TOKEN': authToken
+    'X-AUTH-TOKEN': authToken,
+    pragma: 'no-cache',
+    'cache-control': 'no-cache'
   }
 })
 
