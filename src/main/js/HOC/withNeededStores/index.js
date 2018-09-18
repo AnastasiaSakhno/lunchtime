@@ -24,12 +24,7 @@ const withNeededStores = (neededStores) => (WrappedComponent) => {
 
     componentDidMount() {
       let self = this
-      neededStores.forEach((storeName) => {
-        let store = eval(`self.props.${storeName}`)
-        if (isEmpty(store)) {
-          eval(`self.props.load${capitalize(storeName)}()`)
-        }
-      })
+      neededStores.forEach((storeName) => eval(`self.props.load${capitalize(storeName)}()`))
     }
 
     render() {
