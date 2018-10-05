@@ -1,8 +1,7 @@
 import CanCan from 'cancan'
 
 import {href} from '../utils/object'
-import moment from 'moment/moment'
-import {formattedDate} from '../utils/date'
+import moment from 'moment-timezone'
 
 const cancan = new CanCan()
 export const {allow, can, cannot} = cancan
@@ -30,7 +29,7 @@ export const cancanUser = (currentUser) => {
   return currentUser.roles.includes('ROLE_ADMIN') ? new AdminUser() : new RegularUser({user: currentUser})
 }
 
-const canManageDayByTime = (udm) => moment(formattedDate(udm.props.date)).diff(moment(), 'days') >= 0
+const canManageDayByTime = (udm) => moment.tz(udm.props.date, 'utc').diff(moment(), 'days') >= 0
 const canManageUdmDay = (udm) => !udm.props.day || !udm.props.day.closed
 const canManageUdmMandatory = (udm) => canManageUdmDay(udm) && canManageDayByTime(udm)
 

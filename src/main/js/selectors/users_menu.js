@@ -3,10 +3,10 @@ import {groupBy} from 'ramda'
 
 import {getMenu, NONE} from './menu'
 import {getUsers} from './users'
-import {weekDateFormattedFromString, formattedDate} from '../utils/date'
+import {weekDateFormattedFromString} from '../utils/date'
 import {href} from '../utils/object'
 
-export const udmDateString = udm => formattedDate(udm.date)
+export const udmDateString = udm => udm.date
 export const WEEK_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 export const WEEK_DAYS_ABBREVIATIONS = ['MON', 'TUE', 'WED', 'THU', 'FRI']
 

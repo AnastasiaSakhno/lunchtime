@@ -23,6 +23,7 @@ spring:
 
   http.multipart.max-file-size: 1024KB
 
+spring.resources.cache-period: 100000
 server.session.timeout: 18000 # 5 hours
 
 logging.level.org.springframework.web: INFO

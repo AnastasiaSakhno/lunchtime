@@ -1,5 +1,6 @@
 import * as actionTypes from '../actions/types'
-import {removeCollectionProjection, removeProjectionMembers} from '../utils/api'
+import {removeProjectionMembers} from '../utils/api'
+import {formattedDate} from '../utils/date'
 
 export const initialState = {
   wholeWeekDuplication: {
@@ -8,25 +9,18 @@ export const initialState = {
 }
 
 const findMethod = (udm, action) => udm.id === action.userDayMenu.id
+const withFormattedDate = (udm) => ({
+  ...udm,
+  date: formattedDate(udm.date)
+})
 
 const usersMenu = (state = initialState, action) => {
   switch (action.type) {
   case actionTypes.USERS_MENU_LOADED:
-    let data = removeCollectionProjection(action, 'userDayMenus', ['user', 'menu'])
     return {
       ...state,
       startDate: action.startDate,
-      data: data
-    }
-
-  case actionTypes.USER_DAY_MENU_ADDED_SUCCESSFULLY:
-    let added = removeProjectionMembers(action.userDayMenu, ['user', 'menu'])
-    return {
-      ...state,
-      data: [
-        ...state.data,
-        added
-      ]
+      data: action.userDayMenus
     }
 
   case actionTypes.USER_DAY_MENU_UPDATED_SUCCESSFULLY:
@@ -35,7 +29,7 @@ const usersMenu = (state = initialState, action) => {
       ...state,
       data: state.data.map((udm) => {
         if (findMethod(udm, action)) {
-          return updated
+          return withFormattedDate(updated)
         }
         return udm
       })
@@ -57,6 +51,7 @@ const usersMenu = (state = initialState, action) => {
 
   case actionTypes.USER_DAY_MENU_GOTTEN_SUCCESSFULLY:
     let gotten = removeProjectionMembers(action.userDayMenu, ['user', 'menu'])
+    gotten = withFormattedDate(gotten)
     let found = state.data.find((udm) => findMethod(udm, action))
 
     if (found) {
