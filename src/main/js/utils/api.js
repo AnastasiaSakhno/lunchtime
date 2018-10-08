@@ -8,13 +8,14 @@ export const USER_AUTHORITIES_URI = ({id}) => BASE_API_URI + `/users/${id}/autho
 export const USER_DETAILS_URI = BASE_API_URI + '/google/details'
 export const AUTHORITIES_URI = BASE_API_URI + '/authorities?projection=short'
 export const MENU_URI = BASE_API_URI + '/menus?projection=wide'
+export const MENU_CUSTOM_URI = BASE_API_URI + '/menu'
 export const MENU_DOCUMENTS_URI = BASE_API_URI + '/menuDocuments?projection=wide'
 export const MENU_DOCUMENTS_UPLOAD_URI = BASE_API_URI + '/menu_documents'
 export const USERS_MENU_URI = BASE_API_URI + '/userDayMenus'
 export const USERS_MENU_CUSTOM_URI = BASE_API_URI + '/user_day_menu'
 export const USERS_MENU_BY_ID_URI = ({id}) => BASE_API_URI + `/userDayMenus/${id}?projection=wide`
 export const USERS_MENU_SEARCH_URI = ({from, to}) =>
-  BASE_API_URI + `/user_day_menu?fromDate=${from}&toDate=${to}`
+  `${USERS_MENU_CUSTOM_URI}?fromDate=${from}&toDate=${to}`
 export const DAYS_URI = BASE_API_URI + '/days?projection=wide'
 export const DAYS_BY_ID_URI = ({id}) => BASE_API_URI + `/days/${id}?projection=wide`
 export const DAYS_SEARCH_URI = ({from, to}) =>

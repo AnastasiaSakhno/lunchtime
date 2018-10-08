@@ -1,7 +1,5 @@
 import * as actionTypes from '../actions/types'
 
-import {removeCollectionProjection} from '../utils/api'
-
 export const initialState = []
 
 const users = (state = initialState, action) => {

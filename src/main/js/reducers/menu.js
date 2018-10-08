@@ -1,5 +1,4 @@
 import * as actionTypes from '../actions/types'
-import {removeCollectionProjection} from '../utils/api'
 import {changeArchiveMethod} from './index'
 
 export const initialState = []
@@ -7,7 +6,7 @@ export const initialState = []
 const menus = (state = initialState, action) => {
   switch(action.type) {
   case actionTypes.MENU_LOADED:
-    return removeCollectionProjection(action, 'menus')
+    return action.menus
 
   case actionTypes.MENU_ADDED_SUCCESSFULLY:
     return [

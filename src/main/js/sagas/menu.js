@@ -4,12 +4,12 @@ import { sessionService } from 'redux-react-session'
 import actions from '../actions'
 import * as actionTypes from '../actions/types'
 import { get, post, put as putRest } from '../utils/rest'
-import {getWithoutProjection, MENU_URI} from '../utils/api'
+import {getWithoutProjection, MENU_URI, MENU_CUSTOM_URI} from '../utils/api'
 
 const loadUser = sessionService.loadUser
 
 export function* loadMenu() {
-  const menu = yield call(get, MENU_URI)
+  const menu = yield call(get, MENU_CUSTOM_URI)
   yield put(actions.menu.loaded(menu))
 }
 
