@@ -3,6 +3,7 @@ package com.anahoret.lunchtime.web.controllers
 import com.anahoret.lunchtime.config.Constants.Companion.DATE_FORMAT_PATTERN
 import com.anahoret.lunchtime.repositories.UserDayMenuRepository
 import com.anahoret.lunchtime.services.UserDayMenuService
+import com.anahoret.lunchtime.web.handlers.SpringDataRestHandler
 import org.joda.time.LocalDate
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.ResponseEntity
@@ -25,28 +26,19 @@ class UserDayMenuController(
                 it["id"] = udm.id
                 it["date"] = udm.date.toString(DATE_FORMAT_PATTERN)
                 it["out"] = udm.out
-                it["_links"] = links(request, "userDayMenus", udm.id)
+                val springDataRestHandler = SpringDataRestHandler(request)
+                it["_links"] = springDataRestHandler.links("userDayMenus", udm.id)
                 it["menu"] = HashMap<String, Any>().also {
                     it["id"] = udm.menu.id
                     it["name"] = udm.menu.name
-                    it["_links"] = links(request, "menus", udm.menu.id)
+                    it["_links"] = springDataRestHandler.links("menus", udm.menu.id)
                 }
                 it["user"] = HashMap<String, Any>().also {
                     it["id"] = udm.user.id!!
-                    it["_links"] = links(request, "users", udm.user.id!!)
+                    it["_links"] = springDataRestHandler.links("users", udm.user.id!!)
                 }
             }
         }
-
-    private fun links(request: HttpServletRequest, resource: String, id: Long) =
-        HashMap<String, Any>().also {
-            it["self"] = HashMap<String, Any>().also {
-                it["href"] = link(request, resource, id)
-            }
-        }
-
-    private fun link(request: HttpServletRequest, resource: String, id: Long) =
-        "${request.scheme}://${request.getHeader("Host")}/api/$resource/$id"
 
     @DeleteMapping
     fun deleteTillDate(@DateTimeFormat(pattern = DATE_FORMAT_PATTERN) @RequestParam("tillDate") tillDate: LocalDate) {
