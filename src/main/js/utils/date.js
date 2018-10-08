@@ -2,8 +2,10 @@ import moment from 'moment-timezone'
 
 export const DATE_FORMAT = 'YYYY-MM-DD'
 
+export const dateMomentFromString = (dateFormatted) => moment.tz(dateFormatted, 'utc')
+
 export const weekDate = (weekBeginningFormatted, dayOfWeek) =>
-  moment.tz(weekBeginningFormatted, 'utc').day(dayOfWeek)
+  dateMomentFromString(weekBeginningFormatted).day(dayOfWeek)
 
 export const weekDateJson = (weekBeginningFormatted, dayOfWeek) => {
   let date = weekDate(weekBeginningFormatted, dayOfWeek)
@@ -14,8 +16,6 @@ export const weekDateJson = (weekBeginningFormatted, dayOfWeek) => {
     monthOfYear: date.month() + 1
   }
 }
-
-export const dateMomentFromString = (dateFormatted) => moment(dateFormatted, DATE_FORMAT)
 
 export const dateLong = (dateFormatted) => dateMomentFromString(dateFormatted).valueOf()
 
@@ -28,7 +28,7 @@ export const weekDateFormattedFromString = (weekBeginningFormatted, dayOfWeek) =
 export const weekDateFormattedFromObject = (weekBeginning, dayOfWeek) =>
   weekBeginning.day(dayOfWeek).format(DATE_FORMAT)
 
-export const dateFromJson = (date) => date ? moment([date.year, date.monthOfYear - 1, date.dayOfMonth]) : null
+export const dateFromJson = (date) => date ? moment.tz([date.year, date.monthOfYear - 1, date.dayOfMonth], 'utc') : null
 
 export const formattedDate = (date) => dateFromJson(date).format(DATE_FORMAT)
 
