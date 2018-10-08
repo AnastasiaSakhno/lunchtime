@@ -7,8 +7,7 @@ export const initialState = []
 const users = (state = initialState, action) => {
   switch(action.type) {
   case actionTypes.USERS_LOADED:
-    let usersList = removeCollectionProjection(action, 'users')
-    return [...usersList]
+    return action.users
 
   case actionTypes.USER_UPDATED_SUCCESSFULLY:
     return state.map((user) => {

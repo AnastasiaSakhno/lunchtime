@@ -2,7 +2,7 @@ export const LOGIN_URI = '/auth/google(scope=\'profile\')'
 export const BASE_API_URI = '/api'
 export const CONFIG_URI = BASE_API_URI + '/config'
 export const RESTAURANTS_URI = BASE_API_URI + '/restaurants'
-export const USERS_URI = BASE_API_URI + '/users?projection=short'
+export const USERS_URI = BASE_API_URI + '/users'
 export const USER_BY_ID_URI = ({id}) => BASE_API_URI + `/users/${id}?projection=short`
 export const USER_AUTHORITIES_URI = ({id}) => BASE_API_URI + `/users/${id}/authorities`
 export const USER_DETAILS_URI = BASE_API_URI + '/google/details'
