@@ -47,6 +47,7 @@ const ManageableUserDayMenuSelect = ({startDate, id, dayOfWeek, menu, user,
       className='form-control form-control-sm custom-select user-day-menu-select'
       value={selected}
       onChange={handleSubmit}>
+      <option/>
       {menuList.map((m) => (
         <option
           value={href(m)}
