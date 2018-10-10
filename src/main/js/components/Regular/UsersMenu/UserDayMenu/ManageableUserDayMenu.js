@@ -10,7 +10,7 @@ const ManageableUserDayMenu =
     let dayOfWeekName = WEEK_DAYS[dayOfWeek - 1].toLowerCase()
 
     return (
-      <div className={`user-day-menu_manageable input-group mb-3 user-day-menu-${dayOfWeekName}`}>
+      <div className={`user-day-menu_manageable input-group user-day-menu-${dayOfWeekName}`}>
         <ManageableUserDayMenuSelect
           startDate={startDate}
           id={id}
