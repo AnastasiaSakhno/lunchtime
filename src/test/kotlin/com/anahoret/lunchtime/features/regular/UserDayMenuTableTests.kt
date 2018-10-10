@@ -1,10 +1,9 @@
 package com.anahoret.lunchtime.features.regular
 
-import com.anahoret.lunchtime.config.social.SocialSignInAdapter
+import com.anahoret.lunchtime.config.Constants.Companion.DOMAIN
 import com.anahoret.lunchtime.features.BaseFeatureTest
 import org.ajbrown.namemachine.NameGenerator
 import org.joda.time.LocalDate
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.openqa.selenium.By.cssSelector
@@ -35,7 +34,7 @@ class UserDayMenuTableTests : BaseFeatureTest() {
         createMenu(4, "LeGrand", null, false, leGrand)
 
         repeat(100) { ui ->
-            val user = createUser("test$ui@${SocialSignInAdapter.DOMAIN}", generatedFullName(), setOf(ROLE_REGULAR))
+            val user = createUser("test$ui@${DOMAIN}", generatedFullName(), setOf(ROLE_REGULAR))
             repeat(2) { wi ->
                 repeat(5) { udmi ->
                     val id = ((wi + 1) * (ui + 1) * udmi).toLong()

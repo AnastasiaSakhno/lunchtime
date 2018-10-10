@@ -1,8 +1,8 @@
 import React from 'react'
-import {string, number, bool, object, array, arrayOf, shape, func} from 'prop-types'
+import {string, number, bool, array, arrayOf, shape, func} from 'prop-types'
 
 import UserDayMenu from '../UserDayMenu'
-import {formattedDate, weekDateJson} from '../../../../utils/date'
+import {formattedDate, weekDateFormattedFromString} from '../../../../utils/date'
 import {WEEK_DAYS_ABBREVIATIONS} from '../../../../selectors/users_menu'
 
 const UserWeekMenu = (props) => (
@@ -11,16 +11,16 @@ const UserWeekMenu = (props) => (
     {[...Array(5).keys()].map((i) => {
       let dayOfWeek = i + 1
       let found = props.data.find((udm) => (
-        udm.date.dayOfWeek === dayOfWeek
+        udm.date === weekDateFormattedFromString(props.startDate, dayOfWeek)
       ))
       let key = `udm_${props.user.id}_${dayOfWeek}`
       if (!found) {
         found = {
-          date: weekDateJson(props.startDate, dayOfWeek)
+          date: weekDateFormattedFromString(props.startDate, dayOfWeek)
         }
       }
 
-      let day = props.days ? props.days.find(d => formattedDate(d.date) === formattedDate(found.date)) : null
+      let day = props.days ? props.days.find(d => formattedDate(d.date) === found.date) : null
       let activeMenu = props.activeMenu.filter(
         m => !m.weekDays || m.weekDays.includes(WEEK_DAYS_ABBREVIATIONS[dayOfWeek - 1])
       )
@@ -47,7 +47,7 @@ UserWeekMenu.propTypes = {
     shape({
       id: number,
       out: bool,
-      date: object,
+      date: string,
       archive: bool,
       menu: shape({
         id: number,

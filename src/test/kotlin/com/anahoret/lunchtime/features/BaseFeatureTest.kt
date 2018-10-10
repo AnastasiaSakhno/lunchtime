@@ -3,7 +3,7 @@ package com.anahoret.lunchtime.features
 import com.anahoret.lunchtime.DatabaseCleanupService
 import com.anahoret.lunchtime.FluentUtils
 import com.anahoret.lunchtime.LunchtimeApplication
-import com.anahoret.lunchtime.config.social.SocialSignInAdapter.Companion.DOMAIN
+import com.anahoret.lunchtime.config.Constants.Companion.DOMAIN
 import com.anahoret.lunchtime.domain.*
 import com.anahoret.lunchtime.features.pages.RootPage
 import com.anahoret.lunchtime.repositories.*
