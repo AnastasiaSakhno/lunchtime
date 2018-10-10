@@ -64,7 +64,7 @@ class UserDayMenuTests : BaseFeatureTest() {
         fluentUtils.waitForInvisibility { cssSelector(WHOLE_WEEK_DUPLICATION_CHECKBOX) }
         driver.findElements(cssSelector(USER_DAY_MENU_SELECT)).forEachIndexed { i, element ->
             val select = Select(element)
-            val menu = if(i == 3) "Loft рыба" else "None"
+            val menu = if(i == 3) "Loft рыба" else ""
             assertThat(select.firstSelectedOption.text).isEqualTo(menu)
         }
     }
