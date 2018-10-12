@@ -28,9 +28,10 @@ class UserDayMenuController(
                 it["out"] = udm.out
                 val springDataRestHandler = SpringDataRestHandler(request)
                 it["_links"] = springDataRestHandler.links("userDayMenus", udm.id)
-                it["menu"] = HashMap<String, Any>().also { m ->
+                it["menu"] = HashMap<String, Any?>().also { m ->
                     m["id"] = udm.menu.id
                     m["name"] = udm.menu.name
+                    m["colorHex"] = udm.menu.colorHex
                     m["_links"] = springDataRestHandler.links("menus", udm.menu.id)
                 }
                 it["user"] = HashMap<String, Any>().also { u ->

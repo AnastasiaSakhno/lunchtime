@@ -45,6 +45,7 @@ const ManageableUserDayMenuSelect = ({startDate, id, dayOfWeek, menu, user,
     <select
       id={htmlId()}
       className='form-control form-control-sm custom-select user-day-menu-select'
+      style={{backgroundColor: menu && menu.colorHex ? menu.colorHex : '#FFFFFF'}}
       value={selected}
       onChange={handleSubmit}>
       <option/>
@@ -65,7 +66,8 @@ ManageableUserDayMenuSelect.propTypes = {
   dayOfWeek: number.isRequired,
   menu: shape({
     id: number,
-    name: string
+    name: string,
+    colorHex: string
   }),
   user: shape({
     id: number,

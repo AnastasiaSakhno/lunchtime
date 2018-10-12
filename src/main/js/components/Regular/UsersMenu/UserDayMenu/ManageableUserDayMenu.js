@@ -39,7 +39,8 @@ ManageableUserDayMenu.propTypes = {
   out: bool,
   menu: shape({
     id: number,
-    name: string
+    name: string,
+    colorHex: string
   }),
   user: shape({
     id: number,

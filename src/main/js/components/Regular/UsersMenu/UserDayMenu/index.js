@@ -16,6 +16,7 @@ class UserDayMenu extends Component {
   render = () =>
     (<div
       className='col-2'
+      style={{backgroundColor: this.props.menu && this.props.menu.colorHex ? this.props.menu.colorHex : '#FFFFFF'}}
       ref={(el) => {
         this.udmContainer = el
       }}>
@@ -30,7 +31,8 @@ UserDayMenu.propTypes = {
   out: bool,
   menu: shape({
     id: number,
-    name: string
+    name: string,
+    colorHex: string
   }),
   user: shape({
     id: number,

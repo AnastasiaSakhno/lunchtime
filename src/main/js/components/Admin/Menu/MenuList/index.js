@@ -40,7 +40,8 @@ MenuList.propTypes = {
       name: string,
       weekDays: string,
       restaurant: object,
-      archive: bool
+      archive: bool,
+      colorHex: string
     })
   ).isRequired,
   onUpdate: func.isRequired

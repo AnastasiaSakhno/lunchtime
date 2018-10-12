@@ -9,5 +9,6 @@ interface WideMenuProjection {
     val name: String
     val archive: Boolean
     var weekDays: String?
+    val colorHex: String?
     val restaurant: WideRestaurantProjection
 }

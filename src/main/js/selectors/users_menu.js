@@ -60,7 +60,7 @@ const menuSummaryRow = (menu, users, byDate, menuStatistics, usersMenu) => (
     let arr = menuStatistics ? menuStatistics.groupedByDate[date] : []
     let count = menuDayCount(menu, date, users, byDate, arr)
     let outCount = menuDayOutCount(arr)
-    return {name: menu.name, count: count, out: outCount}
+    return {name: menu.name, colorHex: menu.colorHex, count: count, out: outCount}
   })
 )
 
