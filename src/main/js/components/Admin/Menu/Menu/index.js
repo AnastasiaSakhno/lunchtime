@@ -1,18 +1,31 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {string, bool, number, shape, func} from 'prop-types'
+import {SketchPicker} from 'react-color'
 
 import MenuDestroyAction from '../MenuActions/MenuDestroyAction'
 import archiveBranch from '../../../../HOC/branch/archiveBranch'
 import ArchiveMenu from './ArchiveMenu'
 
-const PureMenu = (props) => (
-  <tr>
-    <td>{props.restaurant ? props.restaurant.name : ''}</td>
-    <td>{props.name}</td>
-    <td>{props.weekDays ? props.weekDays : 'All'}</td>
-    <td><MenuDestroyAction {...props}/></td>
-  </tr>
-)
+class PureMenu extends Component {
+  handleChange = (color) => {
+    this.props.onColorUpdate({...this.props, colorHex: color.hex})
+  }
+
+  render = () => (
+    <tr>
+      <td>{this.props.restaurant ? this.props.restaurant.name : ''}</td>
+      <td>{this.props.name}</td>
+      <td>{this.props.weekDays ? this.props.weekDays : 'All'}</td>
+      <td>
+        <SketchPicker
+          color={this.props.colorHex ? this.props.colorHex : '#FFFFFF'}
+          onChangeComplete={this.handleChange}
+        />
+      </td>
+      <td><MenuDestroyAction {...this.props}/></td>
+    </tr>
+  )
+}
 
 PureMenu.propTypes = {
   id: number,
@@ -24,8 +37,10 @@ PureMenu.propTypes = {
     archive: bool
   }),
   archive: bool.isRequired,
+  colorHex: string,
   onDestroy: func.isRequired,
-  onRestore: func.isRequired
+  onRestore: func.isRequired,
+  onColorUpdate: func.isRequired
 }
 
 export default archiveBranch({

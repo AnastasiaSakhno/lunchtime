@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/types'
-import {changeArchiveMethod} from './index'
+import {updateStoreItemMethod} from './index'
 
 export const initialState = []
 
@@ -15,10 +15,10 @@ const restaurants = (state = initialState, action) => {
     ]
 
   case actionTypes.RESTAURANT_REMOVED_SUCCESSFULLY:
-    return state.map((r) => changeArchiveMethod(r, action.restaurant.id))
+    return state.map((r) => updateStoreItemMethod(r, action.restaurant))
 
   case actionTypes.RESTAURANT_RESTORED_SUCCESSFULLY:
-    return state.map((r) => changeArchiveMethod(r, action.restaurant.id))
+    return state.map((r) => updateStoreItemMethod(r, action.restaurant))
 
   default:
     return state
