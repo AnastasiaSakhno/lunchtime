@@ -9,6 +9,7 @@ export const orderedUsers = createSelector(
   [getCurrentUser, getUsers],
   (currentUser, users) => {
     let result = sortBy(compose(toLower, prop('fullName')))(users)
+    result = filter(u => u.accountEnabled, result)
     if (currentUser) {
       result = filter(u => u.id !== currentUser.id, result)
       result = prepend(currentUser, result)
