@@ -14,10 +14,7 @@ const restaurants = (state = initialState, action) => {
       action.restaurant
     ]
 
-  case actionTypes.RESTAURANT_REMOVED_SUCCESSFULLY:
-    return state.map((r) => updateStoreItemMethod(r, action.restaurant))
-
-  case actionTypes.RESTAURANT_RESTORED_SUCCESSFULLY:
+  case actionTypes.RESTAURANT_UPDATED_SUCCESSFULLY:
     return state.map((r) => updateStoreItemMethod(r, action.restaurant))
 
   default:
