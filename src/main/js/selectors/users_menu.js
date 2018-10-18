@@ -1,7 +1,7 @@
 import {createSelector} from 'reselect'
 import {groupBy} from 'ramda'
 
-import {getMenu, NONE} from './menu'
+import {getMenu} from './menu'
 import {getUsers} from './users'
 import {weekDateFormattedFromString} from '../utils/date'
 import {href} from '../utils/object'

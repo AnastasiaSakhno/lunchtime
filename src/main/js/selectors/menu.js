@@ -1,6 +1,6 @@
 import {createSelector} from 'reselect'
 
-export const NONE = 'None'
+export const NONE_ID = 1
 
 export const getMenu = (state) => state.menu
 
