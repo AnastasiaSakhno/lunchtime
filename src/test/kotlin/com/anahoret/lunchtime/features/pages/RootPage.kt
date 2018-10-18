@@ -50,6 +50,9 @@ class RootPage(fluentTest: FluentTest, private val serverPort: Int) : Page(fluen
         return date.plusWeeks(weeks)
     }
 
+    fun findDay(day: String) =
+        fluentTest.find(".user-day-menu-$day ${BaseFeatureTest.USER_DAY_MENU_SELECT}")
+
     fun fillDay(day: String, menu: String) {
         fluentTest.fillSelect(".user-day-menu-$day ${BaseFeatureTest.USER_DAY_MENU_SELECT}").withText(menu)
         Thread.sleep(1500)

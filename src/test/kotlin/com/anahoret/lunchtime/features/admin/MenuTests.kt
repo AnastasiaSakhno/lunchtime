@@ -49,6 +49,15 @@ class MenuTests : BaseFeatureTest() {
         fluentUtils.waitForInvisibility { xpath("//td/del[contains(text(), 'Mendis')]") }
     }
 
+    @Test
+    fun canChangeTheColor() {
+        driver.findElement(xpath("//div[@title='#7ED321']")).click()
+        Thread.sleep(200)
+        menuRepository.findAll().forEach {
+            assertThat(it.colorHex).isEqualToIgnoringCase(if(it.name == "None") "#7ED321" else null)
+        }
+    }
+
     override fun setupInitialData() {
         super.setupInitialData()
         val loft = createRestaurant(1, "Loft", "пр. Яворницкого, 50", false)

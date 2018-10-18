@@ -63,6 +63,13 @@ class UserDayMenuTests : BaseFeatureTest() {
         assertThat(find("$USER_DAY_MENU_FRIDAY $USER_DAY_MENU_SELECT option[value='$selected']").text).isEqualTo("Loft")
     }
 
+    @Test
+    fun canSeeAppropriateMenuColor() {
+        rootPage.fillDay("friday", "Loft")
+        assertThat(rootPage.findDay("friday").getAttribute("style"))
+            .containsIgnoringCase("background-color: rgb(126, 211, 33);")
+    }
+
     override fun setupInitialData() {
         super.setupInitialData()
         createUser(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_FULL_NAME, setOf(ROLE_REGULAR))
@@ -70,7 +77,7 @@ class UserDayMenuTests : BaseFeatureTest() {
         val leGrand = createRestaurant(2, "LeGrand", "пр. Яворницкого, 50", false)
         val mendis = createRestaurant(3, "Mendis", "ул. Шолом Алейхема, 4/26", true)
         createMenu(1, "None", null, false, null)
-        createMenu(2, "Loft", null, false, loft)
+        createMenu(2, "Loft", null, false, loft, "#7ED321")
         createMenu(3, "Loft рыба", "THU", false, loft)
         createMenu(4, "LeGrand", null, false, leGrand)
         createMenu(5, "Mendis", null, true, mendis)
