@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/types'
-import {changeArchiveMethod} from './index'
+import {updateStoreItemMethod} from './index'
 
 export const initialState = []
 
@@ -14,11 +14,8 @@ const menus = (state = initialState, action) => {
       action.menu
     ]
 
-  case actionTypes.MENU_REMOVED_SUCCESSFULLY:
-    return state.map((m) => changeArchiveMethod(m, action.menu.id))
-
-  case actionTypes.MENU_RESTORED_SUCCESSFULLY:
-    return state.map((m) => changeArchiveMethod(m, action.menu.id))
+  case actionTypes.MENU_UPDATED_SUCCESSFULLY:
+    return state.map((m) => updateStoreItemMethod(m, action.menu))
 
   default:
     return state

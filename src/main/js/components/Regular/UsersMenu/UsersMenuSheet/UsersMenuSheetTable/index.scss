@@ -11,12 +11,14 @@
 
   .row>.col, .row>[class^=col-] {
     border: 1px solid #D3D3D3;
+    padding: 0px;
   }
 
   .row:first-child {
     color: #fff;
     background-color: #212529;
     border-color: #32383E;
+    text-align: center;
   }
 
   .row:not(:first-child):hover {

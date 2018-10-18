@@ -10,8 +10,7 @@ import withNeededStores from '../../../../HOC/withNeededStores'
 class RestaurantsContainer extends PureComponent {
   static propTypes = {
     addRestaurant: func.isRequired,
-    removeRestaurant: func.isRequired,
-    restoreRestaurant: func.isRequired,
+    updateRestaurant: func.isRequired,
     restaurants: array
   }
 
@@ -20,16 +19,15 @@ class RestaurantsContainer extends PureComponent {
       <RestaurantForm onSubmit={this.props.addRestaurant}/>
       <RestaurantsList
         data={this.props.restaurants}
-        onDestroy={this.props.removeRestaurant}
-        onRestore={this.props.restoreRestaurant}/>
+        onDestroy={(r) => this.props.updateRestaurant({...r, archive: true})}
+        onRestore={(r) => this.props.updateRestaurant({...r, archive: false})}/>
     </div>
   )
 }
 
 const mapDispatchToProps = (dispatch) => ({
   addRestaurant: (restaurant) => dispatch(actions.restaurants.add(restaurant)),
-  removeRestaurant: (restaurant) => dispatch(actions.restaurants.remove(restaurant)),
-  restoreRestaurant: (restaurant) => dispatch(actions.restaurants.restore(restaurant))
+  updateRestaurant: (restaurant) => dispatch(actions.restaurants.update(restaurant))
 })
 
 export default connect(null, mapDispatchToProps)(RestaurantsContainer)

@@ -19,6 +19,9 @@ class Menu(
     @Column(name = "archive", nullable = false)
     var archive: Boolean,
 
+    @Column(name = "color_hex", nullable = true)
+    var colorHex: String?,
+
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "restaurant_id")
     var restaurant: Restaurant?,

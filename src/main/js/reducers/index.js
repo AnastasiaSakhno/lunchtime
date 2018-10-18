@@ -18,9 +18,9 @@ const reducers = combineReducers({
 export default reducers
 
 
-export const changeArchiveMethod = (item, id) => {
-  if (item.id === id) {
-    return { ...item, archive: !item.archive }
+export const updateStoreItemMethod = (item, newItem) => {
+  if (item.id === newItem.id) {
+    return { ...item, ...newItem }
   }
   return item
 }

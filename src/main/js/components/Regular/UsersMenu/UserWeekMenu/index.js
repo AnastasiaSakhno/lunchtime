@@ -51,7 +51,8 @@ UserWeekMenu.propTypes = {
       archive: bool,
       menu: shape({
         id: number,
-        name: string
+        name: string,
+        colorHex: string
       })
     })
   ).isRequired,

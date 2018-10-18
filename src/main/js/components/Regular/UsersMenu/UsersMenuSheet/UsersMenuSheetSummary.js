@@ -6,7 +6,10 @@ import selectors from '../../../../selectors'
 const UsersMenuSheetSummary = ({summaryValues}) => {
   const menuSummaryView = (menu, index) => {
     let outText = menu.out === 0 ? '' : `, ${menu.out} out`
-    return (<div className='col-2 users-menu-sheet-table-summary-item' key={`summary_${menu.name}_${index}`}>
+    return (<div
+      className='col-2 users-menu-sheet-table-summary-item'
+      key={`summary_${menu.name}_${index}`}
+      style={{backgroundColor: menu.colorHex ? menu.colorHex : '#FFFFFF'}}>
       {`${menu.name} ${menu.count} ${outText}`}
     </div>)
   }

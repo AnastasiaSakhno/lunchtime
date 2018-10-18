@@ -1,11 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Menu } from '../../Menu'
+import {Menu} from '../../Menu'
 
-const MenuList = ({ data, onDestroy, onRestore }) => {
+const MenuList = ({data, onUpdate}) => {
   const map = data.map((menu) => (
-    <Menu { ...menu } key={ `menu_${menu.id}` } onDestroy={ onDestroy } onRestore={ onRestore } />
+    <Menu
+      {...menu}
+      key={`menu_${menu.id}`}
+      onDestroy={(m) => onUpdate({...m, archive: true})}
+      onRestore={(m) => onUpdate({...m, archive: false})}
+      onColorUpdate={onUpdate}/>
   ))
 
   return (
@@ -16,6 +21,7 @@ const MenuList = ({ data, onDestroy, onRestore }) => {
             <th scope="col">Restaurant</th>
             <th scope="col">Name</th>
             <th scope="col">Week days</th>
+            <th scope="col">Color</th>
             <th scope="col"/>
           </tr>
         </thead>
@@ -25,7 +31,7 @@ const MenuList = ({ data, onDestroy, onRestore }) => {
   )
 }
 
-const { string, bool, number, object, arrayOf, shape, func } = PropTypes
+const {string, bool, number, object, arrayOf, shape, func} = PropTypes
 
 MenuList.propTypes = {
   data: arrayOf(
@@ -34,11 +40,11 @@ MenuList.propTypes = {
       name: string,
       weekDays: string,
       restaurant: object,
-      archive: bool
+      archive: bool,
+      colorHex: string
     })
   ).isRequired,
-  onDestroy: func.isRequired,
-  onRestore: func.isRequired
+  onUpdate: func.isRequired
 }
 
 export default MenuList

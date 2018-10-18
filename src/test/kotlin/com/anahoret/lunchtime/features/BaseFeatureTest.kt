@@ -81,8 +81,8 @@ abstract class BaseFeatureTest : FluentTest() {
     fun createRestaurant(id: Long, name: String, address: String, archive: Boolean) =
         restaurantRepository.save(Restaurant(id, name, address, archive))
 
-    fun createMenu(id: Long, name: String, weekDays: String?, archive: Boolean, restaurant: Restaurant?) =
-        menuRepository.save(Menu(id, name, weekDays, archive, restaurant))
+    fun createMenu(id: Long, name: String, weekDays: String?, archive: Boolean, restaurant: Restaurant?, colorHex: String? = null) =
+        menuRepository.save(Menu(id, name, weekDays, archive, colorHex, restaurant))
 
     fun createUdm(id: Long, user: User, menu: Menu, date: LocalDate, out: Boolean = false) =
         userDayMenuRepository.save(UserDayMenu(id, date, out, menu, user))

@@ -49,13 +49,25 @@ class SummaryMenuTests : BaseFeatureTest() {
             }
     }
 
+    @Test
+    fun canSeeAppropriateMenuColor() {
+        rootPage.fillDay("friday", "Loft")
+        find(USERS_MENU_SHEET_TABLE_SUMMARY_ITEM)
+            .forEachIndexed { index, element ->
+                if (index < 5)
+                    assertThat(element.getAttribute("style")).containsIgnoringCase("background-color: rgb(255, 255, 255);")
+                else
+                    assertThat(element.getAttribute("style")).containsIgnoringCase("background-color: rgb(126, 211, 33);")
+            }
+    }
+
     override fun setupInitialData() {
         super.setupInitialData()
         createUser(FIRST_REGULAR_USER_EMAIL, FIRST_REGULAR_USER_FULL_NAME, setOf(ROLE_REGULAR))
         val loft = createRestaurant(1, "Loft", "пр. Яворницкого, 50", false)
         val leGrand = createRestaurant(2, "LeGrand", "пр. Яворницкого, 50", false)
         createMenu(1, "None", null, false, null)
-        createMenu(2, "Loft", null, false, loft)
+        createMenu(2, "Loft", null, false, loft, "#7ED321")
         createMenu(3, "Loft рыба", "THU", false, loft)
         createMenu(4, "LeGrand", null, false, leGrand)
     }

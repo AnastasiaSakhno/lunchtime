@@ -19,22 +19,12 @@ export const addedSuccessfully = (menu) => ({
   menu
 })
 
-export const remove = (menu) => ({
-  type: actionTypes.REMOVE_MENU,
+export const update = (menu) => ({
+  type: actionTypes.UPDATE_MENU,
   menu
 })
 
-export const removedSuccessfully = (menu) => ({
-  type: actionTypes.MENU_REMOVED_SUCCESSFULLY,
-  menu
-})
-
-export const restore = (menu) => ({
-  type: actionTypes.RESTORE_MENU,
-  menu
-})
-
-export const restoredSuccessfully = (menu) => ({
-  type: actionTypes.MENU_RESTORED_SUCCESSFULLY,
+export const updatedSuccessfully = (menu) => ({
+  type: actionTypes.MENU_UPDATED_SUCCESSFULLY,
   menu
 })

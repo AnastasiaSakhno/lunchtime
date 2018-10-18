@@ -4,7 +4,7 @@ import { sessionService } from 'redux-react-session'
 import actions from '../actions'
 import * as actionTypes from '../actions/types'
 import { get, post, put as putRest } from '../utils/rest'
-import { RESTAURANTS_URI } from '../utils/api'
+import {getWithoutProjection, MENU_URI, RESTAURANTS_URI} from '../utils/api'
 
 const loadUser = sessionService.loadUser
 
@@ -22,27 +22,12 @@ export function* addRestaurant({ restaurant }) {
   }
 }
 
-export function* removeRestaurant({ restaurant }) {
+export function* updateRestaurant({ restaurant }) {
   const user = yield call(loadUser)
-  const newRestaurant = yield call(putRest,
-    `${RESTAURANTS_URI}/${restaurant.id}`,
-    user.auth_token, {...restaurant, archive: true})
+  const newRestaurant = yield call(putRest, `${RESTAURANTS_URI}/${restaurant.id}`, user.auth_token, restaurant)
 
   if(newRestaurant.id) {
-    yield put(actions.restaurants.removedSuccessfully(restaurant))
-    yield put(actions.menu.load())
-  }
-}
-
-export function* restoreRestaurant({ restaurant }) {
-  const user = yield call(loadUser)
-  const newRestaurant = yield call(putRest,
-    `${RESTAURANTS_URI}/${restaurant.id}`,
-    user.auth_token, {...restaurant, archive: false})
-
-  if(newRestaurant.id) {
-    yield put(actions.restaurants.restoredSuccessfully(restaurant))
-    yield put(actions.menu.load())
+    yield put(actions.restaurants.updatedSuccessfully(newRestaurant))
   }
 }
 
@@ -50,7 +35,6 @@ export default function* watchRestaurants() {
   yield [
     takeLatest(actionTypes.LOAD_RESTAURANTS, loadRestaurants),
     takeEvery(actionTypes.ADD_RESTAURANT, addRestaurant),
-    takeEvery(actionTypes.REMOVE_RESTAURANT, removeRestaurant),
-    takeEvery(actionTypes.RESTORE_RESTAURANT, restoreRestaurant)
+    takeEvery(actionTypes.UPDATE_RESTAURANT, updateRestaurant)
   ]
 }

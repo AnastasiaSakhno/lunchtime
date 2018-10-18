@@ -21,6 +21,7 @@ class MenuController(val menuRepository: MenuRepository) {
                 it["name"] = menu.name
                 it["weekDays"] = menu.weekDays
                 it["archive"] = menu.archive
+                it["colorHex"] = menu.colorHex
                 val springDataRestHandler = SpringDataRestHandler(request)
                 it["_links"] = springDataRestHandler.links("menus", menu.id)
                 it["restaurant"] =
