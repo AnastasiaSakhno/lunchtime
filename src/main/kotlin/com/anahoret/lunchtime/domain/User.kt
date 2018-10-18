@@ -47,7 +47,7 @@ class User : SocialUserDetails {
     private val credentialsExpired: Boolean = false
 
     @NotNull
-    private val accountEnabled: Boolean = true
+    val accountEnabled: Boolean = true
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_authorities",

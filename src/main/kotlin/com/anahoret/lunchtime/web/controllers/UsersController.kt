@@ -21,6 +21,7 @@ class UsersController(val userRepository: UserRepository) {
                 it["fullName"] = u.fullName
                 it["username"] = u.username
                 it["roles"] = u.roles
+                it["accountEnabled"] = u.isEnabled
                 it["_links"] = SpringDataRestHandler(request).links("users", u.id!!)
             }
         }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {string, number, arrayOf, shape, array, func} from 'prop-types'
+import {string, number, bool, arrayOf, shape, array, func} from 'prop-types'
 
 import {User} from '../../Users'
 import withSpinner from '../../../../HOC/withSpinner'
@@ -8,7 +8,12 @@ import withSpinner from '../../../../HOC/withSpinner'
 class UsersList extends Component {
   render() {
     const map = this.props.users.map((user) => (
-      <User {...user} key={`user_${user.id}`} authorities={this.props.authorities} onChange={this.props.onChange}/>
+      <User
+        {...user}
+        key={`user_${user.id}`}
+        authorities={this.props.authorities}
+        onUpdate={this.props.onUpdate}
+        onRolesUpdate={this.props.onRolesUpdate}/>
     ))
 
     return (
@@ -19,6 +24,7 @@ class UsersList extends Component {
               <th scope="col">Name</th>
               <th scope="col">Email</th>
               <th scope="col">Roles</th>
+              <th scope="col">Enabled</th>
             </tr>
           </thead>
           <tbody>{map}</tbody>
@@ -34,11 +40,13 @@ UsersList.propTypes = {
       id: number,
       fullName: string,
       username: string,
-      roles: array
+      roles: array,
+      accountEnabled: bool
     })
   ).isRequired,
   authorities: array.isRequired,
-  onChange: func.isRequired
+  onUpdate: func.isRequired,
+  onRolesUpdate: func.isRequired
 }
 
 export default UsersList

@@ -4,7 +4,7 @@ import { sessionService } from 'redux-react-session'
 import actions from '../actions'
 import * as actionTypes from '../actions/types'
 import { get, post, put as putRest } from '../utils/rest'
-import {getWithoutProjection, MENU_URI, RESTAURANTS_URI} from '../utils/api'
+import {RESTAURANTS_URI} from '../utils/api'
 
 const loadUser = sessionService.loadUser
 
