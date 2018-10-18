@@ -18,21 +18,11 @@ class SummaryMenuTests : BaseFeatureTest() {
     }
 
     @Test
-    fun allInNone() {
-        assertThat(find(USERS_MENU_SHEET_TABLE_SUMMARY_ITEM).count()).isEqualTo(5)
-        find(USERS_MENU_SHEET_TABLE_SUMMARY_ITEM)
-            .forEach { assertThat(it.text).isEqualTo("None 2") }
-    }
-
-    @Test
     fun changeSummaryAfterChangeUserDayMenu() {
         rootPage.fillDay("friday", "Loft")
         find(USERS_MENU_SHEET_TABLE_SUMMARY_ITEM)
             .forEachIndexed { index, element ->
-                if (index < 5)
-                    assertThat(element.text).isEqualTo(if (index == 4) "None 1" else "None 2")
-                else
-                    assertThat(element.text).isEqualTo(if (index == 9) "Loft 1" else "Loft 0")
+                    assertThat(element.text).isEqualTo(if (index == 4) "Loft 1" else "Loft 0")
             }
     }
 
@@ -42,10 +32,7 @@ class SummaryMenuTests : BaseFeatureTest() {
         rootPage.clickDayOut("friday")
         find(USERS_MENU_SHEET_TABLE_SUMMARY_ITEM)
             .forEachIndexed { index, element ->
-                if (index < 5)
-                    assertThat(element.text).isEqualTo(if (index == 4) "None 1" else "None 2")
-                else
-                    assertThat(element.text).isEqualTo(if (index == 9) "Loft 1 , 1 out" else "Loft 0")
+                    assertThat(element.text).isEqualTo(if (index == 4) "Loft 1 , 1 out" else "Loft 0")
             }
     }
 
@@ -54,9 +41,6 @@ class SummaryMenuTests : BaseFeatureTest() {
         rootPage.fillDay("friday", "Loft")
         find(USERS_MENU_SHEET_TABLE_SUMMARY_ITEM)
             .forEachIndexed { index, element ->
-                if (index < 5)
-                    assertThat(element.getAttribute("style")).containsIgnoringCase("background-color: rgb(255, 255, 255);")
-                else
                     assertThat(element.getAttribute("style")).containsIgnoringCase("background-color: rgb(126, 211, 33);")
             }
     }

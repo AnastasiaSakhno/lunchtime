@@ -26,7 +26,7 @@ export const groupedByMenu = createSelector(
 
 export const groupedByDate = createSelector(
   [getUsersMenuData],
-  (data) => groupBy(udmDateString)(data.filter(udm => udm.menu.name !== NONE))
+  (data) => groupBy(udmDateString)(data)
 )
 
 export const groupedByMenuAndDate = createSelector(
@@ -40,25 +40,13 @@ export const groupedByMenuAndDate = createSelector(
   )
 )
 
-const menuDayCount = (menu, date, users, byDate, arr) => {
-  let count = arr ? arr.length : 0
-  if (menu.name === NONE) {
-    count = users.length
-    let totalDateArr = byDate[date]
-    if (totalDateArr) {
-      count = count - totalDateArr.length
-    }
-  }
-  return count
-}
-
 const menuDayOutCount = (arr) => arr ? arr.filter(udm => udm.out).length : 0
 
 const menuSummaryRow = (menu, users, byDate, menuStatistics, usersMenu) => (
   WEEK_DAYS.map((day, index) => {
     let date = weekDateFormattedFromString(usersMenu.startDate, index + 1)
     let arr = menuStatistics ? menuStatistics.groupedByDate[date] : []
-    let count = menuDayCount(menu, date, users, byDate, arr)
+    let count = arr ? arr.length : 0
     let outCount = menuDayOutCount(arr)
     return {name: menu.name, colorHex: menu.colorHex, count: count, out: outCount}
   })
@@ -68,7 +56,7 @@ const menuSummary = (menu, byMenuAndDate) => byMenuAndDate.find(gmd => gmd.menu.
 
 export const orderedMenu = createSelector(
   [getMenu, groupedByMenu],
-  (menuList, byMenu) => menuList.filter(m => m.name === NONE || byMenu[href(m)])
+  (menuList, byMenu) => menuList.filter(m => byMenu[href(m)])
 )
 
 export const summaryValues = createSelector(
