@@ -10,12 +10,12 @@ const UsersMenuSheetSummary = ({summaryValues}) => {
       key={`summary_${menu.name}_${index}`}>
       <div className='row'>
         <div
-          className='col text-align-left'
-          style={{backgroundColor: menu.colorHex ? menu.colorHex : '#f8f9fa'}}>
+          className='col-6 text-left'
+          style={menu.colorHex ? {backgroundColor: menu.colorHex} : {}}>
           {menu.name}
         </div>
-        <div className='col'>{menu.count}</div>
-        <div className='col'>{menu.out}</div>
+        <div className='col-3 text-center'>{menu.count}</div>
+        <div className='col-3 text-center'>{menu.out}</div>
       </div>
     </div>
   )
@@ -35,8 +35,8 @@ const UsersMenuSheetSummary = ({summaryValues}) => {
   const headers = selectors.usersMenu.WEEK_DAYS.map(day =>
     (<div key={`summary_${day}`} className='col-2'>
       <div className='row text-white'>
-        <div className='col-8'>{day}</div>
-        <div className='col-4'>Out</div>
+        <div className='col-9'>{day}</div>
+        <div className='col-3'>Out</div>
       </div>
     </div>)
   )

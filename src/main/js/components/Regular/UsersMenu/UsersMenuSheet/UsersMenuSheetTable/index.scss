@@ -7,17 +7,27 @@
     }
   }
 
-  .row>.col, .row>[class^=col-] {
+  >.row:first-child {
+    color: #fff;
+    background-color: #212529;
+    border-color: #32383E;
+    text-align: center;
+  }
+
+  >.row:not(:first-child):hover {
+    background-color: #DCDCDC;
+  }
+
+  >.row>.col, .row>[class^=col-] {
     border: 1px solid #D3D3D3;
     padding: 0px;
 
-    .row {
+    >.row {
       margin: 0;
       color: #000;
 
-      .col {
+      >.col, >[class^=col-] {
         border: none;
-        background-color: #f8f9fa;
 
         &:not(:last-child) {
           border-right: 1px solid #D3D3D3;
@@ -25,19 +35,4 @@
       }
     }
   }
-
-  .row:first-child {
-    color: #fff;
-    background-color: #212529;
-    border-color: #32383E;
-    text-align: center;
-  }
-
-  .row:not(:first-child):hover {
-    background-color: #DCDCDC;
-  }
-}
-
-.text-align-left {
-  text-align: left;
 }

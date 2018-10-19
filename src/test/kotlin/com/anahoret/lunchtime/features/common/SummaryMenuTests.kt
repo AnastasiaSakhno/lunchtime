@@ -27,8 +27,8 @@ class SummaryMenuTests : BaseFeatureTest() {
         rootPage.fillDay("friday", "Loft")
         find(USERS_MENU_SHEET_TABLE_SUMMARY_ITEM)
             .forEachIndexed { index, element ->
-                assertThat(element.find(".col.text-align-left").text).isEqualTo("Loft")
-                assertThat(element.find(".col:nth-of-type(2)").text).isEqualTo(if (index == 4) "1" else "0")
+                assertThat(element.find(".col-6.text-left").text).isEqualTo("Loft")
+                assertThat(element.find(".col-3").text).isEqualTo(if (index == 4) "1" else "0")
             }
     }
 
@@ -38,7 +38,7 @@ class SummaryMenuTests : BaseFeatureTest() {
         rootPage.clickDayOut("friday")
         find(USERS_MENU_SHEET_TABLE_SUMMARY_ITEM)
             .forEachIndexed { index, element ->
-                assertThat(element.find(".col:nth-of-type(3)").text).isEqualTo(if (index == 4) "1" else "0")
+                assertThat(element.find(".col-3:nth-of-type(2)").text).isEqualTo(if (index == 4) "1" else "0")
             }
     }
 
@@ -48,7 +48,7 @@ class SummaryMenuTests : BaseFeatureTest() {
         find(USERS_MENU_SHEET_TABLE_SUMMARY_ITEM)
             .forEach { element ->
                 assertThat(element
-                    .find(".col.text-align-left")
+                    .find(".col-6.text-left")
                     .getAttribute("style")
                 ).containsIgnoringCase("background-color: rgb(126, 211, 33);")
             }
