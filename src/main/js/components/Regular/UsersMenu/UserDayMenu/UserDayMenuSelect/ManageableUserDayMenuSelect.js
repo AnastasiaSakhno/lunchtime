@@ -45,7 +45,7 @@ const ManageableUserDayMenuSelect = ({startDate, id, dayOfWeek, menu, user,
     <select
       id={htmlId()}
       className='form-control form-control-sm custom-select user-day-menu-select'
-      style={{backgroundColor: menu && menu.colorHex ? menu.colorHex : '#FFFFFF'}}
+      style={menu && menu.colorHex ? {backgroundColor: menu.colorHex} : {}}
       value={selected}
       onChange={handleSubmit}>
       <option/>

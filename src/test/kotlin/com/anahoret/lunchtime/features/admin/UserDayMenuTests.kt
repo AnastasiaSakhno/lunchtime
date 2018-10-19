@@ -65,9 +65,11 @@ class UserDayMenuTests : BaseFeatureTest() {
         date = rootPage.prevWeek(date)
         fluentUtils.waitForInvisibility { xpath("//div[text()='LeGrand']") }
         date = rootPage.navigateToWeeksPlus(date, 2)
-        fluentUtils.waitFor { xpath("//div[contains(text(),'Loft 1')]") }
+        fluentUtils.waitFor { xpath("//div[contains(text(),'Loft')]") }
+        fluentUtils.waitFor { xpath("//div[contains(text(),'1')]") }
         rootPage.nextWeek(date)
-        fluentUtils.waitFor { xpath("//div[contains(text(),'Loft рыба 1')]") }
+        fluentUtils.waitFor { xpath("//div[contains(text(),'Loft рыба')]") }
+        fluentUtils.waitFor { xpath("//div[contains(text(),'1')]") }
     }
 
     override fun setupInitialData() {
