@@ -33,6 +33,15 @@ class UsersTests : BaseFeatureTest() {
         Thread.sleep(200)
         val user = userRepository.findByUsername(ADMIN_EMAIL)
         assertThat(user!!.roles.count()).isEqualTo(1)
+        assertThat(user.roles.first()).isEqualTo("ROLE_REGULAR")
+    }
+
+    @Test
+    fun canEditStatus() {
+        findFirst(".user-status-input").click()
+        Thread.sleep(200)
+        val user = userRepository.findByUsername(ADMIN_EMAIL)
+        assertThat(user!!.isEnabled).isEqualTo(false)
     }
 
     override fun setupInitialData() {
