@@ -9,4 +9,5 @@ interface ShortUserProjection {
     val fullName: String
     val username: String
     val roles: Set<String>
+    val accountEnabled: Boolean
 }

@@ -8,6 +8,7 @@ const users = (state = initialState, action) => {
     return action.users
 
   case actionTypes.USER_UPDATED_SUCCESSFULLY:
+  case actionTypes.USER_ROLES_UPDATED_SUCCESSFULLY:
     return state.map((user) => {
       if (user.id === action.user.id) {
         return action.user

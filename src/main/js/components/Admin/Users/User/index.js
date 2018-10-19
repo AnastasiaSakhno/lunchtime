@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {string, number, array, func} from 'prop-types'
+import {string, number, bool, array, func} from 'prop-types'
 
 import {href} from '../../../../utils/object'
 
@@ -8,12 +8,16 @@ class User extends Component {
     authorities: array
   }
 
-  handleChange = (e) => {
+  handleRolesUpdate = (e) => {
     const authorities = Array.from(e.target.options)
       .filter(o => o.selected)
       .map(o => o.value)
 
-    this.props.onChange({id: this.props.id, authorities: authorities})
+    this.props.onRolesUpdate({id: this.props.id, authorities: authorities})
+  }
+
+  handleUpdate = (e) => {
+    this.props.onUpdate({...this.props, accountEnabled: e.target.checked})
   }
 
   render = () => (
@@ -23,7 +27,7 @@ class User extends Component {
       <td>
         <select
           className='form-control custom-select user-roles-select'
-          onChange={this.handleChange} multiple size={this.props.authorities.length}>
+          onChange={this.handleRolesUpdate} multiple size={this.props.authorities.length}>
           {this.props.authorities.map((auth) => (
             <option
               value={href(auth)}
@@ -34,6 +38,13 @@ class User extends Component {
           ))}
         </select>
       </td>
+      <td>
+        <input
+          className='user-status-input'
+          type='checkbox'
+          checked={this.props.accountEnabled}
+          onChange={this.handleUpdate}/>
+      </td>
     </tr>
   )
 }
@@ -43,7 +54,9 @@ User.propTypes = {
   fullName: string.isRequired,
   username: string.isRequired,
   roles: array.isRequired,
-  onChange: func.isRequired
+  accountEnabled: bool.isRequired,
+  onUpdate: func.isRequired,
+  onRolesUpdate: func.isRequired
 }
 
 export default User

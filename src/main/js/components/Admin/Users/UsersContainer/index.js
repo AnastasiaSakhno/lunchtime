@@ -11,18 +11,24 @@ class UsersContainer extends PureComponent {
   static propTypes = {
     users: array,
     authorities: array,
-    updateUser: func.isRequired
+    updateUser: func.isRequired,
+    updateUserRoles: func.isRequired
   }
 
   render = () => (
     <div className="users-container">
-      <UsersList users={this.props.users} authorities={this.props.authorities} onChange={this.props.updateUser}/>
+      <UsersList
+        users={this.props.users}
+        authorities={this.props.authorities}
+        onUpdate={this.props.updateUser}
+        onRolesUpdate={this.props.updateUserRoles}/>
     </div>
   )
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  updateUser: (user) => dispatch(actions.users.update(user))
+  updateUser: (user) => dispatch(actions.users.update(user)),
+  updateUserRoles: (user) => dispatch(actions.users.updateRoles(user))
 })
 
 export default connect(null, mapDispatchToProps)(UsersContainer)

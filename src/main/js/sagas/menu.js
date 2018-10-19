@@ -27,13 +27,15 @@ export function* updateMenu({ menu }) {
   const newMenu = yield call(
     putRest,
     getWithoutProjection(MENU_URI) + '/' + menu.id,
-    user.auth_token, {
+    user.auth_token,
+    {
       id: menu.id,
       name: menu.name,
       weekDays: menu.weekDays,
       archive: menu.archive,
       colorHex: menu.colorHex
-    })
+    }
+  )
 
   if(newMenu.id) {
     yield put(actions.menu.updatedSuccessfully(newMenu))

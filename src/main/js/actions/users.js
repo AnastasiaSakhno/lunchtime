@@ -18,3 +18,13 @@ export const updatedSuccessfully = (user) => ({
   type: actionTypes.USER_UPDATED_SUCCESSFULLY,
   user
 })
+
+export const updateRoles = (user) => ({
+  type: actionTypes.UPDATE_USER_ROLES,
+  user
+})
+
+export const rolesUpdatedSuccessfully = (user) => ({
+  type: actionTypes.USER_ROLES_UPDATED_SUCCESSFULLY,
+  user
+})
