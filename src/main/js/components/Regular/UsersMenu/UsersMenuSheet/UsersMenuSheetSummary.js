@@ -4,15 +4,21 @@ import {array} from 'prop-types'
 import selectors from '../../../../selectors'
 
 const UsersMenuSheetSummary = ({summaryValues}) => {
-  const menuSummaryView = (menu, index) => {
-    let outText = menu.out === 0 ? '' : `, ${menu.out} out`
-    return (<div
+  const menuSummaryView = (menu, index) => (
+    <div
       className='col-2 users-menu-sheet-table-summary-item'
-      key={`summary_${menu.name}_${index}`}
-      style={{backgroundColor: menu.colorHex ? menu.colorHex : '#FFFFFF'}}>
-      {`${menu.name} ${menu.count} ${outText}`}
-    </div>)
-  }
+      key={`summary_${menu.name}_${index}`}>
+      <div className='row'>
+        <div
+          className='col text-align-left'
+          style={{backgroundColor: menu.colorHex ? menu.colorHex : '#f8f9fa'}}>
+          {menu.name}
+        </div>
+        <div className='col'>{menu.count}</div>
+        <div className='col'>{menu.out}</div>
+      </div>
+    </div>
+  )
 
   const summaryRowView = (menuSummary, index) => {
     let menuMap = menuSummary.map((menu, mindex) => menuSummaryView(menu, mindex))
@@ -26,7 +32,14 @@ const UsersMenuSheetSummary = ({summaryValues}) => {
 
   let weekSummary = summaryValues.map((menuSummary, index) => summaryRowView(menuSummary, index))
 
-  const headers = selectors.usersMenu.WEEK_DAYS.map(day => <div key={`summary_${day}`} className='col-2'>{day}</div>)
+  const headers = selectors.usersMenu.WEEK_DAYS.map(day =>
+    (<div key={`summary_${day}`} className='col-2'>
+      <div className='row text-white'>
+        <div className='col-8'>{day}</div>
+        <div className='col-4'>Out</div>
+      </div>
+    </div>)
+  )
 
   return (
     <div className="users-menu-sheet-table users-menu-sheet-table-summary">

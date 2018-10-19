@@ -35,13 +35,15 @@ class UsersMenuSheetTable extends Component {
       return (
         <div key={`date_${day}`} className='col-2'>
           {date}
-          <DayStatus
-            id={found ? found.id : null}
-            closed={found ? found.closed : false}
-            days={this.props.days}
-            date={date}
-            onSubmit={this.props.onSubmitDay}
-            onUpdate={this.props.onUpdateDay}/>
+          <div className='float-right'>
+            <DayStatus
+              id={found ? found.id : null}
+              closed={found ? found.closed : false}
+              days={this.props.days}
+              date={date}
+              onSubmit={this.props.onSubmitDay}
+              onUpdate={this.props.onUpdateDay}/>
+          </div>
         </div>
       )
     })

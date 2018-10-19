@@ -108,7 +108,7 @@ abstract class BaseFeatureTest : FluentTest() {
         const val USER_DAY_MENU_THURSDAY = ".user-day-menu-thursday"
         const val USERS_MENU_SHEET_TABLE_ROW = ".users-menu-sheet-table-row"
         const val USERS_MENU_SHEET_TABLE_SUMMARY = ".users-menu-sheet-table-summary"
-        const val USERS_MENU_SHEET_TABLE_SUMMARY_ITEM = ".users-menu-sheet-table-summary-item"
+        const val USERS_MENU_SHEET_TABLE_SUMMARY_ITEM = ".users-menu-sheet-table-summary-item .row"
         const val USER_DAY_MENU_READONLY = ".user-day-menu_readonly"
         const val WHOLE_WEEK_DUPLICATION_CHECKBOX = ".whole-week-duplication-input"
 

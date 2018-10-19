@@ -28,15 +28,13 @@ const ManageableDayStatus = ({id, closed, date, onSubmit, onUpdate}) => {
   const val = id ? (closed ? 'Reopen' : 'Close') : 'Close'
 
   return (
-    <div className='float-right'>
-      <span
-        onClick={handleClick}
-        className={
-          `badge badge-light day-status_manageable day-status_manageable_${val === 'Reopen' ? 'closed' : 'open'}`
-        }>
-        {val}
-      </span>
-    </div>
+    <span
+      onClick={handleClick}
+      className={
+        `badge badge-light day-status_manageable day-status_manageable_${val === 'Reopen' ? 'closed' : 'open'}`
+      }>
+      {val}
+    </span>
   )
 }
 
