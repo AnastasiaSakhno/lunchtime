@@ -14,7 +14,7 @@ const ArchiveMenu = (props) => (
     <td>
       <del>{props.weekDays ? props.weekDays : 'All'}</del>
     </td>
-    <td style={{backgroundColor: props.colorHex ? this.props.colorHex : '#FFFFFF'}} />
+    <td style={props.colorHex ? {backgroundColor: this.props.colorHex} : {}} />
     <td><MenuRestoreAction {...props}/></td>
   </tr>
 )
