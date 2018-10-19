@@ -1,8 +1,7 @@
 import React from 'react'
-import {bool, string, number, func, shape} from 'prop-types'
+import {bool, string, number, object, func, shape} from 'prop-types'
 
 import {weekDateLong} from '../../../../../utils/date'
-import {NONE_ID} from '../../../../../selectors/menu'
 
 const ManageableUserDayMenuOut = ({startDate, id, dayOfWeek, out, menu, onOutUpdate}) => {
   const handleUpdate = (e) => {
@@ -22,7 +21,7 @@ const ManageableUserDayMenuOut = ({startDate, id, dayOfWeek, out, menu, onOutUpd
           className='user-day-menu-out-input'
           type='checkbox'
           checked={out}
-          disabled={!id || menu && menu.id === NONE_ID}
+          disabled={!id || menu && !menu.restaurant}
           onChange={handleUpdate}/>
       </div>
     </div>
@@ -36,7 +35,8 @@ ManageableUserDayMenuOut.propTypes = {
   out: bool,
   menu: shape({
     id: number,
-    name: string
+    name: string,
+    restaurant: object
   }),
   onOutUpdate: func.isRequired
 }

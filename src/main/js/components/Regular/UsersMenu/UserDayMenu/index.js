@@ -32,7 +32,8 @@ UserDayMenu.propTypes = {
   menu: shape({
     id: number,
     name: string,
-    colorHex: string
+    colorHex: string,
+    restaurant: object
   }),
   user: shape({
     id: number,

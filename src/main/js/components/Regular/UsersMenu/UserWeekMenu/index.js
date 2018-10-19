@@ -1,5 +1,5 @@
 import React from 'react'
-import {string, number, bool, array, arrayOf, shape, func} from 'prop-types'
+import {string, number, bool, object, array, arrayOf, shape, func} from 'prop-types'
 
 import UserDayMenu from '../UserDayMenu'
 import {formattedDate, weekDateFormattedFromString} from '../../../../utils/date'
@@ -52,7 +52,8 @@ UserWeekMenu.propTypes = {
       menu: shape({
         id: number,
         name: string,
-        colorHex: string
+        colorHex: string,
+        restaurant: object
       })
     })
   ).isRequired,
