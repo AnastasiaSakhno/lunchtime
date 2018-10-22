@@ -27,8 +27,8 @@ class SummaryMenuTests : BaseFeatureTest() {
         rootPage.fillDay("friday", "Loft")
         find(USERS_MENU_SHEET_TABLE_SUMMARY_ITEM)
             .forEachIndexed { index, element ->
-                assertThat(element.find(".col-6.text-left").text).isEqualTo("Loft")
-                assertThat(element.find(".col-3").text).isEqualTo(if (index == 4) "1" else "0")
+                assertThat(element.find(".col-6.text-left").text).isEqualTo(if (index == 4) "Loft" else null)
+                assertThat(element.find(".col-3").text).isEqualTo(if (index == 4) "1" else null)
             }
     }
 
@@ -38,7 +38,7 @@ class SummaryMenuTests : BaseFeatureTest() {
         rootPage.clickDayOut("friday")
         find(USERS_MENU_SHEET_TABLE_SUMMARY_ITEM)
             .forEachIndexed { index, element ->
-                assertThat(element.find(".col-3:nth-of-type(2)").text).isEqualTo(if (index == 4) "1" else "0")
+                assertThat(element.find(".col-3:nth-of-type(2)").text).isEqualTo(if (index == 4) "1" else null)
             }
     }
 
@@ -46,11 +46,11 @@ class SummaryMenuTests : BaseFeatureTest() {
     fun canSeeAppropriateMenuColor() {
         rootPage.fillDay("friday", "Loft")
         find(USERS_MENU_SHEET_TABLE_SUMMARY_ITEM)
-            .forEach { element ->
+            .forEachIndexed { index, element ->
                 assertThat(element
                     .find(".col-6.text-left")
                     .getAttribute("style")
-                ).containsIgnoringCase("background-color: rgb(126, 211, 33);")
+                ).isEqualToIgnoringCase(if (index == 4) "background-color: rgb(126, 211, 33);" else null)
             }
     }
 

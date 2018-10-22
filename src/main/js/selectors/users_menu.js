@@ -1,14 +1,15 @@
 import {createSelector} from 'reselect'
-import {groupBy} from 'ramda'
+import {groupBy, find} from 'ramda'
 
 import {getMenu} from './menu'
-import {getUsers} from './users'
-import {weekDateFormattedFromString} from '../utils/date'
+import {dateMomentFromString, weekDateFormattedFromString} from '../utils/date'
 import {href} from '../utils/object'
+import sortBy from 'ramda/es/sortBy'
 
-export const udmDateString = udm => udm.date
 export const WEEK_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 export const WEEK_DAYS_ABBREVIATIONS = ['MON', 'TUE', 'WED', 'THU', 'FRI']
+export const udmDateString = udm => udm.date
+const udmDayOfWeekString = udm => WEEK_DAYS[dateMomentFromString(udm.date).isoWeekday() - 1]
 
 export const getUsersMenu = (state) => state.usersMenu
 
@@ -29,6 +30,11 @@ export const groupedByDate = createSelector(
   (data) => groupBy(udmDateString)(data)
 )
 
+export const groupedByWeekDay = createSelector(
+  [getUsersMenuData],
+  (data) => groupBy(udmDayOfWeekString)(data)
+)
+
 export const groupedByMenuAndDate = createSelector(
   [groupedByMenu],
   (byMenu) => (
@@ -42,7 +48,7 @@ export const groupedByMenuAndDate = createSelector(
 
 const menuDayOutCount = (arr) => arr ? arr.filter(udm => udm.out).length : 0
 
-const menuSummaryRow = (menu, users, byDate, menuStatistics, usersMenu) => (
+const menuSummaryRow = (menu, byDate, menuStatistics, usersMenu) => (
   WEEK_DAYS.map((day, index) => {
     let date = weekDateFormattedFromString(usersMenu.startDate, index + 1)
     let arr = menuStatistics ? menuStatistics.groupedByDate[date] : []
@@ -59,12 +65,39 @@ export const orderedMenu = createSelector(
   (menuList, byMenu) => menuList.filter(m => byMenu[href(m)])
 )
 
+// export const summaryValues = createSelector(
+//   [getUsersMenu, orderedMenu, groupedByMenuAndDate, groupedByDate],
+//   (usersMenu, menuList, byMenuAndDate, byDate) => (
+//     menuList.map(menu => {
+//       let menuStatistics = menuSummary(menu, byMenuAndDate)
+//       return menuSummaryRow(menu, byDate, menuStatistics, usersMenu)
+//     })
+//   )
+// )
+
+
 export const summaryValues = createSelector(
-  [getUsersMenu, orderedMenu, getUsers, groupedByMenuAndDate, groupedByDate],
-  (usersMenu, menuList, users, byMenuAndDate, byDate) => (
-    menuList.map(menu => {
-      let menuStatistics = menuSummary(menu, byMenuAndDate)
-      return menuSummaryRow(menu, users, byDate, menuStatistics, usersMenu)
+  [getMenu, groupedByWeekDay],
+  (menuList, byWeekDay) => (
+    WEEK_DAYS.map(wd => {
+      const wdArr = byWeekDay[wd]
+      // console.log(wd, byWeekDay, wdArr)
+      let value = []
+      if (wdArr) {
+        const byMenu = groupBy(udm => udm.menu.id)(sortBy(udm => udm.menu.id)(wdArr))
+        value = Object.keys(byMenu).map(mid => {
+          const menu = find(m => m.id.toString() === mid.toString())(menuList)
+          return (
+            {
+              name: menu.name,
+              colorHex: menu.colorHex,
+              count: byMenu[mid].length,
+              out: byMenu[mid].filter(udm => udm.out).length
+            })
+        })
+        // console.log('groupedByMenu=', groupedByMenu, value)
+      }
+      return value
     })
   )
 )
