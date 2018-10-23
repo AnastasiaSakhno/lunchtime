@@ -4,33 +4,36 @@ import {array} from 'prop-types'
 import selectors from '../../../../selectors'
 
 const UsersMenuSheetSummary = ({summaryValues}) => {
-  const menuSummaryView = (menu, index) => (
-    <div
+  const weekDayMenuSummaryView = (dayMenuSummary) => dayMenuSummary ?
+    <div className='row'>
+      <div
+        className='col-6 text-left'
+        style={dayMenuSummary.colorHex ? {backgroundColor: dayMenuSummary.colorHex} : {}}>
+        {dayMenuSummary.name}
+      </div>
+      <div className='col-3 text-center'>{dayMenuSummary.count}</div>
+      <div className='col-3 text-center'>{dayMenuSummary.out}</div>
+    </div> :
+    <div className='row'/>
+
+  const weedDaysMenuSummaryMap = (mi) => selectors.usersMenu.WEEK_DAYS.map((day, di) => {
+    const daySummaryValues = summaryValues[di]
+    const dayMenuSummary = daySummaryValues.length > mi ? daySummaryValues[mi] : null
+    return (<div
       className='col-2 users-menu-sheet-table-summary-item'
-      key={`summary_${menu.name}_${index}`}>
-      <div className='row'>
-        <div
-          className='col-6 text-left'
-          style={menu.colorHex ? {backgroundColor: menu.colorHex} : {}}>
-          {menu.name}
-        </div>
-        <div className='col-3 text-center'>{menu.count}</div>
-        <div className='col-3 text-center'>{menu.out}</div>
-      </div>
-    </div>
+      key={`summary_${day}_${mi}`}>
+      {weekDayMenuSummaryView(dayMenuSummary)}
+    </div>)
+  })
+
+  const selectedMenuCount = Math.max(...summaryValues.map(wd => wd.length))
+
+  const weekSummary = [...Array(selectedMenuCount).keys()].map((mi) =>
+    (<div className='row' key={`summary_row_${mi}`}>
+      <div className='col-2' key={`summary_col_${mi}`}/>
+      {weedDaysMenuSummaryMap(mi)}
+    </div>)
   )
-
-  const summaryRowView = (menuSummary, index) => {
-    let menuMap = menuSummary.map((menu, mindex) => menuSummaryView(menu, mindex))
-    return (
-      <div className='row' key={`summary_row_${index}`}>
-        <div className='col-2' key={`summary_col_${index}`}/>
-        {menuMap}
-      </div>
-    )
-  }
-
-  let weekSummary = summaryValues.map((menuSummary, index) => summaryRowView(menuSummary, index))
 
   const headers = selectors.usersMenu.WEEK_DAYS.map(day =>
     (<div key={`summary_${day}`} className='col-2'>
